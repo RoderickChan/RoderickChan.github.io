@@ -11,9 +11,9 @@
 <li><code>tcache_perthread_struct</code>结构体在堆上，大小一般为<code>0x250</code>。它的前64个字节，分别代表<code>0x20~0x410</code>大小的<code>chunk(包括chunk头)</code>的数量。当超过<code>7</code>的时候，再次释放的<code>chunk</code>会被放入到<code>fastbin</code>或者<code>unsorted bin</code>。后面的内存，则分别表示<code>0x20~0x410</code>大小<code>tcache bins</code>的首地址。</li>
 </ul>
 <p>如图所示：</p>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210314224314.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210314224314.png" alt=""></p>
 <p>然后看一下内部细节：</p>
-<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210314224902.png"></p>
+<p><img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210314224902.png" alt=""></p>
 <p>首地址如果是一个有效的地址，下一次分配对应大小的<code>chunk</code>会直接从该地址处分配，没有<code>chunk size</code>的检查。</p>
 <ul>
 <li><code>tcache attack</code>可以重复释放，可以直接修改<code>tcache entry</code>的值，没有<code>chunk size</code>的检查。</li>
@@ -59,10 +59,22 @@
                 }
                 $('.justified-gallery').justifiedGallery();
             }
-        });</script><!--!--><!--!--><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/KaTeX/0.11.1/katex.min.css"><script src="https://cdnjs.loli.net/ajax/libs/KaTeX/0.11.1/katex.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/KaTeX/0.11.1/contrib/auto-render.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/KaTeX/0.11.1/contrib/mhchem.js" defer></script><script>window.addEventListener("load", function() {
-            document.querySelectorAll('[role="article"] > .content').forEach(function(element) {
-                renderMathInElement(element);
-            });
-        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdnjs.loli.net/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
             loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
         });</script></body></html>
