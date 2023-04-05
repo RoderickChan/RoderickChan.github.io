@@ -1,17 +1,39 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
-    <title>pwn-wp - 分类 - roderick - record and learn!</title>
+    <title>pwn-wp - Category - roderick - record and learn!</title>
     <link>https://www.roderickchan.cn/categories/pwn-wp/</link>
-    <description>pwn-wp - 分类 - roderick - record and learn!</description>
-    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
-      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 02 Feb 2023 20:55:25 &#43;0800</lastBuildDate><atom:link href="https://www.roderickchan.cn/categories/pwn-wp/" rel="self" type="application/rss+xml" /><item>
-  <title>2023西湖论剑初赛pwn-jit</title>
-  <link>https://www.roderickchan.cn/2023-02-02-2023%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91%E5%88%9D%E8%B5%9Bpwn-jit/</link>
-  <pubDate>Thu, 02 Feb 2023 20:55:25 &#43;0800</pubDate>
+    <description>pwn-wp - Category - roderick - record and learn!</description>
+    <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
+      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 03 Oct 2022 13:09:01 &#43;0800</lastBuildDate><atom:link href="https://www.roderickchan.cn/categories/pwn-wp/" rel="self" type="application/rss+xml" /><item>
+  <title>2022-SekaiCTF-Pwn-Wp-Gets-Bfs</title>
+  <link>https://www.roderickchan.cn/2022-sekaictf-pwn-wp-gets-bfs/</link>
+  <pubDate>Mon, 03 Oct 2022 13:09:01 &#43;0800</pubDate>
   <author>roderick</author>
-  <guid>https://www.roderickchan.cn/2023-02-02-2023%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91%E5%88%9D%E8%B5%9Bpwn-jit/</guid>
+  <guid>https://www.roderickchan.cn/2022-sekaictf-pwn-wp-gets-bfs/</guid>
   <description><![CDATA[<blockquote>
-<p>一道<code>JIT</code>的题，记录一下。点击<a href="https://download.roderickchan.cn/ctf/2022/2023-xihulunjian-pwn-jit.7z"target="_blank" rel="external nofollow noopener noreferrer">链接<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>下载附件。若需要认证，下载账户名/密码为<code>roderick/rode@rick</code>。</p>
+<p><strong>Note</strong>: writeup for <code>gets</code> and <code>BFS</code></p>
+</blockquote>]]></description>
+</item>
+<item>
+  <title>2022-Cyber-Apocalypse-CTF-All-Pwn-Wp</title>
+  <link>https://www.roderickchan.cn/2022-cyber-apocalypse-ctf-all-pwn-wp/</link>
+  <pubDate>Fri, 20 May 2022 15:07:34 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://www.roderickchan.cn/2022-cyber-apocalypse-ctf-all-pwn-wp/</guid>
+  <description><![CDATA[<blockquote>
+<p>This is my write-up for all pwn challenges in Cyber-Apocalypse-CTF-2022, I had solved all tasks in two days. Anyway, these pwn challenges are not very hard&hellip;</p>
+<p>Please leave a message or send me an email if you have any questions about the wp.</p>
+</blockquote>]]></description>
+</item>
+<item>
+  <title>2022-Sdctf-All-Pwn-Wp</title>
+  <link>https://www.roderickchan.cn/2022-sdctf-all-pwn-wp/</link>
+  <pubDate>Sun, 08 May 2022 15:15:44 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://www.roderickchan.cn/2022-sdctf-all-pwn-wp/</guid>
+  <description><![CDATA[<blockquote>
+<p>I was shocked  when I found  I stayed in a only-me team. Where are my teammates?</p>
+<p>Anyway, I have completed all the tasks of pwn in a afternoon. These tasks are not very hard, and it takes me about <code>4</code> hours. In fact, I have spent almost <code>2</code> hours on solving <code>shamav</code>, this task is a little bit challengeable and interesting.</p>
 </blockquote>]]></description>
 </item>
 </channel>

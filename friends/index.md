@@ -1,10 +1,10 @@
-# 友情链接
+# Friends
 
 
 ---
 
-{{< admonition tip "交换友链" >}}
-如果您想要和我交换友链，请留言。格式如下：
+{{< admonition tip "Exchange links" >}}
+Please leave a message if you want to exchange the friend's link with me, the format is as follows:
 
 ```yml
 - nickname: <your nickname>
@@ -13,12 +13,12 @@
   description: <description of your site>
 ```
 
-> :(fa-solid fa-exclamation-triangle): *网站失效、停止维护、不当内容都可能被取消链接！*
+> :(fa-solid fa-exclamation-triangle): *Website failure, stop maintenance and improper content may be unlinked!*
 {{< /admonition >}}
 
 
 ---
 
-> 作者: [roderick](https://www.roderickchan.cn)  
+> Author: [roderick](https://www.roderickchan.cn)  
 > URL: https://www.roderickchan.cn/friends/  
 

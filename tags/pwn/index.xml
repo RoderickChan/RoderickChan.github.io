@@ -1,131 +1,39 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
-    <title>pwn - 标签 - roderick - record and learn!</title>
+    <title>pwn - Tag - roderick - record and learn!</title>
     <link>https://www.roderickchan.cn/tags/pwn/</link>
-    <description>pwn - 标签 - roderick - record and learn!</description>
-    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
-      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 01 Mar 2023 20:44:12 &#43;0800</lastBuildDate><atom:link href="https://www.roderickchan.cn/tags/pwn/" rel="self" type="application/rss+xml" /><item>
-  <title>Glibc高版本堆利用方法总结</title>
-  <link>https://www.roderickchan.cn/2023-03-01-analysis-of-glibc-heap-exploitation-in-high-version/</link>
-  <pubDate>Wed, 01 Mar 2023 20:44:12 &#43;0800</pubDate>
+    <description>pwn - Tag - roderick - record and learn!</description>
+    <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
+      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 03 Oct 2022 13:09:01 &#43;0800</lastBuildDate><atom:link href="https://www.roderickchan.cn/tags/pwn/" rel="self" type="application/rss+xml" /><item>
+  <title>2022-SekaiCTF-Pwn-Wp-Gets-Bfs</title>
+  <link>https://www.roderickchan.cn/2022-sekaictf-pwn-wp-gets-bfs/</link>
+  <pubDate>Mon, 03 Oct 2022 13:09:01 &#43;0800</pubDate>
   <author>roderick</author>
-  <guid>https://www.roderickchan.cn/2023-03-01-analysis-of-glibc-heap-exploitation-in-high-version/</guid>
+  <guid>https://www.roderickchan.cn/2022-sekaictf-pwn-wp-gets-bfs/</guid>
   <description><![CDATA[<blockquote>
-<p>截止到目前，主要总结在<code>2.35~2.37</code>之间仍然残存的堆利用手法。</p>
+<p><strong>Note</strong>: writeup for <code>gets</code> and <code>BFS</code></p>
 </blockquote>]]></description>
 </item>
 <item>
-  <title>The art of shellcode</title>
-  <link>https://www.roderickchan.cn/2023-02-20-the-art-of-shellcode/</link>
-  <pubDate>Mon, 20 Feb 2023 22:51:44 &#43;0800</pubDate>
+  <title>2022-Cyber-Apocalypse-CTF-All-Pwn-Wp</title>
+  <link>https://www.roderickchan.cn/2022-cyber-apocalypse-ctf-all-pwn-wp/</link>
+  <pubDate>Fri, 20 May 2022 15:07:34 &#43;0800</pubDate>
   <author>roderick</author>
-  <guid>https://www.roderickchan.cn/2023-02-20-the-art-of-shellcode/</guid>
+  <guid>https://www.roderickchan.cn/2022-cyber-apocalypse-ctf-all-pwn-wp/</guid>
   <description><![CDATA[<blockquote>
-<p>对<code>shellcode</code>知识点的一些总结。</p>
+<p>This is my write-up for all pwn challenges in Cyber-Apocalypse-CTF-2022, I had solved all tasks in two days. Anyway, these pwn challenges are not very hard&hellip;</p>
+<p>Please leave a message or send me an email if you have any questions about the wp.</p>
 </blockquote>]]></description>
 </item>
 <item>
-  <title>使用docker调试和部署pwn题</title>
-  <link>https://www.roderickchan.cn/2023-02-13-%E4%BD%BF%E7%94%A8docker%E8%B0%83%E8%AF%95pwn%E9%A2%98/</link>
-  <pubDate>Mon, 13 Feb 2023 13:49:22 &#43;0800</pubDate>
+  <title>2022-Sdctf-All-Pwn-Wp</title>
+  <link>https://www.roderickchan.cn/2022-sdctf-all-pwn-wp/</link>
+  <pubDate>Sun, 08 May 2022 15:15:44 &#43;0800</pubDate>
   <author>roderick</author>
-  <guid>https://www.roderickchan.cn/2023-02-13-%E4%BD%BF%E7%94%A8docker%E8%B0%83%E8%AF%95pwn%E9%A2%98/</guid>
+  <guid>https://www.roderickchan.cn/2022-sdctf-all-pwn-wp/</guid>
   <description><![CDATA[<blockquote>
-<p>使用<code>docker</code>快速部署不同架构、不同版本的调试环境。给出<code>docker</code>环境下<code>pwn</code>题部署模板。</p>
-</blockquote>]]></description>
-</item>
-<item>
-  <title>pwn环境搭建脚本</title>
-  <link>https://www.roderickchan.cn/2023-02-10-pwn%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%84%9A%E6%9C%AC/</link>
-  <pubDate>Fri, 10 Feb 2023 12:25:18 &#43;0800</pubDate>
-  <author>roderick</author>
-  <guid>https://www.roderickchan.cn/2023-02-10-pwn%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%84%9A%E6%9C%AC/</guid>
-  <description><![CDATA[<blockquote>
-<p>分享在<code>ubuntu</code>系统上一站式搭建<code>pwn</code>环境的脚本。</p>
-</blockquote>]]></description>
-</item>
-<item>
-  <title>2023西湖论剑初赛pwn-jit</title>
-  <link>https://www.roderickchan.cn/2023-02-02-2023%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91%E5%88%9D%E8%B5%9Bpwn-jit/</link>
-  <pubDate>Thu, 02 Feb 2023 20:55:25 &#43;0800</pubDate>
-  <author>roderick</author>
-  <guid>https://www.roderickchan.cn/2023-02-02-2023%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91%E5%88%9D%E8%B5%9Bpwn-jit/</guid>
-  <description><![CDATA[<blockquote>
-<p>一道<code>JIT</code>的题，记录一下。点击<a href="https://download.roderickchan.cn/ctf/2022/2023-xihulunjian-pwn-jit.7z"target="_blank" rel="external nofollow noopener noreferrer">链接<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>下载附件。若需要认证，下载账户名/密码为<code>roderick/rode@rick</code>。</p>
-</blockquote>]]></description>
-</item>
-<item>
-  <title>使用decomp2dbg调试程序</title>
-  <link>https://www.roderickchan.cn/2023-01-30-%E4%BD%BF%E7%94%A8decomp2dbg%E8%B0%83%E8%AF%95%E7%A8%8B%E5%BA%8F/</link>
-  <pubDate>Mon, 30 Jan 2023 20:39:51 &#43;0800</pubDate>
-  <author>roderick</author>
-  <guid>https://www.roderickchan.cn/2023-01-30-%E4%BD%BF%E7%94%A8decomp2dbg%E8%B0%83%E8%AF%95%E7%A8%8B%E5%BA%8F/</guid>
-  <description><![CDATA[<blockquote>
-<p>使用<code>decomp2dbg</code>工具，统筹使用<code>IDA</code>和<code>gdb</code>调试程序。截至到目前(<code>2022-02-07</code>)，测试出工具的缺陷在于：函数较多时，会陷入卡顿状态；打开<code>vmlinux</code>，插件启动报错。</p>
-</blockquote>]]></description>
-</item>
-<item>
-  <title>House of Apple 一种新的glibc中IO攻击方法 (3)</title>
-  <link>https://www.roderickchan.cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-3/</link>
-  <pubDate>Tue, 18 Oct 2022 22:36:57 &#43;0800</pubDate>
-  <author>roderick</author>
-  <guid>https://www.roderickchan.cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-3/</guid>
-  <description><![CDATA[<blockquote>
-<p>本文首发于<a href="https://bbs.pediy.com/thread-273863.htm"target="_blank" rel="external nofollow noopener noreferrer">看雪论坛<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>，仅在个人博客记录</p>
-</blockquote>
-<p>分享一系列新的<code>glibc</code>中<code>IO</code>利用思路，暂且命名为<code>house of apple</code>。
-这篇是<code>house of apple3</code>。
-本站的<code>house of apple</code>系列文章的地址为：</p>
-<ul>
-<li><a href="https://roderickchan.cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-1/"target="_blank" rel="external nofollow noopener noreferrer">house of apple1<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-<li><a href="https://roderickchan.cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-2/"target="_blank" rel="external nofollow noopener noreferrer">house of apple2<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-<li><a href="https://roderickchan.cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-3/"target="_blank" rel="external nofollow noopener noreferrer">house of apple3<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-</ul>]]></description>
-</item>
-<item>
-  <title>House of Apple 一种新的glibc中IO攻击方法 (2)</title>
-  <link>https://www.roderickchan.cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-2/</link>
-  <pubDate>Tue, 18 Oct 2022 22:36:54 &#43;0800</pubDate>
-  <author>roderick</author>
-  <guid>https://www.roderickchan.cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-2/</guid>
-  <description><![CDATA[<blockquote>
-<p>本文首发于<a href="https://bbs.pediy.com/thread-273832.htm"target="_blank" rel="external nofollow noopener noreferrer">看雪论坛<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>，仅在个人博客记录</p>
-</blockquote>
-<p>分享一系列新的<code>glibc</code>中<code>IO</code>利用思路，暂且命名为<code>house of apple</code>。
-这篇是<code>house of apple2</code>。
-本站的<code>house of apple</code>系列文章的地址为：</p>
-<ul>
-<li><a href="https://roderickchan.cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-1/"target="_blank" rel="external nofollow noopener noreferrer">house of apple1<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-<li><a href="https://roderickchan.cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-2/"target="_blank" rel="external nofollow noopener noreferrer">house of apple2<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-<li><a href="https://roderickchan.cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-3/"target="_blank" rel="external nofollow noopener noreferrer">house of apple3<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-</ul>]]></description>
-</item>
-<item>
-  <title>House of Apple 一种新的glibc中IO攻击方法 (1)</title>
-  <link>https://www.roderickchan.cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-1/</link>
-  <pubDate>Tue, 18 Oct 2022 22:36:52 &#43;0800</pubDate>
-  <author>roderick</author>
-  <guid>https://www.roderickchan.cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-1/</guid>
-  <description><![CDATA[<blockquote>
-<p>本文首发于<a href="https://bbs.pediy.com/thread-273418.htm"target="_blank" rel="external nofollow noopener noreferrer">看雪论坛<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>，仅在个人博客记录</p>
-</blockquote>
-<p>分享一系列新的<code>glibc</code>中<code>IO</code>利用思路，暂且命名为<code>house of apple</code>。
-这篇是<code>house of apple1</code>。
-本站的<code>house of apple</code>系列文章的地址为：</p>
-<ul>
-<li><a href="https://roderickchan.cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-1/"target="_blank" rel="external nofollow noopener noreferrer">house of apple1<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-<li><a href="https://roderickchan.cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-2/"target="_blank" rel="external nofollow noopener noreferrer">house of apple2<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-<li><a href="https://roderickchan.cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-3/"target="_blank" rel="external nofollow noopener noreferrer">house of apple3<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-</ul>]]></description>
-</item>
-<item>
-  <title>GlibcHeap-house of muney</title>
-  <link>https://www.roderickchan.cn/2022-06-18-glibcheap-house-of-muney/</link>
-  <pubDate>Sat, 18 Jun 2022 22:21:19 &#43;0800</pubDate>
-  <author>roderick</author>
-  <guid>https://www.roderickchan.cn/2022-06-18-glibcheap-house-of-muney/</guid>
-  <description><![CDATA[<blockquote>
-<p><code>house of muney</code>的学习笔记。</p>
+<p>I was shocked  when I found  I stayed in a only-me team. Where are my teammates?</p>
+<p>Anyway, I have completed all the tasks of pwn in a afternoon. These tasks are not very hard, and it takes me about <code>4</code> hours. In fact, I have spent almost <code>2</code> hours on solving <code>shamav</code>, this task is a little bit challengeable and interesting.</p>
 </blockquote>]]></description>
 </item>
 </channel>

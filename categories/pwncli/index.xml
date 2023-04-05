@@ -1,8 +1,0 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-  <channel>
-    <title>pwncli 教程 - 分类 - roderick - record and learn!</title>
-    <link>https://www.roderickchan.cn/categories/pwncli/</link>
-    <description>pwncli 教程 - 分类 - roderick - record and learn!</description>
-    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
-      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><atom:link href="https://www.roderickchan.cn/categories/pwncli/" rel="self" type="application/rss+xml" /></channel>
-</rss>

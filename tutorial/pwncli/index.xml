@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>pwncli tutorial on roderick - record and learn!</title>
+    <link>https://www.roderickchan.cn/tutorial/pwncli/</link>
+    <description>Recent content in pwncli tutorial on roderick - record and learn!</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
+    <webMaster>roderickchan@foxmail.com (roderick)</webMaster>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><atom:link href="https://www.roderickchan.cn/tutorial/pwncli/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>

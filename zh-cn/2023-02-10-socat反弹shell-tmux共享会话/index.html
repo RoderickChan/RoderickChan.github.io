@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>socat反弹shell&#43;tmux共享会话 - roderick - record and learn!</title><meta name="author" content="roderick">
+<meta name="author-link" content="https://www.roderickchan.cn">
+<meta name="description" content="
+使用socat得到一个带有pty的strong shell，然后使用tmux共享会话和结对编程。
+" /><meta name="keywords" content='tmux, socat' /><meta itemprop="name" content="socat反弹shell&#43;tmux共享会话">
+<meta itemprop="description" content="
+使用socat得到一个带有pty的strong shell，然后使用tmux共享会话和结对编程。
+"><meta itemprop="datePublished" content="2023-02-10T15:18:13+08:00" />
+<meta itemprop="dateModified" content="2023-02-10T15:18:13+08:00" />
+<meta itemprop="wordCount" content="2553"><meta itemprop="image" content="https://www.roderickchan.cn/"/>
+<meta itemprop="keywords" content="tmux,socat," /><meta property="og:title" content="socat反弹shell&#43;tmux共享会话" />
+<meta property="og:description" content="
+使用socat得到一个带有pty的strong shell，然后使用tmux共享会话和结对编程。
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.roderickchan.cn/zh-cn/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D/" /><meta property="og:image" content="https://www.roderickchan.cn/"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-02-10T15:18:13+08:00" />
+<meta property="article:modified_time" content="2023-02-10T15:18:13+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.roderickchan.cn/"/>
+
+<meta name="twitter:title" content="socat反弹shell&#43;tmux共享会话"/>
+<meta name="twitter:description" content="
+使用socat得到一个带有pty的strong shell，然后使用tmux共享会话和结对编程。
+"/>
+<meta name="application-name" content="roderick - record and learn!">
+<meta name="apple-mobile-web-app-title" content="roderick - record and learn!"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://www.roderickchan.cn/zh-cn/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D/" /><link rel="prev" href="https://www.roderickchan.cn/zh-cn/2023-02-10-pwn%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%84%9A%E6%9C%AC/" /><link rel="next" href="https://www.roderickchan.cn/zh-cn/2023-02-13-%E4%BD%BF%E7%94%A8docker%E8%B0%83%E8%AF%95pwn%E9%A2%98/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "socat反弹shell+tmux共享会话",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/www.roderickchan.cn\/zh-cn\/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D\/"
+    },"image": ["https:\/\/www.roderickchan.cn\/images\/Apple-Devices-Preview.jpg"],"genre": "posts","keywords": "tmux, socat","wordcount":  2553 ,
+    "url": "https:\/\/www.roderickchan.cn\/zh-cn\/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D\/","datePublished": "2023-02-10T15:18:13+08:00","dateModified": "2023-02-10T15:18:13+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+      "@type": "Organization",
+      "name": "roderick","logo": "https:\/\/www.roderickchan.cn\/logo.png"},"author": {
+        "@type": "Person",
+        "name": "roderick"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="/zh-cn/" title="roderick - record and learn!"><img loading="lazy" src="/logo.png" srcset="/logo.png, /logo.png 1.5x, /logo.png 2x" sizes="auto" data-title="roderick - record and learn!" data-alt="roderick - record and learn!" class="logo" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/><span class="header-title-text">roderick&#39;s blog</span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item text-center">
+              <a
+                class="menu-link"
+                href="/zh-cn/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/zh-cn/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/zh-cn/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/zh-cn/tutorial/pwncli/"
+                
+                
+              ><i class="fa-solid fa-book fa-fw fa-sm" aria-hidden="true"></i> pwncli教程</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/zh-cn/friends/"
+                title="友情链接"
+                
+              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/zh-cn/about/"
+                
+                
+              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language-switch">
+            <span role="button" aria-label="选择语言" title="选择语言"><i class="fa-solid fa-language fa-fw" aria-hidden="true"></i></span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/zh-cn/" title="roderick - record and learn!"><img loading="lazy" src="/logo.png" srcset="/logo.png, /logo.png 1.5x, /logo.png 2x" sizes="auto" data-title="/logo.png" data-alt="/logo.png" class="logo" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/><span class="header-title-text">roderick&#39;s blog</span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="/zh-cn/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/zh-cn/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/zh-cn/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/zh-cn/tutorial/pwncli/"
+                  
+                  
+                ><i class="fa-solid fa-book fa-fw fa-sm" aria-hidden="true"></i> pwncli教程</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/zh-cn/friends/"
+                  title="友情链接"
+                  
+                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/zh-cn/about/"
+                  
+                  
+                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="https://github.com/RoderickChan"
+                  title="GitHub"
+                  rel="noopener noreferrer" target="_blank"
+                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span><span class="menu-system-item language-switch">
+              <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+              <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+            </span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/zh-cn/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">socat反弹shell&#43;tmux共享会话</li>
+    </ol>
+  </nav><main class="container"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom">
+    </aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>socat反弹shell&#43;tmux共享会话</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><a href="https://www.roderickchan.cn" title="作者"target="_blank" rel="external nofollow noopener noreferrer author" class="author"><img loading="lazy" src="https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp" srcset="https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp, https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp 1.5x, https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp 2x" sizes="auto" data-title="roderick" data-alt="roderick" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;roderick</a></span>
+          <span class="post-category">收录于 <a href="/zh-cn/categories/tools/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> tools</a>&ensp;<a href="/zh-cn/categories/pwn-trick/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> pwn-trick</a></span></div>
+      <div class="post-meta-line"><span title="发布于 2023-02-10 15:18:13"><i class="fa-regular fa-calendar-alt fa-fw me-1" aria-hidden="true"></i><time datetime="2023-02-10">2023-02-10</time></span>&nbsp;<span title="更新于 2023-02-10 15:18:13"><i class="fa-regular fa-edit fa-fw me-1" aria-hidden="true"></i><time datetime="2023-02-10">2023-02-10</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 2553 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 6 分钟</span>&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="socat反弹shell&#43;tmux共享会话">
+              <i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+            </span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#socat反弹shell">socat反弹shell</a>
+      <ul>
+        <li><a href="#你弹给我">你弹给我</a></li>
+        <li><a href="#我弹给你">我弹给你</a></li>
+      </ul>
+    </li>
+    <li><a href="#tmux共享会话">tmux共享会话</a>
+      <ul>
+        <li><a href="#组会话">组会话</a></li>
+        <li><a href="#socket共享">socket共享</a></li>
+      </ul>
+    </li>
+    <li><a href="#合并使用">合并使用</a>
+      <ul>
+        <li><a href="#使用场景">使用场景</a></li>
+        <li><a href="#分享你的">分享你的</a></li>
+        <li><a href="#分享我的">分享我的</a></li>
+        <li><a href="#一起操作">一起操作</a></li>
+        <li><a href="#我做你看">我做你看</a></li>
+        <li><a href="#你做我看">你做我看</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><blockquote>
+<p>使用<code>socat</code>得到一个带有<code>pty</code>的<code>strong shell</code>，然后使用<code>tmux</code>共享会话和结对编程。</p>
+</blockquote>
+<h1 id="socat反弹shell">socat反弹shell</h1>
+<p>反弹<code>shell</code>的原理并不复杂，需要建议的一点是，若是<code>A</code>弹<code>shell</code>给<code>B</code>，那么最好是<code>B</code>拥有公网<code>IP</code>，否则由<code>A</code>把程序和公网<code>IP</code>的端口绑定的话，任何人都能通过该端口访问到反弹的<code>shell</code>。</p>
+<p>使用<code>nc</code>或者<code>bash -i &gt; /dev/tcp/xxxx</code>等的方式反弹的<code>shell</code>是没有<code>tty</code>的，那么使用<kbd>Ctrl</kbd>+<kbd>C</kbd>会退出程序，而不是给<code>tty</code>发送信号。同时，无法使用<code>tmux</code>分屏复用工具，无法使用自动补全功能等。</p>
+<p>如果想要像<code>ssh</code>会话一样使用<code>shell</code>，就需要反弹一个带有<code>tty</code>的<code>shell</code>，可以借助<code>socat</code>来实现这一功能。</p>
+<h2 id="你弹给我">你弹给我</h2>
+<p>我有公网<code>IP</code>，地址为：<code>1.1.1.1</code></p>
+<p>我在<code>1.1.1.1</code>机器上执行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">socat file:<span class="sb">`</span>tty<span class="sb">`</span>,raw,echo<span class="o">=</span><span class="m">0</span> tcp-listen:9999,bind<span class="o">=</span>0.0.0.0,reuseaddr,fork
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>你在自己的机器上执行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">socat exec:<span class="s1">&#39;bash -li&#39;</span>,pty,stderr,setsid,sigint,sane tcp:1.1.1.1:9999
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果有<code>zsh</code>，反弹一个<code>zsh</code>也不错。</p>
+<p>还可以把弹<code>shell</code>的操作，换成给一个容器<code>docker run -it xxx /bin/sh</code>，或者其他需要借助<code>tty</code>的操作。</p>
+<h2 id="我弹给你">我弹给你</h2>
+<ul>
+<li>假如你有公网<code>IP</code>，把上面的流程反过来即可。</li>
+<li>假如你没有公网<code>IP</code>，那么可以执行下面的操作。<strong>注意</strong>：下面的操作比较危险，不建议在公网上尝试。</li>
+</ul>
+<p>我有公网<code>IP</code>，地址为：<code>1.1.1.1</code></p>
+<p>我在<code>1.1.1.1</code>机器上执行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">socat exec:<span class="s1">&#39;bash -li&#39;</span>,pty,stderr,setsid,sigint,sane tcp-listen:9999,bind<span class="o">=</span>0.0.0.0,reuseaddr,fork
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>你在自己的机器上执行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">socat file:<span class="sb">`</span>tty<span class="sb">`</span>,raw,echo<span class="o">=</span><span class="m">0</span> tcp:1.1.1.1:9999
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>同时，还可以借助<code>frp</code>这样的反向代理工具，将公网<code>IP</code>当做跳板，把处于局域网机器的<code>shell</code>分享出去。</p>
+<h1 id="tmux共享会话">tmux共享会话</h1>
+<p><code>tmux</code>是一款终端复用工具，非常好用，极力推荐~</p>
+<h2 id="组会话">组会话</h2>
+<p>新建一个公共会话，命名为<code>groupSession</code>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">tmux new -s groupSession
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其他用户先<strong>登陆同一个账号</strong>，但不去直接连接这个会话，而是通过创建一个新的会话来加入上面的公共会话<code>groupSession</code>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">tmux new -t groupSession -s otherSession
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>此时两个用户都可以在同一个会话里操作，就会好像第二个用户连接到了<code>groupSession</code>的会话一样。此时两个用户都可以创建新建的窗口，新窗口的内容依然会实时同步，但是其中一个用户切换到其它窗口，对另外一个用户没有任何影响，因此在这个共享的组会话中，用户各自的操作可以通过新建窗口来执行。即使第二个用户关闭<code>otherSession</code>会话，共享会话<code>groupSession</code>依然存在。</p>
+<p>组会话在共享的同时，又保留了相对的独立，非常适合结对编程场景，它是结对编程最简单的方式。</p>
+<p><strong>优点</strong>：</p>
+<ul>
+<li>会话完全共享</li>
+<li>既可以共享回话，又能保持相对独立。</li>
+</ul>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>账号必须共享</li>
+<li>组会话所需的权限会带来安全隐患</li>
+</ul>
+<p>因此，建议只和比较熟悉的人一起使用组会话功能。</p>
+<p>演示视频如下：</p>
+<div class="bilibili"><iframe src="//player.bilibili.com/player.html?bvid=BV1js4y1e7tu&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe></div>
+<h2 id="socket共享">socket共享</h2>
+<p>第一个用户指定一个<code>socket</code>文件来创建<code>tmux session</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">tmux -S /tmp/shared new-session -s shared
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>另一个用户通过这个<code>socket</code>文件来<code>attach</code>上会话，需要保证有相关权限，否则会因权限不足而报错。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 可读可写
+</span></span><span class="line"><span class="cl">tmux -S /tmp/shared attach-session -t shared
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 只读
+</span></span><span class="line"><span class="cl">tmux -S /tmp/shared attach-session -t shared -r
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>优点</strong>：</p>
+<ul>
+<li>会话完全共享</li>
+<li>不需要使用同一个账户</li>
+<li>只需要控制创建的<code>socket</code>文件的权限即可</li>
+</ul>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>之后加入的用户无法使用自己的配置文件</li>
+<li>共享时无法创建独立窗口，所有人的会话都是完全一样的</li>
+</ul>
+<p>演示视频如下：</p>
+<div class="bilibili"><iframe src="//player.bilibili.com/player.html?bvid=BV17D4y1P7yz&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe></div>
+<h1 id="合并使用">合并使用</h1>
+<h2 id="使用场景">使用场景</h2>
+<p>什么时候需要使用<code>socat</code>反弹<code>shell</code>+<code>tmux</code>共享会话的操作呢？有下面这几种场景可以使用：</p>
+<ol>
+<li>想和小伙伴一起分享终端上的操作，但是又不想给<code>ssh</code>账号，或者说不想把<code>ssh</code>暴露在公网上</li>
+<li>不想用腾讯会议这样的软件进行共享（腾讯会议能看到的东西太多了）</li>
+<li>想给对方分享如何调试程序，需要一个人操作，一个人看，比如一起打<code>CTF</code></li>
+<li>想帮对方安装软件</li>
+<li>协调解决服务器上的问题</li>
+<li>想和小伙伴一起在终端工作，同时又能知道对方的操作，比如一起打<code>CTF</code></li>
+<li>······</li>
+</ol>
+<p>如果想既要一起操作，又可以相对独立操作各自的窗口，那么就应该使用上面所提到的<strong>组会话</strong>功能。但之前提到了，组会话需要共享一个账号，也就是共享<code>ssh</code>的账户密码或者反弹一个自己的<code>shell</code>过去，如果双方并不熟悉，某一方要干坏事（比如种个马）的话，这种方式就会显得很不安全。因此，建议使用<code>socket</code>共享会话功能。下面所提到的都是<code>socket</code>共享回话的操作。</p>
+<h2 id="分享你的">分享你的</h2>
+<p><strong>原则</strong>依旧是：<code>A</code>给<code>B</code>分享，<code>B</code>要有一个公网<code>IP</code>服务器。</p>
+<p>我有公网<code>IP</code>，地址为：<code>1.1.1.1</code></p>
+<p>我在<code>1.1.1.1</code>机器上执行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 监听9999端口</span>
+</span></span><span class="line"><span class="cl">socat file:<span class="sb">`</span>tty<span class="sb">`</span>,raw,echo<span class="o">=</span><span class="m">0</span> tcp-listen:9999,bind<span class="o">=</span>0.0.0.0,reuseaddr,fork
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>你在自己的机器上执行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 打开两个终端窗口，第一个终端执行分割线之上的命令</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 创建会话</span>
+</span></span><span class="line"><span class="cl">tmux -S /tmp/shared new-session -s shared
+</span></span><span class="line"><span class="cl"><span class="c1">#-------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 第二个终端执行下面的命令</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 修改socket文件的权限</span>
+</span></span><span class="line"><span class="cl">chmod o+rw /tmp/shared
+</span></span><span class="line"><span class="cl"><span class="c1"># 添加临时用户</span>
+</span></span><span class="line"><span class="cl">sudo useradd tmpuser
+</span></span><span class="line"><span class="cl"><span class="c1"># 切换到临时用户并分享会话</span>
+</span></span><span class="line"><span class="cl">sudo su -c <span class="s2">&#34;socat exec:&#39;tmux -S /tmp/shared attach-session -t shared&#39;,pty,stderr,setsid,sigint,sane tcp:1.1.1.1:9999&#34;</span> tmpuser
+</span></span><span class="line"><span class="cl"><span class="c1"># 删除临时用户</span>
+</span></span><span class="line"><span class="cl">sudo userdel tmpuser
+</span></span><span class="line"><span class="cl"><span class="c1"># 删除socket文件</span>
+</span></span><span class="line"><span class="cl">/bin/rm /tmp/shared
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="分享我的">分享我的</h2>
+<p>与上面反弹<code>shell</code>类似。</p>
+<ul>
+<li>假如你有公网<code>IP</code>，把上面的流程反过来即可。</li>
+<li>假如你没有公网<code>IP</code>，那么可以执行下面的操作。<strong>注意</strong>：下面的操作比较危险，不建议在公网上尝试。</li>
+</ul>
+<p>我有公网<code>IP</code>，地址为：<code>1.1.1.1</code></p>
+<p>我在<code>1.1.1.1</code>机器上执行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 打开两个终端窗口，第一个终端执行分割线之上的命令</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 创建会话</span>
+</span></span><span class="line"><span class="cl">tmux -S /tmp/shared new-session -s shared
+</span></span><span class="line"><span class="cl"><span class="c1">#-------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 第二个终端执行下面的命令</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 修改socket文件的权限</span>
+</span></span><span class="line"><span class="cl">chmod o+rw /tmp/shared
+</span></span><span class="line"><span class="cl"><span class="c1"># 添加临时用户</span>
+</span></span><span class="line"><span class="cl">sudo useradd tmpuser
+</span></span><span class="line"><span class="cl"><span class="c1"># 切换到临时用户并分享会话</span>
+</span></span><span class="line"><span class="cl">sudo su -c <span class="s2">&#34;socat exec:&#39;tmux -S /tmp/shared attach-session -t shared&#39;,pty,stderr,setsid,sigint,sane tcp-listen:9999,bind=0.0.0.0,reuseaddr,fork&#34;</span> tmpuser
+</span></span><span class="line"><span class="cl"><span class="c1"># 删除临时用户</span>
+</span></span><span class="line"><span class="cl">sudo userdel tmpuser
+</span></span><span class="line"><span class="cl"><span class="c1"># 删除socket文件</span>
+</span></span><span class="line"><span class="cl">/bin/rm /tmp/shared
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>你在自己的机器上执行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">socat file:<span class="sb">`</span>tty<span class="sb">`</span>,raw,echo<span class="o">=</span><span class="m">0</span> tcp:1.1.1.1:9999
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>结束共享的时候，不要使用<code>tmux detach</code>，键入<code>exit</code>来结束。结束后记得删除<code>socket</code>文件。</p>
+<h2 id="一起操作">一起操作</h2>
+<p>如果不需要独立窗口，两边读写同步的话，则使用<strong>socket共享会话</strong>功能。</p>
+<p>上面的操作默认都是读写同步的。</p>
+<h2 id="我做你看">我做你看</h2>
+<p>如果是你分享的会话，那么只需要把上面的<code>分享你的</code>的操作变为：</p>
+<p>我有公网<code>IP</code>，地址为：<code>1.1.1.1</code></p>
+<p>我在<code>1.1.1.1</code>机器上执行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">socat file:<span class="sb">`</span>tty<span class="sb">`</span>,raw,echo<span class="o">=</span><span class="m">0</span> tcp-listen:9999,bind<span class="o">=</span>0.0.0.0,reuseaddr,fork
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>你在自己的机器上执行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 打开两个终端窗口，第一个终端执行分割线之上的命令</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 创建会话</span>
+</span></span><span class="line"><span class="cl">tmux -S /tmp/shared new-session -s shared
+</span></span><span class="line"><span class="cl"><span class="c1">#-------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 第二个终端执行下面的命令</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 修改socket的权限</span>
+</span></span><span class="line"><span class="cl">chmod o+rw /tmp/shared
+</span></span><span class="line"><span class="cl"><span class="c1"># 添加临时用户</span>
+</span></span><span class="line"><span class="cl">sudo useradd tmpuser
+</span></span><span class="line"><span class="cl"><span class="c1"># 切换到临时用户并分享会话</span>
+</span></span><span class="line"><span class="cl">sudo su -c <span class="s2">&#34;socat exec:&#39;tmux -S /tmp/shared attach-session -t shared -r&#39;,pty,stderr,setsid,sigint,sane tcp:1.1.1.1:9999&#34;</span> tmpuser
+</span></span><span class="line"><span class="cl"><span class="c1"># 删除临时用户</span>
+</span></span><span class="line"><span class="cl">sudo userdel tmpuser
+</span></span><span class="line"><span class="cl">/bin/rm /tmp/shared
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看到，只有一个地方不一样，就是<code>tmux -S /tmp/shared attach-session -t shared</code>再带上一个<code>-r</code>参数，使得会话只读。</p>
+<h2 id="你做我看">你做我看</h2>
+<p>同样的，修改命令为<code>tmux -S /tmp/shared attach-session -t shared -r</code>即可。</p>
+<p>演示视频如下：</p>
+<div class="bilibili"><iframe src="//player.bilibili.com/player.html?bvid=BV1NR4y1B7LL&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe></div>
+<h1 id="参考">参考</h1>
+<ol>
+<li><a href="https://blog.csdn.net/fm18771120556/article/details/123524078"target="_blank" rel="external nofollow noopener noreferrer">https://blog.csdn.net/fm18771120556/article/details/123524078<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="http://louiszhai.github.io/2017/09/30/tmux/#%E5%85%B1%E4%BA%AB%E8%B4%A6%E5%8F%B7-amp-%E7%BB%84%E4%BC%9A%E8%AF%9D"target="_blank" rel="external nofollow noopener noreferrer">http://louiszhai.github.io/2017/09/30/tmux/#%E5%85%B1%E4%BA%AB%E8%B4%A6%E5%8F%B7-amp-%E7%BB%84%E4%BC%9A%E8%AF%9D<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+</ol></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2023-02-10 15:18:13">更新于 2023-02-10&nbsp;</span>
+      </div><div class="post-info-license">
+          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+        </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://www.roderickchan.cn/zh-cn/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D/" data-title="socat反弹shell&#43;tmux共享会话" data-hashtags="tmux,socat"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://www.roderickchan.cn/zh-cn/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D/" data-hashtag="tmux"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Linkedin" data-sharer="linkedin" data-url="https://www.roderickchan.cn/zh-cn/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D/"><i class="fa-brands fa-linkedin fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://www.roderickchan.cn/zh-cn/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D/" data-title="socat反弹shell&#43;tmux共享会话" data-web><i class="fa-brands fa-whatsapp fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://www.roderickchan.cn/zh-cn/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D/" data-title="socat反弹shell&#43;tmux共享会话"><i class="fa-brands fa-hacker-news fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Reddit" data-sharer="reddit" data-url="https://www.roderickchan.cn/zh-cn/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D/"><i class="fa-brands fa-reddit fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://www.roderickchan.cn/zh-cn/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D/" data-title="socat反弹shell&#43;tmux共享会话"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Instapaper" data-sharer="instapaper" data-url="https://www.roderickchan.cn/zh-cn/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D/" data-title="socat反弹shell&#43;tmux共享会话" data-description=""><i data-svg-src="/lib/simple-icons/icons/instapaper.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://www.roderickchan.cn/zh-cn/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D/" data-title="socat反弹shell&#43;tmux共享会话"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="https://www.roderickchan.cn/zh-cn/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D/" data-title="socat反弹shell&#43;tmux共享会话" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="https://www.roderickchan.cn/zh-cn/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D/" data-title="socat反弹shell&#43;tmux共享会话"><i data-svg-src="/lib/simple-icons/icons/baidu.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="https://www.roderickchan.cn/zh-cn/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D/" data-title="socat反弹shell&#43;tmux共享会话"><i class="fa-brands fa-evernote fa-fw" aria-hidden="true"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href='/zh-cn/tags/tmux/' class="post-tag">tmux</a><a href='/zh-cn/tags/socat/' class="post-tag">socat</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/zh-cn/2023-02-10-pwn%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%84%9A%E6%9C%AC/" class="post-nav-item" rel="prev" title="pwn环境搭建脚本"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>pwn环境搭建脚本</a>
+      <a href="/zh-cn/2023-02-13-%E4%BD%BF%E7%94%A8docker%E8%B0%83%E8%AF%95pwn%E9%A2%98/" class="post-nav-item" rel="next" title="使用docker调试和部署pwn题">使用docker调试和部署pwn题<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div class="post-reward">
+    <div class="comment">Buy me a coffee~</div>
+    <input type="checkbox" class="reward-input" name="reward" id="fi-reward" hidden />
+    <label class="reward-button" for="fi-reward">赞赏</label>
+    <div class="reward-ways" data-mode="fixed"><div><img loading="lazy" src="/img/reward/alipay.jpg" srcset="/img/reward/alipay.jpg, /img/reward/alipay.jpg 1.5x, /img/reward/alipay.jpg 2x" sizes="auto" data-title="roderick 支付宝" data-alt="roderick 支付宝" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/><span data-animation>支付宝</span>
+          </div><div><img loading="lazy" src="/img/reward/wechat.jpg" srcset="/img/reward/wechat.jpg, /img/reward/wechat.jpg 1.5x, /img/reward/wechat.jpg 2x" sizes="auto" data-title="roderick 微信" data-alt="roderick 微信" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/><span data-animation>微信</span>
+          </div></div>
+  </div><div id="comments"><div id="waline" class="comment"></div><noscript>
+        Please enable JavaScript to view the comments powered by <a href="https://waline.js.org/" rel="external nofollow noopener noreferrer">Waline</a>.
+      </noscript></div></article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.111.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.18"><img class="fixit-icon" src="/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2022 - 2023</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://www.roderickchan.cn"target="_blank" rel="external nofollow noopener noreferrer">roderick</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中……'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i><span class="run-times ms-1">网站运行中……</span></span></div><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div><div class="footer-line beian"><span class="icp footer-divider"><a href="http://beian.miit.gov.cn/">鄂ICP备2022016286号</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><a href="https://github.com/RoderickChan" title="Follow me on Github"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #000;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/waline/waline.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/waline/waline.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pangu/pangu.min.js" defer></script><script src="/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"autoBookmark":true,"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"enable":true,"expired":false,"waline":{"copyright":true,"dark":"body[data-theme='dark']","el":"#waline","emoji":["//unpkg.com/@waline/emojis@1.1.0/weibo"],"highlighter":true,"imageUploader":false,"lang":"zh-cn","login":"enable","meta":["nick","mail","link"],"pageSize":10,"search":false,"serverURL":"https://waline-cmrfu7d4y-roderickchan.vercel.app/","texRenderer":false}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"To record and learn!","typeit-header-subtitle-mobile":"To record and learn!"},"enablePWA":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"pangu":{"enable":true,"selector":"article"},"search":{"algoliaAppID":"0UC880QNFW","algoliaIndex":"index.zh-cn","algoliaSearchKey":"c7f546f74cef1f72f861a13c1d1f97c3","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2022-10-01T09:00:00+08:00","twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"loop":false,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/js/theme.min.js" defer></script></body>
+</html>
