@@ -2,6 +2,15 @@
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
   ><url>
+      <loc>https://roderickchan.github.io/zh-cn/2023-04-05-announcement-about-my-blog/</loc><lastmod>2023-04-05T17:42:44&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            rel="alternate"
+            hreflang="en"
+            href="https://roderickchan.github.io/2023-04-05-announcement-about-my-blog/"
+            /><xhtml:link
+          rel="alternate"
+          hreflang="zh-cn"
+          href="https://roderickchan.github.io/zh-cn/2023-04-05-announcement-about-my-blog/"
+          /></url><url>
       <loc>https://roderickchan.github.io/zh-cn/2023-04-01-nginx-config-problem/</loc><lastmod>2023-04-01T18:03:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
       <loc>https://roderickchan.github.io/zh-cn/2023-03-01-analysis-of-glibc-heap-exploitation-in-high-version/</loc><lastmod>2023-03-01T20:44:12&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
       <loc>https://roderickchan.github.io/zh-cn/2023-02-27-house-of-all-about-glibc-heap-exploitation/</loc><lastmod>2023-04-05T11:47:03&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
@@ -118,8 +127,25 @@
       <loc>https://roderickchan.github.io/zh-cn/2021-03-28-mma-ctf-2nd-2016-greeting/</loc><lastmod>2021-03-28T17:08:36&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
       <loc>https://roderickchan.github.io/zh-cn/2021-03-28-ciscn-2018-quals-note-service2/</loc><lastmod>2021-03-28T16:28:33&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
       <loc>https://roderickchan.github.io/zh-cn/2021-03-28-ciscn_2019_final_5/</loc><lastmod>2021-03-28T13:20:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-      <loc>https://roderickchan.github.io/zh-cn/tags/blog/</loc><lastmod>2023-04-01T18:03:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-      <loc>https://roderickchan.github.io/zh-cn/categories/</loc><lastmod>2023-04-05T13:17:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+      <loc>https://roderickchan.github.io/zh-cn/categories/announcement/</loc><lastmod>2023-04-05T17:42:44&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            rel="alternate"
+            hreflang="en"
+            href="https://roderickchan.github.io/categories/announcement/"
+            /><xhtml:link
+          rel="alternate"
+          hreflang="zh-cn"
+          href="https://roderickchan.github.io/zh-cn/categories/announcement/"
+          /></url><url>
+      <loc>https://roderickchan.github.io/zh-cn/tags/blog/</loc><lastmod>2023-04-05T17:42:44&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            rel="alternate"
+            hreflang="en"
+            href="https://roderickchan.github.io/tags/blog/"
+            /><xhtml:link
+          rel="alternate"
+          hreflang="zh-cn"
+          href="https://roderickchan.github.io/zh-cn/tags/blog/"
+          /></url><url>
+      <loc>https://roderickchan.github.io/zh-cn/categories/</loc><lastmod>2023-04-05T17:42:44&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
             rel="alternate"
             hreflang="en"
             href="https://roderickchan.github.io/categories/"
@@ -128,8 +154,7 @@
           hreflang="zh-cn"
           href="https://roderickchan.github.io/zh-cn/categories/"
           /></url><url>
-      <loc>https://roderickchan.github.io/zh-cn/tags/nginx/</loc><lastmod>2023-04-01T18:03:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-      <loc>https://roderickchan.github.io/zh-cn/posts/</loc><lastmod>2023-04-05T13:17:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+      <loc>https://roderickchan.github.io/zh-cn/posts/</loc><lastmod>2023-04-05T17:42:44&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
             rel="alternate"
             hreflang="en"
             href="https://roderickchan.github.io/posts/"
@@ -138,8 +163,7 @@
           hreflang="zh-cn"
           href="https://roderickchan.github.io/zh-cn/posts/"
           /></url><url>
-      <loc>https://roderickchan.github.io/zh-cn/categories/questions/</loc><lastmod>2023-04-01T18:03:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-      <loc>https://roderickchan.github.io/zh-cn/</loc><lastmod>2023-04-05T13:17:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+      <loc>https://roderickchan.github.io/zh-cn/</loc><lastmod>2023-04-05T17:42:44&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
             rel="alternate"
             hreflang="en"
             href="https://roderickchan.github.io/"
@@ -148,7 +172,7 @@
           hreflang="zh-cn"
           href="https://roderickchan.github.io/zh-cn/"
           /></url><url>
-      <loc>https://roderickchan.github.io/zh-cn/tags/</loc><lastmod>2023-04-05T13:17:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+      <loc>https://roderickchan.github.io/zh-cn/tags/</loc><lastmod>2023-04-05T17:42:44&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
             rel="alternate"
             hreflang="en"
             href="https://roderickchan.github.io/tags/"
@@ -157,6 +181,8 @@
           hreflang="zh-cn"
           href="https://roderickchan.github.io/zh-cn/tags/"
           /></url><url>
+      <loc>https://roderickchan.github.io/zh-cn/tags/nginx/</loc><lastmod>2023-04-01T18:03:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+      <loc>https://roderickchan.github.io/zh-cn/categories/questions/</loc><lastmod>2023-04-01T18:03:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
       <loc>https://roderickchan.github.io/zh-cn/tags/glibc/</loc><lastmod>2023-04-05T11:47:03&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
       <loc>https://roderickchan.github.io/zh-cn/tags/heap-exploitation/</loc><lastmod>2023-04-05T11:47:03&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
       <loc>https://roderickchan.github.io/zh-cn/tags/pwn/</loc><lastmod>2023-04-05T13:15:37&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
