@@ -271,5 +271,5 @@ cd $install_path/pwndbg && ./setup.sh
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2023-02-10-pwn%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%84%9A%E6%9C%AC/  
+> URL: https://roderickchan.github.io/zh-cn/2023-02-10-pwn%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%84%9A%E6%9C%AC/  
 

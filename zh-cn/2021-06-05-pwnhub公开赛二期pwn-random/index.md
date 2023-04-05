@@ -182,5 +182,5 @@ io.interactive()
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2021-06-05-pwnhub%E5%85%AC%E5%BC%80%E8%B5%9B%E4%BA%8C%E6%9C%9Fpwn-random/  
+> URL: https://roderickchan.github.io/zh-cn/2021-06-05-pwnhub%E5%85%AC%E5%BC%80%E8%B5%9B%E4%BA%8C%E6%9C%9Fpwn-random/  
 

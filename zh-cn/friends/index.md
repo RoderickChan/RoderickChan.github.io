@@ -20,5 +20,5 @@
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/friends/  
+> URL: https://roderickchan.github.io/zh-cn/friends/  
 

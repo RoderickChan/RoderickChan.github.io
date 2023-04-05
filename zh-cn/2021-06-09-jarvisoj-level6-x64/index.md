@@ -227,5 +227,5 @@ if __name__ == '__main__':
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2021-06-09-jarvisoj-level6-x64/  
+> URL: https://roderickchan.github.io/zh-cn/2021-06-09-jarvisoj-level6-x64/  
 

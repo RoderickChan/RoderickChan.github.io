@@ -51,5 +51,5 @@ p.interactive()
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2021-08-20-gwctf-2019-jiandan-pwn1/  
+> URL: https://roderickchan.github.io/zh-cn/2021-08-20-gwctf-2019-jiandan-pwn1/  
 

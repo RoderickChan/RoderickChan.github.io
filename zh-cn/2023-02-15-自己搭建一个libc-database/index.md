@@ -142,5 +142,5 @@ lb.search()
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2023-02-15-%E8%87%AA%E5%B7%B1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAlibc-database/  
+> URL: https://roderickchan.github.io/zh-cn/2023-02-15-%E8%87%AA%E5%B7%B1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAlibc-database/  
 

@@ -1211,5 +1211,5 @@ void main()
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2022-07-06-2022-%E9%B9%8F%E7%A8%8B%E6%9D%AF-ctf-pwn/  
+> URL: https://roderickchan.github.io/zh-cn/2022-07-06-2022-%E9%B9%8F%E7%A8%8B%E6%9D%AF-ctf-pwn/  
 

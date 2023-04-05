@@ -402,5 +402,5 @@ io.interactive()
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2021-03-28-ciscn_2019_final_5/  
+> URL: https://roderickchan.github.io/zh-cn/2021-03-28-ciscn_2019_final_5/  
 

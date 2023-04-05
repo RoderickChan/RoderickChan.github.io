@@ -134,5 +134,5 @@ if __name__ == '__main__':
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2021-06-04-npuctf-2020-bad-guy/  
+> URL: https://roderickchan.github.io/zh-cn/2021-06-04-npuctf-2020-bad-guy/  
 

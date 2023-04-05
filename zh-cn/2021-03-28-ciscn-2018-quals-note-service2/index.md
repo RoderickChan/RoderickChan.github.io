@@ -174,5 +174,5 @@ io.interactive()
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2021-03-28-ciscn-2018-quals-note-service2/  
+> URL: https://roderickchan.github.io/zh-cn/2021-03-28-ciscn-2018-quals-note-service2/  
 

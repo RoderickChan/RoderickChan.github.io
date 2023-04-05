@@ -208,5 +208,5 @@ print(c2)
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2021-05-02-vnctf-2021-whitegive/  
+> URL: https://roderickchan.github.io/zh-cn/2021-05-02-vnctf-2021-whitegive/  
 

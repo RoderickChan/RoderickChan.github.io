@@ -84,5 +84,5 @@ asciinema upload cast_file_path
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2023-01-29-asciinema-%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/  
+> URL: https://roderickchan.github.io/zh-cn/2023-01-29-asciinema-%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/  
 

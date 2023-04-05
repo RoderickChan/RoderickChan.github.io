@@ -65,4 +65,4 @@ Disallow: /
 User-agent: ZoominfoBot
 Disallow: /
 
-Sitemap: https://www.roderickchan.cn/sitemap.xml
+Sitemap: https://roderickchan.github.io/sitemap.xml

@@ -741,5 +741,5 @@ ia()
 ---
 
 > Author: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/2022-cyber-apocalypse-ctf-all-pwn-wp/  
+> URL: https://roderickchan.github.io/2022-cyber-apocalypse-ctf-all-pwn-wp/  
 

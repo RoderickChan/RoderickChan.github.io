@@ -55,5 +55,5 @@
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2023-02-08-%E4%BD%BF%E7%94%A8cudatext%E6%9B%BF%E4%BB%A3notepad-/  
+> URL: https://roderickchan.github.io/zh-cn/2023-02-08-%E4%BD%BF%E7%94%A8cudatext%E6%9B%BF%E4%BB%A3notepad-/  
 

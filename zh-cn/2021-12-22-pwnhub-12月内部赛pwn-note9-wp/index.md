@@ -285,5 +285,5 @@ def exp():
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2021-12-22-pwnhub-12%E6%9C%88%E5%86%85%E9%83%A8%E8%B5%9Bpwn-note9-wp/  
+> URL: https://roderickchan.github.io/zh-cn/2021-12-22-pwnhub-12%E6%9C%88%E5%86%85%E9%83%A8%E8%B5%9Bpwn-note9-wp/  
 

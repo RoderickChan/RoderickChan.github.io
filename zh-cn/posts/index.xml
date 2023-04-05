@@ -1,139 +1,139 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
     <title>所有文章 - roderick - record and learn!</title>
-    <link>https://www.roderickchan.cn/zh-cn/posts/</link>
+    <link>https://roderickchan.github.io/zh-cn/posts/</link>
     <description>所有文章 | roderick - record and learn!</description>
     <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
-      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 01 Apr 2023 18:03:06 &#43;0800</lastBuildDate><atom:link href="https://www.roderickchan.cn/zh-cn/posts/" rel="self" type="application/rss+xml" /><item>
+      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 01 Apr 2023 18:03:06 &#43;0800</lastBuildDate><atom:link href="https://roderickchan.github.io/zh-cn/posts/" rel="self" type="application/rss+xml" /><item>
   <title>python带颜色打印字符串</title>
-  <link>https://www.roderickchan.cn/zh-cn/2021-03-28-python%E5%B8%A6%E9%A2%9C%E8%89%B2%E6%89%93%E5%8D%B0%E5%AD%97%E7%AC%A6%E4%B8%B2/</link>
+  <link>https://roderickchan.github.io/zh-cn/2021-03-28-python%E5%B8%A6%E9%A2%9C%E8%89%B2%E6%89%93%E5%8D%B0%E5%AD%97%E7%AC%A6%E4%B8%B2/</link>
   <pubDate>Sun, 28 Mar 2021 17:42:06 &#43;0800</pubDate>
   <author>roderick</author>
-  <guid>https://www.roderickchan.cn/zh-cn/2021-03-28-python%E5%B8%A6%E9%A2%9C%E8%89%B2%E6%89%93%E5%8D%B0%E5%AD%97%E7%AC%A6%E4%B8%B2/</guid>
+  <guid>https://roderickchan.github.io/zh-cn/2021-03-28-python%E5%B8%A6%E9%A2%9C%E8%89%B2%E6%89%93%E5%8D%B0%E5%AD%97%E7%AC%A6%E4%B8%B2/</guid>
   <description><![CDATA[之前调试pwn题的时候，有时候需要将某些特别的，重要的信息用不一样的颜色打印出来。查阅一些资料，了解了print函数的特性后，自己写了一个脚]]></description>
 </item>
 <item>
   <title>pwn题命令行解题脚本</title>
-  <link>https://www.roderickchan.cn/zh-cn/2021-04-02-pwn%E9%A2%98%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%A7%A3%E9%A2%98%E8%84%9A%E6%9C%AC/</link>
+  <link>https://roderickchan.github.io/zh-cn/2021-04-02-pwn%E9%A2%98%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%A7%A3%E9%A2%98%E8%84%9A%E6%9C%AC/</link>
   <pubDate>Fri, 02 Apr 2021 21:19:06 &#43;0800</pubDate>
   <author>roderick</author>
-  <guid>https://www.roderickchan.cn/zh-cn/2021-04-02-pwn%E9%A2%98%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%A7%A3%E9%A2%98%E8%84%9A%E6%9C%AC/</guid>
+  <guid>https://roderickchan.github.io/zh-cn/2021-04-02-pwn%E9%A2%98%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%A7%A3%E9%A2%98%E8%84%9A%E6%9C%AC/</guid>
   <description><![CDATA[这是专门为本地调试与远程答题准备的脚本，依靠命令行参数进行控制。 本脚本支持的功能有： 本地调试 开启tmux调试 设置gdb断点，支持函数名断点、]]></description>
 </item>
 <item>
   <title>幻灯片放映模式切换windows terminal背景图片</title>
-  <link>https://www.roderickchan.cn/zh-cn/2021-04-10-%E5%B9%BB%E7%81%AF%E7%89%87%E6%94%BE%E6%98%A0%E6%A8%A1%E5%BC%8F%E5%88%87%E6%8D%A2windows-terminal%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87/</link>
+  <link>https://roderickchan.github.io/zh-cn/2021-04-10-%E5%B9%BB%E7%81%AF%E7%89%87%E6%94%BE%E6%98%A0%E6%A8%A1%E5%BC%8F%E5%88%87%E6%8D%A2windows-terminal%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87/</link>
   <pubDate>Sat, 10 Apr 2021 19:39:06 &#43;0800</pubDate>
   <author>roderick</author>
-  <guid>https://www.roderickchan.cn/zh-cn/2021-04-10-%E5%B9%BB%E7%81%AF%E7%89%87%E6%94%BE%E6%98%A0%E6%A8%A1%E5%BC%8F%E5%88%87%E6%8D%A2windows-terminal%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87/</guid>
+  <guid>https://roderickchan.github.io/zh-cn/2021-04-10-%E5%B9%BB%E7%81%AF%E7%89%87%E6%94%BE%E6%98%A0%E6%A8%A1%E5%BC%8F%E5%88%87%E6%8D%A2windows-terminal%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87/</guid>
   <description><![CDATA[脚本功能 以幻灯片模式自动切换windows terminal的背景图片，可自定义包含图片的目录、切换频率等。 使用命令python change_tty_image.py --help]]></description>
 </item>
 <item>
   <title>Glibc堆利用之house of系列总结</title>
-  <link>https://www.roderickchan.cn/zh-cn/2023-02-27-house-of-all-about-glibc-heap-exploitation/</link>
+  <link>https://roderickchan.github.io/zh-cn/2023-02-27-house-of-all-about-glibc-heap-exploitation/</link>
   <pubDate>Mon, 27 Feb 2023 15:10:08 &#43;0800</pubDate>
   <author>roderick</author>
-  <guid>https://www.roderickchan.cn/zh-cn/2023-02-27-house-of-all-about-glibc-heap-exploitation/</guid>
+  <guid>https://roderickchan.github.io/zh-cn/2023-02-27-house-of-all-about-glibc-heap-exploitation/</guid>
   <description><![CDATA[<blockquote>
 <p>总结一下<code>glibc</code>堆利用的<code>house of</code>系列利用手法，主要参考了<a href="https://github.com/shellphish/how2heap"target="_blank" rel="external nofollow noopener noreferrer">how2heap<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>，同时参考了其他优秀的文章。</p>
 </blockquote>]]></description>
 </item>
 <item>
   <title>nginx配置的问题记录</title>
-  <link>https://www.roderickchan.cn/zh-cn/2023-04-01-nginx-config-problem/</link>
+  <link>https://roderickchan.github.io/zh-cn/2023-04-01-nginx-config-problem/</link>
   <pubDate>Sat, 01 Apr 2023 18:03:06 &#43;0800</pubDate>
   <author>roderick</author>
-  <guid>https://www.roderickchan.cn/zh-cn/2023-04-01-nginx-config-problem/</guid>
+  <guid>https://roderickchan.github.io/zh-cn/2023-04-01-nginx-config-problem/</guid>
   <description><![CDATA[<blockquote>
 <p>当域名没有规则匹配的时候，<code>nginx</code>的处理过程让我迷惑。</p>
 </blockquote>]]></description>
 </item>
 <item>
   <title>Glibc高版本堆利用方法总结</title>
-  <link>https://www.roderickchan.cn/zh-cn/2023-03-01-analysis-of-glibc-heap-exploitation-in-high-version/</link>
+  <link>https://roderickchan.github.io/zh-cn/2023-03-01-analysis-of-glibc-heap-exploitation-in-high-version/</link>
   <pubDate>Wed, 01 Mar 2023 20:44:12 &#43;0800</pubDate>
   <author>roderick</author>
-  <guid>https://www.roderickchan.cn/zh-cn/2023-03-01-analysis-of-glibc-heap-exploitation-in-high-version/</guid>
+  <guid>https://roderickchan.github.io/zh-cn/2023-03-01-analysis-of-glibc-heap-exploitation-in-high-version/</guid>
   <description><![CDATA[<blockquote>
 <p>截止到目前，主要总结在<code>2.35~2.37</code>之间仍然残存的堆利用手法。</p>
 </blockquote>]]></description>
 </item>
 <item>
   <title>Glibc堆利用之house of系列总结</title>
-  <link>https://www.roderickchan.cn/zh-cn/2023-02-27-house-of-all-about-glibc-heap-exploitation/</link>
+  <link>https://roderickchan.github.io/zh-cn/2023-02-27-house-of-all-about-glibc-heap-exploitation/</link>
   <pubDate>Mon, 27 Feb 2023 15:10:08 &#43;0800</pubDate>
   <author>roderick</author>
-  <guid>https://www.roderickchan.cn/zh-cn/2023-02-27-house-of-all-about-glibc-heap-exploitation/</guid>
+  <guid>https://roderickchan.github.io/zh-cn/2023-02-27-house-of-all-about-glibc-heap-exploitation/</guid>
   <description><![CDATA[<blockquote>
 <p>总结一下<code>glibc</code>堆利用的<code>house of</code>系列利用手法，主要参考了<a href="https://github.com/shellphish/how2heap"target="_blank" rel="external nofollow noopener noreferrer">how2heap<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>，同时参考了其他优秀的文章。</p>
 </blockquote>]]></description>
 </item>
 <item>
   <title>The art of shellcode</title>
-  <link>https://www.roderickchan.cn/zh-cn/2023-02-20-the-art-of-shellcode/</link>
+  <link>https://roderickchan.github.io/zh-cn/2023-02-20-the-art-of-shellcode/</link>
   <pubDate>Mon, 20 Feb 2023 22:51:44 &#43;0800</pubDate>
   <author>roderick</author>
-  <guid>https://www.roderickchan.cn/zh-cn/2023-02-20-the-art-of-shellcode/</guid>
+  <guid>https://roderickchan.github.io/zh-cn/2023-02-20-the-art-of-shellcode/</guid>
   <description><![CDATA[<blockquote>
 <p>对<code>shellcode</code>知识点的一些总结。</p>
 </blockquote>]]></description>
 </item>
 <item>
   <title>自己搭建一个libc database</title>
-  <link>https://www.roderickchan.cn/zh-cn/2023-02-15-%E8%87%AA%E5%B7%B1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAlibc-database/</link>
+  <link>https://roderickchan.github.io/zh-cn/2023-02-15-%E8%87%AA%E5%B7%B1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAlibc-database/</link>
   <pubDate>Wed, 15 Feb 2023 15:55:31 &#43;0800</pubDate>
   <author>roderick</author>
-  <guid>https://www.roderickchan.cn/zh-cn/2023-02-15-%E8%87%AA%E5%B7%B1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAlibc-database/</guid>
+  <guid>https://roderickchan.github.io/zh-cn/2023-02-15-%E8%87%AA%E5%B7%B1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAlibc-database/</guid>
   <description><![CDATA[<blockquote>
 <p>为什么要自己搭建一个<code>libc database</code>呢，因为官方的<a href="https://libc.rip/api/"target="_blank" rel="external nofollow noopener noreferrer">https://libc.rip/api/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>查询接口挂了。</p>
 </blockquote>]]></description>
 </item>
 <item>
   <title>使用docker调试和部署pwn题</title>
-  <link>https://www.roderickchan.cn/zh-cn/2023-02-13-%E4%BD%BF%E7%94%A8docker%E8%B0%83%E8%AF%95pwn%E9%A2%98/</link>
+  <link>https://roderickchan.github.io/zh-cn/2023-02-13-%E4%BD%BF%E7%94%A8docker%E8%B0%83%E8%AF%95pwn%E9%A2%98/</link>
   <pubDate>Mon, 13 Feb 2023 13:49:22 &#43;0800</pubDate>
   <author>roderick</author>
-  <guid>https://www.roderickchan.cn/zh-cn/2023-02-13-%E4%BD%BF%E7%94%A8docker%E8%B0%83%E8%AF%95pwn%E9%A2%98/</guid>
+  <guid>https://roderickchan.github.io/zh-cn/2023-02-13-%E4%BD%BF%E7%94%A8docker%E8%B0%83%E8%AF%95pwn%E9%A2%98/</guid>
   <description><![CDATA[<blockquote>
 <p>使用<code>docker</code>快速部署不同架构、不同版本的调试环境。给出<code>docker</code>环境下<code>pwn</code>题部署模板。</p>
 </blockquote>]]></description>
 </item>
 <item>
   <title>socat反弹shell&#43;tmux共享会话</title>
-  <link>https://www.roderickchan.cn/zh-cn/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D/</link>
+  <link>https://roderickchan.github.io/zh-cn/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D/</link>
   <pubDate>Fri, 10 Feb 2023 15:18:13 &#43;0800</pubDate>
   <author>roderick</author>
-  <guid>https://www.roderickchan.cn/zh-cn/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D/</guid>
+  <guid>https://roderickchan.github.io/zh-cn/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D/</guid>
   <description><![CDATA[<blockquote>
 <p>使用<code>socat</code>得到一个带有<code>pty</code>的<code>strong shell</code>，然后使用<code>tmux</code>共享会话和结对编程。</p>
 </blockquote>]]></description>
 </item>
 <item>
   <title>pwn环境搭建脚本</title>
-  <link>https://www.roderickchan.cn/zh-cn/2023-02-10-pwn%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%84%9A%E6%9C%AC/</link>
+  <link>https://roderickchan.github.io/zh-cn/2023-02-10-pwn%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%84%9A%E6%9C%AC/</link>
   <pubDate>Fri, 10 Feb 2023 12:25:18 &#43;0800</pubDate>
   <author>roderick</author>
-  <guid>https://www.roderickchan.cn/zh-cn/2023-02-10-pwn%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%84%9A%E6%9C%AC/</guid>
+  <guid>https://roderickchan.github.io/zh-cn/2023-02-10-pwn%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%84%9A%E6%9C%AC/</guid>
   <description><![CDATA[<blockquote>
 <p>分享在<code>ubuntu</code>系统上一站式搭建<code>pwn</code>环境的脚本。</p>
 </blockquote>]]></description>
 </item>
 <item>
   <title>使用cudatext替代notepad&#43;&#43;</title>
-  <link>https://www.roderickchan.cn/zh-cn/2023-02-08-%E4%BD%BF%E7%94%A8cudatext%E6%9B%BF%E4%BB%A3notepad-/</link>
+  <link>https://roderickchan.github.io/zh-cn/2023-02-08-%E4%BD%BF%E7%94%A8cudatext%E6%9B%BF%E4%BB%A3notepad-/</link>
   <pubDate>Wed, 08 Feb 2023 10:17:01 &#43;0800</pubDate>
   <author>roderick</author>
-  <guid>https://www.roderickchan.cn/zh-cn/2023-02-08-%E4%BD%BF%E7%94%A8cudatext%E6%9B%BF%E4%BB%A3notepad-/</guid>
+  <guid>https://roderickchan.github.io/zh-cn/2023-02-08-%E4%BD%BF%E7%94%A8cudatext%E6%9B%BF%E4%BB%A3notepad-/</guid>
   <description><![CDATA[<blockquote>
 <p>鉴于<code>notepad++</code>的作者总是发表降智言论，抵制<code>notepad++</code>，从我做起。</p>
 </blockquote>]]></description>
 </item>
 <item>
   <title>2023西湖论剑初赛pwn-jit</title>
-  <link>https://www.roderickchan.cn/zh-cn/2023-02-02-2023%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91%E5%88%9D%E8%B5%9Bpwn-jit/</link>
+  <link>https://roderickchan.github.io/zh-cn/2023-02-02-2023%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91%E5%88%9D%E8%B5%9Bpwn-jit/</link>
   <pubDate>Thu, 02 Feb 2023 20:55:25 &#43;0800</pubDate>
   <author>roderick</author>
-  <guid>https://www.roderickchan.cn/zh-cn/2023-02-02-2023%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91%E5%88%9D%E8%B5%9Bpwn-jit/</guid>
+  <guid>https://roderickchan.github.io/zh-cn/2023-02-02-2023%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91%E5%88%9D%E8%B5%9Bpwn-jit/</guid>
   <description><![CDATA[<blockquote>
 <p>一道<code>JIT</code>的题，记录一下。点击<a href="https://download.roderickchan.cn/ctf/2022/2023-xihulunjian-pwn-jit.7z"target="_blank" rel="external nofollow noopener noreferrer">链接<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>下载附件。若需要认证，下载账户名/密码为<code>roderick/rode@rick</code>。</p>
 </blockquote>]]></description>

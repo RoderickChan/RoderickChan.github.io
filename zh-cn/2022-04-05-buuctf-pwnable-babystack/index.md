@@ -164,5 +164,5 @@ ia()
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2022-04-05-buuctf-pwnable-babystack/  
+> URL: https://roderickchan.github.io/zh-cn/2022-04-05-buuctf-pwnable-babystack/  
 

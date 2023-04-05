@@ -46,5 +46,5 @@
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2021-06-06-pwn-house-of-spirit/  
+> URL: https://roderickchan.github.io/zh-cn/2021-06-06-pwn-house-of-spirit/  
 

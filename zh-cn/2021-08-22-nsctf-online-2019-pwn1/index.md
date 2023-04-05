@@ -283,5 +283,5 @@ attack_off_by_one_loop(None, None)
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2021-08-22-nsctf-online-2019-pwn1/  
+> URL: https://roderickchan.github.io/zh-cn/2021-08-22-nsctf-online-2019-pwn1/  
 

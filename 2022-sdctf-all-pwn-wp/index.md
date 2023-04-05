@@ -595,5 +595,5 @@ If you're a lucky boy, you will find the `/home/antivirus/flag.txt` is `rwxrwxrw
 ---
 
 > Author: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/2022-sdctf-all-pwn-wp/  
+> URL: https://roderickchan.github.io/2022-sdctf-all-pwn-wp/  
 

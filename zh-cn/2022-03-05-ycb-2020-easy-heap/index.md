@@ -160,5 +160,5 @@ ia()
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2022-03-05-ycb-2020-easy-heap/  
+> URL: https://roderickchan.github.io/zh-cn/2022-03-05-ycb-2020-easy-heap/  
 

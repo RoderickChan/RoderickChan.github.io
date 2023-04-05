@@ -128,5 +128,5 @@ p.interactive()
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2021-08-14-gkctf-2021-checkin/  
+> URL: https://roderickchan.github.io/zh-cn/2021-08-14-gkctf-2021-checkin/  
 

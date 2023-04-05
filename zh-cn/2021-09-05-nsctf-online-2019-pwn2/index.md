@@ -96,5 +96,5 @@ p.interactive()
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2021-09-05-nsctf-online-2019-pwn2/  
+> URL: https://roderickchan.github.io/zh-cn/2021-09-05-nsctf-online-2019-pwn2/  
 

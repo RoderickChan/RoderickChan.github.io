@@ -118,5 +118,5 @@ io.interactive()
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2022-02-23-pwnhub-public-2-babyarm/  
+> URL: https://roderickchan.github.io/zh-cn/2022-02-23-pwnhub-public-2-babyarm/  
 

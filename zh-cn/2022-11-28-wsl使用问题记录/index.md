@@ -68,5 +68,5 @@ umask=022
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2022-11-28-wsl%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/  
+> URL: https://roderickchan.github.io/zh-cn/2022-11-28-wsl%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/  
 

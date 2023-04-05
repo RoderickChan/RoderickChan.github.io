@@ -33,5 +33,5 @@
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/about/  
+> URL: https://roderickchan.github.io/zh-cn/about/  
 

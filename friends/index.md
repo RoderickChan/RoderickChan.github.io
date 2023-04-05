@@ -20,5 +20,5 @@ Please leave a message if you want to exchange the friend's link with me, the fo
 ---
 
 > Author: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/friends/  
+> URL: https://roderickchan.github.io/friends/  
 

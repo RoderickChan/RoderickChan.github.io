@@ -131,5 +131,5 @@ if __name__ == '__main__':
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2021-03-28-python%E5%B8%A6%E9%A2%9C%E8%89%B2%E6%89%93%E5%8D%B0%E5%AD%97%E7%AC%A6%E4%B8%B2/  
+> URL: https://roderickchan.github.io/zh-cn/2021-03-28-python%E5%B8%A6%E9%A2%9C%E8%89%B2%E6%89%93%E5%8D%B0%E5%AD%97%E7%AC%A6%E4%B8%B2/  
 

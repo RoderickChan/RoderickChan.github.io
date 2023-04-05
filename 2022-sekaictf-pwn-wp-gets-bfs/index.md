@@ -915,5 +915,5 @@ Attack remote host:
 ---
 
 > Author: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/2022-sekaictf-pwn-wp-gets-bfs/  
+> URL: https://roderickchan.github.io/2022-sekaictf-pwn-wp-gets-bfs/  
 

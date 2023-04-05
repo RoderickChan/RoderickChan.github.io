@@ -116,5 +116,5 @@ p.interactive()
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2021-08-15-%E9%B9%8F%E5%9F%8E%E6%9D%AF-2018-treasure/  
+> URL: https://roderickchan.github.io/zh-cn/2021-08-15-%E9%B9%8F%E5%9F%8E%E6%9D%AF-2018-treasure/  
 

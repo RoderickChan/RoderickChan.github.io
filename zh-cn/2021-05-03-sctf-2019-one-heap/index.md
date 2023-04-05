@@ -271,5 +271,5 @@ if __name__ == "__main__":
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2021-05-03-sctf-2019-one-heap/  
+> URL: https://roderickchan.github.io/zh-cn/2021-05-03-sctf-2019-one-heap/  
 

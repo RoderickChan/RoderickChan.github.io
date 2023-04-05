@@ -40,5 +40,5 @@ p.interactive()
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2021-08-22-linkctf-2018-7-babypie/  
+> URL: https://roderickchan.github.io/zh-cn/2021-08-22-linkctf-2018-7-babypie/  
 

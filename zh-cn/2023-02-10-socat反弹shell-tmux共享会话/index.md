@@ -301,5 +301,5 @@ sudo userdel tmpuser
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D/  
+> URL: https://roderickchan.github.io/zh-cn/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D/  
 

@@ -755,5 +755,5 @@ void main()
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2022-04-28-seccon-2020-kstack/  
+> URL: https://roderickchan.github.io/zh-cn/2022-04-28-seccon-2020-kstack/  
 

@@ -96,5 +96,5 @@ attack(gift['io'])
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2021-07-18-ciscn-2019-n-7/  
+> URL: https://roderickchan.github.io/zh-cn/2021-07-18-ciscn-2019-n-7/  
 

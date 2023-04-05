@@ -163,5 +163,5 @@ for x in range(4, 0x100, 4):
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2021-03-28-xman-2019-format/  
+> URL: https://roderickchan.github.io/zh-cn/2021-03-28-xman-2019-format/  
 

@@ -246,5 +246,5 @@ attack2()
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2021-08-21-hitcon-ctf-2019-one-punch/  
+> URL: https://roderickchan.github.io/zh-cn/2021-08-21-hitcon-ctf-2019-one-punch/  
 

@@ -144,5 +144,5 @@ io.interactive()
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2021-03-28-mma-ctf-2nd-2016-greeting/  
+> URL: https://roderickchan.github.io/zh-cn/2021-03-28-mma-ctf-2nd-2016-greeting/  
 

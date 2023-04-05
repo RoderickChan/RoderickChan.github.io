@@ -360,5 +360,5 @@ if __name__ == '__main__':
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2021-04-04-ycb-2020-babypwn/  
+> URL: https://roderickchan.github.io/zh-cn/2021-04-04-ycb-2020-babypwn/  
 

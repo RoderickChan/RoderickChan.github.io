@@ -32,5 +32,5 @@
 ---
 
 > Author: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/about/  
+> URL: https://roderickchan.github.io/about/  
 

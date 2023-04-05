@@ -214,5 +214,5 @@ sh.interactive()
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2021-06-01-ogeek2019-bookmanager/  
+> URL: https://roderickchan.github.io/zh-cn/2021-06-01-ogeek2019-bookmanager/  
 

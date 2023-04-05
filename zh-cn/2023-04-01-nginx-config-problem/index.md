@@ -399,5 +399,5 @@ how to fix it, please visit the web page mentioned above.
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2023-04-01-nginx-config-problem/  
+> URL: https://roderickchan.github.io/zh-cn/2023-04-01-nginx-config-problem/  
 

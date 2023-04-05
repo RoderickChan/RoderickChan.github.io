@@ -67,5 +67,5 @@ cp d2d.py ~/.d2d.py && echo "source ~/.d2d.py" >> ~/.gdbinit
 ---
 
 > 作者: [roderick](https://www.roderickchan.cn)  
-> URL: https://www.roderickchan.cn/zh-cn/2023-01-30-%E4%BD%BF%E7%94%A8decomp2dbg%E8%B0%83%E8%AF%95%E7%A8%8B%E5%BA%8F/  
+> URL: https://roderickchan.github.io/zh-cn/2023-01-30-%E4%BD%BF%E7%94%A8decomp2dbg%E8%B0%83%E8%AF%95%E7%A8%8B%E5%BA%8F/  
 
