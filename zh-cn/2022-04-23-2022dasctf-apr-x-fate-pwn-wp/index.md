@@ -781,7 +781,7 @@ for i in range(0x24):
         
     log_ex(f"flag: {flag}")
 
-log_ex(f"flag{{{flag}")
+log_ex(f"flag{flag}")
 ```
 
 远程的环境没有了，在本地试了一下，很快就爆破出`flag`：
