@@ -5,6 +5,18 @@
 
 <!--more-->
 
+太长不读:
+
+👉 点击右上角的`选择语言` 按钮切换语言至英语，阅读英文博客
+
+👉 使用搜索框搜索文章
+
+👉 原站点的所有文章均被保留，试着去找到你所需要的文章吧~
+
+👉 仍有疑问，发邮件至`roderickchan@foxmail.com`
+
+---
+
 我有两个相同的博客网站：
 - <https://roderickchan.github.io>
 - <https://www.roderickchan.cn>

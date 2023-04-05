@@ -17,6 +17,14 @@
 </blockquote>]]></description>
 </item>
 <item>
+  <title>[建站教程] 使用aliyun&#43;hugo搭建个人博客</title>
+  <link>https://roderickchan.github.io/zh-cn/2022-10-11-%E4%BD%BF%E7%94%A8aliyun-hugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</link>
+  <pubDate>Tue, 11 Oct 2022 22:36:17 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://roderickchan.github.io/zh-cn/2022-10-11-%E4%BD%BF%E7%94%A8aliyun-hugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</guid>
+  <description><![CDATA[<p>整个搭建过程中，云服务器配置耗费时间需要<code>1~2</code>周，而在配置云服务器过程中占用时间最长的为域名备案，最长需要等待<code>2</code>周才能完成；剩下的几步只需要不到两个小时的时间即可完成。</p>]]></description>
+</item>
+<item>
   <title>nginx配置的问题记录</title>
   <link>https://roderickchan.github.io/zh-cn/2023-04-01-nginx-config-problem/</link>
   <pubDate>Sat, 01 Apr 2023 18:03:06 &#43;0800</pubDate>
@@ -94,16 +102,6 @@
   <guid>https://roderickchan.github.io/zh-cn/2023-02-10-pwn%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%84%9A%E6%9C%AC/</guid>
   <description><![CDATA[<blockquote>
 <p>分享在<code>ubuntu</code>系统上一站式搭建<code>pwn</code>环境的脚本。</p>
-</blockquote>]]></description>
-</item>
-<item>
-  <title>使用cudatext替代notepad&#43;&#43;</title>
-  <link>https://roderickchan.github.io/zh-cn/2023-02-08-%E4%BD%BF%E7%94%A8cudatext%E6%9B%BF%E4%BB%A3notepad-/</link>
-  <pubDate>Wed, 08 Feb 2023 10:17:01 &#43;0800</pubDate>
-  <author>roderick</author>
-  <guid>https://roderickchan.github.io/zh-cn/2023-02-08-%E4%BD%BF%E7%94%A8cudatext%E6%9B%BF%E4%BB%A3notepad-/</guid>
-  <description><![CDATA[<blockquote>
-<p>鉴于<code>notepad++</code>的作者总是发表降智言论，抵制<code>notepad++</code>，从我做起。</p>
 </blockquote>]]></description>
 </item>
 </channel>

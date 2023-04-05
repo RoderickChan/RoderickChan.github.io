@@ -5,6 +5,18 @@
 
 <!--more-->
 
+TL;DR:
+
+👉 Click `select language` button in the upper right corner of the page to read posts **written in Chinese**
+
+👉 Use search box to find an article with keywords
+
+👉 All previous blogs are saved in this site, try to find it~
+
+👉 Still have a question, email me to `roderickchan@foxmail.com`
+
+---
+
 I have two same blog sites:
 - <https://roderickchan.github.io>
 - <https://www.roderickchan.cn>
