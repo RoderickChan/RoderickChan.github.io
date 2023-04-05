@@ -207,6 +207,6 @@ print(c2)
 
 ---
 
-> 作者: [roderick](https://www.roderickchan.cn)  
+> 作者: [roderick](https://roderickchan.github.io)  
 > URL: https://roderickchan.github.io/zh-cn/2021-05-02-vnctf-2021-whitegive/  
 

@@ -121,6 +121,6 @@ p.interactive()
 
 ---
 
-> 作者: [roderick](https://www.roderickchan.cn)  
+> 作者: [roderick](https://roderickchan.github.io)  
 > URL: https://roderickchan.github.io/zh-cn/2021-08-15-starctf-2019-girlfriend/  
 

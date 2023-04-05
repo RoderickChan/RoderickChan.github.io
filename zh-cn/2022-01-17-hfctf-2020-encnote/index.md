@@ -155,6 +155,6 @@ io.interactive()
 
 ---
 
-> 作者: [roderick](https://www.roderickchan.cn)  
+> 作者: [roderick](https://roderickchan.github.io)  
 > URL: https://roderickchan.github.io/zh-cn/2022-01-17-hfctf-2020-encnote/  
 

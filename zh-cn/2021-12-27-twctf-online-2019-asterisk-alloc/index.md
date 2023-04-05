@@ -160,6 +160,6 @@ done
 
 ---
 
-> 作者: [roderick](https://www.roderickchan.cn)  
+> 作者: [roderick](https://roderickchan.github.io)  
 > URL: https://roderickchan.github.io/zh-cn/2021-12-27-twctf-online-2019-asterisk-alloc/  
 

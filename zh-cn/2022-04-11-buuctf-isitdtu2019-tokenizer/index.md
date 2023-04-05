@@ -139,6 +139,6 @@ ia()
 
 ---
 
-> 作者: [roderick](https://www.roderickchan.cn)  
+> 作者: [roderick](https://roderickchan.github.io)  
 > URL: https://roderickchan.github.io/zh-cn/2022-04-11-buuctf-isitdtu2019-tokenizer/  
 

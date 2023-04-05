@@ -57,6 +57,6 @@ exec -a $(python -c "print '\xc0\xc0\xc0\xff'") ./tiny_easy &
 
 ---
 
-> 作者: [roderick](https://www.roderickchan.cn)  
+> 作者: [roderick](https://roderickchan.github.io)  
 > URL: https://roderickchan.github.io/zh-cn/2022-04-05-buuctf-pwnable-tiny-easy/  
 

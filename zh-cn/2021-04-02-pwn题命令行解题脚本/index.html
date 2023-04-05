@@ -9,14 +9,14 @@
 <meta name="author-link" content="https://www.roderickchan.cn">
 <meta name="description" content="这是专门为本地调试与远程答题准备的脚本，依靠命令行参数进行控制。 本脚本支持的功能有： 本地调试 开启tmux调试 设置gdb断点，支持函数名断点、" /><meta name="keywords" content='pwn' /><meta itemprop="name" content="pwn题命令行解题脚本">
 <meta itemprop="description" content="这是专门为本地调试与远程答题准备的脚本，依靠命令行参数进行控制。 本脚本支持的功能有： 本地调试 开启tmux调试 设置gdb断点，支持函数名断点、"><meta itemprop="datePublished" content="2021-04-02T21:19:06+08:00" />
-<meta itemprop="dateModified" content="2023-04-05T13:15:37+08:00" />
+<meta itemprop="dateModified" content="2023-04-05T18:34:30+08:00" />
 <meta itemprop="wordCount" content="2481"><meta itemprop="image" content="https://roderickchan.github.io/"/>
 <meta itemprop="keywords" content="pwn," /><meta property="og:title" content="pwn题命令行解题脚本" />
 <meta property="og:description" content="这是专门为本地调试与远程答题准备的脚本，依靠命令行参数进行控制。 本脚本支持的功能有： 本地调试 开启tmux调试 设置gdb断点，支持函数名断点、" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://roderickchan.github.io/zh-cn/2021-04-02-pwn%E9%A2%98%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%A7%A3%E9%A2%98%E8%84%9A%E6%9C%AC/" /><meta property="og:image" content="https://roderickchan.github.io/"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-04-02T21:19:06+08:00" />
-<meta property="article:modified_time" content="2023-04-05T13:15:37+08:00" />
+<meta property="article:modified_time" content="2023-04-05T18:34:30+08:00" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://roderickchan.github.io/"/>
 
@@ -35,7 +35,7 @@
       "@type": "WebPage",
       "@id": "https:\/\/roderickchan.github.io\/zh-cn\/2021-04-02-pwn%E9%A2%98%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%A7%A3%E9%A2%98%E8%84%9A%E6%9C%AC\/"
     },"image": ["https:\/\/roderickchan.github.io\/images\/Apple-Devices-Preview.jpg"],"genre": "posts","keywords": "pwn","wordcount":  2481 ,
-    "url": "https:\/\/roderickchan.github.io\/zh-cn\/2021-04-02-pwn%E9%A2%98%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%A7%A3%E9%A2%98%E8%84%9A%E6%9C%AC\/","datePublished": "2021-04-02T21:19:06+08:00","dateModified": "2023-04-05T13:15:37+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+    "url": "https:\/\/roderickchan.github.io\/zh-cn\/2021-04-02-pwn%E9%A2%98%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%A7%A3%E9%A2%98%E8%84%9A%E6%9C%AC\/","datePublished": "2021-04-02T21:19:06+08:00","dateModified": "2023-04-05T18:34:30+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
       "@type": "Organization",
       "name": "roderick","logo": "https:\/\/roderickchan.github.io\/logo.png"},"author": {
         "@type": "Person",
@@ -205,7 +205,7 @@
       </h1></div><div class="post-meta">
       <div class="post-meta-line"><span class="post-author"><a href="https://www.roderickchan.cn" title="作者"target="_blank" rel="external nofollow noopener noreferrer author" class="author"><img loading="lazy" src="https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp" srcset="https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp, https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp 1.5x, https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp 2x" sizes="auto" data-title="roderick" data-alt="roderick" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;roderick</a></span>
           <span class="post-category">收录于 <a href="/zh-cn/categories/tools/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> tools</a></span></div>
-      <div class="post-meta-line"><span title="发布于 2021-04-02 21:19:06"><i class="fa-regular fa-calendar-alt fa-fw me-1" aria-hidden="true"></i><time datetime="2021-04-02">2021-04-02</time></span>&nbsp;<span title="更新于 2023-04-05 13:15:37"><i class="fa-regular fa-edit fa-fw me-1" aria-hidden="true"></i><time datetime="2023-04-05">2023-04-05</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 2481 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 5 分钟</span>&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="pwn题命令行解题脚本">
+      <div class="post-meta-line"><span title="发布于 2021-04-02 21:19:06"><i class="fa-regular fa-calendar-alt fa-fw me-1" aria-hidden="true"></i><time datetime="2021-04-02">2021-04-02</time></span>&nbsp;<span title="更新于 2023-04-05 18:34:30"><i class="fa-regular fa-edit fa-fw me-1" aria-hidden="true"></i><time datetime="2023-04-05">2023-04-05</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 2481 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 5 分钟</span>&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="pwn题命令行解题脚本">
               <i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
             </span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
@@ -883,7 +883,7 @@
   <div class="post-info">
     <div class="post-info-line">
       <div class="post-info-mod">
-        <span title="更新于 2023-04-05 13:15:37">更新于 2023-04-05&nbsp;</span>
+        <span title="更新于 2023-04-05 18:34:30">更新于 2023-04-05&nbsp;</span>
       </div><div class="post-info-license">
           <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
         </div></div>

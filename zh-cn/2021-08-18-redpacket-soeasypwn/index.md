@@ -357,6 +357,6 @@ attack3(gift['io'])
 
 ---
 
-> 作者: [roderick](https://www.roderickchan.cn)  
+> 作者: [roderick](https://roderickchan.github.io)  
 > URL: https://roderickchan.github.io/zh-cn/2021-08-18-redpacket-soeasypwn/  
 

@@ -135,6 +135,6 @@ if __name__ == '__main__':
 
 ---
 
-> 作者: [roderick](https://www.roderickchan.cn)  
+> 作者: [roderick](https://roderickchan.github.io)  
 > URL: https://roderickchan.github.io/zh-cn/2021-04-09-de1ctf-2019-weapon/  
 

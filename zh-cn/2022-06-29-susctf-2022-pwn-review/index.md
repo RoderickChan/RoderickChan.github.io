@@ -431,6 +431,6 @@ void main()
 
 ---
 
-> 作者: [roderick](https://www.roderickchan.cn)  
+> 作者: [roderick](https://roderickchan.github.io)  
 > URL: https://roderickchan.github.io/zh-cn/2022-06-29-susctf-2022-pwn-review/  
 

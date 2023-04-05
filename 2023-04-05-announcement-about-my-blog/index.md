@@ -19,6 +19,6 @@ If you are unable to find search results, please switch to a different language 
 
 ---
 
-> Author: [roderick](https://www.roderickchan.cn)  
+> Author: [roderick](https://roderickchan.github.io)  
 > URL: https://roderickchan.github.io/2023-04-05-announcement-about-my-blog/  
 

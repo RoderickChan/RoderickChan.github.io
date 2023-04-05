@@ -19,6 +19,6 @@
 
 ---
 
-> 作者: [roderick](https://www.roderickchan.cn)  
+> 作者: [roderick](https://roderickchan.github.io)  
 > URL: https://roderickchan.github.io/zh-cn/2023-04-05-announcement-about-my-blog/  
 

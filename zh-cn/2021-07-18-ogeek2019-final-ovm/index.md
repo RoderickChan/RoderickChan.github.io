@@ -152,6 +152,6 @@ sh.interactive()
 
 ---
 
-> 作者: [roderick](https://www.roderickchan.cn)  
+> 作者: [roderick](https://roderickchan.github.io)  
 > URL: https://roderickchan.github.io/zh-cn/2021-07-18-ogeek2019-final-ovm/  
 

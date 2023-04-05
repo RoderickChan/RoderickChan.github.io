@@ -1079,6 +1079,6 @@ sh.interactive()
 
 ---
 
-> 作者: [roderick](https://www.roderickchan.cn)  
+> 作者: [roderick](https://roderickchan.github.io)  
 > URL: https://roderickchan.github.io/zh-cn/2021-09-12-ciscn-2019-pwn%E7%B3%BB%E5%88%97/  
 
