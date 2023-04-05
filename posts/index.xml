@@ -1,0 +1,126 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>所有文章 - roderick - record and learn!</title>
+    <link>https://www.roderickchan.cn/posts/</link>
+    <description>所有文章 | roderick - record and learn!</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
+      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 01 Apr 2023 18:03:06 &#43;0800</lastBuildDate><atom:link href="https://www.roderickchan.cn/posts/" rel="self" type="application/rss+xml" /><item>
+  <title>使用docker调试和部署pwn题</title>
+  <link>https://www.roderickchan.cn/2023-02-13-%E4%BD%BF%E7%94%A8docker%E8%B0%83%E8%AF%95pwn%E9%A2%98/</link>
+  <pubDate>Mon, 13 Feb 2023 13:49:22 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://www.roderickchan.cn/2023-02-13-%E4%BD%BF%E7%94%A8docker%E8%B0%83%E8%AF%95pwn%E9%A2%98/</guid>
+  <description><![CDATA[<blockquote>
+<p>使用<code>docker</code>快速部署不同架构、不同版本的调试环境。给出<code>docker</code>环境下<code>pwn</code>题部署模板。</p>
+</blockquote>]]></description>
+</item>
+<item>
+  <title>Glibc堆利用之house of系列总结</title>
+  <link>https://www.roderickchan.cn/2023-02-27-house-of-all-about-glibc-heap-exploitation/</link>
+  <pubDate>Mon, 27 Feb 2023 15:10:08 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://www.roderickchan.cn/2023-02-27-house-of-all-about-glibc-heap-exploitation/</guid>
+  <description><![CDATA[<blockquote>
+<p>总结一下<code>glibc</code>堆利用的<code>house of</code>系列利用手法，主要参考了<a href="https://github.com/shellphish/how2heap"target="_blank" rel="external nofollow noopener noreferrer">how2heap<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>，同时参考了其他优秀的文章。</p>
+</blockquote>]]></description>
+</item>
+<item>
+  <title>【置顶】使用aliyun&#43;hugo&#43;even搭建个人博客</title>
+  <link>https://www.roderickchan.cn/2022-10-11-%E4%BD%BF%E7%94%A8aliyun-hugo-even%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</link>
+  <pubDate>Tue, 11 Oct 2022 22:36:17 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://www.roderickchan.cn/2022-10-11-%E4%BD%BF%E7%94%A8aliyun-hugo-even%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</guid>
+  <description><![CDATA[<p>整个搭建过程中，云服务器配置耗费时间需要<code>1~2</code>周，而在配置云服务器过程中占用时间最长的为域名备案，最长需要等待<code>2</code>周才能完成；剩下的几步只需要不到两个小时的时间即可完成。</p>]]></description>
+</item>
+<item>
+  <title>nginx配置的问题记录</title>
+  <link>https://www.roderickchan.cn/2023-04-01-nginx-config-problem/</link>
+  <pubDate>Sat, 01 Apr 2023 18:03:06 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://www.roderickchan.cn/2023-04-01-nginx-config-problem/</guid>
+  <description><![CDATA[<blockquote>
+<p>当域名没有规则匹配的时候，<code>nginx</code>的处理过程让我迷惑。</p>
+</blockquote>]]></description>
+</item>
+<item>
+  <title>Glibc高版本堆利用方法总结</title>
+  <link>https://www.roderickchan.cn/2023-03-01-analysis-of-glibc-heap-exploitation-in-high-version/</link>
+  <pubDate>Wed, 01 Mar 2023 20:44:12 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://www.roderickchan.cn/2023-03-01-analysis-of-glibc-heap-exploitation-in-high-version/</guid>
+  <description><![CDATA[<blockquote>
+<p>截止到目前，主要总结在<code>2.35~2.37</code>之间仍然残存的堆利用手法。</p>
+</blockquote>]]></description>
+</item>
+<item>
+  <title>Glibc堆利用之house of系列总结</title>
+  <link>https://www.roderickchan.cn/2023-02-27-house-of-all-about-glibc-heap-exploitation/</link>
+  <pubDate>Mon, 27 Feb 2023 15:10:08 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://www.roderickchan.cn/2023-02-27-house-of-all-about-glibc-heap-exploitation/</guid>
+  <description><![CDATA[<blockquote>
+<p>总结一下<code>glibc</code>堆利用的<code>house of</code>系列利用手法，主要参考了<a href="https://github.com/shellphish/how2heap"target="_blank" rel="external nofollow noopener noreferrer">how2heap<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>，同时参考了其他优秀的文章。</p>
+</blockquote>]]></description>
+</item>
+<item>
+  <title>The art of shellcode</title>
+  <link>https://www.roderickchan.cn/2023-02-20-the-art-of-shellcode/</link>
+  <pubDate>Mon, 20 Feb 2023 22:51:44 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://www.roderickchan.cn/2023-02-20-the-art-of-shellcode/</guid>
+  <description><![CDATA[<blockquote>
+<p>对<code>shellcode</code>知识点的一些总结。</p>
+</blockquote>]]></description>
+</item>
+<item>
+  <title>自己搭建一个libc database</title>
+  <link>https://www.roderickchan.cn/2023-02-15-%E8%87%AA%E5%B7%B1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAlibc-database/</link>
+  <pubDate>Wed, 15 Feb 2023 15:55:31 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://www.roderickchan.cn/2023-02-15-%E8%87%AA%E5%B7%B1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAlibc-database/</guid>
+  <description><![CDATA[<blockquote>
+<p>为什么要自己搭建一个<code>libc database</code>呢，因为官方的<a href="https://libc.rip/api/"target="_blank" rel="external nofollow noopener noreferrer">https://libc.rip/api/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>查询接口挂了。</p>
+</blockquote>]]></description>
+</item>
+<item>
+  <title>使用docker调试和部署pwn题</title>
+  <link>https://www.roderickchan.cn/2023-02-13-%E4%BD%BF%E7%94%A8docker%E8%B0%83%E8%AF%95pwn%E9%A2%98/</link>
+  <pubDate>Mon, 13 Feb 2023 13:49:22 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://www.roderickchan.cn/2023-02-13-%E4%BD%BF%E7%94%A8docker%E8%B0%83%E8%AF%95pwn%E9%A2%98/</guid>
+  <description><![CDATA[<blockquote>
+<p>使用<code>docker</code>快速部署不同架构、不同版本的调试环境。给出<code>docker</code>环境下<code>pwn</code>题部署模板。</p>
+</blockquote>]]></description>
+</item>
+<item>
+  <title>socat反弹shell&#43;tmux共享会话</title>
+  <link>https://www.roderickchan.cn/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D/</link>
+  <pubDate>Fri, 10 Feb 2023 15:18:13 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://www.roderickchan.cn/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D/</guid>
+  <description><![CDATA[<blockquote>
+<p>使用<code>socat</code>得到一个带有<code>pty</code>的<code>strong shell</code>，然后使用<code>tmux</code>共享会话和结对编程。</p>
+</blockquote>]]></description>
+</item>
+<item>
+  <title>pwn环境搭建脚本</title>
+  <link>https://www.roderickchan.cn/2023-02-10-pwn%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%84%9A%E6%9C%AC/</link>
+  <pubDate>Fri, 10 Feb 2023 12:25:18 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://www.roderickchan.cn/2023-02-10-pwn%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%84%9A%E6%9C%AC/</guid>
+  <description><![CDATA[<blockquote>
+<p>分享在<code>ubuntu</code>系统上一站式搭建<code>pwn</code>环境的脚本。</p>
+</blockquote>]]></description>
+</item>
+<item>
+  <title>使用cudatext替代notepad&#43;&#43;</title>
+  <link>https://www.roderickchan.cn/2023-02-08-%E4%BD%BF%E7%94%A8cudatext%E6%9B%BF%E4%BB%A3notepad-/</link>
+  <pubDate>Wed, 08 Feb 2023 10:17:01 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://www.roderickchan.cn/2023-02-08-%E4%BD%BF%E7%94%A8cudatext%E6%9B%BF%E4%BB%A3notepad-/</guid>
+  <description><![CDATA[<blockquote>
+<p>鉴于<code>notepad++</code>的作者总是发表降智言论，抵制<code>notepad++</code>，从我做起。</p>
+</blockquote>]]></description>
+</item>
+</channel>
+</rss>

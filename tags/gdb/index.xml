@@ -1,0 +1,28 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>gdb - 标签 - roderick - record and learn!</title>
+    <link>https://www.roderickchan.cn/tags/gdb/</link>
+    <description>gdb - 标签 - roderick - record and learn!</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
+      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 13 Feb 2023 13:49:22 &#43;0800</lastBuildDate><atom:link href="https://www.roderickchan.cn/tags/gdb/" rel="self" type="application/rss+xml" /><item>
+  <title>使用docker调试和部署pwn题</title>
+  <link>https://www.roderickchan.cn/2023-02-13-%E4%BD%BF%E7%94%A8docker%E8%B0%83%E8%AF%95pwn%E9%A2%98/</link>
+  <pubDate>Mon, 13 Feb 2023 13:49:22 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://www.roderickchan.cn/2023-02-13-%E4%BD%BF%E7%94%A8docker%E8%B0%83%E8%AF%95pwn%E9%A2%98/</guid>
+  <description><![CDATA[<blockquote>
+<p>使用<code>docker</code>快速部署不同架构、不同版本的调试环境。给出<code>docker</code>环境下<code>pwn</code>题部署模板。</p>
+</blockquote>]]></description>
+</item>
+<item>
+  <title>使用decomp2dbg调试程序</title>
+  <link>https://www.roderickchan.cn/2023-01-30-%E4%BD%BF%E7%94%A8decomp2dbg%E8%B0%83%E8%AF%95%E7%A8%8B%E5%BA%8F/</link>
+  <pubDate>Mon, 30 Jan 2023 20:39:51 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://www.roderickchan.cn/2023-01-30-%E4%BD%BF%E7%94%A8decomp2dbg%E8%B0%83%E8%AF%95%E7%A8%8B%E5%BA%8F/</guid>
+  <description><![CDATA[<blockquote>
+<p>使用<code>decomp2dbg</code>工具，统筹使用<code>IDA</code>和<code>gdb</code>调试程序。截至到目前(<code>2022-02-07</code>)，测试出工具的缺陷在于：函数较多时，会陷入卡顿状态；打开<code>vmlinux</code>，插件启动报错。</p>
+</blockquote>]]></description>
+</item>
+</channel>
+</rss>

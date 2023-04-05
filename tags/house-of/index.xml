@@ -1,0 +1,82 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>house of - 标签 - roderick - record and learn!</title>
+    <link>https://www.roderickchan.cn/tags/house-of/</link>
+    <description>house of - 标签 - roderick - record and learn!</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
+      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 27 Feb 2023 15:10:08 &#43;0800</lastBuildDate><atom:link href="https://www.roderickchan.cn/tags/house-of/" rel="self" type="application/rss+xml" /><item>
+  <title>Glibc堆利用之house of系列总结</title>
+  <link>https://www.roderickchan.cn/2023-02-27-house-of-all-about-glibc-heap-exploitation/</link>
+  <pubDate>Mon, 27 Feb 2023 15:10:08 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://www.roderickchan.cn/2023-02-27-house-of-all-about-glibc-heap-exploitation/</guid>
+  <description><![CDATA[<blockquote>
+<p>总结一下<code>glibc</code>堆利用的<code>house of</code>系列利用手法，主要参考了<a href="https://github.com/shellphish/how2heap"target="_blank" rel="external nofollow noopener noreferrer">how2heap<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>，同时参考了其他优秀的文章。</p>
+</blockquote>]]></description>
+</item>
+<item>
+  <title>House of Apple 一种新的glibc中IO攻击方法 (3)</title>
+  <link>https://www.roderickchan.cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-3/</link>
+  <pubDate>Tue, 18 Oct 2022 22:36:57 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://www.roderickchan.cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-3/</guid>
+  <description><![CDATA[<blockquote>
+<p>本文首发于<a href="https://bbs.pediy.com/thread-273863.htm"target="_blank" rel="external nofollow noopener noreferrer">看雪论坛<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>，仅在个人博客记录</p>
+</blockquote>
+<p>分享一系列新的<code>glibc</code>中<code>IO</code>利用思路，暂且命名为<code>house of apple</code>。
+这篇是<code>house of apple3</code>。
+本站的<code>house of apple</code>系列文章的地址为：</p>
+<ul>
+<li><a href="https://roderickchan.cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-1/"target="_blank" rel="external nofollow noopener noreferrer">house of apple1<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://roderickchan.cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-2/"target="_blank" rel="external nofollow noopener noreferrer">house of apple2<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://roderickchan.cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-3/"target="_blank" rel="external nofollow noopener noreferrer">house of apple3<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+</ul>]]></description>
+</item>
+<item>
+  <title>House of Apple 一种新的glibc中IO攻击方法 (2)</title>
+  <link>https://www.roderickchan.cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-2/</link>
+  <pubDate>Tue, 18 Oct 2022 22:36:54 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://www.roderickchan.cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-2/</guid>
+  <description><![CDATA[<blockquote>
+<p>本文首发于<a href="https://bbs.pediy.com/thread-273832.htm"target="_blank" rel="external nofollow noopener noreferrer">看雪论坛<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>，仅在个人博客记录</p>
+</blockquote>
+<p>分享一系列新的<code>glibc</code>中<code>IO</code>利用思路，暂且命名为<code>house of apple</code>。
+这篇是<code>house of apple2</code>。
+本站的<code>house of apple</code>系列文章的地址为：</p>
+<ul>
+<li><a href="https://roderickchan.cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-1/"target="_blank" rel="external nofollow noopener noreferrer">house of apple1<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://roderickchan.cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-2/"target="_blank" rel="external nofollow noopener noreferrer">house of apple2<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://roderickchan.cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-3/"target="_blank" rel="external nofollow noopener noreferrer">house of apple3<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+</ul>]]></description>
+</item>
+<item>
+  <title>House of Apple 一种新的glibc中IO攻击方法 (1)</title>
+  <link>https://www.roderickchan.cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-1/</link>
+  <pubDate>Tue, 18 Oct 2022 22:36:52 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://www.roderickchan.cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-1/</guid>
+  <description><![CDATA[<blockquote>
+<p>本文首发于<a href="https://bbs.pediy.com/thread-273418.htm"target="_blank" rel="external nofollow noopener noreferrer">看雪论坛<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>，仅在个人博客记录</p>
+</blockquote>
+<p>分享一系列新的<code>glibc</code>中<code>IO</code>利用思路，暂且命名为<code>house of apple</code>。
+这篇是<code>house of apple1</code>。
+本站的<code>house of apple</code>系列文章的地址为：</p>
+<ul>
+<li><a href="https://roderickchan.cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-1/"target="_blank" rel="external nofollow noopener noreferrer">house of apple1<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://roderickchan.cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-2/"target="_blank" rel="external nofollow noopener noreferrer">house of apple2<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://roderickchan.cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-3/"target="_blank" rel="external nofollow noopener noreferrer">house of apple3<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+</ul>]]></description>
+</item>
+<item>
+  <title>GlibcHeap-house of muney</title>
+  <link>https://www.roderickchan.cn/2022-06-18-glibcheap-house-of-muney/</link>
+  <pubDate>Sat, 18 Jun 2022 22:21:19 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://www.roderickchan.cn/2022-06-18-glibcheap-house-of-muney/</guid>
+  <description><![CDATA[<blockquote>
+<p><code>house of muney</code>的学习笔记。</p>
+</blockquote>]]></description>
+</item>
+</channel>
+</rss>

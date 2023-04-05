@@ -1,0 +1,18 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>tmux - 标签 - roderick - record and learn!</title>
+    <link>https://www.roderickchan.cn/tags/tmux/</link>
+    <description>tmux - 标签 - roderick - record and learn!</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
+      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 10 Feb 2023 15:18:13 &#43;0800</lastBuildDate><atom:link href="https://www.roderickchan.cn/tags/tmux/" rel="self" type="application/rss+xml" /><item>
+  <title>socat反弹shell&#43;tmux共享会话</title>
+  <link>https://www.roderickchan.cn/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D/</link>
+  <pubDate>Fri, 10 Feb 2023 15:18:13 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://www.roderickchan.cn/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D/</guid>
+  <description><![CDATA[<blockquote>
+<p>使用<code>socat</code>得到一个带有<code>pty</code>的<code>strong shell</code>，然后使用<code>tmux</code>共享会话和结对编程。</p>
+</blockquote>]]></description>
+</item>
+</channel>
+</rss>

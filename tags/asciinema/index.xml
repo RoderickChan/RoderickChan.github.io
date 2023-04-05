@@ -1,0 +1,18 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>asciinema - 标签 - roderick - record and learn!</title>
+    <link>https://www.roderickchan.cn/tags/asciinema/</link>
+    <description>asciinema - 标签 - roderick - record and learn!</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
+      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 29 Jan 2023 16:08:04 &#43;0800</lastBuildDate><atom:link href="https://www.roderickchan.cn/tags/asciinema/" rel="self" type="application/rss+xml" /><item>
+  <title>asciinema 使用记录</title>
+  <link>https://www.roderickchan.cn/2023-01-29-asciinema-%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/</link>
+  <pubDate>Sun, 29 Jan 2023 16:08:04 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://www.roderickchan.cn/2023-01-29-asciinema-%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/</guid>
+  <description><![CDATA[<blockquote>
+<p>简易记录<code>asciinema</code>工具录制命令行操作的使用教程。</p>
+</blockquote>]]></description>
+</item>
+</channel>
+</rss>

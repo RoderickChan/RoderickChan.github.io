@@ -1,0 +1,18 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>docker - 标签 - roderick - record and learn!</title>
+    <link>https://www.roderickchan.cn/tags/docker/</link>
+    <description>docker - 标签 - roderick - record and learn!</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
+      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 13 Feb 2023 13:49:22 &#43;0800</lastBuildDate><atom:link href="https://www.roderickchan.cn/tags/docker/" rel="self" type="application/rss+xml" /><item>
+  <title>使用docker调试和部署pwn题</title>
+  <link>https://www.roderickchan.cn/2023-02-13-%E4%BD%BF%E7%94%A8docker%E8%B0%83%E8%AF%95pwn%E9%A2%98/</link>
+  <pubDate>Mon, 13 Feb 2023 13:49:22 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://www.roderickchan.cn/2023-02-13-%E4%BD%BF%E7%94%A8docker%E8%B0%83%E8%AF%95pwn%E9%A2%98/</guid>
+  <description><![CDATA[<blockquote>
+<p>使用<code>docker</code>快速部署不同架构、不同版本的调试环境。给出<code>docker</code>环境下<code>pwn</code>题部署模板。</p>
+</blockquote>]]></description>
+</item>
+</channel>
+</rss>
