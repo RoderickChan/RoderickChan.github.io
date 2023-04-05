@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>pwn题命令行解题脚本 - roderick - record and learn!</title><meta name="author" content="roderick">
+<meta name="author-link" content="https://www.roderickchan.cn">
+<meta name="description" content="这是专门为本地调试与远程答题准备的脚本，依靠命令行参数进行控制。 本脚本支持的功能有： 本地调试 开启tmux调试 设置gdb断点，支持函数名断点、" /><meta name="keywords" content='pwn' /><meta itemprop="name" content="pwn题命令行解题脚本">
+<meta itemprop="description" content="这是专门为本地调试与远程答题准备的脚本，依靠命令行参数进行控制。 本脚本支持的功能有： 本地调试 开启tmux调试 设置gdb断点，支持函数名断点、"><meta itemprop="datePublished" content="2021-04-02T21:19:06+08:00" />
+<meta itemprop="dateModified" content="2023-04-05T13:15:37+08:00" />
+<meta itemprop="wordCount" content="2481"><meta itemprop="image" content="https://www.roderickchan.cn/"/>
+<meta itemprop="keywords" content="pwn," /><meta property="og:title" content="pwn题命令行解题脚本" />
+<meta property="og:description" content="这是专门为本地调试与远程答题准备的脚本，依靠命令行参数进行控制。 本脚本支持的功能有： 本地调试 开启tmux调试 设置gdb断点，支持函数名断点、" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.roderickchan.cn/zh-cn/2021-04-02-pwn%E9%A2%98%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%A7%A3%E9%A2%98%E8%84%9A%E6%9C%AC/" /><meta property="og:image" content="https://www.roderickchan.cn/"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-04-02T21:19:06+08:00" />
+<meta property="article:modified_time" content="2023-04-05T13:15:37+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.roderickchan.cn/"/>
+
+<meta name="twitter:title" content="pwn题命令行解题脚本"/>
+<meta name="twitter:description" content="这是专门为本地调试与远程答题准备的脚本，依靠命令行参数进行控制。 本脚本支持的功能有： 本地调试 开启tmux调试 设置gdb断点，支持函数名断点、"/>
+<meta name="application-name" content="roderick - record and learn!">
+<meta name="apple-mobile-web-app-title" content="roderick - record and learn!"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://www.roderickchan.cn/zh-cn/2021-04-02-pwn%E9%A2%98%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%A7%A3%E9%A2%98%E8%84%9A%E6%9C%AC/" /><link rel="prev" href="https://www.roderickchan.cn/zh-cn/2021-03-28-python%E5%B8%A6%E9%A2%9C%E8%89%B2%E6%89%93%E5%8D%B0%E5%AD%97%E7%AC%A6%E4%B8%B2/" /><link rel="next" href="https://www.roderickchan.cn/zh-cn/2021-04-03-bcloud-bctf-2016/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "pwn题命令行解题脚本",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/www.roderickchan.cn\/zh-cn\/2021-04-02-pwn%E9%A2%98%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%A7%A3%E9%A2%98%E8%84%9A%E6%9C%AC\/"
+    },"image": ["https:\/\/www.roderickchan.cn\/images\/Apple-Devices-Preview.jpg"],"genre": "posts","keywords": "pwn","wordcount":  2481 ,
+    "url": "https:\/\/www.roderickchan.cn\/zh-cn\/2021-04-02-pwn%E9%A2%98%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%A7%A3%E9%A2%98%E8%84%9A%E6%9C%AC\/","datePublished": "2021-04-02T21:19:06+08:00","dateModified": "2023-04-05T13:15:37+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+      "@type": "Organization",
+      "name": "roderick","logo": "https:\/\/www.roderickchan.cn\/logo.png"},"author": {
+        "@type": "Person",
+        "name": "roderick"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="/zh-cn/" title="roderick - record and learn!"><img loading="lazy" src="/logo.png" srcset="/logo.png, /logo.png 1.5x, /logo.png 2x" sizes="auto" data-title="roderick - record and learn!" data-alt="roderick - record and learn!" class="logo" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/><span class="header-title-text">roderick&#39;s blog</span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item text-center">
+              <a
+                class="menu-link"
+                href="/zh-cn/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/zh-cn/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/zh-cn/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/zh-cn/tutorial/pwncli/"
+                
+                
+              ><i class="fa-solid fa-book fa-fw fa-sm" aria-hidden="true"></i> pwncli教程</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/zh-cn/friends/"
+                title="友情链接"
+                
+              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/zh-cn/about/"
+                
+                
+              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language-switch">
+            <span role="button" aria-label="选择语言" title="选择语言"><i class="fa-solid fa-language fa-fw" aria-hidden="true"></i></span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/zh-cn/" title="roderick - record and learn!"><img loading="lazy" src="/logo.png" srcset="/logo.png, /logo.png 1.5x, /logo.png 2x" sizes="auto" data-title="/logo.png" data-alt="/logo.png" class="logo" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/><span class="header-title-text">roderick&#39;s blog</span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="/zh-cn/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/zh-cn/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/zh-cn/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/zh-cn/tutorial/pwncli/"
+                  
+                  
+                ><i class="fa-solid fa-book fa-fw fa-sm" aria-hidden="true"></i> pwncli教程</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/zh-cn/friends/"
+                  title="友情链接"
+                  
+                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/zh-cn/about/"
+                  
+                  
+                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="https://github.com/RoderickChan"
+                  title="GitHub"
+                  rel="noopener noreferrer" target="_blank"
+                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span><span class="menu-system-item language-switch">
+              <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+              <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+            </span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/zh-cn/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">pwn题命令行解题脚本</li>
+    </ol>
+  </nav><main class="container"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom">
+    </aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>pwn题命令行解题脚本</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><a href="https://www.roderickchan.cn" title="作者"target="_blank" rel="external nofollow noopener noreferrer author" class="author"><img loading="lazy" src="https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp" srcset="https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp, https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp 1.5x, https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp 2x" sizes="auto" data-title="roderick" data-alt="roderick" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;roderick</a></span>
+          <span class="post-category">收录于 <a href="/zh-cn/categories/tools/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> tools</a></span></div>
+      <div class="post-meta-line"><span title="发布于 2021-04-02 21:19:06"><i class="fa-regular fa-calendar-alt fa-fw me-1" aria-hidden="true"></i><time datetime="2021-04-02">2021-04-02</time></span>&nbsp;<span title="更新于 2023-04-05 13:15:37"><i class="fa-regular fa-edit fa-fw me-1" aria-hidden="true"></i><time datetime="2023-04-05">2023-04-05</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 2481 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 5 分钟</span>&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="pwn题命令行解题脚本">
+              <i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+            </span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#脚本内容">脚本内容</a></li>
+            <li><a href="#使用">使用</a></li>
+            <li><a href="#使用示例">使用示例</a></li>
+            <li><a href="#参考与引用">参考与引用</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><p>这是专门为本地调试与远程答题准备的脚本，依靠命令行参数进行控制。
+本脚本支持的功能有：</p>
+<ul>
+<li>本地调试
+<ul>
+<li>开启<code>tmux</code>调试</li>
+<li>设置<code>gdb</code>断点，支持<code>函数名断点</code>、<code>地址断点</code>、<code>文件名:行号断点</code>、<code>$rebase(0x00)断点</code></li>
+<li>设置<code>gdb script</code>，可以设置任何内置的<code>gdb</code>命令</li>
+</ul>
+</li>
+<li>远程答题
+<ul>
+<li>默认支持<code>buuctf</code>，只需要指定远程<code>port</code></li>
+<li>显式指定远程<code>ip</code>和<code>port</code></li>
+</ul>
+</li>
+<li>使用的装饰器函数、偏函数
+<ul>
+<li>在执行函数前、后线程休眠指定秒数</li>
+<li>记录函数执行日志</li>
+<li><code>int16</code>，字符串与整数转化</li>
+</ul>
+</li>
+<li>可自由定制
+<ul>
+<li>依托<code>click</code>模块进行自由定制</li>
+</ul>
+</li>
+</ul>
+<!-- more -->
+<h3 id="脚本内容">脚本内容</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span><span class="lnt">199
+</span><span class="lnt">200
+</span><span class="lnt">201
+</span><span class="lnt">202
+</span><span class="lnt">203
+</span><span class="lnt">204
+</span><span class="lnt">205
+</span><span class="lnt">206
+</span><span class="lnt">207
+</span><span class="lnt">208
+</span><span class="lnt">209
+</span><span class="lnt">210
+</span><span class="lnt">211
+</span><span class="lnt">212
+</span><span class="lnt">213
+</span><span class="lnt">214
+</span><span class="lnt">215
+</span><span class="lnt">216
+</span><span class="lnt">217
+</span><span class="lnt">218
+</span><span class="lnt">219
+</span><span class="lnt">220
+</span><span class="lnt">221
+</span><span class="lnt">222
+</span><span class="lnt">223
+</span><span class="lnt">224
+</span><span class="lnt">225
+</span><span class="lnt">226
+</span><span class="lnt">227
+</span><span class="lnt">228
+</span><span class="lnt">229
+</span><span class="lnt">230
+</span><span class="lnt">231
+</span><span class="lnt">232
+</span><span class="lnt">233
+</span><span class="lnt">234
+</span><span class="lnt">235
+</span><span class="lnt">236
+</span><span class="lnt">237
+</span><span class="lnt">238
+</span><span class="lnt">239
+</span><span class="lnt">240
+</span><span class="lnt">241
+</span><span class="lnt">242
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="ch">#!/usr/bin/python3</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># -*- encoding: utf-8 -*-</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># @File    : do_pwn_template.py</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># @Time    : 2021/04/02 21:15:43</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># @Author  : Roderick Chan</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># @Email   : ch22166@163.com</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># @Desc    : pwn题本地调试、远程攻击脚本</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">==========================================================================================
+</span></span></span><span class="line"><span class="cl"><span class="s1">本脚本为pwn题所编写，利用click模块配置命令行参数，
+</span></span></span><span class="line"><span class="cl"><span class="s1">能方便地进行本地调试和远程解题。
+</span></span></span><span class="line"><span class="cl"><span class="s1">本地命令示例：
+</span></span></span><span class="line"><span class="cl"><span class="s1">    python3 exp.py filename --tmux 1 --gdb-breakpoint 0x804802a --gdb-breakpoint printf
+</span></span></span><span class="line"><span class="cl"><span class="s1">    python3 exp.py filename -t 1 -gb 0x804802a -gb printf
+</span></span></span><span class="line"><span class="cl"><span class="s1">    python3 exp.py filename -t 1 -gs &#34;x /12gx \$rebase(0x202080)&#34; -sf 0 -pl &#34;warn&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    即可开始本地调试,并且会断在地址或函数处。先启动tmux后，--tmux才会有效。
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">远程命令示例：
+</span></span></span><span class="line"><span class="cl"><span class="s1">    python3 exp.py filename -i 127.0.0.1 -p 22164
+</span></span></span><span class="line"><span class="cl"><span class="s1">    python3 exp.py filename -p 22164
+</span></span></span><span class="line"><span class="cl"><span class="s1">    可以连接指定的IP和端口。目前在刷buuctf上的题，所以填了默认ip，只指定端口即可。
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">==========================================================================================
+</span></span></span><span class="line"><span class="cl"><span class="s1">&#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">LibcSearcher</span> <span class="kn">import</span> <span class="n">LibcSearcher</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">click</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sys</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">functools</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="vm">__doc__</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">FILENAME</span> <span class="o">=</span> <span class="s1">&#39;#&#39;</span> <span class="c1"># 要执行的文件名</span>
+</span></span><span class="line"><span class="cl"><span class="n">DEBUG</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># 是否为调试模式</span>
+</span></span><span class="line"><span class="cl"><span class="n">TMUX</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># 是否开启TMUX</span>
+</span></span><span class="line"><span class="cl"><span class="n">GDB_BREAKPOINT</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># 当tmux开启的时候，断点的设置</span>
+</span></span><span class="line"><span class="cl"><span class="n">GDB_SCRIPT</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># 当tmux开启的时候, gdb_script的设置，可以是任意有效的语句</span>
+</span></span><span class="line"><span class="cl"><span class="n">IP</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># 远程连接的IP</span>
+</span></span><span class="line"><span class="cl"><span class="n">PORT</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># 远程连接的端口</span>
+</span></span><span class="line"><span class="cl"><span class="n">LOCAL_LOG</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># 本地LOG是否开启</span>
+</span></span><span class="line"><span class="cl"><span class="n">PWN_LOG_LEVEL</span> <span class="o">=</span> <span class="s1">&#39;debug&#39;</span> <span class="c1"># pwntools的log级别设置</span>
+</span></span><span class="line"><span class="cl"><span class="n">STOP_FUNCTION</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># STOP方法是否开启</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">CONTEXT_SETTINGS</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">help_option_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;-h&#39;</span><span class="p">,</span> <span class="s1">&#39;--help&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@click.command</span><span class="p">(</span><span class="n">context_settings</span><span class="o">=</span><span class="n">CONTEXT_SETTINGS</span><span class="p">,</span> <span class="n">short_help</span><span class="o">=</span><span class="s1">&#39;Do pwn!&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@click.argument</span><span class="p">(</span><span class="s1">&#39;filename&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@click.option</span><span class="p">(</span><span class="s1">&#39;-d&#39;</span><span class="p">,</span> <span class="s1">&#39;--debug&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">bool</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Excute program at local env or remote env. Default value: True.&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@click.option</span><span class="p">(</span><span class="s1">&#39;-t&#39;</span><span class="p">,</span> <span class="s1">&#39;--tmux&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">bool</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Excute program at tmux or not. Default value: False.&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@click.option</span><span class="p">(</span><span class="s1">&#39;-gb&#39;</span><span class="p">,</span> <span class="s1">&#39;--gdb-breakpoint&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="p">[],</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">multiple</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&#34;Set a gdb breakpoint while tmux is enabled, is a hex address or &#39;\$rebase&#39; addr or a function name. Multiple setting supported. Default value:&#39;[]&#39;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@click.option</span><span class="p">(</span><span class="s1">&#39;-gs&#39;</span><span class="p">,</span> <span class="s1">&#39;--gdb-script&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&#34;Set a gdb script while tmux is enabled, the script will be passed to gdb and use &#39;</span><span class="se">\\</span><span class="s2">n&#39; or &#39;;&#39; to split lines. Default value:None&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@click.option</span><span class="p">(</span><span class="s1">&#39;-i&#39;</span><span class="p">,</span> <span class="s1">&#39;--ip&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The remote ip addr. Default value: None.&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@click.option</span><span class="p">(</span><span class="s1">&#39;-p&#39;</span><span class="p">,</span> <span class="s1">&#39;--port&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The remote port. Default value: None.&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@click.option</span><span class="p">(</span><span class="s1">&#39;-ll&#39;</span><span class="p">,</span> <span class="s1">&#39;--local-log&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">bool</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Set local log enabled or not. Default value: True.&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@click.option</span><span class="p">(</span><span class="s1">&#39;-pl&#39;</span><span class="p">,</span> <span class="s1">&#39;--pwn-log&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">&#39;debug&#39;</span><span class="p">,</span> <span class="s1">&#39;info&#39;</span><span class="p">,</span> <span class="s1">&#39;warn&#39;</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="s1">&#39;notset&#39;</span><span class="p">]),</span> <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;debug&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Set pwntools log level. Default value: debug.&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@click.option</span><span class="p">(</span><span class="s1">&#39;-sf&#39;</span><span class="p">,</span> <span class="s1">&#39;--stop-function&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">bool</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Set stop function enabled or not. Default value: True.&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">parse_command_args</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">debug</span><span class="p">,</span> <span class="n">tmux</span><span class="p">,</span> <span class="n">gdb_breakpoint</span><span class="p">,</span> <span class="n">gdb_script</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                       <span class="n">ip</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">local_log</span><span class="p">,</span> <span class="n">pwn_log</span><span class="p">,</span> <span class="n">stop_function</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;&#39;&#39;FILENAME: The filename of current directory to pwn&#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">global</span> <span class="n">FILENAME</span><span class="p">,</span> <span class="n">DEBUG</span><span class="p">,</span> <span class="n">TMUX</span><span class="p">,</span> <span class="n">GDB_BREAKPOINT</span><span class="p">,</span> <span class="n">GDB_SCRIPT</span><span class="p">,</span> <span class="n">IP</span><span class="p">,</span> <span class="n">PORT</span><span class="p">,</span> <span class="n">LOCAL_LOG</span><span class="p">,</span> <span class="n">PWN_LOG_LEVEL</span><span class="p">,</span> <span class="n">STOP_FUNCTION</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># assign</span>
+</span></span><span class="line"><span class="cl">    <span class="n">FILENAME</span> <span class="o">=</span> <span class="n">filename</span>
+</span></span><span class="line"><span class="cl">    <span class="n">DEBUG</span> <span class="o">=</span> <span class="n">debug</span>
+</span></span><span class="line"><span class="cl">    <span class="n">TMUX</span> <span class="o">=</span> <span class="n">tmux</span>
+</span></span><span class="line"><span class="cl">    <span class="n">GDB_BREAKPOINT</span> <span class="o">=</span> <span class="n">gdb_breakpoint</span>
+</span></span><span class="line"><span class="cl">    <span class="n">GDB_SCRIPT</span> <span class="o">=</span> <span class="n">gdb_script</span>
+</span></span><span class="line"><span class="cl">    <span class="n">IP</span> <span class="o">=</span> <span class="n">ip</span>
+</span></span><span class="line"><span class="cl">    <span class="n">PORT</span> <span class="o">=</span> <span class="n">port</span>
+</span></span><span class="line"><span class="cl">    <span class="n">LOCAL_LOG</span> <span class="o">=</span> <span class="n">local_log</span>
+</span></span><span class="line"><span class="cl">    <span class="n">PWN_LOG_LEVEL</span> <span class="o">=</span> <span class="n">pwn_log</span>
+</span></span><span class="line"><span class="cl">    <span class="n">STOP_FUNCTION</span> <span class="o">=</span> <span class="n">stop_function</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># change</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">PORT</span><span class="p">:</span> <span class="c1"># 远程下这些是需要关闭的</span>
+</span></span><span class="line"><span class="cl">        <span class="n">DEBUG</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">        <span class="n">TMUX</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">        <span class="n">STOP_FUNCTION</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">        <span class="n">GDB_BREAKPOINT</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">        <span class="n">GDB_SCRIPT</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">IP</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">IP</span> <span class="o">=</span> <span class="s1">&#39;node3.buuoj.cn&#39;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">IP</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">        <span class="n">PORT</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># assert</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="ow">not</span> <span class="p">(</span><span class="n">FILENAME</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">PORT</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">),</span> <span class="s1">&#39;para error&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="ow">not</span> <span class="p">(</span><span class="n">FILENAME</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">DEBUG</span> <span class="o">==</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;para error&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="ow">not</span> <span class="p">(</span><span class="n">PORT</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">DEBUG</span> <span class="o">==</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;para error&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="ow">not</span> <span class="p">(</span><span class="n">DEBUG</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">TMUX</span> <span class="o">==</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;para error&#39;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># print</span>
+</span></span><span class="line"><span class="cl">    <span class="n">click</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="s1">&#39;=&#39;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">click</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="s1">&#39; [+] Args info:</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">FILENAME</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">click</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="s1">&#39;  filename: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">FILENAME</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">click</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="s1">&#39;  debug enabled: </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">DEBUG</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">click</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="s1">&#39;  tmux enabled: </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">TMUX</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">GDB_BREAKPOINT</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">click</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="s1">&#39;  gdb breakpoint: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">GDB_BREAKPOINT</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="n">GDB_SCRIPT</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="n">click</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="s2">&#34;  gdb script: </span><span class="si">{}</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">GDB_SCRIPT</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">IP</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">click</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="s1">&#39;  remote ip: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">IP</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">PORT</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">click</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="s1">&#39;  remote port: </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">PORT</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">click</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="s1">&#39;  local log enabled: </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">LOCAL_LOG</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">click</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="s1">&#39;  pwn log_level: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">PWN_LOG_LEVEL</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">click</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="s1">&#39;  stop function enabled: </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">STOP_FUNCTION</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">click</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="s1">&#39;=&#39;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">parse_command_args</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="n">standalone_mode</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 退出条件，只要参数有 -h 或 --help就退出</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="s1">&#39;-h&#39;</span> <span class="o">==</span> <span class="n">arg</span> <span class="ow">or</span> <span class="s1">&#39;--help&#39;</span> <span class="o">==</span> <span class="n">arg</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">io</span> <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">FILENAME</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">io</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">IP</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">TMUX</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">context</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">terminal</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;tmux&#39;</span><span class="p">,</span> <span class="s1">&#39;splitw&#39;</span><span class="p">,</span> <span class="s1">&#39;-h&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="n">tmp_all_gdb</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">GDB_BREAKPOINT</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">GDB_BREAKPOINT</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 解析每一条gdb-breakpoint</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">gb</span> <span class="ow">in</span> <span class="n">GDB_BREAKPOINT</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">gb</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;0x&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">gb</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;$rebase(&#39;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="n">tmp_all_gdb</span> <span class="o">+=</span> <span class="s2">&#34;b *</span><span class="si">{}</span><span class="se">\n</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">gb</span><span class="p">)</span> <span class="c1"># 带上*</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span><span class="p">:</span> <span class="c1"># 传入函数</span>
+</span></span><span class="line"><span class="cl">                <span class="n">tmp_all_gdb</span> <span class="o">+=</span> <span class="s2">&#34;b </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">gb</span><span class="p">)</span> <span class="c1"># 不带*</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">GDB_SCRIPT</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tmp_all_gdb</span> <span class="o">+=</span> <span class="n">GDB_SCRIPT</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\\</span><span class="s2">n&#34;</span><span class="p">,</span> <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&#34;;&#34;</span><span class="p">,</span> <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">tmp_all_gdb</span> <span class="o">+=</span> <span class="s2">&#34;c</span><span class="se">\n</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">gdb</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="n">gdbscript</span><span class="o">=</span><span class="n">tmp_all_gdb</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">FILENAME</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cur_elf</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">FILENAME</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[+] libc used ===&gt; </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cur_elf</span><span class="o">.</span><span class="n">libc</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">LOG_ADDR</span><span class="p">(</span><span class="n">addr_name</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">addr</span><span class="p">:</span><span class="nb">int</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">LOCAL_LOG</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">{}</span><span class="s2"> ===&gt; </span><span class="si">{}</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">addr_name</span><span class="p">,</span> <span class="nb">hex</span><span class="p">(</span><span class="n">addr</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">LOG_ADDR_EX</span><span class="p">(</span><span class="n">addr_name</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    存储地址的变量名，字符串
+</span></span></span><span class="line"><span class="cl"><span class="s1">    如：a = 0xdeadbeef 
+</span></span></span><span class="line"><span class="cl"><span class="s1">    调用: LOG_ADDR_EX(&#39;a&#39;)
+</span></span></span><span class="line"><span class="cl"><span class="s1">    
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">LOCAL_LOG</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 利用eval函数, 首先检索一下</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">addr_name</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">()</span> <span class="ow">or</span> <span class="n">addr_name</span> <span class="ow">in</span> <span class="nb">vars</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">            <span class="n">tmp_var</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">addr_name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">{}</span><span class="s2"> ===&gt; </span><span class="si">{}</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">addr_name</span><span class="p">,</span> <span class="nb">hex</span><span class="p">(</span><span class="n">tmp_var</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">log</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&#34;No variable named: &#39;&#34;</span> <span class="o">+</span> <span class="n">addr_name</span> <span class="o">+</span> <span class="s2">&#34;&#39;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">STOP</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">STOP_FUNCTION</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;stop...</span><span class="si">{}</span><span class="s2">  </span><span class="si">{}</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_lineno</span><span class="p">,</span> <span class="n">proc</span><span class="o">.</span><span class="n">pidof</span><span class="p">(</span><span class="n">io</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pause</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">############### 定义一些偏函数 ###################</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">int16</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#################### END ########################</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">############### 定义一些装饰器函数 ###############</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">time_count</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    装饰器：统计函数运行时间
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@functools.wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;=&#39;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;function #</span><span class="si">{}</span><span class="s1"># start...&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">res</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;function #</span><span class="si">{}</span><span class="s1"># end...execute time: </span><span class="si">{}</span><span class="s1"> s / </span><span class="si">{}</span><span class="s1"> min&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">,</span> <span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span> <span class="o">/</span> <span class="mi">60</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">res</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">wrapper</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">sleep_call</span><span class="p">(</span><span class="n">second</span><span class="p">:</span><span class="nb">int</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">mod</span><span class="p">:</span><span class="nb">int</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    装饰器：在调用函数前后线程先睡眠指定秒数
+</span></span></span><span class="line"><span class="cl"><span class="s2">    
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Args:
+</span></span></span><span class="line"><span class="cl"><span class="s2">        second: 休眠秒数
+</span></span></span><span class="line"><span class="cl"><span class="s2">        mod: 0 不休眠; 1 为调用前休眠; 2 为调用后休眠; 3 为前后均修眠
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">mod</span> <span class="o">&gt;</span> <span class="mi">3</span> <span class="ow">or</span> <span class="n">mod</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">mod</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">wrapper1</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nd">@functools.wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">def</span> <span class="nf">wrapper2</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">mod</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">second</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">res</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">mod</span> <span class="o">&amp;</span> <span class="mi">2</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">second</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">res</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">wrapper2</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">wrapper1</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="c1">#################### END ########################</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">context</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">log_level</span><span class="o">=</span><span class="n">PWN_LOG_LEVEL</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 一般需要带上文件，可注释改行语句</span>
+</span></span><span class="line"><span class="cl"><span class="k">assert</span> <span class="n">FILENAME</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;give me a file!&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">##################################################</span>
+</span></span><span class="line"><span class="cl"><span class="c1">##############以下为攻击代码#######################</span>
+</span></span><span class="line"><span class="cl"><span class="c1">##################################################</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="使用">使用</h3>
+<p>使用详情基本在注释里面写得很清楚了，这里展示一下输入<code>python exp.py -h</code>后显示的帮助信息：</p>
+<p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210402233749.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210402233749.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210402233749.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210402233749.png 2x" sizes="auto" data-title="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210402233749.png" data-alt="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210402233749.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210402233915.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210402233915.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210402233915.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210402233915.png 2x" sizes="auto" data-title="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210402233915.png" data-alt="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210402233915.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210402234008.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210402234008.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210402234008.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210402234008.png 2x" sizes="auto" data-title="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210402234008.png" data-alt="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210402234008.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p>笔记本屏幕有点小······</p>
+<p>以下为全部显示内容：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">==========================================================================================
+</span></span><span class="line"><span class="cl">本脚本为pwn题所编写，利用click模块配置命令行参数，
+</span></span><span class="line"><span class="cl">能方便地进行本地调试和远程解题。
+</span></span><span class="line"><span class="cl">本地命令示例：
+</span></span><span class="line"><span class="cl">    python3 exp.py filename --tmux 1 --gdb-breakpoint 0x804802a --gdb-breakpoint printf
+</span></span><span class="line"><span class="cl">    python3 exp.py filename -t 1 -gb 0x804802a -gb printf
+</span></span><span class="line"><span class="cl">    python3 exp.py filename -t 1 -gs &#34;x /12gx $rebase(0x202080)&#34; -sf 0 -pl &#34;warn&#34;
+</span></span><span class="line"><span class="cl">    即可开始本地调试,并且会断在地址或函数处。先启动tmux后，--tmux才会有效。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">远程命令示例：
+</span></span><span class="line"><span class="cl">    python3 exp.py filename -i 127.0.0.1 -p 22164
+</span></span><span class="line"><span class="cl">    python3 exp.py filename -p 22164
+</span></span><span class="line"><span class="cl">    可以连接指定的IP和端口。目前在刷buuctf上的题，所以填了默认ip，只指定端口即可。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">==========================================================================================
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Usage: do_pwn_template.py [OPTIONS] [FILENAME]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  FILENAME: The filename of current directory to pwn
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Options:
+</span></span><span class="line"><span class="cl">  -d, --debug BOOLEAN             Excute program at local env or remote env.
+</span></span><span class="line"><span class="cl">                                  Default value: True.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  -t, --tmux BOOLEAN              Excute program at tmux or not. Default
+</span></span><span class="line"><span class="cl">                                  value: False.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  -gb, --gdb-breakpoint TEXT      Set a gdb breakpoint while tmux is enabled,
+</span></span><span class="line"><span class="cl">                                  is a hex address or &#39;$rebase&#39; addr or a
+</span></span><span class="line"><span class="cl">                                  function name. Multiple setting supported.
+</span></span><span class="line"><span class="cl">                                  Default value:&#39;[]&#39;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  -gs, --gdb-script TEXT          Set a gdb script while tmux is enabled, the
+</span></span><span class="line"><span class="cl">                                  script will be passed to gdb and cannot be
+</span></span><span class="line"><span class="cl">                                  identified with gdb-breakpoint
+</span></span><span class="line"><span class="cl">                                  simultaneously. Default value:None
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  -i, --ip TEXT                   The remote ip addr. Default value: None.
+</span></span><span class="line"><span class="cl">  -p, --port INTEGER              The remote port. Default value: None.
+</span></span><span class="line"><span class="cl">  -ll, --local-log BOOLEAN        Set local log enabled or not. Default value:
+</span></span><span class="line"><span class="cl">                                  True.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  -pl, --pwn-log [debug|info|warn|error|notset]
+</span></span><span class="line"><span class="cl">                                  Set pwntools log level. Default value:
+</span></span><span class="line"><span class="cl">                                  debug.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  -sf, --stop-function BOOLEAN    Set stop function enabled or not. Default
+</span></span><span class="line"><span class="cl">                                  value: True.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  -h, --help                      Show this message and exit.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="使用示例">使用示例</h3>
+<p>本地调试：
+输入：<code>python3 exp.py ./ycb_2020_babypwn -t 1 -gs &quot;b malloc\nb free&quot;</code>
+<img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405125931.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405125931.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405125931.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405125931.png 2x" sizes="auto" data-title="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405125931.png" data-alt="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405125931.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>
+自动下断点<code>malloc</code>和<code>free</code>
+输入：<code>python3 exp.py ./ycb_2020_babypwn -t 1 -gb &quot;\$rebase(0xc1f)&quot;</code>，这里要加上转义字符，否会失败。
+<img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405133859.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405133859.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405133859.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405133859.png 2x" sizes="auto" data-title="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405133859.png" data-alt="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405133859.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>
+的确断住了。
+远程攻击：
+输入：<code>python3 exp.py ./ycb_2020_babypwn -i &quot;127.0.0.1&quot; -p 6666</code>
+<img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405134223.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405134223.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405134223.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405134223.png 2x" sizes="auto" data-title="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405134223.png" data-alt="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405134223.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<h3 id="参考与引用">参考与引用</h3>
+<ul>
+<li>click帮助文档：<a href="https://click.palletsprojects.com/en/7.x/"target="_blank" rel="external nofollow noopener noreferrer">https://click.palletsprojects.com/en/7.x/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li>pwntools帮助文档：<a href="https://docs.pwntools.com/en/latest/"target="_blank" rel="external nofollow noopener noreferrer">https://docs.pwntools.com/en/latest/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2023-04-05 13:15:37">更新于 2023-04-05&nbsp;</span>
+      </div><div class="post-info-license">
+          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+        </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://www.roderickchan.cn/zh-cn/2021-04-02-pwn%E9%A2%98%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%A7%A3%E9%A2%98%E8%84%9A%E6%9C%AC/" data-title="pwn题命令行解题脚本" data-hashtags="pwn"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://www.roderickchan.cn/zh-cn/2021-04-02-pwn%E9%A2%98%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%A7%A3%E9%A2%98%E8%84%9A%E6%9C%AC/" data-hashtag="pwn"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Linkedin" data-sharer="linkedin" data-url="https://www.roderickchan.cn/zh-cn/2021-04-02-pwn%E9%A2%98%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%A7%A3%E9%A2%98%E8%84%9A%E6%9C%AC/"><i class="fa-brands fa-linkedin fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://www.roderickchan.cn/zh-cn/2021-04-02-pwn%E9%A2%98%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%A7%A3%E9%A2%98%E8%84%9A%E6%9C%AC/" data-title="pwn题命令行解题脚本" data-web><i class="fa-brands fa-whatsapp fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://www.roderickchan.cn/zh-cn/2021-04-02-pwn%E9%A2%98%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%A7%A3%E9%A2%98%E8%84%9A%E6%9C%AC/" data-title="pwn题命令行解题脚本"><i class="fa-brands fa-hacker-news fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Reddit" data-sharer="reddit" data-url="https://www.roderickchan.cn/zh-cn/2021-04-02-pwn%E9%A2%98%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%A7%A3%E9%A2%98%E8%84%9A%E6%9C%AC/"><i class="fa-brands fa-reddit fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://www.roderickchan.cn/zh-cn/2021-04-02-pwn%E9%A2%98%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%A7%A3%E9%A2%98%E8%84%9A%E6%9C%AC/" data-title="pwn题命令行解题脚本"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Instapaper" data-sharer="instapaper" data-url="https://www.roderickchan.cn/zh-cn/2021-04-02-pwn%E9%A2%98%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%A7%A3%E9%A2%98%E8%84%9A%E6%9C%AC/" data-title="pwn题命令行解题脚本" data-description=""><i data-svg-src="/lib/simple-icons/icons/instapaper.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://www.roderickchan.cn/zh-cn/2021-04-02-pwn%E9%A2%98%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%A7%A3%E9%A2%98%E8%84%9A%E6%9C%AC/" data-title="pwn题命令行解题脚本"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="https://www.roderickchan.cn/zh-cn/2021-04-02-pwn%E9%A2%98%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%A7%A3%E9%A2%98%E8%84%9A%E6%9C%AC/" data-title="pwn题命令行解题脚本" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="https://www.roderickchan.cn/zh-cn/2021-04-02-pwn%E9%A2%98%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%A7%A3%E9%A2%98%E8%84%9A%E6%9C%AC/" data-title="pwn题命令行解题脚本"><i data-svg-src="/lib/simple-icons/icons/baidu.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="https://www.roderickchan.cn/zh-cn/2021-04-02-pwn%E9%A2%98%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%A7%A3%E9%A2%98%E8%84%9A%E6%9C%AC/" data-title="pwn题命令行解题脚本"><i class="fa-brands fa-evernote fa-fw" aria-hidden="true"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href='/zh-cn/tags/pwn/' class="post-tag">pwn</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/zh-cn/2021-03-28-python%E5%B8%A6%E9%A2%9C%E8%89%B2%E6%89%93%E5%8D%B0%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="post-nav-item" rel="prev" title="python带颜色打印字符串"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>python带颜色打印字符串</a>
+      <a href="/zh-cn/2021-04-03-bcloud-bctf-2016/" class="post-nav-item" rel="next" title="bcloud_bctf_2016">bcloud_bctf_2016<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div class="post-reward">
+    <div class="comment">Buy me a coffee~</div>
+    <input type="checkbox" class="reward-input" name="reward" id="fi-reward" hidden />
+    <label class="reward-button" for="fi-reward">赞赏</label>
+    <div class="reward-ways" data-mode="fixed"><div><img loading="lazy" src="/img/reward/alipay.jpg" srcset="/img/reward/alipay.jpg, /img/reward/alipay.jpg 1.5x, /img/reward/alipay.jpg 2x" sizes="auto" data-title="roderick 支付宝" data-alt="roderick 支付宝" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/><span data-animation>支付宝</span>
+          </div><div><img loading="lazy" src="/img/reward/wechat.jpg" srcset="/img/reward/wechat.jpg, /img/reward/wechat.jpg 1.5x, /img/reward/wechat.jpg 2x" sizes="auto" data-title="roderick 微信" data-alt="roderick 微信" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/><span data-animation>微信</span>
+          </div></div>
+  </div><div id="comments"><div id="waline" class="comment"></div><noscript>
+        Please enable JavaScript to view the comments powered by <a href="https://waline.js.org/" rel="external nofollow noopener noreferrer">Waline</a>.
+      </noscript></div></article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.111.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.18"><img class="fixit-icon" src="/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2022 - 2023</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://www.roderickchan.cn"target="_blank" rel="external nofollow noopener noreferrer">roderick</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中……'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i><span class="run-times ms-1">网站运行中……</span></span></div><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div><div class="footer-line beian"><span class="icp footer-divider"><a href="http://beian.miit.gov.cn/">鄂ICP备2022016286号</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><a href="https://github.com/RoderickChan" title="Follow me on Github"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #000;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/waline/waline.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/waline/waline.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pangu/pangu.min.js" defer></script><script src="/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"autoBookmark":true,"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"enable":true,"expired":false,"waline":{"copyright":true,"dark":"body[data-theme='dark']","el":"#waline","emoji":["//unpkg.com/@waline/emojis@1.1.0/weibo"],"highlighter":true,"imageUploader":false,"lang":"zh-cn","login":"enable","meta":["nick","mail","link"],"pageSize":10,"search":false,"serverURL":"https://waline-cmrfu7d4y-roderickchan.vercel.app/","texRenderer":false}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"To record and learn!","typeit-header-subtitle-mobile":"To record and learn!"},"enablePWA":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"pangu":{"enable":true,"selector":"article"},"search":{"algoliaAppID":"0UC880QNFW","algoliaIndex":"index.zh-cn","algoliaSearchKey":"c7f546f74cef1f72f861a13c1d1f97c3","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2022-10-01T09:00:00+08:00","twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"loop":false,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/js/theme.min.js" defer></script></body>
+</html>

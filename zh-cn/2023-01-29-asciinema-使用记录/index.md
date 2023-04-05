@@ -7,7 +7,7 @@
 
 有时候需要分享命令行操作的全过程，[asciinema](https://github.com/asciinema/asciinema)是一个很好用的工具，开源免费，配合`tmux`使用直接起飞。
 
-我使用该工具录制了`pwncli`的使用教程：[pwncli tutorial - roderick - record and learn! (roderickchan.cn)](https://www.roderickchan.cn/2023-01-29-pwncli-tutorial/)。
+我使用该工具录制了`pwncli`的使用教程。
 
 [asciinema](https://github.com/asciinema/asciinema)会将屏幕上的所有信息保存下载，生成一个`cast`后缀的文件，并且其还提供了一个工具将`cast`文件转化为`gif`。
 
