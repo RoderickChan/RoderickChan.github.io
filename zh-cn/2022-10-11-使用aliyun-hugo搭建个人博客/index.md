@@ -217,7 +217,7 @@ AuthorizedKeysFile      .ssh/authorized_keys
 
 ![image-20230113144224324](https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20230113144224324.png)
 
-可以使用我制作的小图片，点击[这里](https://www.roderickchan.cn/img/follow_me_on_github.png)下载，然后放置在`static\img\follow_me_on_github.png`。也可以自己制作图片，图片不要太大，否则容易压盖到其他内容。
+可以使用我制作的小图片，点击[这里](https://roderickchan.github.io/img/follow_me_on_github.png)下载，然后放置在`static\img\follow_me_on_github.png`。也可以自己制作图片，图片不要太大，否则容易压盖到其他内容。
 
 
 

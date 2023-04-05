@@ -7,7 +7,7 @@
 
 我有两个相同的博客网站：
 -   [https://roderickchan.github.io](https://roderickchan.github.io/)
--   [https://www.roderickchan.cn](https://www.roderickchan.cn/)
+-   [https://www.roderickchan.cn](https://roderickchan.github.io/)
 
 我在Github Pages和中国阿里云VPS上部署了这两个完全相同的网站，这样做是为了提高访问速度并做好博客备份。中文和英文博客会存储在不同的文件夹中，因此，你需要单击“语言切换”按钮来切换语言并阅读更多博客。
 
