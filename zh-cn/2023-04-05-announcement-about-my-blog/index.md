@@ -13,7 +13,7 @@
 
 👉 原站点的所有文章均被保留，试着去找到你所需要的文章吧~
 
-👉 仍有疑问，发邮件至`roderickchan@foxmail.com`
+👉 仍有疑问，发邮件至 roderickchan@foxmail.com
 
 ---
 

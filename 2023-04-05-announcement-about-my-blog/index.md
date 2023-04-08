@@ -13,7 +13,7 @@ TL;DR:
 
 👉 All previous blogs are saved in this site, try to find it~
 
-👉 Still have a question, email me to `roderickchan@foxmail.com`
+👉 Still have a question, email me to roderickchan@foxmail.com
 
 ---
 
