@@ -14,7 +14,7 @@
 对shellcode知识点的一些总结。
 "><meta itemprop="datePublished" content="2023-02-20T22:51:44+08:00" />
 <meta itemprop="dateModified" content="2023-02-20T22:51:44+08:00" />
-<meta itemprop="wordCount" content="5638"><meta itemprop="image" content="https://roderickchan.github.io/"/>
+<meta itemprop="wordCount" content="5679"><meta itemprop="image" content="https://roderickchan.github.io/"/>
 <meta itemprop="keywords" content="shellcode,pwn," /><meta property="og:title" content="The art of shellcode" />
 <meta property="og:description" content="
 对shellcode知识点的一些总结。
@@ -42,7 +42,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/roderickchan.github.io\/zh-cn\/2023-02-20-the-art-of-shellcode\/"
-    },"image": ["https:\/\/roderickchan.github.io\/images\/Apple-Devices-Preview.jpg"],"genre": "posts","keywords": "shellcode, pwn","wordcount":  5638 ,
+    },"image": ["https:\/\/roderickchan.github.io\/images\/Apple-Devices-Preview.jpg"],"genre": "posts","keywords": "shellcode, pwn","wordcount":  5679 ,
     "url": "https:\/\/roderickchan.github.io\/zh-cn\/2023-02-20-the-art-of-shellcode\/","datePublished": "2023-02-20T22:51:44+08:00","dateModified": "2023-02-20T22:51:44+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
       "@type": "Organization",
       "name": "roderick","logo": "https:\/\/roderickchan.github.io\/logo.png"},"author": {
@@ -213,7 +213,7 @@
       </h1></div><div class="post-meta">
       <div class="post-meta-line"><span class="post-author"><a href="https://www.roderickchan.cn" title="作者"target="_blank" rel="external nofollow noopener noreferrer author" class="author"><img loading="lazy" src="https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp" srcset="https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp, https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp 1.5x, https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp 2x" sizes="auto" data-title="roderick" data-alt="roderick" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;roderick</a></span>
           <span class="post-category">收录于 <a href="/zh-cn/categories/pwn-trick/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> pwn-trick</a></span></div>
-      <div class="post-meta-line"><span title="发布于 2023-02-20 22:51:44"><i class="fa-regular fa-calendar-alt fa-fw me-1" aria-hidden="true"></i><time datetime="2023-02-20">2023-02-20</time></span>&nbsp;<span title="更新于 2023-02-20 22:51:44"><i class="fa-regular fa-edit fa-fw me-1" aria-hidden="true"></i><time datetime="2023-02-20">2023-02-20</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 5638 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 12 分钟</span>&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="The art of shellcode">
+      <div class="post-meta-line"><span title="发布于 2023-02-20 22:51:44"><i class="fa-regular fa-calendar-alt fa-fw me-1" aria-hidden="true"></i><time datetime="2023-02-20">2023-02-20</time></span>&nbsp;<span title="更新于 2023-02-20 22:51:44"><i class="fa-regular fa-edit fa-fw me-1" aria-hidden="true"></i><time datetime="2023-02-20">2023-02-20</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 5679 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 12 分钟</span>&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="The art of shellcode">
               <i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
             </span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
@@ -288,6 +288,15 @@
 <li>本文尽可能地全面地总结有关<code>shellcode</code>的知识点。目前重点关注<code>linux</code>系统用户态的<code>x86</code>汇编指令。持续更新中&hellip;&hellip;</li>
 <li>本文只将现有有关<code>shellcode</code>的知识点提炼出来，没有做细致地解释与分析，不会涉及到具体的例题。若师傅们有疑问可以在评论中提出&hellip;&hellip;</li>
 </ul>
+<p>可以在<a href="https://www.bilibili.com/video/BV1mV4y1f7YK"target="_blank" rel="external nofollow noopener noreferrer">Bilibili<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>上观看视频进行学习：</p>
+<div class="bilibili"><iframe src="//player.bilibili.com/player.html?bvid=BV1mV4y1f7YK&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe></div>
+<p>或者在<a href="https://www.youtube.com/watch?v=qVE5aaS9hF0"target="_blank" rel="external nofollow noopener noreferrer">Youtube<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>上观看视频进行学习：</p>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube-nocookie.com/embed/qVE5aaS9hF0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+<hr>
 <h1 id="1-如何编写shellcode">1-如何编写shellcode</h1>
 <p><code>shellcode</code>是一段可被<code>CPU</code>直接执行的程序码。</p>
 <p>使用<code>shellcode</code>进行攻击是一项经典而强大的技术，借助<code>shellcode</code>几乎可以完成任何事情，包括但不限于泄露敏感信息、反弹<code>shell</code>、布置后门等。</p>

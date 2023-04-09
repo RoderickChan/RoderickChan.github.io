@@ -5,6 +5,7 @@
 
 <!--more-->
 
+
 {{< music server="netease" type="song" id="1455273374" >}}
 
 relax and learn...
@@ -14,7 +15,15 @@ relax and learn...
 - 本文尽可能地全面地总结有关`shellcode`的知识点。目前重点关注`linux`系统用户态的`x86`汇编指令。持续更新中......
 - 本文只将现有有关`shellcode`的知识点提炼出来，没有做细致地解释与分析，不会涉及到具体的例题。若师傅们有疑问可以在评论中提出......
 
+可以在[Bilibili](https://www.bilibili.com/video/BV1mV4y1f7YK)上观看视频进行学习：
 
+{{< bilibili id="BV1mV4y1f7YK" >}}
+
+或者在[Youtube](https://www.youtube.com/watch?v=qVE5aaS9hF0)上观看视频进行学习：
+
+{{< youtube "qVE5aaS9hF0" >}}
+
+---
 
 # 1-如何编写shellcode
 
