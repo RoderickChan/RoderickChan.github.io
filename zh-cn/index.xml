@@ -71,7 +71,7 @@
   <author>roderick</author>
   <guid>https://roderickchan.github.io/zh-cn/2023-02-15-%E8%87%AA%E5%B7%B1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAlibc-database/</guid>
   <description><![CDATA[<blockquote>
-<p>为什么要自己搭建一个<code>libc database</code>呢，因为官方的<a href="https://libc.rip/api/"target="_blank" rel="external nofollow noopener noreferrer">https://libc.rip/api/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>查询接口挂了。</p>
+<p>为什么要自己搭建一个 <code>libc database</code> 呢，<del>因为官方的<a href="https://libc.rip/api/"target="_blank" rel="external nofollow noopener noreferrer">https://libc.rip/api/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>查询接口挂了</del>官方的查询接口时好时坏，现在又可以用了。</p>
 </blockquote>]]></description>
 </item>
 <item>

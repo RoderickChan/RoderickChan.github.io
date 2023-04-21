@@ -63,7 +63,21 @@ umask=022
 
 之后就能看到宿主机磁盘文件的权限，属主变成了`1000`的用户。
 
-主要是为了解决直接从`linux`系统中访问`windows`磁盘文件的权限问题。
+主要是为了解决直接从 `linux` 系统中访问 `windows` 磁盘文件的权限问题。
+
+
+# 5 清空 wsl 的磁盘数据
+不管使用的是 `wsl` 的什么操作系统，或者使用 `backend` 是 `wsl` 的 `docker desktop`，都会生成一个名为 `ext4.vhdx` 的文件，这个文件随着系统的使用会越来越大，而且只会变大，不会变小。那么，有时候需要在适当的时候压缩一下这个文件，释放出空间。
+
+其实很简单，使用这个命令即可：[Optimize-VHD (Hyper-V) | Microsoft Learn](https://learn.microsoft.com/en-us/powershell/module/hyper-v/optimize-vhd?view=windowsserver2022-ps)
+
+压缩之前，可以先执行一下 `docker system prune`
+
+然后：`wsl.exe --shutdown`
+
+然后在 `powershell` 中执行 `Optimize-VHD -Path "YourPath\ext4.vhdx" -Mode Full` 修改一下对应的文件路径即可。
+
+之后，就可以完美释放 `wsl`  使用过程中占用的磁盘空间。
 
 ---
 

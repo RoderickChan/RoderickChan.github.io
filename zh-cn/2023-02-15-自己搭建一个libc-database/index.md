@@ -1,11 +1,17 @@
 # 自己搭建一个libc database
 
 
-> 为什么要自己搭建一个`libc database`呢，因为官方的<https://libc.rip/api/>查询接口挂了。
+> 为什么要自己搭建一个 `libc database` 呢，~~因为官方的<https://libc.rip/api/>查询接口挂了~~官方的查询接口时好时坏，现在又可以用了。
 
 <!--more-->
+{{< admonition >}}
+如果官方的接口可用，我就会暂时下线自己部署的接口 <https://libc.roderickchan.cn>。
 
-为什么要自己搭建一个`libc database`呢，因为官方的<https://libc.rip/api/>查询接口挂了。而我写的`pwncli`中的`LibcBox`依赖这个接口，挂了之后直接影响了`LibcBox`的使用。既然不能白嫖了，那不如自己动手搭建一个。自己动手，丰衣足食。
+如果你发现官方的接口用不了了，请及时联系我，我会重启服务。
+{{< /admonition >}}
+
+
+为什么要自己搭建一个`libc database`呢，因为~~写文章的时候~~官方的<https://libc.rip/api/>查询接口挂了。而我写的`pwncli`中的`LibcBox`依赖这个接口，挂了之后直接影响了`LibcBox`的使用。既然不能白嫖了，那不如自己动手搭建一个。自己动手，丰衣足食。
 
 # 下载项目
 
