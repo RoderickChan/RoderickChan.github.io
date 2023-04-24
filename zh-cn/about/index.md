@@ -27,7 +27,7 @@
 
 - `github`: <https://github.com/RoderickChan>
 - `email`: roderickchan@foxmail.com
-- `two(same) blog sites`：<https://roderickchan.github.io/> and <https://www.roderickchan.cn>
+- `bilibili`: <https://space.bilibili.com/3461577038629345>
 
 
 ---
