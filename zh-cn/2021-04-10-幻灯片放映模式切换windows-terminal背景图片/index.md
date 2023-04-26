@@ -252,6 +252,6 @@ while True:
 
 ---
 
-> 作者: [roderick](https://www.roderickchan.cn)  
+> 作者: [roderick](https://roderickchan.github.io)  
 > URL: https://roderickchan.github.io/zh-cn/2021-04-10-%E5%B9%BB%E7%81%AF%E7%89%87%E6%94%BE%E6%98%A0%E6%A8%A1%E5%BC%8F%E5%88%87%E6%8D%A2windows-terminal%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87/  
 
