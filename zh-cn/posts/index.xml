@@ -4,7 +4,7 @@
     <link>https://roderickchan.github.io/zh-cn/posts/</link>
     <description>所有文章 | roderick - record and learn!</description>
     <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
-      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 05 Apr 2023 17:42:44 &#43;0800</lastBuildDate><atom:link href="https://roderickchan.github.io/zh-cn/posts/" rel="self" type="application/rss+xml" /><item>
+      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 01 Jul 2023 12:25:56 &#43;0800</lastBuildDate><atom:link href="https://roderickchan.github.io/zh-cn/posts/" rel="self" type="application/rss+xml" /><item>
   <title>Glibc堆利用之house of系列总结</title>
   <link>https://roderickchan.github.io/zh-cn/2023-02-27-house-of-all-about-glibc-heap-exploitation/</link>
   <pubDate>Mon, 27 Feb 2023 15:10:08 &#43;0800</pubDate>
@@ -13,24 +13,6 @@
   <description><![CDATA[<blockquote>
 <p>总结一下<code>glibc</code>堆利用的<code>house of</code>系列利用手法，主要参考了<a href="https://github.com/shellphish/how2heap"target="_blank" rel="external nofollow noopener noreferrer">how2heap<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>，同时参考了其他优秀的文章。</p>
 </blockquote>]]></description>
-</item>
-<item>
-  <title>WSL使用问题记录</title>
-  <link>https://roderickchan.github.io/zh-cn/2022-11-28-wsl%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/</link>
-  <pubDate>Mon, 28 Nov 2022 16:17:03 &#43;0800</pubDate>
-  <author>roderick</author>
-  <guid>https://roderickchan.github.io/zh-cn/2022-11-28-wsl%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/</guid>
-  <description><![CDATA[<blockquote>
-<p>记录一下使用<code>wsl2</code>的时候遇到的问题和解决方案。</p>
-</blockquote>]]></description>
-</item>
-<item>
-  <title>[建站教程] 使用aliyun&#43;hugo搭建个人博客</title>
-  <link>https://roderickchan.github.io/zh-cn/2022-10-11-%E4%BD%BF%E7%94%A8aliyun-hugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</link>
-  <pubDate>Tue, 11 Oct 2022 22:36:17 &#43;0800</pubDate>
-  <author>roderick</author>
-  <guid>https://roderickchan.github.io/zh-cn/2022-10-11-%E4%BD%BF%E7%94%A8aliyun-hugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</guid>
-  <description><![CDATA[<p>整个搭建过程中，云服务器配置耗费时间需要<code>1~2</code>周，而在配置云服务器过程中占用时间最长的为域名备案，最长需要等待<code>2</code>周才能完成；剩下的几步只需要不到两个小时的时间即可完成。</p>]]></description>
 </item>
 <item>
   <title>[置顶] 博客站点说明</title>
@@ -49,6 +31,26 @@
   <author>roderick</author>
   <guid>https://roderickchan.github.io/zh-cn/2022-10-11-%E4%BD%BF%E7%94%A8aliyun-hugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</guid>
   <description><![CDATA[<p>整个搭建过程中，云服务器配置耗费时间需要<code>1~2</code>周，而在配置云服务器过程中占用时间最长的为域名备案，最长需要等待<code>2</code>周才能完成；剩下的几步只需要不到两个小时的时间即可完成。</p>]]></description>
+</item>
+<item>
+  <title>阅读论文的姿势总结</title>
+  <link>https://roderickchan.github.io/zh-cn/2023-07-01-how-to-read-paper/</link>
+  <pubDate>Sat, 01 Jul 2023 12:25:56 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://roderickchan.github.io/zh-cn/2023-07-01-how-to-read-paper/</guid>
+  <description><![CDATA[<blockquote>
+<p>论文不是万能的，但没有论文是万万不能的。</p>
+</blockquote>]]></description>
+</item>
+<item>
+  <title>pwn 训练营第一期资料汇总</title>
+  <link>https://roderickchan.github.io/zh-cn/2023-05-06-shg-pwn-tutorial-1/</link>
+  <pubDate>Sat, 06 May 2023 23:56:49 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://roderickchan.github.io/zh-cn/2023-05-06-shg-pwn-tutorial-1/</guid>
+  <description><![CDATA[<blockquote>
+<p>分享队内第一期 <code>pwn</code> 训练营的资料。</p>
+</blockquote>]]></description>
 </item>
 <item>
   <title>nginx配置的问题记录</title>
@@ -108,26 +110,6 @@
   <guid>https://roderickchan.github.io/zh-cn/2023-02-13-%E4%BD%BF%E7%94%A8docker%E8%B0%83%E8%AF%95pwn%E9%A2%98/</guid>
   <description><![CDATA[<blockquote>
 <p>使用<code>docker</code>快速部署不同架构、不同版本的调试环境。给出<code>docker</code>环境下<code>pwn</code>题部署模板。</p>
-</blockquote>]]></description>
-</item>
-<item>
-  <title>socat反弹shell&#43;tmux共享会话</title>
-  <link>https://roderickchan.github.io/zh-cn/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D/</link>
-  <pubDate>Fri, 10 Feb 2023 15:18:13 &#43;0800</pubDate>
-  <author>roderick</author>
-  <guid>https://roderickchan.github.io/zh-cn/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D/</guid>
-  <description><![CDATA[<blockquote>
-<p>使用<code>socat</code>得到一个带有<code>pty</code>的<code>strong shell</code>，然后使用<code>tmux</code>共享会话和结对编程。</p>
-</blockquote>]]></description>
-</item>
-<item>
-  <title>pwn环境搭建脚本</title>
-  <link>https://roderickchan.github.io/zh-cn/2023-02-10-pwn%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%84%9A%E6%9C%AC/</link>
-  <pubDate>Fri, 10 Feb 2023 12:25:18 &#43;0800</pubDate>
-  <author>roderick</author>
-  <guid>https://roderickchan.github.io/zh-cn/2023-02-10-pwn%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%84%9A%E6%9C%AC/</guid>
-  <description><![CDATA[<blockquote>
-<p>分享在<code>ubuntu</code>系统上一站式搭建<code>pwn</code>环境的脚本。</p>
 </blockquote>]]></description>
 </item>
 </channel>
