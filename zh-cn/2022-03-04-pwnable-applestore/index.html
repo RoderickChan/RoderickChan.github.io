@@ -81,7 +81,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -168,7 +168,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -249,7 +249,7 @@
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220304203629493.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220304203629493.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220304203629493.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220304203629493.png 2x" sizes="auto" data-title="image-20220304203629493" data-alt="image-20220304203629493" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <h3 id="利用思路">利用思路</h3>
 <p>恢复出结构体：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -264,8 +264,7 @@
 </span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">price</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">	<span class="k">struct</span> <span class="n">Apple</span><span class="o">*</span> <span class="n">next</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">	<span class="k">struct</span> <span class="n">Apple</span><span class="o">*</span> <span class="n">pre</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">};</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>利用上面的漏洞，思路为：</p>
 <ul>
@@ -275,7 +274,7 @@
 <li><code>delete</code>结束后，然后继续利用<code>printf</code>调用链，执行<code>system(&quot;/bin/sh&quot;)</code></li>
 </ul>
 <h3 id="exp">EXP</h3>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
@@ -482,8 +481,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>远程打：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220304204349952.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220304204349952.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220304204349952.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220304204349952.png 2x" sizes="auto" data-title="image-20220304204349952" data-alt="image-20220304204349952" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>

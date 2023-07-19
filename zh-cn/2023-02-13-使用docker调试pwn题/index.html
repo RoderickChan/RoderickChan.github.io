@@ -89,7 +89,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -176,7 +176,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -243,7 +243,7 @@
 <p>每个镜像都给出了<code>Ubuntu</code>的版本、其使用的<code>glibc-libc.so.6</code>的版本和编译时间。</p>
 <p>直接使用<code>docker pull roderickchan/debug_pwn_env:22.04-2.35-0ubuntu3.1-20230213</code>这样的命令拉取镜像即可。</p>
 <p>拉取镜像后，运行命令如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -256,12 +256,11 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">docker run -it -rm -v host_path:container_path -p host_port:container_port --cap-add<span class="o">=</span>SYS_PTRACE IMAGE_ID /bin/bash <span class="c1"># do not update</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">docker run -it --rm -v host_path:container_path -p host_port:container_port --privileged IMAGE_ID <span class="c1"># privileged enabled and auto update</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">docker run -it --rm -v host_path:container_path -p host_port:container_port --privileged IMAGE_ID <span class="c1"># privileged enabled and auto update</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>可以映射宿主机端口和容器端口，映射文件或者目录。如果不带命令，容器会自动更新一些<code>pwn</code>相关的仓库和包，如果带上命令，就会执行指定的命令。</p>
 <p>事实上这个镜像的<code>Dockerfile</code>如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -424,12 +423,11 @@
 </span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c"># expose some ports</span><span class="err">
 </span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">EXPOSE</span><span class="s"> 22 23946 10001 10002</span><span class="err">
 </span></span></span><span class="line"><span class="cl"><span class="err">
-</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">CMD</span> <span class="p">[</span><span class="s2">&#34;/bin/update.sh&#34;</span><span class="p">]</span><span class="err">
-</span></span></span></code></pre></td></tr></table>
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">CMD</span> <span class="p">[</span><span class="s2">&#34;/bin/update.sh&#34;</span><span class="p">]</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>内置了自使用的<code>tmux</code>配置文件和<code>gdb-gef/peda/pwndbg</code>三个脚本以及最新的<code>pwncli</code>库。完整文件位于<a href="https://github.com/RoderickChan/CVE-ANALYZE/tree/main/basic_image"target="_blank" rel="external nofollow noopener noreferrer">CVE-ANALYZE/basic_image at main · RoderickChan/CVE-ANALYZE (github.com)<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>，可根据需求更改和自定义配置文件。</p>
 <p>如果是<code>debian</code>系统，只需要安装一些基础的包即可：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -494,12 +492,11 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># 安装pwntools和pwncli</span>
 </span></span><span class="line"><span class="cl">pip3 install pwntools pwncli 
-</span></span><span class="line"><span class="cl">bash -c <span class="s2">&#34;</span><span class="k">$(</span>wget https://gef.blah.cat/sh -O -<span class="k">)</span><span class="s2">&#34;</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">bash -c <span class="s2">&#34;</span><span class="k">$(</span>wget https://gef.blah.cat/sh -O -<span class="k">)</span><span class="s2">&#34;</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>这里选用<code>gef</code>插件，因为<code>gef</code>插件的依赖少，安装速度快，功能比<code>peda</code>强大。</p>
 <p>如果是<code>fedora</code>系统，安装软件包列表如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-4"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -556,8 +553,7 @@
 </span></span><span class="line"><span class="cl">EOF
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">pip3 install pwntools pwncli 
-</span></span><span class="line"><span class="cl">bash -c <span class="s2">&#34;</span><span class="k">$(</span>wget https://gef.blah.cat/sh -O -<span class="k">)</span><span class="s2">&#34;</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">bash -c <span class="s2">&#34;</span><span class="k">$(</span>wget https://gef.blah.cat/sh -O -<span class="k">)</span><span class="s2">&#34;</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>和上面基本是一样的，不过有些包的名字不一样。</p>
 <h1 id="0x2-出题模板">0x2 出题模板</h1>

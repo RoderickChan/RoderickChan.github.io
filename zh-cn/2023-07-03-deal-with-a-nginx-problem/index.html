@@ -33,7 +33,7 @@
 <meta name="application-name" content="roderick - record and learn!">
 <meta name="apple-mobile-web-app-title" content="roderick - record and learn!"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://roderickchan.github.io/zh-cn/2023-07-03-deal-with-a-nginx-problem/" /><link rel="prev" href="https://roderickchan.github.io/zh-cn/2023-07-01-how-to-read-paper/" /><link rel="next" href="https://roderickchan.github.io/zh-cn/2022-10-11-%E4%BD%BF%E7%94%A8aliyun-hugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://roderickchan.github.io/zh-cn/2023-07-03-deal-with-a-nginx-problem/" /><link rel="prev" href="https://roderickchan.github.io/zh-cn/2023-07-01-how-to-read-paper/" /><link rel="next" href="https://roderickchan.github.io/zh-cn/2023-07-11-git-and-github/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
   {
     "@context": "http://schema.org",
     "@type": "BlogPosting",
@@ -89,7 +89,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -176,7 +176,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -261,7 +261,7 @@
 <p>这个时候，为了避免需要重复修改浏览器窗口的 <code>URL</code>，我掏出了 <code>curl</code> 分析报文。</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/Pasted%20image%2020230703221642.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/Pasted%20image%2020230703221642.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/Pasted%20image%2020230703221642.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/Pasted%20image%2020230703221642.png 2x" sizes="auto" data-title="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/Pasted%20image%2020230703221642.png" data-alt="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/Pasted%20image%2020230703221642.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>发现服务器给的 <code>Location</code> 竟然带上了端口号，而且这个端口是我的后端代理端口，而我的公网服务器上的配置大概是酱紫的：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -280,8 +280,7 @@
 </span></span><span class="line"><span class="cl">        <span class="kn">proxy_set_header</span> <span class="s">X-Real-IP</span> <span class="nv">$remote_addr</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="kn">proxy_set_header</span> <span class="s">X-Forwarded-For</span> <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="kn">proxy_set_header</span> <span class="s">X-Forwarded-Proto</span> <span class="s">https</span><span class="p">;</span>     
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>怎么肥事？怎么在域名后面加上了本地代理的端口呢 ❓</p>
 <p>我沉思片刻，联想到前面 <code>127.0.0.1:10081</code> 本地服务并无异常的情况，我好像有点明白了。我猜测这里的 <code>Location</code> 是<span style="background:#fff88f">真正处理请求的后端代理服务器转发给我的公网服务器</span>的信息，然后公网服务器又拿着这个 <code>Location</code> 又转发给了我的浏览器，我的浏览器拿着这个 <code>url</code> 去访问，没有对应的服务，自然就会报错了。</p>
@@ -292,7 +291,7 @@
 <p>于是，我接着谷歌<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>，发现了 <code>nginx</code> 返回 <code>location</code> 字段时，如果不是默认 <code>80/443</code> 端口，会带上端口号，所以这就解释了为什么后端的代理服务器给的 <code>Location</code> 带有端口号。</p>
 <h1 id="解决办法">解决办法</h1>
 <p>搞清楚问题来源后，我开始搜索 <code>nginx</code> 如何修改 <code>proxy</code> 的 <code>Location</code> 字段。很快啊，很快发现有个指令 <code>proxy_redirect</code>。在查看了该指令的说明<sup id="fnref1:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>后，我立马对配置文件进行了修改：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -315,8 +314,7 @@
 </span></span><span class="line"><span class="cl">        <span class="kn">proxy_set_header</span> <span class="s">X-Forwarded-Proto</span> <span class="s">https</span><span class="p">;</span>     
 </span></span><span class="line"><span class="cl">        <span class="kn">proxy_redirect</span> <span class="p">~</span><span class="sr">^http://www\.roderickchan\.cn:(10080|10081|10082)(/.*)$</span> <span class="s">https://www.roderickchan.cn</span><span class="nv">$2</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>这里的 <code>proxy_pass</code> 为 <code>http://my_blog;</code> 是因为我做了负载均衡。</p>
 <p>修改后重新启动 <code>nginx</code> 。然后，再使用 <code>curl</code> 验证，发现可以正常访问了：</p>
@@ -374,7 +372,7 @@
   </div>
 
   <div class="post-nav"><a href="/zh-cn/2023-07-01-how-to-read-paper/" class="post-nav-item" rel="prev" title="阅读论文的姿势总结"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>阅读论文的姿势总结</a>
-      <a href="/zh-cn/2022-10-11-%E4%BD%BF%E7%94%A8aliyun-hugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" class="post-nav-item" rel="next" title="[建站教程] 使用aliyun&#43;hugo搭建个人博客">[建站教程] 使用aliyun&#43;hugo搭建个人博客<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+      <a href="/zh-cn/2023-07-11-git-and-github/" class="post-nav-item" rel="next" title="Git与Github的简要分享">Git与Github的简要分享<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
 <div class="post-reward">
     <div class="comment">Buy me a coffee~</div>

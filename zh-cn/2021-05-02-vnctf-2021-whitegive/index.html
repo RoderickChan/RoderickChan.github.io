@@ -81,7 +81,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -168,7 +168,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -251,7 +251,7 @@
 <!-- more -->
 <h3 id="题目">题目</h3>
 <p>题目如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -326,8 +326,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="s1">952508462840095293368043281511747192551431448088755251878915582522463097721381421883702408853564036431155676272901680250701398946525803160765527940151587567521509500006089852079864042238196362897144754722623523621230744820970423076092319608853809407595863195726851921082224085255808985329769890887863865121647796115540376158135632760785321953364738008064130705467326745546629505023549047992509562623348749056757848144371814157305011884825502144329268299851210747
 </span></span></span><span class="line"><span class="cl"><span class="s1">788785744509676701442642497798353940704045062680685297430840370664093043099033424646382070232242765761123110381200239132310785932203252095093993313010883982078216697297202940152563278231011836966627537170460186597134847633828107444548759805274516431300662852153808962421740187067058018192457264083227110866080267684557127718769967184710395811547902947248700889674967381917907905535103547918375731341071557144999864774198881339085314424766509424492349867615604684
 </span></span></span><span class="line"><span class="cl"><span class="s1">
-</span></span></span><span class="line"><span class="cl"><span class="s1">&#39;&#39;&#39;</span>
-</span></span></code></pre></td></tr></table>
+</span></span></span><span class="line"><span class="cl"><span class="s1">&#39;&#39;&#39;</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="题目分析">题目分析</h3>
 <p>题目经过了两轮<code>RSA</code>加密：</p>
@@ -360,7 +359,7 @@
 <p>合理猜测，<code>p</code>是<code>n</code>{% raw %}$hint * e ^ e - 1${% endraw %}的最大公约数。因此可以求{% raw %}$[n, hint * e ^ e -1]${% endraw %}，如果是质数，就印证了猜测。</p>
 </blockquote>
 <h4 id="解题步骤">解题步骤</h4>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -387,21 +386,19 @@
 </span></span><span class="line"><span class="cl"><span class="n">tmp1</span> <span class="o">=</span> <span class="n">hint</span> <span class="o">*</span> <span class="nb">pow</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
 </span></span><span class="line"><span class="cl"><span class="n">p</span> <span class="o">=</span> <span class="n">gmpy2</span><span class="o">.</span><span class="n">gcd</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">tmp1</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="k">assert</span> <span class="n">gmpy2</span><span class="o">.</span><span class="n">is_prime</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="s2">&#34;p is not prime!&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;p: &#34;</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;p: &#34;</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>最后输出为：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># p:  12277650054115967661107194664489294899976814835828734682974752510058202849445626179849053725591557564741699546987225940819984218689690122416052643452524421</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># p:  12277650054115967661107194664489294899976814835828734682974752510058202849445626179849053725591557564741699546987225940819984218689690122416052643452524421</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>可知，猜想是正确的。</p>
 <p>那么就，解出上一轮加密使用的<code>e</code>：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-4"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -422,14 +419,13 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">print(&#34;last round e: &#34;, m)
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"># e = 93943500165298065499950418373429723509334252629406924973909070866091749987346174290549648466771963135864917881154270768788129489671486923171733460927672763251885052132144244633336183737015936611716827476566876619327956203686756399730968768494676888428137426449681845021696056187478027217734766494935085365973
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"># e = 93943500165298065499950418373429723509334252629406924973909070866091749987346174290549648466771963135864917881154270768788129489671486923171733460927672763251885052132144244633336183737015936611716827476566876619327956203686756399730968768494676888428137426449681845021696056187478027217734766494935085365973</span></span></code></pre></td></tr></table>
 </div>
 </div><p>接着，来解出第一轮加密的明文。<code>wiener attack</code>解不出来，得用<a href="https://github.com/mimoo/RSA-and-LLL-attacks/blob/master/boneh_durfee.sage"target="_blank" rel="external nofollow noopener noreferrer"><code>Boneh Durfee attack</code><i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
 <p>有：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210502135241702.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210502135241702.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210502135241702.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210502135241702.png 2x" sizes="auto" data-title="image-20210502135241702" data-alt="image-20210502135241702" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>那么就解出了第一轮加密的密文为：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-5"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -446,11 +442,10 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># Boneh Durfee attack</span>
 </span></span><span class="line"><span class="cl"><span class="n">d0</span> <span class="o">=</span> <span class="mi">103079922798932082066165266087442072203677117380612800709240732626110126828541</span>
 </span></span><span class="line"><span class="cl"><span class="n">m0</span> <span class="o">=</span> <span class="nb">pow</span><span class="p">(</span><span class="n">c0</span><span class="p">,</span> <span class="n">d0</span><span class="p">,</span> <span class="n">n0</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;m0：&#34;</span><span class="p">,</span> <span class="n">long_to_bytes</span><span class="p">(</span><span class="n">m0</span><span class="p">))</span> <span class="c1"># b&#39;https://dawn-whisper.lanzous.com/iCAv0lod7yj-password:gzjq&#39;</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;m0：&#34;</span><span class="p">,</span> <span class="n">long_to_bytes</span><span class="p">(</span><span class="n">m0</span><span class="p">))</span> <span class="c1"># b&#39;https://dawn-whisper.lanzous.com/iCAv0lod7yj-password:gzjq&#39;</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>是一个网址，下载下载，得到第二关的题目，老套娃了：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-6"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -505,8 +500,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="s1">74797173657575640598140788410852016843612519588375968190579734420951374103129570637822547217967978911328419808529204143522454142303138959013220811558490951614314306849367068478190797885056922705403028856734095288522290055309880572321557493798362056216783777593386133347693892941928131945986087712737862263761
 </span></span></span><span class="line"><span class="cl"><span class="s1">9209695919437085323423940852135308337887271742988391422139555924185234849146079306139570263602339983687993333013333937719071267190971983543492940032646907167417161479697805991443259327402389097539126399994414628326218438416138199892253597375493026563369334352434282120293396846427418323600336867792587721214
 </span></span></span><span class="line"><span class="cl"><span class="s1">
-</span></span></span><span class="line"><span class="cl"><span class="s1">&#39;&#39;&#39;</span>
-</span></span></code></pre></td></tr></table>
+</span></span></span><span class="line"><span class="cl"><span class="s1">&#39;&#39;&#39;</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>读下题目，就是<code>related message attack</code>，使用[脚本](<a href="https://github.com/ValarDragon/CTF-Crypto/blob/master/RSA/FranklinReiter.sage"target="_blank" rel="external nofollow noopener noreferrer">CTF-Crypto/FranklinReiter.sage at master · ValarDragon/CTF-Crypto (github.com)<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>)即可跑出答案。</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210502140210528.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210502140210528.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210502140210528.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210502140210528.png 2x" sizes="auto" data-title="image-20210502140210528" data-alt="image-20210502140210528" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>

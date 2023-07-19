@@ -81,7 +81,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -168,7 +168,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -246,7 +246,7 @@
 <p>远程为<code>libc-2.23.so</code>。</p>
 <h3 id="漏洞点">漏洞点</h3>
 <p>漏洞点在<code>strsep</code>函数：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -297,8 +297,7 @@
 </span></span><span class="line"><span class="cl">    <span class="o">*</span><span class="n">stringp</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="n">begin</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>对<code>*end</code>指向的内容有修改。</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220411232917698.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220411232917698.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220411232917698.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220411232917698.png 2x" sizes="auto" data-title="image-20220411232917698" data-alt="image-20220411232917698" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
@@ -311,7 +310,7 @@
 <li>我选择爆破最后一个字节为<code>0xb0</code>，输入<code>rop</code>链（<code>rop</code>中的<code>\x00</code>都可以用<code>\xb0</code>代替，这样在<code>strsep</code>的时候，就把这些<code>\xb0</code>给置为<code>\x00</code>了），<code>rop</code>链分别调用<code>stdout</code>泄露出<code>glibc</code>地址，然后伪造一个<code>std::string</code>对象，往<code>bss</code>段上输入，最后栈迁移到<code>bss</code>然后调用<code>gets</code>继续输入，执行<code>mprotect+shellcode</code></li>
 </ul>
 <h3 id="exp">EXP</h3>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -438,8 +437,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">sl</span><span class="p">(</span><span class="n">flat</span><span class="p">({</span><span class="mh">0x10</span><span class="p">:</span> <span class="n">rop</span><span class="o">.</span><span class="n">chain</span><span class="p">()}))</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>远程爆破一下就好，运气很好，第一次就成功了：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220411234013931.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220411234013931.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220411234013931.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220411234013931.png 2x" sizes="auto" data-title="image-20220411234013931" data-alt="image-20220411234013931" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>

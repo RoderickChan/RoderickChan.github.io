@@ -89,7 +89,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -176,7 +176,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -236,15 +236,14 @@
 <p>对于<code>windows</code>上使用<code>IDA</code>的场景，选择手动安装会更好。苹果可以选择自动安装。手动安装的步骤如下：</p>
 <p>首先，去官网<code>clone</code>仓库，拷贝<code>decompilers/d2d_ida/*</code>到<code>IDA/plugins</code>目录下面。</p>
 <p>然后，在<code>linux</code>系统（<code>WSL</code>或者虚拟机均可）里面执行：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">pip3 install . <span class="o">&amp;&amp;</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>cp d2d.py ~/.d2d.py <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&#34;source ~/.d2d.py&#34;</span> &gt;&gt; ~/.gdbinit
-</span></span></code></pre></td></tr></table>
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>cp d2d.py ~/.d2d.py <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&#34;source ~/.d2d.py&#34;</span> &gt;&gt; ~/.gdbinit</span></span></code></pre></td></tr></table>
 </div>
 </div><p>最后，在<code>windows</code>机器的防火墙中添加一个入站规则，选择端口为<code>tcp/3662</code>，只对私有域放行端口。</p>
 <h1 id="2-使用">2-使用</h1>

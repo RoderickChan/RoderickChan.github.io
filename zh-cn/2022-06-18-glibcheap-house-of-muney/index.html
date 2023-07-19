@@ -81,7 +81,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -168,7 +168,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -250,7 +250,7 @@
 <a name="jMcY1"></a></p>
 <h3 id="elf文件解析">ELF文件解析</h3>
 <p>众所周知，解析<code>ELF</code>文件只需要解析好文件头即可。<code>ELF</code>文件头定义好了静态视图下的<code>ELF</code>文件和动态视图下的<code>ELF</code>文件。首先简要说一下静态视图。<br />静态视图下，组成<code>elf</code>文件的基本单位是<code>section</code>，可以翻译为节。<code>elf</code>头会定义节头表（这里插播一句，所谓的表，其实都是数组，数组的每个元素都是一个结构体，比如<code>dyn/rel</code>等），节头表中定义了节的数量、每个节的类型、起始的虚拟地址。与动态链接相关的节为<code>.dynamic</code>节，这里面存储这与动态链接相关的描述信息。使用<code>readelf</code>查看<code>.dynamic</code>，这里以<code>pwncli/examples</code>文件夹下的<code>stackoverflow_pie</code>文件为例。</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -313,11 +313,10 @@
 </span></span><span class="line"><span class="cl"> 0x000000006fffffff <span class="o">(</span>VERNEEDNUM<span class="o">)</span>         <span class="m">1</span>
 </span></span><span class="line"><span class="cl"> 0x000000006ffffff0 <span class="o">(</span>VERSYM<span class="o">)</span>             0x484
 </span></span><span class="line"><span class="cl"> 0x000000006ffffff9 <span class="o">(</span>RELACOUNT<span class="o">)</span>          <span class="m">3</span>
-</span></span><span class="line"><span class="cl"> 0x0000000000000000 <span class="o">(</span>NULL<span class="o">)</span>               0x0
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"> 0x0000000000000000 <span class="o">(</span>NULL<span class="o">)</span>               0x0</span></span></code></pre></td></tr></table>
 </div>
 </div><p>这里的<code>.dynamic</code>实际是一个数组，数组的每一个元素对应的数据结构为：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -338,12 +337,11 @@
 </span></span><span class="line"><span class="cl">      <span class="n">Elf64_Xword</span> <span class="n">d_val</span><span class="p">;</span>		<span class="cm">/* Integer value */</span>
 </span></span><span class="line"><span class="cl">      <span class="n">Elf64_Addr</span> <span class="n">d_ptr</span><span class="p">;</span>			<span class="cm">/* Address value */</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="n">d_un</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">Elf64_Dyn</span><span class="p">;</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">Elf64_Dyn</span><span class="p">;</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>这里的<code>tag</code>表示的是节的类型，也就是上面使用<code>readelf</code>打印出来的，在小括号中表示的如：<code>INIT</code>,<code>FINI</code>和<code>STRTAB</code>等等。第二个成员是一个联合体，有时候表示的是这个节处在节表中的下标，而有时候则表示这个节的虚拟地址。与符号查找相关的就是这里的<code>STRTAB</code>和<code>SYMTAB</code>。</p>
 <p>这两个表分别是字符串表 和符号表，字符串表就是一大串字符串，包含整个程序中所使用到的所有字符。符号表则表示符号的定义，其对应的数据结构为：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -364,12 +362,11 @@
 </span></span><span class="line"><span class="cl">  <span class="n">Elf64_Section</span>	<span class="n">st_shndx</span><span class="p">;</span>		<span class="cm">/* Section index */</span>
 </span></span><span class="line"><span class="cl">  <span class="n">Elf64_Addr</span>	<span class="n">st_value</span><span class="p">;</span>		<span class="cm">/* Symbol value */</span>
 </span></span><span class="line"><span class="cl">  <span class="n">Elf64_Xword</span>	<span class="n">st_size</span><span class="p">;</span>		<span class="cm">/* Symbol size */</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">Elf64_Sym</span><span class="p">;</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">Elf64_Sym</span><span class="p">;</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>这里需要注意，第一个成员的大小为<code>4</code>字节，表示的意思是这个符号所描述的字符串在字符串表中的下标。那么，如果修改了这个下标，就能解析出不同的符号地址。还有一个需要关注的成员是<code>st_value</code>，表示符号的值。而当符号是一个函数或者变量的时候，这个值就代表符号的虚拟地址，如果开启了<code>PIE</code>，那么符号的实际地址就是加载的基地址加上这个值。</p>
 <p>符号表和字符串表描述了怎么找到符号，但是如何标识哪些符号需要重定位，则需要使用到重定位表。使用 <code>readelf</code>查看重定位表。</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-4"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -414,11 +411,10 @@
 </span></span><span class="line"><span class="cl"><span class="m">000000201020</span>  <span class="m">000300000007</span> R_X86_64_JUMP_SLO <span class="m">0000000000000000</span> setbuf@GLIBC_2.2.5 + <span class="m">0</span>
 </span></span><span class="line"><span class="cl"><span class="m">000000201028</span>  <span class="m">000400000007</span> R_X86_64_JUMP_SLO <span class="m">0000000000000000</span> system@GLIBC_2.2.5 + <span class="m">0</span>
 </span></span><span class="line"><span class="cl"><span class="m">000000201030</span>  <span class="m">000500000007</span> R_X86_64_JUMP_SLO <span class="m">0000000000000000</span> printf@GLIBC_2.2.5 + <span class="m">0</span>
-</span></span><span class="line"><span class="cl"><span class="m">000000201038</span>  <span class="m">000600000007</span> R_X86_64_JUMP_SLO <span class="m">0000000000000000</span> read@GLIBC_2.2.5 + <span class="m">0</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="m">000000201038</span>  <span class="m">000600000007</span> R_X86_64_JUMP_SLO <span class="m">0000000000000000</span> read@GLIBC_2.2.5 + <span class="m">0</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>重定位表的数据结构为：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-5"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -431,13 +427,12 @@
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="n">Elf64_Addr</span>	<span class="n">r_offset</span><span class="p">;</span>		<span class="cm">/* Address */</span>
 </span></span><span class="line"><span class="cl">  <span class="n">Elf64_Xword</span>	<span class="n">r_info</span><span class="p">;</span>			<span class="cm">/* Relocation type and symbol index */</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">Elf64_Rel</span><span class="p">;</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">Elf64_Rel</span><span class="p">;</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>对于可重定位文件来说，<code>r_offset</code>表示重定位入口所需要修正的位置的第一个字节的地址。换句话说，一般在查找动态符号的时候，这个值代表对应符号在<code>got</code>表中的地址。使用 <code>libc.got['xxx']</code>得到的就是这个地址。<br />第二个成员一般有两部分，低<code>32</code>位表示重定位入口的类型，高<code>32</code>位表示这个重定位符号在符号表中的下标。</p>
 <p>接下来，再来看<code>plt</code>表和<code>got</code>表。<br /><code>plt</code>表的全称为<code>procedure linkage table</code>，程序调用其他<code>so</code>中定义的函数实际会跳转到对应的<code>plt</code>表进行调用。不管什么时候，<code>plt</code>一定会跳转到对应的<code>got</code>表中，取出<code>got</code>表的地址，然后跳转。如果程序使用的是懒加载机制，那么在第一次调用某个函数时，其<code>got</code>表对应的内容实际并不是该函数的真实地址，此时会走向解析符号的流程，解析成功后，将真实地址装载到<code>got</code>表中，以后的每一次调用，则都会直接跳转到真实地址。</p>
 <p>有一种利用方法叫做<code>ret2plt/ret2got</code>就是利用这两个表的特性，修改<code>got</code>表，即可控制程序的执行流。那么，第一次调用函数时，其对应<code>got</code>表中填写的地址对应的指令是啥呢。</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-6"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -446,19 +441,17 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">push n
 </span></span><span class="line"><span class="cl">push ModuleID
-</span></span><span class="line"><span class="cl">jmp _dl_runtime_resolve
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">jmp _dl_runtime_resolve</span></span></code></pre></td></tr></table>
 </div>
 </div><p>实际上，第<code>2</code>条指令是第<code>3</code>条指令都处于<code>plt[0]</code>，因此，实际上每个<code>got</code>表中初始状态下填写的指令为：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-7"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">push n
-</span></span><span class="line"><span class="cl">jmp plt<span class="o">[</span>0<span class="o">]</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">jmp plt<span class="o">[</span>0<span class="o">]</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>而这里的<code>n</code>对应的是该符号在<code>rel.plt</code>重定位表中的下标。第二个<code>MoudleID</code>则一般是本程序的<code>link_map</code>结构体的地址，解析来就进入到了<code>_dl_runtime_resolve</code>函数 。</p>
 <p>简单小结一下，在解析符号的时候，<strong>简略</strong>步骤可以这样理解：</p>
@@ -475,7 +468,7 @@
 <p><a name="VtdKV"></a></p>
 <h3 id="符号查找">符号查找</h3>
 <p>符号查找过程中的第一个函数是<code>_dl_runtime_resolve</code>，其对应的汇编代码如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-8"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -560,11 +553,10 @@
 </span></span><span class="line"><span class="cl">   0x00007ffff7fe7c72 &lt;+178&gt;:	mov    rbx,QWORD PTR <span class="o">[</span>rsp<span class="o">]</span>
 </span></span><span class="line"><span class="cl">   0x00007ffff7fe7c76 &lt;+182&gt;:	add    rsp,0x18
 </span></span><span class="line"><span class="cl">   0x00007ffff7fe7c7a &lt;+186&gt;:	bnd jmp r11
-</span></span><span class="line"><span class="cl">End of assembler dump.
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">End of assembler dump.</span></span></code></pre></td></tr></table>
 </div>
 </div><p>前面做了一系列工作保存数据，然后就是<code>call _dl_fixup</code>这个函数，然后获取到真实的地址，把地址保存在<code>r11</code>寄存器中，把相关数据恢复后，直接<code>jmp r11</code>。所以，重点需要看一下<code>_dl_fixup</code>这个函数。<br />为了方便，直接将函数的分析写成注释，如下所示：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-9"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
@@ -785,11 +777,10 @@
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">value</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">	<span class="c1">// 修正got表条目
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">return</span> <span class="nf">elf_machine_fixup_plt</span> <span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">refsym</span><span class="p">,</span> <span class="n">sym</span><span class="p">,</span> <span class="n">reloc</span><span class="p">,</span> <span class="n">rel_addr</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>很多细节并没有深入阐述，只给出了大致的流程。<br />接下来调用<code>_dl_lookup_symbol_x</code>在其他<code>link_map</code>中寻找符号，实际调用的是<code>do_lookup_x</code>，然后来看这个函数。</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-10"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -982,8 +973,7 @@
 </span></span><span class="line"><span class="cl">		<span class="p">}</span>
 </span></span><span class="line"><span class="cl">	    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">          <span class="c1">//....
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>如果找到了，就跳转到<code>found_it</code>分支，然后就会进行一些基本的检查之后，就会跳转出去，符号查找结束。<br />如果没找到，最后会<code>assert</code>抛出断言，程序异常终止。
 <a name="Z8GpW"></a></p>
@@ -997,7 +987,7 @@
 <li>在进行符号解析的时候，进行任意函数调用</li>
 </ol>
 <h2 id="poc">POC</h2>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-11"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -1124,11 +1114,10 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="nf">puts</span><span class="p">(</span><span class="s">&#34;[*] step6: get shell ---&gt; exit(</span><span class="se">\&#34;</span><span class="s">/bin/sh</span><span class="se">\&#34;</span><span class="s">)&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="nf">exit</span><span class="p">(</span><span class="n">strptr</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>执行后输出：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-12"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -1161,8 +1150,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">set</span> <span class="n">hasharr</span> <span class="n">to</span> <span class="mh">0x7c967e3e7c93f2a0ul</span>
 </span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="nl">step6</span><span class="p">:</span> <span class="n">get</span> <span class="n">shell</span> <span class="o">---&gt;</span> <span class="nf">exit</span><span class="p">(</span><span class="s">&#34;/bin/sh&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="err">$</span> <span class="n">whoami</span>
-</span></span><span class="line"><span class="cl"><span class="n">roderick</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">roderick</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image.png 2x" sizes="auto" data-title="image" data-alt="image" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>总的来看，需要伪造的结构有：</p>

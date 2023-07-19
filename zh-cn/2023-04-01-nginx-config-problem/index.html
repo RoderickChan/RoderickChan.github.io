@@ -89,7 +89,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -176,7 +176,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -249,7 +249,7 @@
 <p>好些天前，为了在公网服务器上搭建一个<code>chatgpt</code>的<code>web</code>版本服务，我申请了子域名<code>chatgpt.roderickchan.cn</code>，配置好了<code>DNS</code>解析规则并申请了对应的<code>ssl</code>证书。</p>
 <p>我之前的<code>nginx</code>配置是这样的：<code>/etc/nginx/nginx.conf</code>为主要的配置文件，设置一些公共的参数、规则等，<code>/etc/nginx/conf.d/*.conf*</code>会存放不同的域名的规则。
 我的<code>/etc/nginx/nginx.conf</code>内容如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -330,12 +330,11 @@
 </span></span><span class="line"><span class="cl">    <span class="kn">gzip</span> <span class="no">off</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="kn">include</span> <span class="s">/etc/nginx/conf.d/*.conf</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>再正常不过的配置。</p>
 <p>每当我申请了<code>xxx.roderickchan.cn</code>域名的时候，就会在<code>/etc/nginx/conf.d</code>目录下新增<code>xxx.roderickchan.cn.conf</code>文件，文件填入的内容如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -418,8 +417,7 @@
 </span></span><span class="line"><span class="cl">        <span class="kn">proxy_set_header</span> <span class="s">X-Forwarded-Proto</span> <span class="s">https</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>该配置文件主要干了以下几件事：</p>
 <ul>
@@ -432,7 +430,7 @@
 <p>发现问题后，我一拍脑袋，直接让所有域名的<code>http</code>都跳转到<code>https</code>不就行了，这样访问<code>https</code>肯定会失败。</p>
 <h2 id="尝试解决">尝试解决</h2>
 <p>于是，我立马对<code>/etc/nginx/nginx.conf</code>进行了修改，修改后的<code>conf</code>文件为：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -457,8 +455,7 @@
 </span></span><span class="line"><span class="cl">	    <span class="kn">return</span> <span class="mi">301</span> <span class="s">https://</span><span class="nv">$host/$request_uri</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="kn">include</span> <span class="s">/etc/nginx/conf.d/*.conf</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>在<code>80</code>端口上，为所有没有匹配到的域名设置了强制跳转<code>https</code>。</p>
 <p>我以为接下来访问<code>http://xxx.roderickchan.cn</code>的流程会像这样：</p>
@@ -469,7 +466,7 @@
 <li>访问失败</li>
 </ol>
 <p>用<code>curl</code>测试了一下，发现真的会失败：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-4"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -594,8 +591,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">curl failed to verify the legitimacy of the server and therefore could not
 </span></span><span class="line"><span class="cl">establish a secure connection to it. To learn more about this situation and
-</span></span><span class="line"><span class="cl">how to fix it, please visit the web page mentioned above.
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">how to fix it, please visit the web page mentioned above.</span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>But</code>，失败的错误是<code>no alternative certificate subject name matches target host name </code>，服务器给我的证书的域名仍然是<code>download.roderickchan.cn</code>，这就离离原上谱了。</p>
 <h2 id="问题定位">问题定位</h2>
@@ -613,7 +609,7 @@
 <h1 id="解决方案">解决方案</h1>
 <h2 id="解决方案1">解决方案1</h2>
 <p>很快啊，我就写好了匹配规则，修改后的配置文件为：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-5"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -646,12 +642,11 @@
 </span></span><span class="line"><span class="cl">	    <span class="kn">return</span> <span class="mi">403</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="kn">include</span> <span class="s">/etc/nginx/conf.d/*.conf</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>设置了<code>default_server</code>，直接用了<code>www.roderickchan.cn</code>的证书。心想这次没问题，用<code>curl</code>测试一下，没想到又一次离谱了起来。
 测试访问<code>http://chatgpt.roderickchan.cn</code></p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-6"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -718,11 +713,10 @@
 </span></span><span class="line"><span class="cl">&lt;hr&gt;&lt;center&gt;nginx/1.18.0 <span class="o">(</span>Ubuntu<span class="o">)</span>&lt;/center&gt;
 </span></span><span class="line"><span class="cl">&lt;/body&gt;
 </span></span><span class="line"><span class="cl">&lt;/html&gt;
-</span></span><span class="line"><span class="cl">* Connection <span class="c1">#0 to host chatgpt.roderickchan.cn left intact</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">* Connection <span class="c1">#0 to host chatgpt.roderickchan.cn left intact</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>确实给出了<code>403</code>的错误，没有问题。继续测试<code>https</code>访问：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-7"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -793,8 +787,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">curl failed to verify the legitimacy of the server and therefore could not
 </span></span><span class="line"><span class="cl">establish a secure connection to it. To learn more about this situation and
-</span></span><span class="line"><span class="cl">how to fix it, please visit the web page mentioned above.
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">how to fix it, please visit the web page mentioned above.</span></span></code></pre></td></tr></table>
 </div>
 </div><p>又找到<code>subject: CN=www.roderickchan.cn</code>去了·····</p>
 <p>所以，<code>nginx</code>根据证书，又给重定向到了<code>www.roderickchan.cn</code>，然后，检测到证书与匹配，报错。</p>
@@ -802,19 +795,18 @@
 <h2 id="解决方案2">解决方案2</h2>
 <p>采用一个自签名的证书，替换到合法的域名的证书即可。</p>
 <p>使用<code>openssl</code>生成自签名证书：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-8"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">openssl genrsa -out server.key <span class="m">4096</span>
-</span></span><span class="line"><span class="cl">openssl req -new -x509 -days <span class="m">3650</span> -key server.key -out server.crt -subj <span class="s2">&#34;/C=CN/ST=mykey/L=mykey/O=mykey/OU=mykey/CN=domain1/CN=domain2/CN=domain3&#34;</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">openssl req -new -x509 -days <span class="m">3650</span> -key server.key -out server.crt -subj <span class="s2">&#34;/C=CN/ST=mykey/L=mykey/O=mykey/OU=mykey/CN=domain1/CN=domain2/CN=domain3&#34;</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>最后会生成<code>server.crt</code>和<code>server.key</code>两个文件，替换掉就好了。</p>
 <p>最最最终的配置文件为：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-9"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -847,11 +839,10 @@
 </span></span><span class="line"><span class="cl">	    <span class="kn">return</span> <span class="mi">403</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="kn">include</span> <span class="s">/etc/nginx/conf.d/*.conf</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>最后用<code>curl</code>测试一下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-10"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -896,8 +887,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">curl failed to verify the legitimacy of the server and therefore could not
 </span></span><span class="line"><span class="cl">establish a secure connection to it. To learn more about this situation and
-</span></span><span class="line"><span class="cl">how to fix it, please visit the web page mentioned above.
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">how to fix it, please visit the web page mentioned above.</span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>SSL certificate problem: self signed certificate</code>，浏览器上访问也会得到<code>403</code>了。</p>
 <p>至此，终于解决了这个问题。</p>

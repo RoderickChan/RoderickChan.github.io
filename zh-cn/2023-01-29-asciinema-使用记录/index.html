@@ -89,7 +89,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -176,7 +176,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -240,54 +240,49 @@
 <p>想掌握全部的使用技巧，点击其官方网站<a href="https://github.com/asciinema/asciinema"target="_blank" rel="external nofollow noopener noreferrer">asciinema/asciinema: Terminal session recorder 📹 (github.com)<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>阅读<code>readme</code>文件即可。</p>
 <h1 id="1-安装">1-安装</h1>
 <p>在<code>ubuntu</code>上安装的方式有两种：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt install asciinema
-</span></span><span class="line"><span class="cl">pipx install asciinema
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">pipx install asciinema</span></span></code></pre></td></tr></table>
 </div>
 </div><h1 id="2-录制">2-录制</h1>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">asciinema rec -t <span class="s2">&#34;title&#34;</span> cast_file_path
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">asciinema rec -t <span class="s2">&#34;title&#34;</span> cast_file_path</span></span></code></pre></td></tr></table>
 </div>
 </div><h1 id="3-播放">3-播放</h1>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">asciinema play cast_file_path
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">asciinema play cast_file_path</span></span></code></pre></td></tr></table>
 </div>
 </div><h1 id="4-上传">4-上传</h1>
 <p>首先可以登录<a href="https://asciinema.org/"target="_blank" rel="external nofollow noopener noreferrer">asciinema - Record and share your terminal sessions, the simple way<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>这个网站。</p>
 <p>然后：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-4"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">asciinema auth
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">asciinema auth</span></span></code></pre></td></tr></table>
 </div>
 </div><p>会生成一个链接，点击一下。</p>
 <p>接下来：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-5"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">asciinema upload cast_file_path
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">asciinema upload cast_file_path</span></span></code></pre></td></tr></table>
 </div>
 </div><p>即可上传。</p>
 <p>上传成功后会有一个链接，点击链接即可访问。然后可以修改标题和描述，并将录制的内容公开。</p>

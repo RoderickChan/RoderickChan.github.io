@@ -121,7 +121,7 @@ house of apple3
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -208,7 +208,7 @@ house of apple3
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -325,7 +325,7 @@ house of apple3
 </ul>
 <p>最后会遍历<code>_IO_list_all</code>存放的每一个<code>IO_FILE</code>结构体，如果满足条件的话，会调用每个结构体中<code>vtable-&gt;_overflow</code>函数指针指向的函数。</p>
 <p>使用<code>largebin attack</code>可以劫持<code>_IO_list_all</code>变量，将其替换为伪造的<code>IO_FILE</code>结构体，而在此时，我们其实仍可以继续利用某些<code>IO</code>流函数去修改其他地方的值。要想修改其他地方的值，就离不开<code>_IO_FILE</code>的一个成员<code>_wide_data</code>的利用。</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -356,11 +356,10 @@ house of apple3
 </span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">_mode</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="cm">/* Make sure we don&#39;t get into trouble again.  */</span>
 </span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="n">_unused2</span><span class="p">[</span><span class="mi">15</span> <span class="o">*</span> <span class="k">sizeof</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="k">sizeof</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span> <span class="o">-</span> <span class="k">sizeof</span> <span class="p">(</span><span class="kt">size_t</span><span class="p">)];</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">};</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>amd64</code>程序下，<code>struct _IO_wide_data *_wide_data</code>在<code>_IO_FILE</code>中的偏移为<code>0xa0</code>：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -427,11 +426,10 @@ house of apple3
 </span></span><span class="line"><span class="cl">0xb8:&#39;__pad5&#39;,
 </span></span><span class="line"><span class="cl">0xc0:&#39;_mode&#39;,
 </span></span><span class="line"><span class="cl">0xc4:&#39;_unused2&#39;,
-</span></span><span class="line"><span class="cl">0xd8:&#39;vtable&#39;
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">0xd8:&#39;vtable&#39;</span></span></code></pre></td></tr></table>
 </div>
 </div><p>我们在伪造<code>_IO_FILE</code>结构体的时候，伪造<code>_wide_data</code>变量，然后通过某些函数，比如<code>_IO_wstrn_overflow</code>就可以将已知地址空间上的某些值修改为一个已知值。</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -496,13 +494,12 @@ house of apple3
 </span></span><span class="line"><span class="cl">  <span class="cm">/* Since we are not really interested in storing the characters
 </span></span></span><span class="line"><span class="cl"><span class="cm">     which do not fit in the buffer we simply ignore it.  */</span>
 </span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="n">c</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>分析一下这个函数，首先将<code>fp</code>强转为<code>_IO_wstrnfile *</code>指针，然后判断<code>fp-&gt;_wide_data-&gt;_IO_buf_base != snf-&gt;overflow_buf</code>是否成立（一般肯定是成立的），如果成立则会对<code>fp-&gt;_wide_data</code>的<code>_IO_write_base</code>、<code>_IO_read_base</code>、<code>_IO_read_ptr</code>和<code>_IO_read_end</code>赋值为<code>snf-&gt;overflow_buf</code>或者与该地址一定范围内偏移的值；最后对<code>fp-&gt;_wide_data</code>的<code>_IO_write_ptr</code>和<code>_IO_write_end</code>赋值。</p>
 <p>也就是说，只要控制了<code>fp-&gt;_wide_data</code>，就可以控制从<code>fp-&gt;_wide_data</code>开始一定范围内的内存的值，也就等同于<strong>任意地址写已知地址</strong>。</p>
 <p>这里有时候需要绕过<code>_IO_wsetb</code>函数里面的<code>free</code>：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-4"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -529,11 +526,10 @@ house of apple3
 </span></span><span class="line"><span class="cl">    <span class="n">f</span><span class="o">-&gt;</span><span class="n">_flags2</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="n">_IO_FLAGS2_USER_WBUF</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">else</span>
 </span></span><span class="line"><span class="cl">    <span class="n">f</span><span class="o">-&gt;</span><span class="n">_flags2</span> <span class="o">|=</span> <span class="n">_IO_FLAGS2_USER_WBUF</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>_IO_wstrnfile</code>涉及到的结构体如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-5"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -604,12 +600,11 @@ house of apple3
 </span></span><span class="line"><span class="cl">  <span class="cm">/* This is used for the characters which do not fit in the buffer
 </span></span></span><span class="line"><span class="cl"><span class="cm">     provided by the user.  */</span>
 </span></span><span class="line"><span class="cl">  <span class="kt">wchar_t</span> <span class="n">overflow_buf</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span> <span class="c1">// overflow_buf在这里********
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span> <span class="n">_IO_wstrnfile</span><span class="p">;</span>
-</span></span></code></pre></td></tr></table>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span> <span class="n">_IO_wstrnfile</span><span class="p">;</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>其中，<code>overflow_buf</code>相对于<code>_IO_FILE</code>结构体的偏移为<code>0xf0</code>，在<code>vtable</code>后面。</p>
 <p>而<code>struct _IO_wide_data</code>结构体如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-6"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -656,12 +651,11 @@ house of apple3
 </span></span><span class="line"><span class="cl">  <span class="k">struct</span> <span class="n">_IO_codecvt</span> <span class="n">_codecvt</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="kt">wchar_t</span> <span class="n">_shortbuf</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">  <span class="k">const</span> <span class="k">struct</span> <span class="n">_IO_jump_t</span> <span class="o">*</span><span class="n">_wide_vtable</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">};</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>换而言之，假如此时在堆上伪造一个<code>_IO_FILE</code>结构体并已知其地址为<code>A</code>，将<code>A + 0xd8</code>替换为<code>_IO_wstrn_jumps</code>地址，<code>A + 0xc0</code>设置为<code>B</code>，并设置其他成员以便能调用到<code>_IO_OVERFLOW</code>。<code>exit</code>函数则会一路调用到<code>_IO_wstrn_overflow</code>函数，并将<code>B</code>至<code>B + 0x38</code>的地址区域的内容都替换为<code>A + 0xf0</code>或者<code>A + 0x1f0</code>。</p>
 <p>简单写一个<code>demo</code>程序进行验证：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-7"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -790,11 +784,10 @@ house of apple3
 </span></span><span class="line"><span class="cl">        <span class="n">tmp</span> <span class="o">+=</span> <span class="mi">2</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="nf">puts</span><span class="p">(</span><span class="s">&#34;===========================new value=======================&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>输出结果如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-8"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -847,15 +840,14 @@ house of apple3
 </span></span><span class="line"><span class="cl"><span class="o">[</span>0x55cfb956d2b0<span class="o">]</span>: 0x00007f648ba40770  0x00007f648ba40770
 </span></span><span class="line"><span class="cl"><span class="o">[</span>0x55cfb956d2c0<span class="o">]</span>: 0x00007f648ba40770  0x00007f648ba40770
 </span></span><span class="line"><span class="cl"><span class="o">[</span>0x55cfb956d2d0<span class="o">]</span>: 0x00007f648ba40770  <span class="nv">0x00007f648ba40870</span>
-</span></span><span class="line"><span class="cl"><span class="o">===========================</span>new <span class="nv">value</span><span class="o">=======================</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="o">===========================</span>new <span class="nv">value</span><span class="o">=======================</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>从输出中可以看到，已经成功修改了<code>sdterr-&gt;_wide_data</code>所指向的地址空间的内存。</p>
 <h2 id="利用思路">利用思路</h2>
 <p>从上面的分析可以，在只给了<code>1</code>次<code>largebin attack</code>的前提下，能利用<code>_IO_wstrn_overflow</code>函数将任意地址空间上的值修改为一个已知地址，并且这个已知地址通常为堆地址。那么，当我们伪造两个甚至多个<code>_IO_FILE</code>结构体，并将这些结构体通过<code>chain</code>字段串联起来就能进行组合利用。基于此，我总结了<code>house of apple</code>下至少四种利用思路。</p>
 <h3 id="思路一修改tcache线程变量">思路一：修改<code>tcache</code>线程变量</h3>
 <p>该思路需要借助<code>house of pig</code>的思想，利用<code>_IO_str_overflow</code>中的<code>malloc</code>进行任意地址分配，<code>memcpy</code>进行任意地址覆盖。其代码片段如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-9"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -902,8 +894,7 @@ house of apple3
 </span></span><span class="line"><span class="cl">	      <span class="nf">memcpy</span> <span class="p">(</span><span class="n">new_buf</span><span class="p">,</span> <span class="n">old_buf</span><span class="p">,</span> <span class="n">old_blen</span><span class="p">);</span> <span class="c1">// 劫持_IO_buf_base后即可任意地址写任意值
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>	      <span class="nf">free</span> <span class="p">(</span><span class="n">old_buf</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">      <span class="c1">// .......
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>利用步骤如下：</p>
 <ul>
@@ -965,15 +956,14 @@ house of apple3
 <p>因此，选择使用<code>house of apple</code>劫持<code>_IO_FILE-&gt;_wide_data</code>成员进行利用。</p>
 <p>在利用之前，还有一些准备工作需要做。我们需要进行合理的堆风水布局，使得能够在修改一个<code>largebin chunk A</code>的<code>bk_nextsize</code>的同时伪造一个<code>chunk B</code>，并需要让<code>A</code>和<code>B</code>在同一个<code>bins</code>数组中，然后释放<code>B</code>并进行<code>largebin attack</code>，这样就能保证既完成任意地址写堆地址，也能控制写的堆地址所属的<code>chunk</code>的内容。</p>
 <p>对三种大小<code>chunk</code>的<code>size</code>进行分析，并设<code>x = key + 0x10</code>，<code>y = key + 0x20</code>, <code>z = key * 2 + 0x10</code>。那么有：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-10"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">2 * y - z = 2 * key + 0x40 - 2 * key - 0x10 = 0x30
-</span></span><span class="line"><span class="cl">2 * y - 2 * x = 2 *key + 0x40 - 2 * key - 0x20 = 0x20
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">2 * y - 2 * x = 2 *key + 0x40 - 2 * key - 0x20 = 0x20</span></span></code></pre></td></tr></table>
 </div>
 </div><p>题目中还存在<code>UAF</code>，于是就可以的构造出如下布局：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/956675_6ECD7E3FD4WBJNX.jpg" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/956675_6ECD7E3FD4WBJNX.jpg, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/956675_6ECD7E3FD4WBJNX.jpg 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/956675_6ECD7E3FD4WBJNX.jpg 2x" sizes="auto" data-title="img" data-alt="img" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
@@ -1005,7 +995,7 @@ house of apple3
 </li>
 </ul>
 <p>其<code>exp</code>如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-11"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
@@ -1308,8 +1298,7 @@ house of apple3
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>调试截图如下：</p>
 <p>修改掉<code>pointer_guard</code>：</p>
@@ -1327,7 +1316,7 @@ house of apple3
 <li>仍然利用一些<code>gadgets</code>劫持<code>rsp</code>，然后<code>rop</code>泄露出<code>flag</code></li>
 </ul>
 <p><code>exp</code>如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-12"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
@@ -1650,8 +1639,7 @@ house of apple3
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">bye</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>调试截图：</p>
 <p>修改掉<code>tache</code>变量：</p>

@@ -81,7 +81,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -168,7 +168,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -255,7 +255,7 @@
 </li>
 <li>
 <p>直接调用<code>swapgs_restore_regs_and_return_to_usermode</code>，从<code>mov rdi, cr3</code>处开始返回用户态，布局如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -274,14 +274,13 @@
 </span></span><span class="line"><span class="cl">user_cs
 </span></span><span class="line"><span class="cl">user_eflags
 </span></span><span class="line"><span class="cl">user_sp
-</span></span><span class="line"><span class="cl">user_ss
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">user_ss</span></span></code></pre></td></tr></table>
 </div>
 </div></li>
 </ul>
 <h3 id="题目分析">题目分析</h3>
 <p>首先修改启动脚本：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -336,11 +335,10 @@
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>	-no-reboot <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>	-smp <span class="nv">cores</span><span class="o">=</span>2,threads<span class="o">=</span><span class="m">2</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>	-cpu kvm64,+smep,smap  <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>	-s <span class="c1"># 开启调试端口</span>
-</span></span></code></pre></td></tr></table>
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>	-s <span class="c1"># 开启调试端口</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>然后添加一个<code>gdb</code>脚本：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -357,11 +355,10 @@
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    -ex <span class="s1">&#39;target remote 127.0.0.1:1234&#39;</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    -ex <span class="s1">&#39;add-symbol-file vmlinux 0xffffffff81000000&#39;</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    -ex <span class="s1">&#39;add-symbol-file kqueue.ko 0xffffffffc0000000&#39;</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>    -ex <span class="s1">&#39;b *0xffffffffc0000058&#39;</span> <span class="se">\
-</span></span></span></code></pre></td></tr></table>
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    -ex <span class="s1">&#39;b *0xffffffffc0000058&#39;</span> <span class="err">\</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>并可以在<code>init</code>脚本中添加以方便调试：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-4"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -370,11 +367,10 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">cat /proc/kallsyms &gt; /tmp/kallsyms
 </span></span><span class="line"><span class="cl">cat /sys/module/kqueue/sections/.text &gt; /tmp/modules
-</span></span><span class="line"><span class="cl">cat /sys/module/kqueue/sections/.bss &gt;&gt; /tmp/modules
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">cat /sys/module/kqueue/sections/.bss &gt;&gt; /tmp/modules</span></span></code></pre></td></tr></table>
 </div>
 </div><p>题目是一个循环链表，梳理出结构体如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-5"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -409,8 +405,7 @@
 </span></span><span class="line"><span class="cl">  <span class="n">u64</span> <span class="n">idx</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="n">data</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">  <span class="n">Node</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">};</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h4 id="kqueue_init">kqueue_init</h4>
 <p>模块初始化的时候，申请了<code>kmalloc-96</code>的<code>chunk</code>并给全局变量<code>queue</code>赋值，然后申请了一个<code>node</code>：</p>
@@ -424,7 +419,7 @@
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220629201432118.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220629201432118.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220629201432118.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220629201432118.png 2x" sizes="auto" data-title="image-20220629201432118" data-alt="image-20220629201432118" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <h3 id="利用思路">利用思路</h3>
 <p>这题的附件有很大的<code>bug</code>，<code>/bin</code>目录以及<code>/sbin</code>对<code>ctf</code>用户都可以写。观察一下<code>init</code>脚本，发现结束后调用了<code>mount</code>命令和<code>poweroff</code>命令，所以只需要修改软连接为自定义脚本即可。</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-6"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -449,8 +444,7 @@
 </span></span><span class="line"><span class="cl">	<span class="nf">system</span><span class="p">(</span><span class="s">&#34;chmod +x /tmp/poweroff&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">	<span class="nf">system</span><span class="p">(</span><span class="s">&#34;ln -s /tmp/poweroff /sbin/poweroff&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>然后输入<code>exit</code>退出的时候，可以直接获得<code>flag</code>。</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220629193228160.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220629193228160.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220629193228160.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220629193228160.png 2x" sizes="auto" data-title="image-20220629193228160" data-alt="image-20220629193228160" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
@@ -461,7 +455,7 @@
 <li>结合<code>pt_regs</code>结构体，使用栈迁移修改<code>modprobe_path</code>即可读取<code>flag</code></li>
 </ul>
 <h3 id="exp">EXP</h3>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-7"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
@@ -722,11 +716,10 @@
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nf">prepare</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl">    <span class="nf">hacker</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>还可以利用<code>commit_creds(preapare_cred(0))</code>来提升权限至<code>root</code>，使用<code>xchg esp, eax; ret</code>这一类的<code>gadget</code>即可。</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-8"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
@@ -943,8 +936,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nf">prepare</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl">    <span class="nf">hacker</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220630221315813.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220630221315813.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220630221315813.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220630221315813.png 2x" sizes="auto" data-title="image-20220630221315813" data-alt="image-20220630221315813" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <h2 id="5-kqueue-revenge">5-kqueue-revenge</h2>

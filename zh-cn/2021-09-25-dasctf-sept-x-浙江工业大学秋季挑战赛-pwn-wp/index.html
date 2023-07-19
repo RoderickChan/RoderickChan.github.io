@@ -81,7 +81,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -168,7 +168,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -289,7 +289,7 @@
 <li>通过校验即可以作为有效的密码</li>
 </ul>
 <p>爆破的脚本如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -320,8 +320,7 @@
 </span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;a valid char:&#34;</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">p</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">    <span class="n">p</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>最后得到两个可以用的密码：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210925160351278.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210925160351278.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210925160351278.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210925160351278.png 2x" sizes="auto" data-title="image-20210925160351278" data-alt="image-20210925160351278" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
@@ -340,7 +339,7 @@
 <li>利用程序<code>mmap</code>的<code>0x23330000</code>这一段<code>rwx</code>内存执行<code>shellcode</code></li>
 </ul>
 <h4 id="exp">exp</h4>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -503,8 +502,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">asm</span><span class="p">(</span><span class="n">shellcraft</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="s2">&#34;/flag&#34;</span><span class="p">)))</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">p</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">p</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>远程打：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210925161955747.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210925161955747.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210925161955747.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210925161955747.png 2x" sizes="auto" data-title="image-20210925161955747" data-alt="image-20210925161955747" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
@@ -517,7 +515,7 @@
 <p>栈溢出：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210925152030008.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210925152030008.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210925152030008.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210925152030008.png 2x" sizes="auto" data-title="image-20210925152030008" data-alt="image-20210925152030008" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <h4 id="exp-1">exp</h4>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -552,8 +550,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">p</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">&#34;EASY PWN PWN PWN~</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">flat</span><span class="p">({</span><span class="mi">0</span><span class="p">:</span><span class="n">asm</span><span class="p">(</span><span class="n">shellcraft</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="s1">&#39;/flag&#39;</span><span class="p">)),</span> <span class="mh">0x58</span><span class="p">:</span> <span class="n">addr</span> <span class="o">-</span> <span class="mh">0x50</span><span class="p">}))</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">p</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">p</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>远程打：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210925162147990.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210925162147990.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210925162147990.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210925162147990.png 2x" sizes="auto" data-title="image-20210925162147990" data-alt="image-20210925162147990" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
@@ -568,7 +565,7 @@
 <p>远程靶机很诡异啊，泄露出地址后，我用<code>libc.sym['read']</code>执行<code>read</code>会失败，但是用二进制文件的<code>read@plt</code>可以成功，还有<code>pop rdx; pop rsi; ret</code>远程也会失败，就很迷。后来改了下<code>gadgets</code>，然后喜提<code>test flag</code>：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210925152821175.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210925152821175.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210925152821175.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210925152821175.png 2x" sizes="auto" data-title="image-20210925152821175" data-alt="image-20210925152821175" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <h4 id="exp-2">exp</h4>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-4"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -691,8 +688,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">log_ex</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Get flag: </span><span class="si">{</span><span class="n">flag_</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">p</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">p</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>exp</code>均使用我自己写的小工具<code>pwncli</code>编写，欢迎试用~</p>
 <h3 id="其他链接">其他链接</h3>

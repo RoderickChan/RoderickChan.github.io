@@ -4,7 +4,7 @@
     <link>https://roderickchan.github.io/zh-cn/posts/</link>
     <description>所有文章 | roderick - record and learn!</description>
     <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
-      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 03 Jul 2023 19:26:06 &#43;0800</lastBuildDate><atom:link href="https://roderickchan.github.io/zh-cn/posts/" rel="self" type="application/rss+xml" /><item>
+      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 11 Jul 2023 18:14:58 &#43;0800</lastBuildDate><atom:link href="https://roderickchan.github.io/zh-cn/posts/" rel="self" type="application/rss+xml" /><item>
   <title>Glibc堆利用之house of系列总结</title>
   <link>https://roderickchan.github.io/zh-cn/2023-02-27-house-of-all-about-glibc-heap-exploitation/</link>
   <pubDate>Mon, 27 Feb 2023 15:10:08 &#43;0800</pubDate>
@@ -31,6 +31,22 @@
   <author>roderick</author>
   <guid>https://roderickchan.github.io/zh-cn/2022-10-11-%E4%BD%BF%E7%94%A8aliyun-hugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</guid>
   <description><![CDATA[<p>整个搭建过程中，云服务器配置耗费时间需要<code>1~2</code>周，而在配置云服务器过程中占用时间最长的为域名备案，最长需要等待<code>2</code>周才能完成；剩下的几步只需要不到两个小时的时间即可完成。</p>]]></description>
+</item>
+<item>
+  <title>Git与Github的简要分享</title>
+  <link>https://roderickchan.github.io/zh-cn/2023-07-11-git-and-github/</link>
+  <pubDate>Tue, 11 Jul 2023 18:14:58 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://roderickchan.github.io/zh-cn/2023-07-11-git-and-github/</guid>
+  <description><![CDATA[<blockquote>
+<ol>
+<li>之前的一次组会上，给组内小伙伴分享了 <code>Git</code> 和 <code>Github</code> 有关的基础概念与原理，介绍了使用 <code>Github</code> 进行协作开发的流程。</li>
+<li>本篇博客会总结材料的主要内容，并提供材料的 <code>PPT</code> 和 <code>PDF</code> 文件下载连接。</li>
+<li>现在 <code>Github</code> 网站改版了，<code>PPT</code> 是基于改版前的排版而制作的。</li>
+<li>本次分享的是基础使用教程，不涉及复杂的<code>git</code>命令讲解。</li>
+<li>文档只提供了大纲，很多细节没有体现在文档中，欢迎与我探讨。</li>
+</ol>
+</blockquote>]]></description>
 </item>
 <item>
   <title>解决博客链接结尾不带斜杠时访问失败的问题</title>
@@ -100,16 +116,6 @@
   <guid>https://roderickchan.github.io/zh-cn/2023-02-20-the-art-of-shellcode/</guid>
   <description><![CDATA[<blockquote>
 <p>对<code>shellcode</code>知识点的一些总结。</p>
-</blockquote>]]></description>
-</item>
-<item>
-  <title>自己搭建一个libc database</title>
-  <link>https://roderickchan.github.io/zh-cn/2023-02-15-%E8%87%AA%E5%B7%B1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAlibc-database/</link>
-  <pubDate>Wed, 15 Feb 2023 15:55:31 &#43;0800</pubDate>
-  <author>roderick</author>
-  <guid>https://roderickchan.github.io/zh-cn/2023-02-15-%E8%87%AA%E5%B7%B1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAlibc-database/</guid>
-  <description><![CDATA[<blockquote>
-<p>为什么要自己搭建一个 <code>libc database</code> 呢，<del>因为官方的<a href="https://libc.rip/api/"target="_blank" rel="external nofollow noopener noreferrer">https://libc.rip/api/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>查询接口挂了</del>官方的查询接口时好时坏，现在又可以用了。</p>
 </blockquote>]]></description>
 </item>
 </channel>

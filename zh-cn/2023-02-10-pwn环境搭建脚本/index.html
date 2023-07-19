@@ -89,7 +89,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -176,7 +176,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -222,7 +222,7 @@
 <p>如果无法访问国外的源，建议替换<code>apt</code>源和<code>pip</code>源为国内的源，替换脚本内的<code>HUB_DOMAIN</code>环境变量，使得域名指向国内镜像。</p>
 <p>另外，国内源安装<code>zsh</code>或者执行某些<code>wget</code>命令可能会失败。</p>
 <p>因此，非常建议<strong>开着全局代理执行这个安装脚本</strong>。</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
@@ -653,11 +653,10 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># Example aliases</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># alias zshconfig=&#34;mate ~/.zshrc&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># alias ohmyzsh=&#34;mate ~/.oh-my-zsh&#34;</span>
-</span></span><span class="line"><span class="cl">EOF
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">EOF</span></span></code></pre></td></tr></table>
 </div>
 </div><p>安装结束后，执行一下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -680,11 +679,10 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># 记得拷贝文件</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># cp -r ./decompilers/d2d_ida/* /path/to/ida/plugins/</span>
 </span></span><span class="line"><span class="cl">pip3 install . <span class="o">&amp;&amp;</span> <span class="se">\
-</span></span></span><span class="line"><span class="cl"><span class="se"></span>cp d2d.py ~/.d2d.py <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&#34;source ~/.d2d.py&#34;</span> &gt;&gt; ~/.gdbinit
-</span></span></code></pre></td></tr></table>
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>cp d2d.py ~/.d2d.py <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&#34;source ~/.d2d.py&#34;</span> &gt;&gt; ~/.gdbinit</span></span></code></pre></td></tr></table>
 </div>
 </div><p>更新各个仓库、工具的脚本：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -707,8 +705,7 @@
 </span></span><span class="line"><span class="cl"><span class="nb">cd</span> <span class="si">${</span><span class="nv">install_path</span><span class="si">}</span>/<span class="si">${</span><span class="nv">repo</span><span class="si">}</span> <span class="o">&amp;&amp;</span> git pull <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&#34;update </span><span class="si">${</span><span class="nv">repo</span><span class="si">}</span><span class="s2"> end!&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="k">done</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nb">cd</span> <span class="nv">$install_path</span>/pwndbg <span class="o">&amp;&amp;</span> ./setup.sh
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> <span class="nv">$install_path</span>/pwndbg <span class="o">&amp;&amp;</span> ./setup.sh</span></span></code></pre></td></tr></table>
 </div>
 </div><p>其他工具，比如<code>arm/aarch64</code>的交叉编译工具链，<code>docker</code>等，建议在需要的时候用<code>google</code>搜索安装方式。不需要的时候安装比较占用硬盘体积。</p></div><div class="post-footer" id="post-footer">
   <div class="post-info">

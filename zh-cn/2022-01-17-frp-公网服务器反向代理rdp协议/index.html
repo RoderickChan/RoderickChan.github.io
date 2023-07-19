@@ -81,7 +81,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -168,7 +168,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -287,7 +287,7 @@
 </ul>
 <h3 id="服务端">服务端</h3>
 <p>到<code>frp</code>的官网上下载最新的<code>release</code>包，选择符合当前公网服务器架构的二进制包。我采用的是<code>stcp</code>模式，这样可以避免在服务器上暴露端口，修改<code>frps.ini</code>，配置如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -304,12 +304,11 @@
 </span></span><span class="line"><span class="cl">token = auth_token # 修改为自己的token
 </span></span><span class="line"><span class="cl">dashboard_port = 7500
 </span></span><span class="line"><span class="cl">dashboard_user = admin # 最好不要用这样的用户名和密码
-</span></span><span class="line"><span class="cl">dashboard_pwd = admin123
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">dashboard_pwd = admin123</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="客户端被远程访问">客户端(被远程访问)</h3>
 <p>同样需要下载<code>frp</code>二进制包，修改<code>frpc.ini</code>，配置如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -336,12 +335,11 @@
 </span></span><span class="line"><span class="cl">use_compression = true
 </span></span><span class="line"><span class="cl">sk = secret_key # 修改为自己的sercet key
 </span></span><span class="line"><span class="cl">local_ip = 127.0.0.1
-</span></span><span class="line"><span class="cl">local_port = 3389
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">local_port = 3389</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="客户端远程访问">客户端(远程访问)</h3>
 <p>修改<code>fprc.ini</code>，配置如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -372,13 +370,12 @@
 </span></span><span class="line"><span class="cl">sk = secret_key # 修改为自己的sercet key
 </span></span><span class="line"><span class="cl">server_name = rdp_server
 </span></span><span class="line"><span class="cl">local_ip = 127.0.0.1
-</span></span><span class="line"><span class="cl">bind_port = 7001
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">bind_port = 7001</span></span></code></pre></td></tr></table>
 </div>
 </div><p>最后使用<code>Remote Desktop</code>访问<code>127.0.0.1：7001</code>地址，然后填好账户名，输入密码后即可远程访问内网的主机。</p>
 <h3 id="注册为服务">注册为服务</h3>
 <p>如果要用<code>systemctl</code>管理<code>frp</code>服务端的话，需要建立文件<code>/usr/lib/systemd/system/frp.service</code>，然后添加服务：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-4"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -413,13 +410,12 @@
 </span></span><span class="line"><span class="cl">StandardError=inherit
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">[Install]
-</span></span><span class="line"><span class="cl">WantedBy=multi-user.target
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">WantedBy=multi-user.target</span></span></code></pre></td></tr></table>
 </div>
 </div><p>然后执行：<code>systemctl daemon-reload</code>重启即可。重启后，可以用<code>systemctl start/restart/stop/enable</code>等来管理服务。</p>
 <p>如果想要要在<code>Windows</code>上开机自启动的话，可以使用<a href="https://github.com/winsw/winsw"target="_blank" rel="external nofollow noopener noreferrer">winsw<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>或者<a href="https://nssm.cc/"target="_blank" rel="external nofollow noopener noreferrer">nssm<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>，将<code>frp</code>注册为服务，然后就会开机自启动了。</p>
 <p>以<code>winsw</code>为例，下载了二进制包后，编写<code>frp_rdp.xml</code>：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-5"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -444,19 +440,17 @@
 </span></span><span class="line"><span class="cl">    <span class="nt">&lt;onfailure</span> <span class="na">action=</span><span class="s">&#34;restart&#34;</span> <span class="na">delay=</span><span class="s">&#34;120 sec&#34;</span><span class="nt">/&gt;</span>
 </span></span><span class="line"><span class="cl">    <span class="nt">&lt;logmode&gt;</span>append<span class="nt">&lt;/logmode&gt;</span>
 </span></span><span class="line"><span class="cl">    <span class="nt">&lt;logpath&gt;</span>logs<span class="nt">&lt;/logpath&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="nt">&lt;/service&gt;</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/service&gt;</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>然后执行：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-6"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">winsw</span><span class="p">.</span><span class="py">exe</span> <span class="n">install</span> <span class="n">frp_rdp</span><span class="p">.</span><span class="py">xml</span>
-</span></span><span class="line"><span class="cl"><span class="n">winsw</span><span class="p">.</span><span class="py">exe</span> <span class="nb">start </span><span class="n">frp_rdp</span><span class="p">.</span><span class="py">xml</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">winsw</span><span class="p">.</span><span class="py">exe</span> <span class="nb">start </span><span class="n">frp_rdp</span><span class="p">.</span><span class="n">xml</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="总结">总结</h2>
 <p>只要搭建过一次内网穿透的服务，其他协议如<code>ssh/http/ftp</code>等的搭建都大同小异。为了安全起见，建议：</p>

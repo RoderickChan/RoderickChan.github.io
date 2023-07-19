@@ -81,7 +81,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -168,7 +168,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -288,7 +288,7 @@
 <h3 id="利用思路">利用思路</h3>
 <p>考虑到题目中存在<code>exit</code>，且可以进行<code>1</code>次<code>largebin attack</code>，因此直接用我提出的<a href="https://roderickchan.github.io/2022/06/17/House-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADIO%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/"target="_blank" rel="external nofollow noopener noreferrer">house of apple<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>套现有的脚本模板去解题。</p>
 <h3 id="exp">EXP</h3>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
@@ -607,11 +607,10 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">sla</span><span class="p">(</span><span class="s2">&#34;5.Exit</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="s2">&#34;5&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>当然，需要手写一个<code>calc.c</code>去计算地址：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -710,8 +709,7 @@
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="nf">waitpid</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nf">puts</span><span class="p">(</span><span class="s">&#34;done!&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="fruitshop">fruitshop</h2>
 <h3 id="题目分析-1">题目分析</h3>
@@ -720,7 +718,7 @@
 <h3 id="利用思路-1">利用思路</h3>
 <p>仍然利用<code>house of apple</code>去拿<code>shell</code>。</p>
 <h3 id="exp-1">EXP</h3>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
@@ -991,8 +989,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">sla</span><span class="p">(</span><span class="s2">&#34;&gt; &#34;</span><span class="p">,</span> <span class="s2">&#34;quit&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="one">one</h2>
 <h3 id="题目分析-2">题目分析</h3>
@@ -1005,7 +1002,7 @@
 <li>利用<code>ret2csu</code>做栈<code>rop</code></li>
 </ul>
 <h3 id="exp-2">EXP</h3>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-4"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -1128,13 +1125,12 @@
 </span></span><span class="line"><span class="cl"><span class="p">]}))</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="ezthree">ezthree</h2>
 <h3 id="题目分析-3">题目分析</h3>
 <p>一个是<code>rw</code>属性的内存块，可以写入以下指令：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-5"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -1147,8 +1143,7 @@
 </span></span><span class="line"><span class="cl">jmp
 </span></span><span class="line"><span class="cl">movrax
 </span></span><span class="line"><span class="cl">nop
-</span></span><span class="line"><span class="cl">zero
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">zero</span></span></code></pre></td></tr></table>
 </div>
 </div><p>一个是<code>rwx</code>的指令，但是只能写<code>0x28</code>字节，且写入后直接<code>close 0/1/2</code>了。</p>
 <p>由于在分配<code>rw</code>内存的时候，有这样一句：</p>
@@ -1162,7 +1157,7 @@
 <li>使用<code>reverse tcp</code>反向连接读取<code>flag</code></li>
 </ul>
 <h3 id="exp-3">EXP</h3>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-6"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
@@ -1385,14 +1380,13 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">sa</span><span class="p">(</span><span class="s2">&#34;You want to do sometings ?</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">asm</span><span class="p">(</span><span class="n">sc</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="rainbowcat">rainbowcat</h2>
 <h3 id="题目分析-4">题目分析</h3>
 <p>似乎是加了花指令导致<code>IDA</code>反编译基本失效，不过好在题目不复杂，可以通过简单的测试得到所有功能。</p>
 <p>测试之后发现四个功能：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-7"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -1413,8 +1407,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">3.show
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">4.edit
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">4.edit</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="利用思路-4">利用思路</h3>
 <ul>
@@ -1425,7 +1418,7 @@
 <li>使用<code>house of apple</code>进行<code>orw</code>读取<code>flag</code></li>
 </ul>
 <h3 id="exp-4">EXP</h3>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-8"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
@@ -1754,8 +1747,7 @@
 </span></span><span class="line"><span class="cl"><span class="n">add</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">add</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="arm-protocol">arm-protocol</h2>
 <h3 id="题目分析-5">题目分析</h3>
@@ -1764,7 +1756,7 @@
 <p>在<code>edit</code>的时候，有<code>off by one</code>，因为是先赋值，后判断的：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220706205439387.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220706205439387.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220706205439387.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220706205439387.png 2x" sizes="auto" data-title="image-20220706205439387" data-alt="image-20220706205439387" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>逆向出数据结构为：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-9"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -1779,8 +1771,7 @@
 </span></span><span class="line"><span class="cl">  <span class="kt">void</span> <span class="o">*</span><span class="n">func_ptr</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="kt">void</span> <span class="o">*</span><span class="n">data_addr</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">};</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="利用思路-5">利用思路</h3>
 <ul>
@@ -1788,7 +1779,7 @@
 <li>第二次伪造修改为<code>system</code>和<code>/bin/sh</code>地址即可</li>
 </ul>
 <h3 id="exp-5">EXP</h3>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-10"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -1971,8 +1962,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">show</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="pchsdhci">pchsdhci</h2>
 <h3 id="题目分析-6">题目分析</h3>
@@ -1985,7 +1975,7 @@
 <li>最后在访问物理内存的时候，伪造<code>MemoryRegion-&gt;ops</code>的<code>valid</code>指针，伪造<code>opaque</code>指针，可以调用执行任意代码</li>
 </ul>
 <h3 id="exp-6">EXP</h3>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-11"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
@@ -2470,8 +2460,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="nf">mmio_read</span><span class="p">(</span><span class="n">SDHC_SYSAD</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="引用与参考">引用与参考</h2>
 <p>1、<a href="https://roderickchan.github.io"target="_blank" rel="external nofollow noopener noreferrer">My Blog<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>

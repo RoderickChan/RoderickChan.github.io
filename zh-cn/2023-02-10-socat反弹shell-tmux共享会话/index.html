@@ -89,7 +89,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -176,7 +176,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -258,22 +258,20 @@
 <h2 id="你弹给我">你弹给我</h2>
 <p>我有公网<code>IP</code>，地址为：<code>1.1.1.1</code></p>
 <p>我在<code>1.1.1.1</code>机器上执行：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">socat file:<span class="sb">`</span>tty<span class="sb">`</span>,raw,echo<span class="o">=</span><span class="m">0</span> tcp-listen:9999,bind<span class="o">=</span>0.0.0.0,reuseaddr,fork
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">socat file:<span class="sb">`</span>tty<span class="sb">`</span>,raw,echo<span class="o">=</span><span class="m">0</span> tcp-listen:9999,bind<span class="o">=</span>0.0.0.0,reuseaddr,fork</span></span></code></pre></td></tr></table>
 </div>
 </div><p>你在自己的机器上执行：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">socat exec:<span class="s1">&#39;bash -li&#39;</span>,pty,stderr,setsid,sigint,sane tcp:1.1.1.1:9999
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">socat exec:<span class="s1">&#39;bash -li&#39;</span>,pty,stderr,setsid,sigint,sane tcp:1.1.1.1:9999</span></span></code></pre></td></tr></table>
 </div>
 </div><p>如果有<code>zsh</code>，反弹一个<code>zsh</code>也不错。</p>
 <p>还可以把弹<code>shell</code>的操作，换成给一个容器<code>docker run -it xxx /bin/sh</code>，或者其他需要借助<code>tty</code>的操作。</p>
@@ -284,44 +282,40 @@
 </ul>
 <p>我有公网<code>IP</code>，地址为：<code>1.1.1.1</code></p>
 <p>我在<code>1.1.1.1</code>机器上执行：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">socat exec:<span class="s1">&#39;bash -li&#39;</span>,pty,stderr,setsid,sigint,sane tcp-listen:9999,bind<span class="o">=</span>0.0.0.0,reuseaddr,fork
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">socat exec:<span class="s1">&#39;bash -li&#39;</span>,pty,stderr,setsid,sigint,sane tcp-listen:9999,bind<span class="o">=</span>0.0.0.0,reuseaddr,fork</span></span></code></pre></td></tr></table>
 </div>
 </div><p>你在自己的机器上执行：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-4"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">socat file:<span class="sb">`</span>tty<span class="sb">`</span>,raw,echo<span class="o">=</span><span class="m">0</span> tcp:1.1.1.1:9999
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">socat file:<span class="sb">`</span>tty<span class="sb">`</span>,raw,echo<span class="o">=</span><span class="m">0</span> tcp:1.1.1.1:9999</span></span></code></pre></td></tr></table>
 </div>
 </div><p>同时，还可以借助<code>frp</code>这样的反向代理工具，将公网<code>IP</code>当做跳板，把处于局域网机器的<code>shell</code>分享出去。</p>
 <h1 id="tmux共享会话">tmux共享会话</h1>
 <p><code>tmux</code>是一款终端复用工具，非常好用，极力推荐~</p>
 <h2 id="组会话">组会话</h2>
 <p>新建一个公共会话，命名为<code>groupSession</code>。</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-5"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">tmux new -s groupSession
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">tmux new -s groupSession</span></span></code></pre></td></tr></table>
 </div>
 </div><p>其他用户先<strong>登陆同一个账号</strong>，但不去直接连接这个会话，而是通过创建一个新的会话来加入上面的公共会话<code>groupSession</code>。</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-6"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">tmux new -t groupSession -s otherSession
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">tmux new -t groupSession -s otherSession</span></span></code></pre></td></tr></table>
 </div>
 </div><p>此时两个用户都可以在同一个会话里操作，就会好像第二个用户连接到了<code>groupSession</code>的会话一样。此时两个用户都可以创建新建的窗口，新窗口的内容依然会实时同步，但是其中一个用户切换到其它窗口，对另外一个用户没有任何影响，因此在这个共享的组会话中，用户各自的操作可以通过新建窗口来执行。即使第二个用户关闭<code>otherSession</code>会话，共享会话<code>groupSession</code>依然存在。</p>
 <p>组会话在共享的同时，又保留了相对的独立，非常适合结对编程场景，它是结对编程最简单的方式。</p>
@@ -340,16 +334,15 @@
 <div class="bilibili"><iframe src="//player.bilibili.com/player.html?bvid=BV1js4y1e7tu&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe></div>
 <h2 id="socket共享">socket共享</h2>
 <p>第一个用户指定一个<code>socket</code>文件来创建<code>tmux session</code></p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-7"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">tmux -S /tmp/shared new-session -s shared
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">tmux -S /tmp/shared new-session -s shared</span></span></code></pre></td></tr></table>
 </div>
 </div><p>另一个用户通过这个<code>socket</code>文件来<code>attach</code>上会话，需要保证有相关权限，否则会因权限不足而报错。</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-8"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -362,8 +355,7 @@
 </span></span><span class="line"><span class="cl">tmux -S /tmp/shared attach-session -t shared
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"># 只读
-</span></span><span class="line"><span class="cl">tmux -S /tmp/shared attach-session -t shared -r
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">tmux -S /tmp/shared attach-session -t shared -r</span></span></code></pre></td></tr></table>
 </div>
 </div><p><strong>优点</strong>：</p>
 <ul>
@@ -395,18 +387,17 @@
 <p><strong>原则</strong>依旧是：<code>A</code>给<code>B</code>分享，<code>B</code>要有一个公网<code>IP</code>服务器。</p>
 <p>我有公网<code>IP</code>，地址为：<code>1.1.1.1</code></p>
 <p>我在<code>1.1.1.1</code>机器上执行：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-9"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 监听9999端口</span>
-</span></span><span class="line"><span class="cl">socat file:<span class="sb">`</span>tty<span class="sb">`</span>,raw,echo<span class="o">=</span><span class="m">0</span> tcp-listen:9999,bind<span class="o">=</span>0.0.0.0,reuseaddr,fork
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">socat file:<span class="sb">`</span>tty<span class="sb">`</span>,raw,echo<span class="o">=</span><span class="m">0</span> tcp-listen:9999,bind<span class="o">=</span>0.0.0.0,reuseaddr,fork</span></span></code></pre></td></tr></table>
 </div>
 </div><p>你在自己的机器上执行：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-10"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -439,8 +430,7 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># 删除临时用户</span>
 </span></span><span class="line"><span class="cl">sudo userdel tmpuser
 </span></span><span class="line"><span class="cl"><span class="c1"># 删除socket文件</span>
-</span></span><span class="line"><span class="cl">/bin/rm /tmp/shared
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">/bin/rm /tmp/shared</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="分享我的">分享我的</h2>
 <p>与上面反弹<code>shell</code>类似。</p>
@@ -450,7 +440,7 @@
 </ul>
 <p>我有公网<code>IP</code>，地址为：<code>1.1.1.1</code></p>
 <p>我在<code>1.1.1.1</code>机器上执行：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-11"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -483,17 +473,15 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># 删除临时用户</span>
 </span></span><span class="line"><span class="cl">sudo userdel tmpuser
 </span></span><span class="line"><span class="cl"><span class="c1"># 删除socket文件</span>
-</span></span><span class="line"><span class="cl">/bin/rm /tmp/shared
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">/bin/rm /tmp/shared</span></span></code></pre></td></tr></table>
 </div>
 </div><p>你在自己的机器上执行：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-12"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">socat file:<span class="sb">`</span>tty<span class="sb">`</span>,raw,echo<span class="o">=</span><span class="m">0</span> tcp:1.1.1.1:9999
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">socat file:<span class="sb">`</span>tty<span class="sb">`</span>,raw,echo<span class="o">=</span><span class="m">0</span> tcp:1.1.1.1:9999</span></span></code></pre></td></tr></table>
 </div>
 </div><p>结束共享的时候，不要使用<code>tmux detach</code>，键入<code>exit</code>来结束。结束后记得删除<code>socket</code>文件。</p>
 <h2 id="一起操作">一起操作</h2>
@@ -503,16 +491,15 @@
 <p>如果是你分享的会话，那么只需要把上面的<code>分享你的</code>的操作变为：</p>
 <p>我有公网<code>IP</code>，地址为：<code>1.1.1.1</code></p>
 <p>我在<code>1.1.1.1</code>机器上执行：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-13"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">socat file:<span class="sb">`</span>tty<span class="sb">`</span>,raw,echo<span class="o">=</span><span class="m">0</span> tcp-listen:9999,bind<span class="o">=</span>0.0.0.0,reuseaddr,fork
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">socat file:<span class="sb">`</span>tty<span class="sb">`</span>,raw,echo<span class="o">=</span><span class="m">0</span> tcp-listen:9999,bind<span class="o">=</span>0.0.0.0,reuseaddr,fork</span></span></code></pre></td></tr></table>
 </div>
 </div><p>你在自己的机器上执行：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-14"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -543,8 +530,7 @@
 </span></span><span class="line"><span class="cl">sudo su -c <span class="s2">&#34;socat exec:&#39;tmux -S /tmp/shared attach-session -t shared -r&#39;,pty,stderr,setsid,sigint,sane tcp:1.1.1.1:9999&#34;</span> tmpuser
 </span></span><span class="line"><span class="cl"><span class="c1"># 删除临时用户</span>
 </span></span><span class="line"><span class="cl">sudo userdel tmpuser
-</span></span><span class="line"><span class="cl">/bin/rm /tmp/shared
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">/bin/rm /tmp/shared</span></span></code></pre></td></tr></table>
 </div>
 </div><p>可以看到，只有一个地方不一样，就是<code>tmux -S /tmp/shared attach-session -t shared</code>再带上一个<code>-r</code>参数，使得会话只读。</p>
 <h2 id="你做我看">你做我看</h2>

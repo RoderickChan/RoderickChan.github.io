@@ -81,7 +81,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -168,7 +168,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -292,7 +292,7 @@
 <p>开始处理的入口函数，也就是从这里开始，函数有点绕了。这里我用<code>python</code>的缩进来分析各个分支。</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222230825905.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222230825905.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222230825905.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211222230825905.png 2x" sizes="auto" data-title="image-20211222230825905" data-alt="image-20211222230825905" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>提取主要流程如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -319,13 +319,12 @@
 </span></span><span class="line"><span class="cl">					<span class="k">return</span>
 </span></span><span class="line"><span class="cl">				<span class="n">sub_2907</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">			<span class="n">sub_2514</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">		<span class="n">sub_20F7</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">		<span class="n">sub_20F7</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>后续的函数都可以这么分析，这样整理后流程看起来就清晰多了。这里可以发现，在<code>show_ptr</code>后有个<code>return</code>，由于程序使用的是<code>malloc</code>，且<code>read_input</code>函数里面也没有<code>\x00</code>截断，因此此处可以泄露出<code>main_arena+XX</code>的地址。</p>
 <p>接下来直接给出其他函数的主要流程。</p>
 <h5 id="sub_1ed8show_ptr">sub_1ED8(show_ptr)</h5>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -338,11 +337,10 @@
 </span></span><span class="line"><span class="cl">	<span class="n">a4</span> <span class="o">&gt;</span> <span class="n">a12</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">		<span class="n">a5</span> <span class="o">&lt;</span> <span class="n">a14</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">			<span class="n">a6</span> <span class="o">+</span> <span class="n">a7</span> <span class="o">==</span> <span class="n">a8</span> <span class="o">+</span> <span class="n">a9</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">				<span class="n">puts</span><span class="p">(</span><span class="n">ptr</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">				<span class="n">puts</span><span class="p">(</span><span class="n">ptr</span><span class="p">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h5 id="sub_2907">sub_2907</h5>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -373,11 +371,10 @@
 </span></span><span class="line"><span class="cl">			<span class="n">show_ptr</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">			<span class="k">return</span>
 </span></span><span class="line"><span class="cl">		<span class="n">sub_2907</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">	<span class="n">sub_2514</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">	<span class="n">sub_2514</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h5 id="sub_2cfb">sub_2CFB</h5>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-4"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -392,11 +389,10 @@
 </span></span><span class="line"><span class="cl">	<span class="n">res</span> <span class="o">=</span> <span class="n">snprintf</span><span class="p">(</span><span class="n">buf2</span><span class="p">,</span> <span class="mh">0xA</span><span class="n">uLL</span><span class="p">,</span> <span class="s2">&#34;</span><span class="si">%s</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">buf1</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">res</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">		<span class="n">scanf</span><span class="p">(</span><span class="o">%</span><span class="n">d</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">stack_var</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="n">puts</span><span class="p">(</span><span class="n">buf1</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">	<span class="n">puts</span><span class="p">(</span><span class="n">buf1</span><span class="p">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h5 id="sub_2514">sub_2514</h5>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-5"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -425,11 +421,10 @@
 </span></span><span class="line"><span class="cl">				<span class="n">sub_2514</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">			<span class="n">show_ptr</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">		<span class="n">sub_2CFB</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">	<span class="n">sub_2907</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">	<span class="n">sub_2907</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h5 id="sub_2f07">sub_2F07</h5>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-6"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -462,8 +457,7 @@
 </span></span><span class="line"><span class="cl">				<span class="n">sub_2CFB</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">			<span class="n">show_ptr</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">		<span class="n">sub_2907</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">	<span class="n">sub_2514</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">	<span class="n">sub_2514</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h4 id="漏洞点">漏洞点</h4>
 <p>目前发现的漏洞点有：</p>
@@ -492,7 +486,7 @@
 <li>利用<code>sub_2F07</code>中的栈溢出进行<code>ROP</code>，我这里使用<code>mprotect+shellcode</code>读取<code>flag</code></li>
 </ul>
 <h3 id="exp">EXP</h3>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-7"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -653,8 +647,7 @@
 </span></span><span class="line"><span class="cl">    <span class="n">rop_attack</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">    <span class="n">exp</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">    <span class="n">exp</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>最后远程打：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211223213824409.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211223213824409.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211223213824409.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20211223213824409.png 2x" sizes="auto" data-title="image-20211223213824409" data-alt="image-20211223213824409" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>

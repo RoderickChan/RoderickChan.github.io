@@ -25,7 +25,7 @@
 <meta name="application-name" content="roderick - record and learn!">
 <meta name="apple-mobile-web-app-title" content="roderick - record and learn!"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://roderickchan.github.io/zh-cn/2022-10-11-%E4%BD%BF%E7%94%A8aliyun-hugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" /><link rel="prev" href="https://roderickchan.github.io/zh-cn/2023-07-03-deal-with-a-nginx-problem/" /><link rel="next" href="https://roderickchan.github.io/zh-cn/2023-04-05-announcement-about-my-blog/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://roderickchan.github.io/zh-cn/2022-10-11-%E4%BD%BF%E7%94%A8aliyun-hugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" /><link rel="prev" href="https://roderickchan.github.io/zh-cn/2023-07-11-git-and-github/" /><link rel="next" href="https://roderickchan.github.io/zh-cn/2023-04-05-announcement-about-my-blog/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
   {
     "@context": "http://schema.org",
     "@type": "BlogPosting",
@@ -81,7 +81,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -168,7 +168,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -276,7 +276,7 @@
 <p>切换到<code>github page</code>非常方便，直接<code>push</code>博客目录下的<code>publibc</code>的所有内容到<code>you-github-username.github.io</code>这个仓库下即可。</p>
 <h2 id="2023-03-13更新">2023-03-13更新</h2>
 <p>使用<code>algolia</code>来搭建<code>search database</code>，按照这个博客<a href="https://blog.csdn.net/lb52406/article/details/125564605"target="_blank" rel="external nofollow noopener noreferrer">使用 Algolia 云引擎，实现个人博客 Hugo 本地智能搜索_回忆中的明天的博客-CSDN博客<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>的教程一步一步搭建即可，<code>fixit</code>主题只需要把相关配置弄好就行。最后给出一个<code>python</code>实现的上传<code>index.json</code>模板：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -333,8 +333,7 @@
 </span></span><span class="line"><span class="cl">    <span class="n">application_id</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">admin_key</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">upload</span><span class="p">(</span><span class="n">application_id</span><span class="p">,</span> <span class="n">admin_key</span><span class="p">,</span> <span class="n">index_zh</span><span class="p">,</span> <span class="n">json_zh_path</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">upload</span><span class="p">(</span><span class="n">application_id</span><span class="p">,</span> <span class="n">admin_key</span><span class="p">,</span> <span class="n">index_en</span><span class="p">,</span> <span class="n">json_en_path</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">    <span class="n">upload</span><span class="p">(</span><span class="n">application_id</span><span class="p">,</span> <span class="n">admin_key</span><span class="p">,</span> <span class="n">index_en</span><span class="p">,</span> <span class="n">json_en_path</span><span class="p">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="2023-02-27-更新">2023-02-27 更新</h2>
 <p>使用<code>waline</code>部署评论系统，参照以下文档进行操作即可：</p>
@@ -379,7 +378,7 @@
 <p>主要有服务器的配置和域名配置</p>
 <p><strong>1、<code>ssh</code>服务配置</strong></p>
 <p>系统一般自带了<code>ssh</code>服务，如果没有的话，可以自己装一个。装完之后，修改<code>/etc/ssh/sshd_config</code>文件，主要修改项为：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -398,8 +397,7 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># 禁止密码认证</span>
 </span></span><span class="line"><span class="cl">PasswordAuthentication no
 </span></span><span class="line"><span class="cl"><span class="c1"># 公钥存储文件</span>
-</span></span><span class="line"><span class="cl">AuthorizedKeysFile      .ssh/authorized_keys
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">AuthorizedKeysFile      .ssh/authorized_keys</span></span></code></pre></td></tr></table>
 </div>
 </div><p>然后把自己的公钥传到服务器上，使用私钥登录以保证服务器的安全。</p>
 <p><strong>2、域名配置</strong></p>
@@ -434,7 +432,7 @@
 <p>可以使用我制作的小图片，点击<a href="https://roderickchan.github.io/img/follow_me_on_github.png"target="_blank" rel="external nofollow noopener noreferrer">这里<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>下载，然后放置在<code>static\img\follow_me_on_github.png</code>。也可以自己制作图片，图片不要太大，否则容易压盖到其他内容。</p>
 <h2 id="32-配置back-to-top按钮">3.2 配置Back to top按钮</h2>
 <p>修改<code>assets\sass\_partial\_back-to-top.scss</code>文件：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -487,8 +485,7 @@
 </span></span><span class="line"><span class="cl">  <span class="nc">.icon-up</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">     <span class="na">vertical-align</span><span class="o">:</span> <span class="ni">top</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>效果图如下：</p>
 <p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20230113150413459.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20230113150413459.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20230113150413459.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20230113150413459.png 2x" sizes="auto" data-title="image-20230113150413459" data-alt="image-20230113150413459" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
@@ -500,18 +497,17 @@
 <h2 id="35-配置访客记录地球仪">3.5 配置访客记录地球仪</h2>
 <p><a href="https://www.revolvermaps.com/"target="_blank" rel="external nofollow noopener noreferrer">Welcome to RevolverMaps | RevolverMaps - Free 3D Visitor Maps<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>提供了相关的功能，可以在网站首页和每篇博客下面生成一个可拉拽的地球仪，地球仪上记录这访客的国家和地区。因此，你需要去该网站上选一个心仪的地球仪，其会自动生成一段<code>javascript</code>代码。</p>
 <p>修改<code>config.toml</code>文件，添加如下代码：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-4"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="line"><span class="cl"><span class="p">[</span><span class="nx">params</span><span class="p">.</span><span class="nx">revolvermaps</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">enable</span> <span class="p">=</span> <span class="kc">true</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">  <span class="nx">enable</span> <span class="p">=</span> <span class="kc">true</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>修改<code>layouts\partials\comments.html</code>文件，添加代码：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-5"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -520,8 +516,7 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">  {{- if .Site.Params.revolvermaps.enable}}
 </span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text/javascript&#34;</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;//rf.revolvermaps.com/0/0/8.js?i=5iujp75b2pp&amp;amp;m=0&amp;amp;c=ff0000&amp;amp;cr1=ffffff&amp;amp;f=arial&amp;amp;l=33&#34;</span> <span class="na">async</span><span class="o">=</span><span class="s">&#34;async&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  {{- end}}
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">  {{- end}}</span></span></code></pre></td></tr></table>
 </div>
 </div><p>这里显示的是我的配置，你需要把<code>script</code>元素的内容替换为你拷贝的代码即可。</p>
 <p>效果图如下：</p>
@@ -532,7 +527,7 @@
 <p>目前主流的方法是在写好博客后，执行<code>hugo</code>的相关命令，生成<code>public</code>目录，然后把整个<code>public</code>目录使用<code>scp</code>或者<code>rsync</code>等工具打包上传到公网服务器上，然后再配置<code>nginx</code>反向代理，在配置文件中指定<code>root</code>根目录为服务器上的<code>/xxxx/public</code>目录。</p>
 <p>最开始，我也是这么做的。</p>
 <p>假设此时你的域名为<code>testdomain.com</code>，那么采用这种方案的配置文件内容为：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-6"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -691,8 +686,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="kn">error_page</span> <span class="mi">404</span> <span class="s">/404.html</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>这份配置文件主要做了两件事情：</p>
 <ul>
@@ -723,7 +717,7 @@
 <p><strong>1. 本地开启nginx服务并设置开启自启动</strong></p>
 <p>由于我使用的是<code>windows</code>，所以需要到<a href="http://nginx.org/en/docs/windows.html"target="_blank" rel="external nofollow noopener noreferrer">这里<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>下载<code>windows</code>版本的<code>nginx</code>。</p>
 <p>不建议直接双击<code>nginx.exe</code>。相关操作命令如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-7"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -742,11 +736,10 @@
 </span></span><span class="line"><span class="cl"># 优雅关闭服务
 </span></span><span class="line"><span class="cl">nginx.exe -s quit
 </span></span><span class="line"><span class="cl"># 重启服务
-</span></span><span class="line"><span class="cl">nginx.exe -s reload
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">nginx.exe -s reload</span></span></code></pre></td></tr></table>
 </div>
 </div><p>配置文件在<code>conf/nginx.conf</code>，内容如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-8"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -849,12 +842,11 @@
 </span></span><span class="line"><span class="cl">            <span class="kn">root</span>   <span class="s">html</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>配置好了之后，启动<code>nginx.exe</code>，访问<code>localhost:9000</code>即可在本地访问博客。</p>
 <p>如果要配置<code>nginx</code>服务开机自启动，首先需要下载<a href="https://github.com/winsw/winsw/releases"target="_blank" rel="external nofollow noopener noreferrer">Releases · winsw/winsw · GitHub<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>，然后将二进制文件复制一份到<code>nginx</code>主目录下并重命名为<code>winsw.exe</code>，这个目录下面有<code>nginx.exe</code>文件和<code>conf</code>等子文件夹。接着在当前目录新建一个<code>nginx.xml</code>，配置文件如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-9"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -881,11 +873,10 @@
 </span></span><span class="line"><span class="cl">    <span class="nt">&lt;onfailure</span> <span class="na">action=</span><span class="s">&#34;restart&#34;</span> <span class="na">delay=</span><span class="s">&#34;120 sec&#34;</span><span class="nt">/&gt;</span>
 </span></span><span class="line"><span class="cl">    <span class="nt">&lt;logmode&gt;</span>append<span class="nt">&lt;/logmode&gt;</span>
 </span></span><span class="line"><span class="cl">    <span class="nt">&lt;logpath&gt;</span>logs<span class="nt">&lt;/logpath&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="nt">&lt;/service&gt;</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/service&gt;</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>然后在<code>console</code>里面执行：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-10"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -896,13 +887,12 @@
 <pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># 安装服务</span>
 </span></span><span class="line"><span class="cl"><span class="p">./</span><span class="n">winsw</span><span class="p">.</span><span class="py">exe</span> <span class="n">install</span> <span class="n">nginx</span><span class="p">.</span><span class="py">xml</span>
 </span></span><span class="line"><span class="cl"><span class="c"># 启动服务</span>
-</span></span><span class="line"><span class="cl"><span class="p">./</span><span class="n">winsw</span><span class="p">.</span><span class="py">exe</span> <span class="nb">start </span><span class="n">nginx</span><span class="p">.</span><span class="py">xml</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">./</span><span class="n">winsw</span><span class="p">.</span><span class="py">exe</span> <span class="nb">start </span><span class="n">nginx</span><span class="p">.</span><span class="n">xml</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>执行完成后，浏览器中访问<code>127.0.0.1:9000</code>就能看到自己的博客网站。</p>
 <p><strong>2. frp配置</strong></p>
 <p>下载<code>frp</code>工具，在本地<code>PC</code>上，编写配置文件如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-11"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -951,12 +941,11 @@
 </span></span><span class="line"><span class="cl"><span class="na">use_encryption</span> <span class="o">=</span> <span class="s">true</span>
 </span></span><span class="line"><span class="cl"><span class="na">remote_port</span> <span class="o">=</span> <span class="s">8000</span>
 </span></span><span class="line"><span class="cl"><span class="na">local_ip</span> <span class="o">=</span> <span class="s">localhost</span>
-</span></span><span class="line"><span class="cl"><span class="na">local_port</span> <span class="o">=</span> <span class="s">9000</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="na">local_port</span> <span class="o">=</span> <span class="s">9000</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>在远程的<code>8001</code>有一个下载服务，远程的<code>8000</code>可以访问本地的博客。</p>
 <p>同样的，给出<code>winsw</code>使用的配置文件，使得<code>frpc</code>服务可以开机自启动：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-12"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -981,12 +970,11 @@
 </span></span><span class="line"><span class="cl">    <span class="nt">&lt;onfailure</span> <span class="na">action=</span><span class="s">&#34;restart&#34;</span> <span class="na">delay=</span><span class="s">&#34;120 sec&#34;</span><span class="nt">/&gt;</span>
 </span></span><span class="line"><span class="cl">    <span class="nt">&lt;logmode&gt;</span>append<span class="nt">&lt;/logmode&gt;</span>
 </span></span><span class="line"><span class="cl">    <span class="nt">&lt;logpath&gt;</span>logs<span class="nt">&lt;/logpath&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="nt">&lt;/service&gt;</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/service&gt;</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><strong>3. 公网服务器nginx配置</strong></p>
 <p>在公网服务器上，根据不同的域名配置转发规则，配置文件如下</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-13"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
@@ -1207,8 +1195,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="kn">error_page</span> <span class="mi">404</span> <span class="s">/404.html</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>这里我配置了<code>testdomain.com</code>提供博客访问，<code>download.testdomain.com</code>提供文件下载。</p>
 <p>并且，<code>8000/8001</code>端口可以设置防火墙规则，禁止外部访问。</p>
@@ -1216,7 +1203,7 @@
 <p>如果把博客文件放在本地，只使用一个电脑可能不够保险，会面临着断网的风险。比如，我是用以前的旧的笔记本作为服务器放置在学校实验室的机房，运行了好几个月没啥问题，结果寒假期间莫名其妙校园网断掉了，返校后才发现校园网的无感认证好像并没有生效😂</p>
 <p>为了保险起见，我在实验室的台式机和自己的电脑上使用的相同的配置去配置<code>nginx</code>和<code>frpc</code>，用<code>syncThing</code>去同步文件(现在硬盘不值钱，随便同步)，然后到公网服务器上配置了负载均衡。</p>
 <p>参考<a href="https://www.nginx.com/resources/wiki/start/topics/examples/full/"target="_blank" rel="external nofollow noopener noreferrer">Full Example Configuration | NGINX<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>，配置一下负载均衡策略即可，我是用是默认的<del>毕竟个人网站，不需要什么花里花哨的策略</del>。</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-14"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -1251,8 +1238,7 @@
 </span></span><span class="line"><span class="cl">    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">      <span class="kn">proxy_pass</span>      <span class="s">http://big_server_com</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h1 id="5-教程总结">5 教程总结</h1>
 <p>总结了使用<code>hugo + enev + aliyun</code>配置博客的过程。</p>
@@ -1298,7 +1284,7 @@
     </section>
   </div>
 
-  <div class="post-nav"><a href="/zh-cn/2023-07-03-deal-with-a-nginx-problem/" class="post-nav-item" rel="prev" title="解决博客链接结尾不带斜杠时访问失败的问题"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>解决博客链接结尾不带斜杠时访问失败的问题</a>
+  <div class="post-nav"><a href="/zh-cn/2023-07-11-git-and-github/" class="post-nav-item" rel="prev" title="Git与Github的简要分享"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Git与Github的简要分享</a>
       <a href="/zh-cn/2023-04-05-announcement-about-my-blog/" class="post-nav-item" rel="next" title="[置顶] 博客站点说明">[置顶] 博客站点说明<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
 <div class="post-reward">

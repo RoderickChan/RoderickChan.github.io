@@ -72,7 +72,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -163,7 +163,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -193,6 +193,11 @@
     </a><a href="mailto:roderickchan@foxmail.com" title="Email" rel=" me"><i class="fa-regular fa-envelope fa-fw" aria-hidden="true"></i>
     </a><a href="/zh-cn/index.xml" title="RSS"target="_blank" rel="external nofollow noopener noreferrer me"><i class="fa-solid fa-rss fa-fw" aria-hidden="true"></i>
     </a></div></div>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+    <a href="/zh-cn/2022-03-08-buuctf-pwn-tasks-20/">buuctf-pwn-tasks-20</a>
+  </h1><div class="post-meta"><span class="post-author"><a href="https://roderickchan.github.io" title="作者"target="_blank" rel="external nofollow noopener noreferrer author" class="author"><img loading="lazy" src="https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp" srcset="https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp, https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp 1.5x, https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp 2x" sizes="auto" data-title="roderick" data-alt="roderick" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;roderick</a></span>&nbsp;<span class="post-publish" title='2022-03-08 21:50:02'>发布于 <time datetime="2022-03-08">2022-03-08</time></span>&nbsp;<span class="post-category">收录于 <a href="/zh-cn/categories/pwn-wp/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> pwn-wp</a></span></div><div class="content">简介 有些题目很碎，直接搞一个合集吧，收录20个题目，大部分都是buuctf上面的，还有其他的题目。 hitcon_2018_hackergame_2018_calc 这道题主要的考点在于使用-0x80000</div><div class="post-footer">
+    <a href="/zh-cn/2022-03-08-buuctf-pwn-tasks-20/">阅读全文</a><div class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href='/zh-cn/tags/pwn/' class="post-tag">pwn</a></div></div>
+</article>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
     <a href="/zh-cn/2022-03-05-ciscn-2019-en-1/">ciscn_2019_en_1</a>
   </h1><div class="post-meta"><span class="post-author"><a href="https://roderickchan.github.io" title="作者"target="_blank" rel="external nofollow noopener noreferrer author" class="author"><img loading="lazy" src="https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp" srcset="https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp, https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp 1.5x, https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp 2x" sizes="auto" data-title="roderick" data-alt="roderick" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;roderick</a></span>&nbsp;<span class="post-publish" title='2022-03-05 23:34:59'>发布于 <time datetime="2022-03-05">2022-03-05</time></span>&nbsp;<span class="post-category">收录于 <a href="/zh-cn/categories/pwn-wp/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> pwn-wp</a></span></div><div class="content">总结 利用了一个组合拳gadget： 1 2 3 4 5 6 7 .text:00010620 MOV R2, R9 .text:00010624 MOV R1, R8 .text:00010628 MOV R0, R7 .text:0001062C BLX R3 .text:00010630 CMP R4, R6 .text:00010634 BNE loc_10618 .text:00010638 POP {R4-R10,PC} 这一段gadget在init函数，其实和r</div><div class="post-footer">
@@ -290,11 +295,6 @@
   </h1><div class="post-meta"><span class="post-author"><a href="https://roderickchan.github.io" title="作者"target="_blank" rel="external nofollow noopener noreferrer author" class="author"><img loading="lazy" src="https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp" srcset="https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp, https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp 1.5x, https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp 2x" sizes="auto" data-title="roderick" data-alt="roderick" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;roderick</a></span>&nbsp;<span class="post-publish" title='2021-10-24 17:00:59'>发布于 <time datetime="2021-10-24">2021-10-24</time></span>&nbsp;<span class="post-category">收录于 <a href="/zh-cn/categories/pwn-wp/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> pwn-wp</a></span></div><div class="content">总结 一道简单的tcache dup的题，前面需要绕过校验，注意一下函数的参数为int16。最后把shellcode处理一下即可。 checksec 版本为lib</div><div class="post-footer">
     <a href="/zh-cn/2021-10-24-ciscn-final-10/">阅读全文</a><div class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href='/zh-cn/tags/pwn/' class="post-tag">pwn</a></div></div>
 </article>
-<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-    <a href="/zh-cn/2021-10-23-cscctf-2019-final-childrenheap/">cscctf_2019_final_childrenheap</a>
-  </h1><div class="post-meta"><span class="post-author"><a href="https://roderickchan.github.io" title="作者"target="_blank" rel="external nofollow noopener noreferrer author" class="author"><img loading="lazy" src="https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp" srcset="https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp, https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp 1.5x, https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp 2x" sizes="auto" data-title="roderick" data-alt="roderick" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;roderick</a></span>&nbsp;<span class="post-publish" title='2021-10-23 15:12:12'>发布于 <time datetime="2021-10-23">2021-10-23</time></span>&nbsp;<span class="post-category">收录于 <a href="/zh-cn/categories/pwn-wp/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> pwn-wp</a></span></div><div class="content">总结 本题使用malopt(1, 0)禁用了fastbin，这种情况下，一般来说有两种解题思路： 方法一：首先unsortedbin attack攻</div><div class="post-footer">
-    <a href="/zh-cn/2021-10-23-cscctf-2019-final-childrenheap/">阅读全文</a><div class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href='/zh-cn/tags/pwn/' class="post-tag">pwn</a></div></div>
-</article>
 <ul class="pagination"><li class="page-item">
           <span class="page-link">
             <a href="/zh-cn/">1</a>
@@ -316,8 +316,10 @@
             <a href="/zh-cn/page/5/">5</a>
           </span>
         </li><li class="page-item">
+          <span class="page-link" aria-hidden="true">&hellip;</span>
+        </li><li class="page-item">
           <span class="page-link">
-            <a href="/zh-cn/page/6/">6</a>
+            <a href="/zh-cn/page/7/">7</a>
           </span>
         </li></ul></div></main><footer class="footer">
     <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.111.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.18"><img class="fixit-icon" src="/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>

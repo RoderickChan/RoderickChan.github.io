@@ -81,7 +81,7 @@
               ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
               <a
                 class="menu-link"
-                href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                href="https://download.roderickchan.cn/"
                 title="我的资源下载中心"
                 rel="noopener noreferrer" target="_blank"
               ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
@@ -168,7 +168,7 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="https://roderick:rode%40rick@download.roderickchan.cn/"
+                  href="https://download.roderickchan.cn/"
                   title="我的资源下载中心"
                   rel="noopener noreferrer" target="_blank"
                 ><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li
@@ -237,7 +237,7 @@
     </div><p>之前调试pwn题的时候，有时候需要将某些特别的，重要的信息用不一样的颜色打印出来。查阅一些<a href="https://stackoverflow.com/questions/287871/how-to-print-colored-text-to-the-terminal"target="_blank" rel="external nofollow noopener noreferrer">资料<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>，了解了<code>print</code>函数的特性后，自己写了一个脚本，可以用来获取带颜色信息的字符串或者打印一串带颜色、背景色、下划线等的字符串。</p>
 <!-- more -->
 <h3 id="脚本内容">脚本内容</h3>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
@@ -466,8 +466,7 @@
 </span></span><span class="line"><span class="cl">    <span class="n">print_red</span><span class="p">(</span><span class="s1">&#39;Print with red font: lynne&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">print_green</span><span class="p">(</span><span class="s1">&#39;Print with green font: lynne&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">print_blue</span><span class="p">(</span><span class="s1">&#39;Print with blue font:lynne&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">print_color</span><span class="p">(</span><span class="s1">&#39;Print with cyan font, blue background and underline: lynne&#39;</span><span class="p">,</span> <span class="n">font_color</span><span class="o">=</span><span class="n">FontColor</span><span class="o">.</span><span class="n">CYAN</span><span class="p">,</span> <span class="n">background_color</span><span class="o">=</span><span class="n">BackgroundColor</span><span class="o">.</span><span class="n">BLUE</span><span class="p">,</span> <span class="n">terminal_mode</span><span class="o">=</span><span class="n">TerminalMode</span><span class="o">.</span><span class="n">UNDERLINE</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">    <span class="n">print_color</span><span class="p">(</span><span class="s1">&#39;Print with cyan font, blue background and underline: lynne&#39;</span><span class="p">,</span> <span class="n">font_color</span><span class="o">=</span><span class="n">FontColor</span><span class="o">.</span><span class="n">CYAN</span><span class="p">,</span> <span class="n">background_color</span><span class="o">=</span><span class="n">BackgroundColor</span><span class="o">.</span><span class="n">BLUE</span><span class="p">,</span> <span class="n">terminal_mode</span><span class="o">=</span><span class="n">TerminalMode</span><span class="o">.</span><span class="n">UNDERLINE</span><span class="p">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>在控制台的打印效果如下：
 <img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210307164058.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210307164058.png, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210307164058.png 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210307164058.png 2x" sizes="auto" data-title="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210307164058.png" data-alt="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/20210307164058.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
