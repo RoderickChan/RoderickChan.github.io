@@ -4,7 +4,7 @@
     <link>https://roderickchan.github.io/zh-cn/</link>
     <description>Welcome to roderick&#39;s blog site!</description>
     <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
-      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 11 Jul 2023 18:14:58 &#43;0800</lastBuildDate>
+      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 26 Nov 2023 23:08:47 &#43;0800</lastBuildDate>
       <atom:link href="https://roderickchan.github.io/zh-cn/index.xml" rel="self" type="application/rss+xml" />
     <item>
   <title>[置顶] 博客站点说明</title>
@@ -23,6 +23,26 @@
   <author>roderick</author>
   <guid>https://roderickchan.github.io/zh-cn/2022-10-11-%E4%BD%BF%E7%94%A8aliyun-hugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</guid>
   <description><![CDATA[<p>整个搭建过程中，云服务器配置耗费时间需要<code>1~2</code>周，而在配置云服务器过程中占用时间最长的为域名备案，最长需要等待<code>2</code>周才能完成；剩下的几步只需要不到两个小时的时间即可完成。</p>]]></description>
+</item>
+<item>
+  <title>从 system 函数的实现看 Linux 下对环境变量的处理</title>
+  <link>https://roderickchan.github.io/zh-cn/2023-11-25-exploit-env-variable/</link>
+  <pubDate>Sun, 26 Nov 2023 23:08:47 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://roderickchan.github.io/zh-cn/2023-11-25-exploit-env-variable/</guid>
+  <description><![CDATA[<blockquote>
+<p>很久之前写的一篇关于环境变量的总结博客，当时没有写完，最近又翻找出来了，有些虎头蛇尾 😅</p>
+</blockquote>]]></description>
+</item>
+<item>
+  <title>使用RSS订阅资讯</title>
+  <link>https://roderickchan.github.io/zh-cn/2023-07-15-use-rss-to-read-the-world/</link>
+  <pubDate>Sat, 15 Jul 2023 10:36:26 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://roderickchan.github.io/zh-cn/2023-07-15-use-rss-to-read-the-world/</guid>
+  <description><![CDATA[<blockquote>
+<p>处于信息时代的今天，可供选择的阅读媒介数不胜数，各类信息让人眼花缭乱。不知不觉，我们早已把自己淹没在信息的海洋中。为了能有效地筛选与获取信息，我尝试过数种方法，<code>RSS</code> 订阅是非常值得推荐的一种方法。本篇博客带大家认识与使用 <code>RSS</code> 订阅，使用 <code>RSS</code> 阅读新闻、博客和论文。</p>
+</blockquote>]]></description>
 </item>
 <item>
   <title>Git与Github的简要分享</title>
@@ -88,26 +108,6 @@
   <guid>https://roderickchan.github.io/zh-cn/2023-03-01-analysis-of-glibc-heap-exploitation-in-high-version/</guid>
   <description><![CDATA[<blockquote>
 <p>截止到目前，主要总结在<code>2.35~2.37</code>之间仍然残存的堆利用手法。</p>
-</blockquote>]]></description>
-</item>
-<item>
-  <title>Glibc堆利用之house of系列总结</title>
-  <link>https://roderickchan.github.io/zh-cn/2023-02-27-house-of-all-about-glibc-heap-exploitation/</link>
-  <pubDate>Mon, 27 Feb 2023 15:10:08 &#43;0800</pubDate>
-  <author>roderick</author>
-  <guid>https://roderickchan.github.io/zh-cn/2023-02-27-house-of-all-about-glibc-heap-exploitation/</guid>
-  <description><![CDATA[<blockquote>
-<p>总结一下<code>glibc</code>堆利用的<code>house of</code>系列利用手法，主要参考了<a href="https://github.com/shellphish/how2heap"target="_blank" rel="external nofollow noopener noreferrer">how2heap<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>，同时参考了其他优秀的文章。</p>
-</blockquote>]]></description>
-</item>
-<item>
-  <title>The art of shellcode</title>
-  <link>https://roderickchan.github.io/zh-cn/2023-02-20-the-art-of-shellcode/</link>
-  <pubDate>Mon, 20 Feb 2023 22:51:44 &#43;0800</pubDate>
-  <author>roderick</author>
-  <guid>https://roderickchan.github.io/zh-cn/2023-02-20-the-art-of-shellcode/</guid>
-  <description><![CDATA[<blockquote>
-<p>对<code>shellcode</code>知识点的一些总结。</p>
 </blockquote>]]></description>
 </item>
 </channel>

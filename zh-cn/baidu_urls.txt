@@ -1,5 +1,7 @@
 https://roderickchan.github.io/zh-cn/2023-04-05-announcement-about-my-blog/
 https://roderickchan.github.io/zh-cn/2022-10-11-%E4%BD%BF%E7%94%A8aliyun-hugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/
+https://roderickchan.github.io/zh-cn/2023-11-25-exploit-env-variable/
+https://roderickchan.github.io/zh-cn/2023-07-15-use-rss-to-read-the-world/
 https://roderickchan.github.io/zh-cn/2023-07-11-git-and-github/
 https://roderickchan.github.io/zh-cn/2023-07-03-deal-with-a-nginx-problem/
 https://roderickchan.github.io/zh-cn/2023-07-01-how-to-read-paper/
