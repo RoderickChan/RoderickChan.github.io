@@ -4,7 +4,7 @@
     <link>https://roderickchan.github.io/zh-cn/posts/</link>
     <description>所有文章 | roderick - record and learn!</description>
     <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
-      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 26 Nov 2023 23:08:47 &#43;0800</lastBuildDate><atom:link href="https://roderickchan.github.io/zh-cn/posts/" rel="self" type="application/rss+xml" /><item>
+      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 16 Jan 2024 19:31:27 &#43;0800</lastBuildDate><atom:link href="https://roderickchan.github.io/zh-cn/posts/" rel="self" type="application/rss+xml" /><item>
   <title>Glibc堆利用之house of系列总结</title>
   <link>https://roderickchan.github.io/zh-cn/2023-02-27-house-of-all-about-glibc-heap-exploitation/</link>
   <pubDate>Mon, 27 Feb 2023 15:10:08 &#43;0800</pubDate>
@@ -31,6 +31,26 @@
   <author>roderick</author>
   <guid>https://roderickchan.github.io/zh-cn/2022-10-11-%E4%BD%BF%E7%94%A8aliyun-hugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</guid>
   <description><![CDATA[<p>整个搭建过程中，云服务器配置耗费时间需要<code>1~2</code>周，而在配置云服务器过程中占用时间最长的为域名备案，最长需要等待<code>2</code>周才能完成；剩下的几步只需要不到两个小时的时间即可完成。</p>]]></description>
+</item>
+<item>
+  <title>使用python批量处理markdown文件中的图片</title>
+  <link>https://roderickchan.github.io/zh-cn/2024-01-15-use-python-to-upload-images-to-aliyunoss/</link>
+  <pubDate>Tue, 16 Jan 2024 19:31:27 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://roderickchan.github.io/zh-cn/2024-01-15-use-python-to-upload-images-to-aliyunoss/</guid>
+  <description><![CDATA[<blockquote>
+<p>记录一个小工具，用于批量处理 <code>markdown</code> 文件中的图片，将其下载下来，然后上传到 <code>aliyun OSS</code> 存储中。</p>
+</blockquote>]]></description>
+</item>
+<item>
+  <title>解决Zotero条目的作者混乱问题</title>
+  <link>https://roderickchan.github.io/zh-cn/2024-01-10-edit-zotero-items-using-javascript-api/</link>
+  <pubDate>Wed, 10 Jan 2024 22:25:43 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://roderickchan.github.io/zh-cn/2024-01-10-edit-zotero-items-using-javascript-api/</guid>
+  <description><![CDATA[<blockquote>
+<p>记录下最近在使用 <code>zotero</code> 的时候，遇到的一个不大不小的问题，以及解决方案。</p>
+</blockquote>]]></description>
 </item>
 <item>
   <title>从 system 函数的实现看 Linux 下对环境变量的处理</title>
@@ -96,26 +116,6 @@
   <guid>https://roderickchan.github.io/zh-cn/2023-05-06-shg-pwn-tutorial-1/</guid>
   <description><![CDATA[<blockquote>
 <p>分享队内第一期 <code>pwn</code> 训练营的资料。</p>
-</blockquote>]]></description>
-</item>
-<item>
-  <title>nginx配置的问题记录</title>
-  <link>https://roderickchan.github.io/zh-cn/2023-04-01-nginx-config-problem/</link>
-  <pubDate>Sat, 01 Apr 2023 18:03:06 &#43;0800</pubDate>
-  <author>roderick</author>
-  <guid>https://roderickchan.github.io/zh-cn/2023-04-01-nginx-config-problem/</guid>
-  <description><![CDATA[<blockquote>
-<p>当域名没有规则匹配的时候，<code>nginx</code>的处理过程让我迷惑。</p>
-</blockquote>]]></description>
-</item>
-<item>
-  <title>Glibc高版本堆利用方法总结</title>
-  <link>https://roderickchan.github.io/zh-cn/2023-03-01-analysis-of-glibc-heap-exploitation-in-high-version/</link>
-  <pubDate>Wed, 01 Mar 2023 20:44:12 &#43;0800</pubDate>
-  <author>roderick</author>
-  <guid>https://roderickchan.github.io/zh-cn/2023-03-01-analysis-of-glibc-heap-exploitation-in-high-version/</guid>
-  <description><![CDATA[<blockquote>
-<p>截止到目前，主要总结在<code>2.35~2.37</code>之间仍然残存的堆利用手法。</p>
 </blockquote>]]></description>
 </item>
 </channel>
