@@ -3,6 +3,7 @@ https://roderickchan.github.io/zh-cn/2022-10-11-%E4%BD%BF%E7%94%A8aliyun-hugo%E6
 https://roderickchan.github.io/zh-cn/2024-01-15-use-python-to-upload-images-to-aliyunoss/
 https://roderickchan.github.io/zh-cn/2024-01-10-edit-zotero-items-using-javascript-api/
 https://roderickchan.github.io/zh-cn/2023-11-25-exploit-env-variable/
+https://roderickchan.github.io/zh-cn/2023-11-23-poetry-install-hash-error/
 https://roderickchan.github.io/zh-cn/2023-07-15-use-rss-to-read-the-world/
 https://roderickchan.github.io/zh-cn/2023-07-11-git-and-github/
 https://roderickchan.github.io/zh-cn/2023-07-03-deal-with-a-nginx-problem/

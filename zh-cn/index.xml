@@ -55,6 +55,16 @@
 </blockquote>]]></description>
 </item>
 <item>
+  <title>poetry install的hash不一致错误的解决思路</title>
+  <link>https://roderickchan.github.io/zh-cn/2023-11-23-poetry-install-hash-error/</link>
+  <pubDate>Thu, 23 Nov 2023 16:37:23 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://roderickchan.github.io/zh-cn/2023-11-23-poetry-install-hash-error/</guid>
+  <description><![CDATA[<blockquote>
+<p>最近 <code>poetry install</code> 总是碰到 <code>hash</code> 不匹配的错误，记录一些解决方案</p>
+</blockquote>]]></description>
+</item>
+<item>
   <title>使用RSS订阅资讯</title>
   <link>https://roderickchan.github.io/zh-cn/2023-07-15-use-rss-to-read-the-world/</link>
   <pubDate>Sat, 15 Jul 2023 10:36:26 &#43;0800</pubDate>
@@ -98,16 +108,6 @@
   <guid>https://roderickchan.github.io/zh-cn/2023-07-01-how-to-read-paper/</guid>
   <description><![CDATA[<blockquote>
 <p>论文不是万能的，但没有论文是万万不能的。</p>
-</blockquote>]]></description>
-</item>
-<item>
-  <title>pwn 训练营第一期资料汇总</title>
-  <link>https://roderickchan.github.io/zh-cn/2023-05-06-shg-pwn-tutorial-1/</link>
-  <pubDate>Sat, 06 May 2023 23:56:49 &#43;0800</pubDate>
-  <author>roderick</author>
-  <guid>https://roderickchan.github.io/zh-cn/2023-05-06-shg-pwn-tutorial-1/</guid>
-  <description><![CDATA[<blockquote>
-<p>分享队内第一期 <code>pwn</code> 训练营的资料。</p>
 </blockquote>]]></description>
 </item>
 </channel>

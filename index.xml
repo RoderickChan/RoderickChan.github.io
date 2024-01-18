@@ -4,7 +4,7 @@
     <link>https://roderickchan.github.io/</link>
     <description>Welcome to roderick&#39;s blog site!</description>
     <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
-      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 23 Nov 2023 16:37:23 &#43;0800</lastBuildDate>
+      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 05 Apr 2023 17:42:44 &#43;0800</lastBuildDate>
       <atom:link href="https://roderickchan.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
   <title>[Pinned] About my blog site</title>
@@ -14,16 +14,6 @@
   <guid>https://roderickchan.github.io/2023-04-05-announcement-about-my-blog/</guid>
   <description><![CDATA[<blockquote>
 <p>About my blog site.</p>
-</blockquote>]]></description>
-</item>
-<item>
-  <title>poetry install的hash不一致错误的解决思路</title>
-  <link>https://roderickchan.github.io/2023-11-23-poetry-install-hash-error/</link>
-  <pubDate>Thu, 23 Nov 2023 16:37:23 &#43;0800</pubDate>
-  <author>roderick</author>
-  <guid>https://roderickchan.github.io/2023-11-23-poetry-install-hash-error/</guid>
-  <description><![CDATA[<blockquote>
-<p>最近 <code>poetry install</code> 总是碰到 <code>hash</code> 不匹配的错误，记录一些解决方案</p>
 </blockquote>]]></description>
 </item>
 <item>
