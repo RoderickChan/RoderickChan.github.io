@@ -5,14 +5,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
     <meta name="robots" content="noodp" />
-    <title>starctf_2019_girlfriend - roderick - record and learn!</title><meta name="author" content="roderick">
-<meta name="author-link" content="https://roderickchan.github.io">
-<meta name="description" content="总结 常规的fastbin attack，劫持__malloc_hook为realloc&#43;2，然后__realloc_hook为one_gadg" /><meta name="keywords" content='pwn' /><meta itemprop="name" content="starctf_2019_girlfriend">
-<meta itemprop="description" content="总结 常规的fastbin attack，劫持__malloc_hook为realloc&#43;2，然后__realloc_hook为one_gadg"><meta itemprop="datePublished" content="2021-08-14T13:15:05+08:00" />
+    <title>starctf_2019_girlfriend - roderick - record and learn!</title><meta name="author" content="">
+<meta name="author-link" content="">
+<meta name="description" content="总结常规的fastbin attack，劫持__malloc_hook为realloc&#43;2，然后__realloc_hook为one_gadg" /><meta name="keywords" content='pwn' /><meta itemprop="name" content="starctf_2019_girlfriend">
+<meta itemprop="description" content="总结常规的fastbin attack，劫持__malloc_hook为realloc&#43;2，然后__realloc_hook为one_gadg"><meta itemprop="datePublished" content="2021-08-14T13:15:05+08:00" />
 <meta itemprop="dateModified" content="2021-08-14T13:15:05+08:00" />
 <meta itemprop="wordCount" content="415"><meta itemprop="image" content="https://roderickchan.github.io/"/>
 <meta itemprop="keywords" content="pwn," /><meta property="og:title" content="starctf_2019_girlfriend" />
-<meta property="og:description" content="总结 常规的fastbin attack，劫持__malloc_hook为realloc&#43;2，然后__realloc_hook为one_gadg" />
+<meta property="og:description" content="总结常规的fastbin attack，劫持__malloc_hook为realloc&#43;2，然后__realloc_hook为one_gadg" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://roderickchan.github.io/zh-cn/2021-08-15-starctf-2019-girlfriend/" /><meta property="og:image" content="https://roderickchan.github.io/"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-08-14T13:15:05+08:00" />
@@ -21,11 +21,13 @@
 <meta name="twitter:image" content="https://roderickchan.github.io/"/>
 
 <meta name="twitter:title" content="starctf_2019_girlfriend"/>
-<meta name="twitter:description" content="总结 常规的fastbin attack，劫持__malloc_hook为realloc&#43;2，然后__realloc_hook为one_gadg"/>
+<meta name="twitter:description" content="总结常规的fastbin attack，劫持__malloc_hook为realloc&#43;2，然后__realloc_hook为one_gadg"/>
 <meta name="application-name" content="roderick - record and learn!">
 <meta name="apple-mobile-web-app-title" content="roderick - record and learn!"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://roderickchan.github.io/zh-cn/2021-08-15-starctf-2019-girlfriend/" /><link rel="prev" href="https://roderickchan.github.io/zh-cn/2021-08-01-gkctf-2021-esapesh/" /><link rel="next" href="https://roderickchan.github.io/zh-cn/2021-08-14-actf-2019-onerepeater/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://roderickchan.github.io/zh-cn/2021-08-15-starctf-2019-girlfriend/" /><link rel="prev" href="https://roderickchan.github.io/zh-cn/2021-08-01-gkctf-2021-esapesh/" /><link rel="next" href="https://roderickchan.github.io/zh-cn/2021-08-14-actf-2019-onerepeater/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
   {
     "@context": "http://schema.org",
     "@type": "BlogPosting",
@@ -46,7 +48,7 @@
   <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
   <div class="header-wrapper" data-github-corner="right">
     <div class="header-title">
-      <a href="/zh-cn/" title="roderick - record and learn!"><img loading="lazy" src="/logo.png" data-title="roderick - record and learn!" data-alt="roderick - record and learn!" class="logo" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-text">roderick&#39;s blog</span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
+      <a href="/zh-cn/" title="roderick - record and learn!"><img loading="lazy" src="/logo.png" alt="roderick - record and learn!" data-title="roderick - record and learn!" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-text">roderick&#39;s blog</span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
     <nav>
       <ul class="menu"><li class="menu-item text-center">
               <a
@@ -67,12 +69,6 @@
                 
                 
               ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
-              <a
-                class="menu-link"
-                href="/zh-cn/tutorial/pwncli/"
-                title="pwncli使用教程"
-                
-              ><i class="fa-solid fa-book fa-fw fa-sm" aria-hidden="true"></i> Pwncli</a></li><li class="menu-item">
               <a
                 class="menu-link"
                 href="/zh-cn/about/"
@@ -107,7 +103,7 @@
   <div class="header-container">
     <div class="header-wrapper">
       <div class="header-title">
-        <a href="/zh-cn/" title="roderick - record and learn!"><img loading="lazy" src="/logo.png" data-title="/logo.png" data-alt="/logo.png" class="logo" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-text">roderick&#39;s blog</span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
+        <a href="/zh-cn/" title="roderick - record and learn!"><img loading="lazy" src="/logo.png" alt="/logo.png" data-title="/logo.png" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-text">roderick&#39;s blog</span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
       <div class="menu-toggle" id="menu-toggle-mobile">
         <span></span><span></span><span></span>
       </div>
@@ -154,13 +150,6 @@
               class="menu-item"
             ><a
                   class="menu-link"
-                  href="/zh-cn/tutorial/pwncli/"
-                  title="pwncli使用教程"
-                  
-                ><i class="fa-solid fa-book fa-fw fa-sm" aria-hidden="true"></i> Pwncli</a></li><li
-              class="menu-item"
-            ><a
-                  class="menu-link"
                   href="/zh-cn/about/"
                   
                   
@@ -192,20 +181,15 @@
   <div class="search-dropdown mobile">
     <div id="search-dropdown-mobile"></div>
   </div><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
-    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/zh-cn/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">starctf_2019_girlfriend</li>
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/zh-cn/posts/" title="Posts">文章</a></li><li class="breadcrumb-item active" aria-current="page">starctf_2019_girlfriend</li>
     </ol>
-  </nav><main class="container"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
-      <div class="toc-content" id="toc-content-auto"></div></aside>
-
-  <aside class="aside-custom">
-    </aside>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
 
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>starctf_2019_girlfriend</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><a href="https://roderickchan.github.io" title="作者"target="_blank" rel="external nofollow noopener noreferrer author" class="author"><img loading="lazy" src="https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp" data-title="roderick" data-alt="roderick" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;roderick</a></span>
-          <span class="post-category">收录于 <a href="/zh-cn/categories/pwn-wp/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> pwn-wp</a></span></div>
-      <div class="post-meta-line"><span title="发布于 2021-08-14 13:15:05"><i class="fa-regular fa-calendar-alt fa-fw me-1" aria-hidden="true"></i><time datetime="2021-08-14">2021-08-14</time></span>&nbsp;<span title="更新于 2021-08-14 13:15:05"><i class="fa-regular fa-edit fa-fw me-1" aria-hidden="true"></i><time datetime="2021-08-14">2021-08-14</time></span>&nbsp;<span title="415 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 500 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 1 分钟</span>&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="starctf_2019_girlfriend">
+      <div class="post-meta-line"><span class="post-author"><a href="https://roderickchan.github.io" title="作者"target="_blank" rel="external nofollow noopener noreferrer author" class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+    roderick</a></span><span class="post-included-in">&nbsp;收录于 <a href="/zh-cn/categories/pwn-wp/" class="post-category" title="分类 - pwn-wp"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> pwn-wp</a></span></div><div class="post-meta-line"><span title="发布于 2021-08-14 13:15:05"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2021-08-14">2021-08-14</time></span>&nbsp;<span title="415 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 500 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 1 分钟</span>&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="starctf_2019_girlfriend">
               <i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
             </span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
@@ -234,22 +218,15 @@
     </li>
   </ul>
 </nav></div>
-      </div><div class="content" id="content"><div class="details admonition warning open">
-      <div class="details-summary admonition-title">
-        <i class="icon fa-solid fa-exclamation-triangle fa-fw" aria-hidden="true"></i>警告<i class="details-icon fa-solid fa-angle-right fa-fw" aria-hidden="true"></i>
-      </div>
-      <div class="details-content">
-        <div class="admonition-content">本文最后更新于 2021-08-14，文中内容可能已过时。</div>
-      </div>
-    </div><h3 id="总结">总结</h3>
-<p>常规的<code>fastbin attack</code>，劫持<code>__malloc_hook</code>为<code>realloc+2</code>，然后<code>__realloc_hook</code>为<code>one_gadget</code>即可</p>
+      </div><div class="content" id="content"><h3 id="总结" class="heading-element">
+  <a href="#%e6%80%bb%e7%bb%93" class="heading-mark"></a>总结</h3><p>常规的<code>fastbin attack</code>，劫持<code>__malloc_hook</code>为<code>realloc+2</code>，然后<code>__realloc_hook</code>为<code>one_gadget</code>即可</p>
 <!-- more -->
-<h3 id="题目分析">题目分析</h3>
-<h4 id="checksec">checksec</h4>
-<p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210815165047553.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210815165047553.png?size=small, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210815165047553.png?size=medium 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210815165047553.png?size=large 2x" sizes="auto" data-title="image-20210815165047553" data-alt="image-20210815165047553" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="题目分析" class="heading-element">
+  <a href="#%e9%a2%98%e7%9b%ae%e5%88%86%e6%9e%90" class="heading-mark"></a>题目分析</h3><h4 id="checksec" class="heading-element">
+  <a href="#checksec" class="heading-mark"></a>checksec</h4><p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210815165047553.png" alt="image-20210815165047553" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210815165047553.png?size=small, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210815165047553.png?size=medium 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210815165047553.png?size=large 2x" sizes="auto" data-title="image-20210815165047553" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>题目环境为<code>ubuntu-16.04</code></p>
-<h4 id="函数分析">函数分析</h4>
-<p>恢复下<code>girlfriend</code>的结构体：</p>
+<h4 id="函数分析" class="heading-element">
+  <a href="#%e5%87%bd%e6%95%b0%e5%88%86%e6%9e%90" class="heading-mark"></a>函数分析</h4><p>恢复下<code>girlfriend</code>的结构体：</p>
 <div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -268,9 +245,9 @@
 </span></span><span class="line"><span class="cl"><span class="p">};</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>漏洞点在<code>call_girlfriend</code>的时候的<code>UAF</code>:</p>
-<p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210815165332825.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210815165332825.png?size=small, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210815165332825.png?size=medium 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210815165332825.png?size=large 2x" sizes="auto" data-title="image-20210815165332825" data-alt="image-20210815165332825" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/></p>
-<h3 id="exp">exp</h3>
-<div class="highlight" id="id-2"><div class="chroma">
+<p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210815165332825.png" alt="image-20210815165332825" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210815165332825.png?size=small, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210815165332825.png?size=medium 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210815165332825.png?size=large 2x" sizes="auto" data-title="image-20210815165332825" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="exp" class="heading-element">
+  <a href="#exp" class="heading-mark"></a>exp</h3><div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -417,9 +394,9 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">p</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
-</div><p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210815165431812.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210815165431812.png?size=small, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210815165431812.png?size=medium 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210815165431812.png?size=large 2x" sizes="auto" data-title="image-20210815165431812" data-alt="image-20210815165431812" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/></p>
-<h3 id="引用与参考">引用与参考</h3>
-<p>1、<a href="https://roderickchan.github.io"target="_blank" rel="external nofollow noopener noreferrer">My Blog<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
+</div><p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210815165431812.png" alt="image-20210815165431812" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210815165431812.png?size=small, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210815165431812.png?size=medium 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20210815165431812.png?size=large 2x" sizes="auto" data-title="image-20210815165431812" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="引用与参考" class="heading-element">
+  <a href="#%e5%bc%95%e7%94%a8%e4%b8%8e%e5%8f%82%e8%80%83" class="heading-mark"></a>引用与参考</h3><p>1、<a href="https://roderickchan.github.io"target="_blank" rel="external nofollow noopener noreferrer">My Blog<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
 <p>2、<a href="https://ctf-wiki.org/"target="_blank" rel="external nofollow noopener noreferrer">Ctf Wiki<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
 <p>3、<a href="https://github.com/RoderickChan/pwncli"target="_blank" rel="external nofollow noopener noreferrer">pwncli<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
 </div><div class="post-footer" id="post-footer">
@@ -428,12 +405,11 @@
       <div class="post-info-mod">
         <span title="更新于 2021-08-14 13:15:05">更新于 2021-08-14&nbsp;</span>
       </div><div class="post-info-license">
-          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
-        </div></div>
-    <div class="post-info-line">
-      <div class="post-info-md"></div>
-      <div class="post-info-share">
-        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://roderickchan.github.io/zh-cn/2021-08-15-starctf-2019-girlfriend/" data-title="starctf_2019_girlfriend" data-hashtags="pwn"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+            <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+          </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://roderickchan.github.io/zh-cn/2021-08-15-starctf-2019-girlfriend/" data-title="starctf_2019_girlfriend" data-hashtags="pwn"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
   <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://roderickchan.github.io/zh-cn/2021-08-15-starctf-2019-girlfriend/" data-hashtag="pwn"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
   <a href="javascript:void(0);" title="分享到 Linkedin" data-sharer="linkedin" data-url="https://roderickchan.github.io/zh-cn/2021-08-15-starctf-2019-girlfriend/"><i class="fa-brands fa-linkedin fa-fw" aria-hidden="true"></i></a>
   <a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://roderickchan.github.io/zh-cn/2021-08-15-starctf-2019-girlfriend/" data-title="starctf_2019_girlfriend" data-web><i class="fa-brands fa-whatsapp fa-fw" aria-hidden="true"></i></a>
@@ -446,12 +422,11 @@
   <a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="https://roderickchan.github.io/zh-cn/2021-08-15-starctf-2019-girlfriend/" data-title="starctf_2019_girlfriend"><i data-svg-src="/lib/simple-icons/icons/baidu.min.svg" aria-hidden="true"></i></a>
   <a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="https://roderickchan.github.io/zh-cn/2021-08-15-starctf-2019-girlfriend/" data-title="starctf_2019_girlfriend"><i class="fa-brands fa-evernote fa-fw" aria-hidden="true"></i></a>
   </span>
-      </div>
-    </div>
-  </div>
+        </div>
+      </div></div>
 
   <div class="post-info-more">
-    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href='/zh-cn/tags/pwn/' class="post-tag">pwn</a></section>
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/zh-cn/tags/pwn/" class="post-tag" title="标签 - pwn">pwn</a></section>
     <section>
       <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
     </section>
@@ -464,21 +439,25 @@
     <div class="comment">Buy me a coffee~</div>
     <input type="checkbox" class="reward-input" name="reward" id="fi-reward" hidden />
     <label class="reward-button" for="fi-reward">赞赏</label>
-    <div class="reward-ways" data-mode="static"><div><img loading="lazy" src="/img/reward/alipay.jpg" data-title="roderick 支付宝" data-alt="roderick 支付宝" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/><span data-animation>支付宝</span>
-          </div><div><img loading="lazy" src="/img/reward/wechat.jpg" data-title="roderick 微信" data-alt="roderick 微信" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/><span data-animation>微信</span>
+    <div class="reward-ways" data-mode="static"><div><img loading="lazy" src="/img/reward/alipay.jpg" alt="roderick 支付宝" data-title="roderick 支付宝" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span data-animation>支付宝</span>
+          </div><div><img loading="lazy" src="/img/reward/wechat.jpg" alt="roderick 微信" data-title="roderick 微信" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span data-animation>微信</span>
           </div></div>
   </div><div id="comments"><div id="waline" class="comment"></div><noscript>
         Please enable JavaScript to view the comments powered by <a href="https://waline.js.org/" rel="external nofollow noopener noreferrer">Waline</a>.
-      </noscript></div></article></main><footer class="footer">
-    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.111.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.18-lts.4"><img class="fixit-icon" src="/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+      </noscript></div></article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line custom"><script type="text/javascript" src="//rf.revolvermaps.com/0/0/6.js?i=5oavxjxo0yo&amp;m=7&amp;c=e63100&amp;cr1=ffffff&amp;f=arial&amp;l=0&amp;bv=90&amp;lx=-420&amp;ly=420&amp;hi=20&amp;he=7&amp;hc=a8ddff&amp;rs=80&s=170" async="async"></script></div><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.111.3"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.1"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
         </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
             <span itemprop="copyrightYear">2022 - 2024</span><span class="author" itemprop="copyrightHolder">
-              <a href="https://roderickchan.github.io"target="_blank" rel="external nofollow noopener noreferrer">roderick</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中……'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i><span class="run-times ms-1">网站运行中……</span></span></div><div class="footer-line visitor">
+              <a href="/zh-cn/"></a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中……'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i><span class="run-times ms-1">网站运行中……</span></span></div><div class="footer-line visitor">
           <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
         </div><div class="footer-line beian"><span class="icp footer-divider"><a href="http://beian.miit.gov.cn/">鄂ICP备2022016286号</a></span></div></div>
   </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
         </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><a href="https://github.com/RoderickChan" title="Follow me on Github"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #000;--bg-progress-dark: #fff;"></div><noscript>
     <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
   </noscript>
-</div><link rel="stylesheet" href="/lib/waline/waline.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/waline/waline.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pangu/pangu.min.js" defer></script><script src="/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"autoBookmark":true,"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"enable":true,"expired":false,"waline":{"copyright":true,"dark":"body[data-theme='dark']","el":"#waline","emoji":["//unpkg.com/@waline/emojis@1.1.0/weibo"],"highlighter":true,"imageUploader":true,"lang":"zh-cn","login":"enable","meta":["nick","mail","link"],"pageSize":10,"reaction":true,"search":false,"serverURL":"https://waline.roderickchan.cn/","texRenderer":false}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"To record and learn!","typeit-header-subtitle-mobile":"To record and learn!"},"enablePWA":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"pangu":{"enable":true,"selector":"article"},"search":{"algoliaAppID":"6CJ87MRD62","algoliaIndex":"index.zh-cn","algoliaSearchKey":"9f68a62dba71402a82f37137a7a886d2","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2022-10-01T09:00:00+08:00","twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"loop":false,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/js/theme.min.js" defer></script></body>
+</div><link rel="stylesheet" href="/lib/waline/waline.css"><link rel="preload" href="/lib/katex/katex.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/katex/katex.min.css"></noscript><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/waline/waline.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pangu/pangu.min.js" defer></script><script src="/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"autoBookmark":true,"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"enable":true,"expired":false,"waline":{"copyright":true,"dark":"body[data-theme='dark']","el":"#waline","emoji":["//unpkg.com/@waline/emojis@1.1.0/weibo"],"highlighter":true,"imageUploader":true,"lang":"zh-cn","login":"enable","meta":["nick","mail","link"],"pageSize":10,"reaction":true,"search":false,"serverURL":"https://waline.roderickchan.cn/","texRenderer":false}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-subtitle-desktop":"To record and learn!","typeit-header-subtitle-mobile":"To record and learn!"},"enablePWA":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"pangu":{"enable":true,"selector":"article"},"search":{"algoliaAppID":"6CJ87MRD62","algoliaIndex":"index.zh-cn","algoliaSearchKey":"9f68a62dba71402a82f37137a7a886d2","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"siteTime":"2022-10-01T09:00:00+08:00","twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":-1,"loop":false,"speed":100},"watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/js/theme.min.js" defer></script></body>
 </html>
