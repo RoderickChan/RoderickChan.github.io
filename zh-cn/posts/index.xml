@@ -4,7 +4,7 @@
     <link>https://roderickchan.github.io/zh-cn/posts/</link>
     <description>所有文章 | roderick - record and learn!</description>
     <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
-      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 20 Jan 2024 20:21:19 &#43;0800</lastBuildDate><atom:link href="https://roderickchan.github.io/zh-cn/posts/" rel="self" type="application/rss+xml" /><item>
+      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 03 Mar 2024 19:29:18 &#43;0800</lastBuildDate><atom:link href="https://roderickchan.github.io/zh-cn/posts/" rel="self" type="application/rss+xml" /><item>
   <title>Glibc堆利用之house of系列总结</title>
   <link>https://roderickchan.github.io/zh-cn/2023-02-27-house-of-all-about-glibc-heap-exploitation/</link>
   <pubDate>Mon, 27 Feb 2023 15:10:08 &#43;0800</pubDate>
@@ -22,6 +22,16 @@
   <guid>https://roderickchan.github.io/zh-cn/2023-04-05-announcement-about-my-blog/</guid>
   <description><![CDATA[<blockquote>
 <p>关于本站博客。</p>
+</blockquote>]]></description>
+</item>
+<item>
+  <title>【快来pwn1pwn】1-课程介绍</title>
+  <link>https://roderickchan.github.io/zh-cn/2024-03-03-pwn1pwn-course-1/</link>
+  <pubDate>Sun, 03 Mar 2024 19:29:18 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://roderickchan.github.io/zh-cn/2024-03-03-pwn1pwn-course-1/</guid>
+  <description><![CDATA[<blockquote>
+<p>快来 pwn1pwn 系列公开课第 <code>1</code> 集【课程介绍】</p>
 </blockquote>]]></description>
 </item>
 <item>
@@ -108,16 +118,6 @@
 <li>本次分享的是基础使用教程，不涉及复杂的<code>git</code>命令讲解。</li>
 <li>文档只提供了大纲，很多细节没有体现在文档中，欢迎与我探讨。</li>
 </ol>
-</blockquote>]]></description>
-</item>
-<item>
-  <title>解决博客链接结尾不带斜杠时访问失败的问题</title>
-  <link>https://roderickchan.github.io/zh-cn/2023-07-03-deal-with-a-nginx-problem/</link>
-  <pubDate>Mon, 03 Jul 2023 19:26:06 &#43;0800</pubDate>
-  <author>roderick</author>
-  <guid>https://roderickchan.github.io/zh-cn/2023-07-03-deal-with-a-nginx-problem/</guid>
-  <description><![CDATA[<blockquote>
-<p>现在访问我的博客，带或者不带斜杠均可正常访问。</p>
 </blockquote>]]></description>
 </item>
 </channel>
