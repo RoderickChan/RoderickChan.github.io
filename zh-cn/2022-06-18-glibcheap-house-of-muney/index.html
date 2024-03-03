@@ -10,7 +10,7 @@
 <meta name="description" content="house of muney" /><meta name="keywords" content='house of muney, glibc' /><meta itemprop="name" content="GlibcHeap-house of muney">
 <meta itemprop="description" content="house of muney"><meta itemprop="datePublished" content="2022-06-18T22:21:19+08:00" />
 <meta itemprop="dateModified" content="2022-06-18T22:21:19+08:00" />
-<meta itemprop="wordCount" content="5384"><meta itemprop="image" content="https://roderickchan.github.io/"/>
+<meta itemprop="wordCount" content="5377"><meta itemprop="image" content="https://roderickchan.github.io/"/>
 <meta itemprop="keywords" content="pwn,house of,glibc," /><meta property="og:title" content="GlibcHeap-house of muney" />
 <meta property="og:description" content="house of muney" />
 <meta property="og:type" content="article" />
@@ -36,7 +36,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/roderickchan.github.io\/zh-cn\/2022-06-18-glibcheap-house-of-muney\/"
-    },"image": ["https:\/\/roderickchan.github.io\/images\/Apple-Devices-Preview.jpg"],"genre": "posts","keywords": "pwn, house of, glibc","wordcount":  5384 ,
+    },"image": ["https:\/\/roderickchan.github.io\/images\/Apple-Devices-Preview.jpg"],"genre": "posts","keywords": "pwn, house of, glibc","wordcount":  5377 ,
     "url": "https:\/\/roderickchan.github.io\/zh-cn\/2022-06-18-glibcheap-house-of-muney\/","datePublished": "2022-06-18T22:21:19+08:00","dateModified": "2022-06-18T22:21:19+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
       "@type": "Organization",
       "name": "roderick","logo": "https:\/\/roderickchan.github.io\/logo.png"},"author": {
@@ -188,7 +188,7 @@
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>GlibcHeap-house of muney</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><a href="https://roderickchan.github.io" title="作者"target="_blank" rel="external nofollow noopener noreferrer author" class="author"><img loading="lazy" src="https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp" alt="roderick" data-title="roderick" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;roderick</a></span><span class="post-included-in">&nbsp;收录于 <a href="/zh-cn/categories/pwn-trick/" class="post-category" title="分类 - pwn-trick"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> pwn-trick</a></span></div><div class="post-meta-line"><span title="发布于 2022-06-18 22:21:19"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2022-06-18">2022-06-18</time></span>&nbsp;<span title="5384 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 5400 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 11 分钟</span>&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="GlibcHeap-house of muney">
+      <div class="post-meta-line"><span class="post-author"><a href="https://roderickchan.github.io" title="作者"target="_blank" rel="external nofollow noopener noreferrer author" class="author"><img loading="lazy" src="https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp" alt="roderick" data-title="roderick" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;roderick</a></span><span class="post-included-in">&nbsp;收录于 <a href="/zh-cn/categories/pwn-trick/" class="post-category" title="分类 - pwn-trick"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> pwn-trick</a></span></div><div class="post-meta-line"><span title="发布于 2022-06-18 22:21:19"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2022-06-18">2022-06-18</time></span>&nbsp;<span title="5377 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 5400 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 11 分钟</span>&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="GlibcHeap-house of muney">
               <i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
             </span>&nbsp;</div>
     </div>
@@ -1141,8 +1141,7 @@
 <li>bitmask_word</li>
 <li>bucket</li>
 <li>hasharr，需要多伪造几个，并不是第一个就满足条件</li>
-<li>target symbol -&gt;st_value，符号表中，除了st_value修改为目标地址外，其他成员建议保持不变
-<a name="YuzCI"></a></li>
+<li>target symbol -&gt;st_value，符号表中，除了 st_value 修改为目标地址外，其他成员建议保持不变</li>
 </ol>
 <h2 id="思考" class="heading-element">
   <a href="#%e6%80%9d%e8%80%83" class="heading-mark"></a>思考</h2><p>个人感觉<code>house of muney</code>可以进行拓展，只要可以在<strong>偷到的内存</strong>上面做一些文章，就可以达到一些特殊的目的。</p>

@@ -7,12 +7,12 @@
     <meta name="robots" content="noodp" />
     <title>kernel-pwn-babydriver - roderick - record and learn!</title><meta name="author" content="roderick">
 <meta name="author-link" content="https://roderickchan.github.io">
-<meta name="description" content="总结其实也做了不少的内核的pwn题，但是总结的博客自己没有写多少。一方面是因为博客写起来相对来说比价麻烦，而我又是一个比较懒的人&helli" /><meta name="keywords" content='pwn' /><meta itemprop="name" content="kernel-pwn-babydriver">
-<meta itemprop="description" content="总结其实也做了不少的内核的pwn题，但是总结的博客自己没有写多少。一方面是因为博客写起来相对来说比价麻烦，而我又是一个比较懒的人&helli"><meta itemprop="datePublished" content="2022-03-12T20:30:48+08:00" />
+<meta name="description" content="一道经典的内核入门题目解析。 基础知识 kernel一图胜千言： 需要注意的是，linux内核是单内核。因此，内核基本拥有对系统绝对的控制权。而微" /><meta name="keywords" content='pwn' /><meta itemprop="name" content="kernel-pwn-babydriver">
+<meta itemprop="description" content="一道经典的内核入门题目解析。 基础知识 kernel一图胜千言： 需要注意的是，linux内核是单内核。因此，内核基本拥有对系统绝对的控制权。而微"><meta itemprop="datePublished" content="2022-03-12T20:30:48+08:00" />
 <meta itemprop="dateModified" content="2022-03-12T20:30:48+08:00" />
-<meta itemprop="wordCount" content="9978"><meta itemprop="image" content="https://roderickchan.github.io/"/>
+<meta itemprop="wordCount" content="9835"><meta itemprop="image" content="https://roderickchan.github.io/"/>
 <meta itemprop="keywords" content="pwn," /><meta property="og:title" content="kernel-pwn-babydriver" />
-<meta property="og:description" content="总结其实也做了不少的内核的pwn题，但是总结的博客自己没有写多少。一方面是因为博客写起来相对来说比价麻烦，而我又是一个比较懒的人&helli" />
+<meta property="og:description" content="一道经典的内核入门题目解析。 基础知识 kernel一图胜千言： 需要注意的是，linux内核是单内核。因此，内核基本拥有对系统绝对的控制权。而微" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://roderickchan.github.io/zh-cn/2022-03-12-kernel-pwn-babydriver/" /><meta property="og:image" content="https://roderickchan.github.io/"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-03-12T20:30:48+08:00" />
@@ -21,7 +21,7 @@
 <meta name="twitter:image" content="https://roderickchan.github.io/"/>
 
 <meta name="twitter:title" content="kernel-pwn-babydriver"/>
-<meta name="twitter:description" content="总结其实也做了不少的内核的pwn题，但是总结的博客自己没有写多少。一方面是因为博客写起来相对来说比价麻烦，而我又是一个比较懒的人&helli"/>
+<meta name="twitter:description" content="一道经典的内核入门题目解析。 基础知识 kernel一图胜千言： 需要注意的是，linux内核是单内核。因此，内核基本拥有对系统绝对的控制权。而微"/>
 <meta name="application-name" content="roderick - record and learn!">
 <meta name="apple-mobile-web-app-title" content="roderick - record and learn!"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -36,7 +36,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/roderickchan.github.io\/zh-cn\/2022-03-12-kernel-pwn-babydriver\/"
-    },"image": ["https:\/\/roderickchan.github.io\/images\/Apple-Devices-Preview.jpg"],"genre": "posts","keywords": "pwn","wordcount":  9978 ,
+    },"image": ["https:\/\/roderickchan.github.io\/images\/Apple-Devices-Preview.jpg"],"genre": "posts","keywords": "pwn","wordcount":  9835 ,
     "url": "https:\/\/roderickchan.github.io\/zh-cn\/2022-03-12-kernel-pwn-babydriver\/","datePublished": "2022-03-12T20:30:48+08:00","dateModified": "2022-03-12T20:30:48+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
       "@type": "Organization",
       "name": "roderick","logo": "https:\/\/roderickchan.github.io\/logo.png"},"author": {
@@ -188,7 +188,7 @@
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>kernel-pwn-babydriver</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><a href="https://roderickchan.github.io" title="作者"target="_blank" rel="external nofollow noopener noreferrer author" class="author"><img loading="lazy" src="https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp" alt="roderick" data-title="roderick" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;roderick</a></span><span class="post-included-in">&nbsp;收录于 <a href="/zh-cn/categories/pwn-wp/" class="post-category" title="分类 - pwn-wp"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> pwn-wp</a></span></div><div class="post-meta-line"><span title="发布于 2022-03-12 20:30:48"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2022-03-12">2022-03-12</time></span>&nbsp;<span title="9978 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 10000 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 20 分钟</span>&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="kernel-pwn-babydriver">
+      <div class="post-meta-line"><span class="post-author"><a href="https://roderickchan.github.io" title="作者"target="_blank" rel="external nofollow noopener noreferrer author" class="author"><img loading="lazy" src="https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp" alt="roderick" data-title="roderick" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;roderick</a></span><span class="post-included-in">&nbsp;收录于 <a href="/zh-cn/categories/pwn-wp/" class="post-category" title="分类 - pwn-wp"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> pwn-wp</a></span></div><div class="post-meta-line"><span title="发布于 2022-03-12 20:30:48"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2022-03-12">2022-03-12</time></span>&nbsp;<span title="9835 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 9900 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 20 分钟</span>&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="kernel-pwn-babydriver">
               <i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
             </span>&nbsp;</div>
     </div>
@@ -207,7 +207,6 @@
   <ul>
     <li>
       <ul>
-        <li><a href="#总结">总结</a></li>
         <li><a href="#基础知识">基础知识</a>
           <ul>
             <li><a href="#kernel">kernel</a></li>
@@ -242,8 +241,9 @@
     </li>
   </ul>
 </nav></div>
-      </div><div class="content" id="content"><h2 id="总结" class="heading-element">
-  <a href="#%e6%80%bb%e7%bb%93" class="heading-mark"></a>总结</h2><p>其实也做了不少的内核的<code>pwn</code>题，但是总结的博客自己没有写多少。一方面是因为博客写起来相对来说比价麻烦，而我又是一个比较懒的人&hellip;&hellip;好吧，虽然这篇写的是<code>babaydriver</code>这道题目，但是会总结内核<code>pwn</code>入门的一些基础只是，以及很多利用手法。就是，对题目加上很多限制之后的利用手法分析。</p>
+      </div><div class="content" id="content"><blockquote>
+<p>一道经典的内核入门题目解析。</p>
+</blockquote>
 <!-- more -->
 <h2 id="基础知识" class="heading-element">
   <a href="#%e5%9f%ba%e7%a1%80%e7%9f%a5%e8%af%86" class="heading-mark"></a>基础知识</h2><h3 id="kernel" class="heading-element">
