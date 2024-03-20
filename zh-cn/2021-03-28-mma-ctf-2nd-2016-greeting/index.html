@@ -230,7 +230,14 @@
     </li>
   </ul>
 </nav></div>
-      </div><div class="content" id="content"><h3 id="总结" class="heading-element">
+      </div><div class="content" id="content"><div class="details admonition note open">
+      <div class="details-summary admonition-title">
+        <i class="icon fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i>注意<i class="details-icon fa-solid fa-angle-right fa-fw" aria-hidden="true"></i>
+      </div>
+      <div class="details-content">
+        <div class="admonition-content">本文最后更新于 2021-03-28，文中内容可能已过时。</div>
+      </div>
+    </div><h3 id="总结" class="heading-element">
   <a href="#%e6%80%bb%e7%bb%93" class="heading-mark"></a>总结</h3><p>本题主要为<code>printf</code>格式化字符串漏洞，最好的方式是手写<code>fmt payload</code>，然后有一些新的知识点：</p>
 <ul>
 <li>pwntools的<code>fmtstr_payload</code>不是特别好用，特别是只想写低字节的时候，还是得手动写<code>fmt_payload</code>，抽个时间自己写个格式化<code>payload</code>生成函数吧。也不是第一次在这儿折腾了。</li>
