@@ -4,7 +4,7 @@
     <link>https://roderickchan.github.io/zh-cn/posts/</link>
     <description>所有文章 | roderick - record and learn!</description>
     <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
-      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 19 Mar 2024 22:36:16 &#43;0800</lastBuildDate><atom:link href="https://roderickchan.github.io/zh-cn/posts/" rel="self" type="application/rss+xml" /><item>
+      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 14 Apr 2024 23:46:06 &#43;0800</lastBuildDate><atom:link href="https://roderickchan.github.io/zh-cn/posts/" rel="self" type="application/rss+xml" /><item>
   <title>Glibc堆利用之house of系列总结</title>
   <link>https://roderickchan.github.io/zh-cn/2023-02-27-house-of-all-about-glibc-heap-exploitation/</link>
   <pubDate>Mon, 27 Feb 2023 15:10:08 &#43;0800</pubDate>
@@ -15,26 +15,6 @@
 </blockquote>]]></description>
 </item>
 <item>
-  <title>《活着》读书笔记</title>
-  <link>https://roderickchan.github.io/zh-cn/2024-01-20-huozhe-reading-notes/</link>
-  <pubDate>Sat, 20 Jan 2024 20:21:19 &#43;0800</pubDate>
-  <author>roderick</author>
-  <guid>https://roderickchan.github.io/zh-cn/2024-01-20-huozhe-reading-notes/</guid>
-  <description><![CDATA[<div class="featured-image"><img loading="eager" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/huozhe.jpeg" alt="《活着》读书笔记" title="活着的读书笔记" referrerpolicy="no-referrer"/></div><blockquote>
-<p>每次阅读都不禁潸然泪下。</p>
-</blockquote>]]></description>
-</item>
-<item>
-  <title>【快来pwn1pwn】2-pwn基本环境与工具</title>
-  <link>https://roderickchan.github.io/zh-cn/2024-03-10-pwn1pwn-course-2/</link>
-  <pubDate>Sun, 10 Mar 2024 06:35:00 &#43;0800</pubDate>
-  <author>roderick</author>
-  <guid>https://roderickchan.github.io/zh-cn/2024-03-10-pwn1pwn-course-2/</guid>
-  <description><![CDATA[<blockquote>
-<p>快来 pwn1pwn 系列公开课第 <code>2</code> 集【 pwn 基本环境与工具】</p>
-</blockquote>]]></description>
-</item>
-<item>
   <title>[置顶] 博客站点说明</title>
   <link>https://roderickchan.github.io/zh-cn/2023-04-05-announcement-about-my-blog/</link>
   <pubDate>Wed, 05 Apr 2023 17:42:44 &#43;0800</pubDate>
@@ -42,6 +22,16 @@
   <guid>https://roderickchan.github.io/zh-cn/2023-04-05-announcement-about-my-blog/</guid>
   <description><![CDATA[<blockquote>
 <p>关于本站博客。</p>
+</blockquote>]]></description>
+</item>
+<item>
+  <title>在2024年如何成功搭建Ubuntu 16.04的pwn环境</title>
+  <link>https://roderickchan.github.io/zh-cn/2024-04-14-docker-pwn-env-image-for-ubuntu-16.04/</link>
+  <pubDate>Sun, 14 Apr 2024 23:46:06 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://roderickchan.github.io/zh-cn/2024-04-14-docker-pwn-env-image-for-ubuntu-16.04/</guid>
+  <description><![CDATA[<blockquote>
+<p>在 2024 年搭建一个 <code>Ubuntu 16.04</code> 的 <code>pwn</code> 环境。</p>
 </blockquote>]]></description>
 </item>
 <item>
@@ -122,16 +112,6 @@
   <guid>https://roderickchan.github.io/zh-cn/2023-11-25-exploit-env-variable/</guid>
   <description><![CDATA[<blockquote>
 <p>很久之前写的一篇关于环境变量的总结博客，当时没有写完，最近又翻找出来了，有些虎头蛇尾 😅</p>
-</blockquote>]]></description>
-</item>
-<item>
-  <title>poetry install的hash不一致错误的解决思路</title>
-  <link>https://roderickchan.github.io/zh-cn/2023-11-23-poetry-install-hash-error/</link>
-  <pubDate>Thu, 23 Nov 2023 16:37:23 &#43;0800</pubDate>
-  <author>roderick</author>
-  <guid>https://roderickchan.github.io/zh-cn/2023-11-23-poetry-install-hash-error/</guid>
-  <description><![CDATA[<blockquote>
-<p>最近 <code>poetry install</code> 总是碰到 <code>hash</code> 不匹配的错误，记录一些解决方案</p>
 </blockquote>]]></description>
 </item>
 </channel>

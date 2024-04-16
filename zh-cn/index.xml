@@ -4,7 +4,7 @@
     <link>https://roderickchan.github.io/zh-cn/</link>
     <description>Welcome to roderick&#39;s blog site!</description>
     <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
-      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 19 Mar 2024 22:36:16 &#43;0800</lastBuildDate>
+      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 14 Apr 2024 23:46:06 &#43;0800</lastBuildDate>
       <atom:link href="https://roderickchan.github.io/zh-cn/index.xml" rel="self" type="application/rss+xml" />
     <item>
   <title>[置顶] 博客站点说明</title>
@@ -14,6 +14,16 @@
   <guid>https://roderickchan.github.io/zh-cn/2023-04-05-announcement-about-my-blog/</guid>
   <description><![CDATA[<blockquote>
 <p>关于本站博客。</p>
+</blockquote>]]></description>
+</item>
+<item>
+  <title>在2024年如何成功搭建Ubuntu 16.04的pwn环境</title>
+  <link>https://roderickchan.github.io/zh-cn/2024-04-14-docker-pwn-env-image-for-ubuntu-16.04/</link>
+  <pubDate>Sun, 14 Apr 2024 23:46:06 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://roderickchan.github.io/zh-cn/2024-04-14-docker-pwn-env-image-for-ubuntu-16.04/</guid>
+  <description><![CDATA[<blockquote>
+<p>在 2024 年搭建一个 <code>Ubuntu 16.04</code> 的 <code>pwn</code> 环境。</p>
 </blockquote>]]></description>
 </item>
 <item>
@@ -84,16 +94,6 @@
   <guid>https://roderickchan.github.io/zh-cn/2023-11-25-exploit-env-variable/</guid>
   <description><![CDATA[<blockquote>
 <p>很久之前写的一篇关于环境变量的总结博客，当时没有写完，最近又翻找出来了，有些虎头蛇尾 😅</p>
-</blockquote>]]></description>
-</item>
-<item>
-  <title>poetry install的hash不一致错误的解决思路</title>
-  <link>https://roderickchan.github.io/zh-cn/2023-11-23-poetry-install-hash-error/</link>
-  <pubDate>Thu, 23 Nov 2023 16:37:23 &#43;0800</pubDate>
-  <author>roderick</author>
-  <guid>https://roderickchan.github.io/zh-cn/2023-11-23-poetry-install-hash-error/</guid>
-  <description><![CDATA[<blockquote>
-<p>最近 <code>poetry install</code> 总是碰到 <code>hash</code> 不匹配的错误，记录一些解决方案</p>
 </blockquote>]]></description>
 </item>
 </channel>

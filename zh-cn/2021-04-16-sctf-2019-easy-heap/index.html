@@ -246,7 +246,14 @@
     </li>
   </ul>
 </nav></div>
-      </div><div class="content" id="content"><h3 id="总结" class="heading-element">
+      </div><div class="content" id="content"><div class="details admonition note open">
+      <div class="details-summary admonition-title">
+        <i class="icon fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i>注意<i class="details-icon fa-solid fa-angle-right fa-fw" aria-hidden="true"></i>
+      </div>
+      <div class="details-content">
+        <div class="admonition-content">本文最后更新于 2021-04-16，文中内容可能已过时。</div>
+      </div>
+    </div><h3 id="总结" class="heading-element">
   <a href="#%e6%80%bb%e7%bb%93" class="heading-mark"></a>总结</h3><p>根据本题，学习与收获有：</p>
 <ul>
 <li>根据<a href="https://ctf-wiki.org/pwn/linux/glibc-heap/chunk_extend_overlapping/#5extendoverlapping"target="_blank" rel="external nofollow noopener noreferrer">ctfwiki<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>中的前向合并技巧，当不存在一个存储<code>chunk</code>的堆地址的已知地址时，可以利用<code>main_arena+96</code>这个地址来进行<code>unlink</code>利用</li>

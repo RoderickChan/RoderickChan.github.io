@@ -240,7 +240,14 @@
     </li>
   </ul>
 </nav></div>
-      </div><div class="content" id="content"><h3 id="总结" class="heading-element">
+      </div><div class="content" id="content"><div class="details admonition note open">
+      <div class="details-summary admonition-title">
+        <i class="icon fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i>注意<i class="details-icon fa-solid fa-angle-right fa-fw" aria-hidden="true"></i>
+      </div>
+      <div class="details-content">
+        <div class="admonition-content">本文最后更新于 2021-04-14，文中内容可能已过时。</div>
+      </div>
+    </div><h3 id="总结" class="heading-element">
   <a href="#%e6%80%bb%e7%bb%93" class="heading-mark"></a>总结</h3><p>根据本题，学习与收获有：</p>
 <ul>
 <li>当<code>RELRO</code>保护为<code>NO RELRO</code>的时候，<code>init.array、fini.array、got.plt</code>均可读可写；为<code>PARTIAL RELRO</code>的时候，<code>ini.array、fini.array</code>可读不可写，<code>got.plt</code>可读可写；为<code>FULL RELRO</code>时，<code>init.array、fini.array、got.plt</code>均可读不可写。</li>
