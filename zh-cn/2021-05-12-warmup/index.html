@@ -236,7 +236,14 @@
     </li>
   </ul>
 </nav></div>
-      </div><div class="content" id="content"><h3 id="总结" class="heading-element">
+      </div><div class="content" id="content"><div class="details admonition note open">
+      <div class="details-summary admonition-title">
+        <i class="icon fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i>注意<i class="details-icon fa-solid fa-angle-right fa-fw" aria-hidden="true"></i>
+      </div>
+      <div class="details-content">
+        <div class="admonition-content">本文最后更新于 2021-05-12，文中内容可能已过时。</div>
+      </div>
+    </div><h3 id="总结" class="heading-element">
   <a href="#%e6%80%bb%e7%bb%93" class="heading-mark"></a>总结</h3><p>根据本题，学习与收获有：</p>
 <ul>
 <li>刚开始尝试利用<code>read</code>的返回值来构造<code>execve</code>的<code>syscall</code>，后来发现基本没有办法。后来查了下资料，才知道需要从<code>alarm</code>函数的返回值进行利用。虽然之前一直都知道<code>alarm</code>函数的功能，但是并不清楚其返回值是啥。</li>

@@ -4,7 +4,7 @@
     <link>https://roderickchan.github.io/zh-cn/</link>
     <description>Welcome to roderick&#39;s blog site!</description>
     <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
-      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 14 Apr 2024 23:46:06 &#43;0800</lastBuildDate>
+      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 28 Jun 2024 23:58:57 &#43;0800</lastBuildDate>
       <atom:link href="https://roderickchan.github.io/zh-cn/index.xml" rel="self" type="application/rss+xml" />
     <item>
   <title>[置顶] 博客站点说明</title>
@@ -14,6 +14,16 @@
   <guid>https://roderickchan.github.io/zh-cn/2023-04-05-announcement-about-my-blog/</guid>
   <description><![CDATA[<blockquote>
 <p>关于本站博客。</p>
+</blockquote>]]></description>
+</item>
+<item>
+  <title>《亲密关系》读书笔记</title>
+  <link>https://roderickchan.github.io/zh-cn/2024-06-28-qinmiguanxi-reading-notes/</link>
+  <pubDate>Fri, 28 Jun 2024 23:58:57 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://roderickchan.github.io/zh-cn/2024-06-28-qinmiguanxi-reading-notes/</guid>
+  <description><![CDATA[<div class="featured-image"><img loading="eager" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/202406290128804.jpg" alt="《亲密关系》读书笔记" title="《亲密关系》的读书笔记" referrerpolicy="no-referrer"/></div><blockquote>
+<div class="typeit" data-loop="true"><div id="id-1"></div></div>
 </blockquote>]]></description>
 </item>
 <item>
@@ -84,16 +94,6 @@
   <guid>https://roderickchan.github.io/zh-cn/2024-01-10-edit-zotero-items-using-javascript-api/</guid>
   <description><![CDATA[<blockquote>
 <p>记录下最近在使用 <code>zotero</code> 的时候，遇到的一个不大不小的问题，以及解决方案。</p>
-</blockquote>]]></description>
-</item>
-<item>
-  <title>从 system 函数的实现看 Linux 下对环境变量的处理</title>
-  <link>https://roderickchan.github.io/zh-cn/2023-11-25-exploit-env-variable/</link>
-  <pubDate>Sun, 26 Nov 2023 23:08:47 &#43;0800</pubDate>
-  <author>roderick</author>
-  <guid>https://roderickchan.github.io/zh-cn/2023-11-25-exploit-env-variable/</guid>
-  <description><![CDATA[<blockquote>
-<p>很久之前写的一篇关于环境变量的总结博客，当时没有写完，最近又翻找出来了，有些虎头蛇尾 😅</p>
 </blockquote>]]></description>
 </item>
 </channel>
