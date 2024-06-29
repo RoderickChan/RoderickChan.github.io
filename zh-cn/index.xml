@@ -4,7 +4,7 @@
     <link>https://roderickchan.github.io/zh-cn/</link>
     <description>Welcome to roderick&#39;s blog site!</description>
     <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
-      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 28 Jun 2024 23:58:57 &#43;0800</lastBuildDate>
+      <webMaster>roderickchan@foxmail.com (roderick)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 29 Jun 2024 23:45:27 &#43;0800</lastBuildDate>
       <atom:link href="https://roderickchan.github.io/zh-cn/index.xml" rel="self" type="application/rss+xml" />
     <item>
   <title>[置顶] 博客站点说明</title>
@@ -14,6 +14,16 @@
   <guid>https://roderickchan.github.io/zh-cn/2023-04-05-announcement-about-my-blog/</guid>
   <description><![CDATA[<blockquote>
 <p>关于本站博客。</p>
+</blockquote>]]></description>
+</item>
+<item>
+  <title>【快来pwn1pwn】4-GDB调试指南</title>
+  <link>https://roderickchan.github.io/zh-cn/2024-06-29-pwn1pwn-course-4/</link>
+  <pubDate>Sat, 29 Jun 2024 23:45:27 &#43;0800</pubDate>
+  <author>roderick</author>
+  <guid>https://roderickchan.github.io/zh-cn/2024-06-29-pwn1pwn-course-4/</guid>
+  <description><![CDATA[<blockquote>
+<p>快来 pwn1pwn 系列公开课第 <code>4</code> 集【GDB调试指南】</p>
 </blockquote>]]></description>
 </item>
 <item>
@@ -84,16 +94,6 @@
   <guid>https://roderickchan.github.io/zh-cn/2024-01-15-use-python-to-upload-images-to-aliyunoss/</guid>
   <description><![CDATA[<blockquote>
 <p>记录一个小工具，用于批量处理 <code>markdown</code> 文件中的图片，将其下载下来，然后上传到 <code>aliyun OSS</code> 存储中。</p>
-</blockquote>]]></description>
-</item>
-<item>
-  <title>解决Zotero条目的作者混乱问题</title>
-  <link>https://roderickchan.github.io/zh-cn/2024-01-10-edit-zotero-items-using-javascript-api/</link>
-  <pubDate>Wed, 10 Jan 2024 22:25:43 &#43;0800</pubDate>
-  <author>roderick</author>
-  <guid>https://roderickchan.github.io/zh-cn/2024-01-10-edit-zotero-items-using-javascript-api/</guid>
-  <description><![CDATA[<blockquote>
-<p>记录下最近在使用 <code>zotero</code> 的时候，遇到的一个不大不小的问题，以及解决方案。</p>
 </blockquote>]]></description>
 </item>
 </channel>
