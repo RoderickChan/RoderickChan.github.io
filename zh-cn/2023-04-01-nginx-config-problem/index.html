@@ -204,7 +204,7 @@
     
     <div class="wechat-account">
         <center>
-          <img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/roderick_wechat_official_account_white_in_green.png" height="104" width="372">
+          <img src="https://image.roderickchan.cn/img/roderick_wechat_official_account_white_in_green.png" height="104" width="372">
         </center>
       </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
@@ -589,7 +589,7 @@
 怀着这样的疑惑，我在互联网上搜索了好一阵。直到在<code>stackoverflow</code>上找到这么一个问题：<a href="https://stackoverflow.com/questions/9824328/why-is-nginx-responding-to-any-domain-name"target="_blank" rel="external nofollow noopener noreferrer">Why is nginx responding to any domain name? - Stack Overflow<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
 <p>这个问题，不正是我的问题么！</p>
 <p>根据这个问题下面的回答，我找到了官方文档：<a href="http://nginx.org/en/docs/http/request_processing.html"target="_blank" rel="external nofollow noopener noreferrer">How nginx processes a request<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>。看到了这一段：</p>
-<p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/2023-04-01_182248.png" alt="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/2023-04-01_182248.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/2023-04-01_182248.png?size=small, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/2023-04-01_182248.png?size=medium 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/2023-04-01_182248.png?size=large 2x" data-title="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/2023-04-01_182248.png" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="https://image.roderickchan.cn/img/2023-04-01_182248.png" alt="https://image.roderickchan.cn/img/2023-04-01_182248.png" srcset="https://image.roderickchan.cn/img/2023-04-01_182248.png?size=small, https://image.roderickchan.cn/img/2023-04-01_182248.png?size=medium 1.5x, https://image.roderickchan.cn/img/2023-04-01_182248.png?size=large 2x" data-title="https://image.roderickchan.cn/img/2023-04-01_182248.png" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>到这里，我<del>终于</del>暂时破案了。</p>
 <p>由于我没有指定<code>default_server</code>，那么我的<code>yyy.roderickchan.cn.conf</code>（按字母排序是第一个）中的第一个<code>server</code>会被当做为<code>default_server</code>，所以我的请求链是这样的：
 <code>http://xxx.roderickchan.cn</code> &mdash;&gt; <code>nginx</code>没有找到<code>xxx.roderickchan.cn</code>处理规则，寻找<code>default_server</code> &mdash;&gt; <code>nginx</code>没有找到显式定义的<code>default_server</code> &mdash;&gt; <code>nginx</code>根据加载的<code>server</code>顺序跳转到<code>http://yyy.roderickchan.cn</code> &mdash;&gt; 被重定向到<code>https://yyy.roderickchan.cn</code>。</p>

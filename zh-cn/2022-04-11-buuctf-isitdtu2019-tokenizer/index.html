@@ -196,7 +196,7 @@
     
     <div class="wechat-account">
         <center>
-          <img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/roderick_wechat_official_account_white_in_green.png" height="104" width="372">
+          <img src="https://image.roderickchan.cn/img/roderick_wechat_official_account_white_in_green.png" height="104" width="372">
         </center>
       </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
@@ -225,7 +225,7 @@
   <a href="#%e6%80%bb%e7%bb%93" class="heading-mark"></a>总结</h3><p>考察<code>strsep</code>函数，查看其源码可知，该函数签名为：<code>char * __strsep (char **stringp, const char *delim)</code>，其中<code>*stringp</code>这个字符串会被修改。每当<code>*stringp</code>所指向的字符串含有分割符的时候，会将此处置为<code>\0</code>。也就是说，会改变原有字符串的值（可以执行某一位置置为<code>\0</code>）。</p>
 <!-- more -->
 <h3 id="checksec" class="heading-element">
-  <a href="#checksec" class="heading-mark"></a>checksec</h3><p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220411232737883.png" alt="image-20220411232737883" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220411232737883.png?size=small, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220411232737883.png?size=medium 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220411232737883.png?size=large 2x" data-title="image-20220411232737883" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+  <a href="#checksec" class="heading-mark"></a>checksec</h3><p><img loading="lazy" src="https://image.roderickchan.cn/img/image-20220411232737883.png" alt="image-20220411232737883" srcset="https://image.roderickchan.cn/img/image-20220411232737883.png?size=small, https://image.roderickchan.cn/img/image-20220411232737883.png?size=medium 1.5x, https://image.roderickchan.cn/img/image-20220411232737883.png?size=large 2x" data-title="image-20220411232737883" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>远程为<code>libc-2.23.so</code>。</p>
 <h3 id="漏洞点" class="heading-element">
   <a href="#%e6%bc%8f%e6%b4%9e%e7%82%b9" class="heading-mark"></a>漏洞点</h3><p>漏洞点在<code>strsep</code>函数：</p>
@@ -283,7 +283,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>对<code>*end</code>指向的内容有修改。</p>
-<p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220411232917698.png" alt="image-20220411232917698" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220411232917698.png?size=small, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220411232917698.png?size=medium 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220411232917698.png?size=large 2x" data-title="image-20220411232917698" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="https://image.roderickchan.cn/img/image-20220411232917698.png" alt="image-20220411232917698" srcset="https://image.roderickchan.cn/img/image-20220411232917698.png?size=small, https://image.roderickchan.cn/img/image-20220411232917698.png?size=medium 1.5x, https://image.roderickchan.cn/img/image-20220411232917698.png?size=large 2x" data-title="image-20220411232917698" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>这里拷贝结束后，刚好挨着<code>rbp</code>寄存器指向的值。</p>
 <h3 id="利用思路" class="heading-element">
   <a href="#%e5%88%a9%e7%94%a8%e6%80%9d%e8%b7%af" class="heading-mark"></a>利用思路</h3><ul>
@@ -423,7 +423,7 @@
 </span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>远程爆破一下就好，运气很好，第一次就成功了：</p>
-<p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220411234013931.png" alt="image-20220411234013931" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220411234013931.png?size=small, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220411234013931.png?size=medium 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20220411234013931.png?size=large 2x" data-title="image-20220411234013931" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="https://image.roderickchan.cn/img/image-20220411234013931.png" alt="image-20220411234013931" srcset="https://image.roderickchan.cn/img/image-20220411234013931.png?size=small, https://image.roderickchan.cn/img/image-20220411234013931.png?size=medium 1.5x, https://image.roderickchan.cn/img/image-20220411234013931.png?size=large 2x" data-title="image-20220411234013931" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <h3 id="引用与参考" class="heading-element">
   <a href="#%e5%bc%95%e7%94%a8%e4%b8%8e%e5%8f%82%e8%80%83" class="heading-mark"></a>引用与参考</h3><p>1、<a href="https://roderickchan.github.io"target="_blank" rel="external nofollow noopener noreferrer">My Blog<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
 <p>2、<a href="https://ctf-wiki.org/"target="_blank" rel="external nofollow noopener noreferrer">Ctf Wiki<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>

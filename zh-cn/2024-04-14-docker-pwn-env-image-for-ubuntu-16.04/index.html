@@ -196,7 +196,7 @@
     
     <div class="wechat-account">
         <center>
-          <img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/roderick_wechat_official_account_white_in_green.png" height="104" width="372">
+          <img src="https://image.roderickchan.cn/img/roderick_wechat_official_account_white_in_green.png" height="104" width="372">
         </center>
       </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
@@ -301,7 +301,7 @@
 </table>
 <p>主要的变动是相较于之前的镜像，新增了 <code>Ubuntu-16.04</code> 的镜像。</p>
 <p>新增镜像主要是由于有位师傅提了一个 <code>issue</code>：</p>
-<p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-2024-04-14.png" alt="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-2024-04-14.png" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-2024-04-14.png?size=small, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-2024-04-14.png?size=medium 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-2024-04-14.png?size=large 2x" data-title="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-2024-04-14.png" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="https://image.roderickchan.cn/img/image-2024-04-14.png" alt="https://image.roderickchan.cn/img/image-2024-04-14.png" srcset="https://image.roderickchan.cn/img/image-2024-04-14.png?size=small, https://image.roderickchan.cn/img/image-2024-04-14.png?size=medium 1.5x, https://image.roderickchan.cn/img/image-2024-04-14.png?size=large 2x" data-title="https://image.roderickchan.cn/img/image-2024-04-14.png" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>其实很久之前，我自己确实配过一个 <code>Ubuntu-16.04</code> 的调试 <code>pwn</code> 的镜像，但是没有把 <code>Dockerfile</code> 文件留下来，也没有把镜像保存下来。今年已经是 <code>2024</code> 年了， <code>Ubuntu 16.04</code> 已经是 <code>8</code> 年前的系统，很多软件已不支持 <code>Ubuntu 16.04</code> 的环境。不过，既然有师傅提出这个需求，那就必须制作一个 <code>Ubuntu 16.04</code> 的版本的调试环境，毕竟很多入门 <code>pwn</code> 的师傅在学习堆的时候，都是从 <code>glibc-2.23</code> 开始的，而 <code>Ubuntu 16.04</code> 使用的就是这个版本的 <code>glibc</code>。</p>
 <p>需要说明的是，以下升级软件的时候，尽量使用 <code>root</code> 用户执行命令，从而能全局安装，如果对升级软件的细节不感兴趣，可以直接跳到最后查看最终的 <code>Dockerfile</code> 文件内容。</p>
 <h2 id="安装必备软件" class="heading-element">
@@ -682,13 +682,13 @@
 </div>
 </div><p>目前镜像已经推送到了 <code>dockerhub</code>，可以直接执行命令 <code>docker pull roderickchan/debug_pwn_env: 16.04-2.23-0 ubuntu 11.3-20240412</code> 下载镜像使用。</p>
 <p>镜像的启动的截图如下：</p>
-<p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20240416181210824.png" alt="image-20240416181210824" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20240416181210824.png?size=small, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20240416181210824.png?size=medium 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20240416181210824.png?size=large 2x" data-title="image-20240416181210824" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="https://image.roderickchan.cn/img/image-20240416181210824.png" alt="image-20240416181210824" srcset="https://image.roderickchan.cn/img/image-20240416181210824.png?size=small, https://image.roderickchan.cn/img/image-20240416181210824.png?size=medium 1.5x, https://image.roderickchan.cn/img/image-20240416181210824.png?size=large 2x" data-title="image-20240416181210824" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>软件版本：</p>
-<p><img loading="lazy" src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20240416181037513.png" alt="image-20240416181037513" srcset="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20240416181037513.png?size=small, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20240416181037513.png?size=medium 1.5x, https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/image-20240416181037513.png?size=large 2x" data-title="image-20240416181037513" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="https://image.roderickchan.cn/img/image-20240416181037513.png" alt="image-20240416181037513" srcset="https://image.roderickchan.cn/img/image-20240416181037513.png?size=small, https://image.roderickchan.cn/img/image-20240416181037513.png?size=medium 1.5x, https://image.roderickchan.cn/img/image-20240416181037513.png?size=large 2x" data-title="image-20240416181037513" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <hr>
 <p>欢迎关注我的公众号<strong>roderick blog</strong>，原创文章第一时间推送~</p>
 <center>
-    <img src="https://lynne-markdown.oss-cn-hangzhou.aliyuncs.com/img/roderick_blog_wechat_official_account.jpg" style="width: 180px;">
+    <img src="https://image.roderickchan.cn/img/roderick_blog_wechat_official_account.jpg" style="width: 180px;">
 </center></div><div class="post-footer" id="post-footer">
   <div class="post-info">
     <div class="post-info-line">
