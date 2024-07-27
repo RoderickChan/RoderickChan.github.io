@@ -218,7 +218,14 @@
     </li>
   </ul>
 </nav></div>
-      </div><div class="content" id="content"><h3 id="解题思路" class="heading-element">
+      </div><div class="content" id="content"><div class="details admonition note open">
+      <div class="details-summary admonition-title">
+        <i class="icon fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i>注意<i class="details-icon fa-solid fa-angle-right fa-fw" aria-hidden="true"></i>
+      </div>
+      <div class="details-content">
+        <div class="admonition-content">本文最后更新于 2021-07-18，文中内容可能已过时。</div>
+      </div>
+    </div><h3 id="解题思路" class="heading-element">
   <a href="#%e8%a7%a3%e9%a2%98%e6%80%9d%e8%b7%af" class="heading-mark"></a>解题思路</h3><p>题目还挺有趣的，点在于需要循环进行<code>fmt_attack</code>。栈上某个地址存储着<code>fmt_attack_flag</code>，当其不为<code>0</code>的时候，会直接执行<code>exit</code>退出。因此，需要尝试寻找一个地址，该地址存储着<code>fmt_attack_flag</code>的地址。因此，解题思路为：</p>
 <ul>
 <li>修改<code>fmt_attack_flag</code>为<code>0</code>的时候，同时泄露出栈上存储的代码段基地址和<code>libc</code>基地址</li>

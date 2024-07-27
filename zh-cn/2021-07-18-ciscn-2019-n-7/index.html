@@ -218,7 +218,14 @@
     </li>
   </ul>
 </nav></div>
-      </div><div class="content" id="content"><h3 id="解题思路" class="heading-element">
+      </div><div class="content" id="content"><div class="details admonition note open">
+      <div class="details-summary admonition-title">
+        <i class="icon fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i>注意<i class="details-icon fa-solid fa-angle-right fa-fw" aria-hidden="true"></i>
+      </div>
+      <div class="details-content">
+        <div class="admonition-content">本文最后更新于 2021-07-18，文中内容可能已过时。</div>
+      </div>
+    </div><h3 id="解题思路" class="heading-element">
   <a href="#%e8%a7%a3%e9%a2%98%e6%80%9d%e8%b7%af" class="heading-mark"></a>解题思路</h3><ul>
 <li>利用溢出修改指针的洞，将指针修改到<code>stdout</code>结构体上方，修改<code>flag</code>为<code>0xfbad1800</code>，然后修改<code>IO_write_base</code>为<code>__environ</code>地址，<code>IO_write_ptr</code>为<code>__environ + 8</code>地址，泄露栈地址</li>
 <li>劫持<code>__libc_start_main</code>栈帧的<code>retaddr</code>，使用<code>rop</code>执行<code>system(&quot;/bin/sh&quot;)</code></li>

@@ -227,7 +227,6 @@
 </blockquote>
 <h2 id="前言" class="heading-element">
   <a href="#%e5%89%8d%e8%a8%80" class="heading-mark"></a>前言</h2><p>遇到了好几次<code>hosue of muney</code>相关的题目，之前并没有深入地分析<code>house of muney</code>的原理，只是了解了一个大概。这次详细分析一下原理与相关源码，并尝试挖掘出一些新的东西出来。<br />本次调试基于<code>ubuntu 20.04  2.31-0ubuntu9.9</code>，自己写的<code>poc</code>，会与原有的<code>poc</code>相比有改动。</p>
-<!--more-->
 <h2 id="利用原理" class="heading-element">
   <a href="#%e5%88%a9%e7%94%a8%e5%8e%9f%e7%90%86" class="heading-mark"></a>利用原理</h2><p>要理解<code>house of muney</code>的利用，就必须清楚<code>elf</code>文件的动态链接过程。从《链接、装载与库》这本书里面就对<code>ELF</code>文件有着深入的剖析。这里不详细的说明<code>elf</code>文件的组成格式与装载流程，只会涉及到符号解析的部分。
 <a name="jMcY1"></a></p>
