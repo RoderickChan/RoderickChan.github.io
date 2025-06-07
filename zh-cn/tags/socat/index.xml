@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>socat - 标签 | roderick - record and learn!</title>
+    <link>https://roderickchan.github.io/zh-cn/tags/socat/</link>
+    <description>Welcome to roderick&#39;s blog site!</description>
+    <generator>Hugo 0.147.7 &amp; FixIt v0.3.21-87ca54d0</generator>
+    <language>zh-CN</language>
+    <managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
+    <webMaster>roderickchan@foxmail.com (roderick)</webMaster>
+    <copyright>本站内容采用 CC BY-NC-SA 4.0 国际许可协议。</copyright>
+    <lastBuildDate>Fri, 10 Feb 2023 15:18:13 +0800</lastBuildDate>
+    <atom:link href="https://roderickchan.github.io/zh-cn/tags/socat/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>socat反弹shell&#43;tmux共享会话</title>
+      <link>https://roderickchan.github.io/zh-cn/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D/</link>
+      <pubDate>Fri, 10 Feb 2023 15:18:13 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/zh-cn/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D/</guid>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/tools/">tools</category>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/pwn-trick/">pwn-trick</category>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;使用&lt;code&gt;socat&lt;/code&gt;得到一个带有&lt;code&gt;pty&lt;/code&gt;的&lt;code&gt;strong shell&lt;/code&gt;，然后使用&lt;code&gt;tmux&lt;/code&gt;共享会话和结对编程。&lt;/p&gt;&lt;/blockquote&gt;</description>
+    </item>
+  </channel>
+</rss>

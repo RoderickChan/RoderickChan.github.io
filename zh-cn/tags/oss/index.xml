@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>oss - 标签 | roderick - record and learn!</title>
+    <link>https://roderickchan.github.io/zh-cn/tags/oss/</link>
+    <description>Welcome to roderick&#39;s blog site!</description>
+    <generator>Hugo 0.147.7 &amp; FixIt v0.3.21-87ca54d0</generator>
+    <language>zh-CN</language>
+    <managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
+    <webMaster>roderickchan@foxmail.com (roderick)</webMaster>
+    <copyright>本站内容采用 CC BY-NC-SA 4.0 国际许可协议。</copyright>
+    <lastBuildDate>Tue, 16 Jan 2024 19:31:27 +0800</lastBuildDate>
+    <atom:link href="https://roderickchan.github.io/zh-cn/tags/oss/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用python批量处理markdown文件中的图片</title>
+      <link>https://roderickchan.github.io/zh-cn/2024-01-15-use-python-to-upload-images-to-aliyunoss/</link>
+      <pubDate>Tue, 16 Jan 2024 19:31:27 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/zh-cn/2024-01-15-use-python-to-upload-images-to-aliyunoss/</guid>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/tools/">tools</category>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;记录一个小工具，用于批量处理 &lt;code&gt;markdown&lt;/code&gt; 文件中的图片，将其下载下来，然后上传到 &lt;code&gt;aliyun OSS&lt;/code&gt; 存储中。&lt;/p&gt;&lt;/blockquote&gt;</description>
+    </item>
+  </channel>
+</rss>

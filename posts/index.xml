@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>All Posts | roderick - record and learn!</title>
+    <link>https://roderickchan.github.io/posts/</link>
+    <description>Welcome to roderick&#39;s blog site!</description>
+    <generator>Hugo 0.147.7 &amp; FixIt v0.3.21-87ca54d0</generator>
+    <language>en</language>
+    <managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
+    <webMaster>roderickchan@foxmail.com (roderick)</webMaster>
+    <copyright>This work is licensed under CC BY-NC-SA-4.0.</copyright>
+    <lastBuildDate>Wed, 05 Apr 2023 17:42:44 +0800</lastBuildDate>
+    <atom:link href="https://roderickchan.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[Pinned] About my blog site</title>
+      <link>https://roderickchan.github.io/2023-04-05-announcement-about-my-blog/</link>
+      <pubDate>Wed, 05 Apr 2023 17:42:44 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/2023-04-05-announcement-about-my-blog/</guid>
+      <category domain="https://roderickchan.github.io/categories/announcement/">Announcement</category>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;About my blog site.&lt;/p&gt;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>2022-SekaiCTF-Pwn-Wp-Gets-Bfs</title>
+      <link>https://roderickchan.github.io/2022-sekaictf-pwn-wp-gets-bfs/</link>
+      <pubDate>Mon, 03 Oct 2022 13:09:01 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/2022-sekaictf-pwn-wp-gets-bfs/</guid>
+      <category domain="https://roderickchan.github.io/categories/pwn-wp/">pwn-wp</category>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: writeup for &lt;code&gt;gets&lt;/code&gt; and &lt;code&gt;BFS&lt;/code&gt;&lt;/p&gt;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>2022-Cyber-Apocalypse-CTF-All-Pwn-Wp</title>
+      <link>https://roderickchan.github.io/2022-cyber-apocalypse-ctf-all-pwn-wp/</link>
+      <pubDate>Fri, 20 May 2022 15:07:34 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/2022-cyber-apocalypse-ctf-all-pwn-wp/</guid>
+      <category domain="https://roderickchan.github.io/categories/pwn-wp/">pwn-wp</category>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;This is my write-up for all pwn challenges in Cyber-Apocalypse-CTF-2022, I had solved all tasks in two days. Anyway, these pwn challenges are not very hard&amp;hellip;&lt;/p&gt;&#xA;&lt;p&gt;Please leave a message or send me an email if you have any questions about the wp.&lt;/p&gt;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>2022-Sdctf-All-Pwn-Wp</title>
+      <link>https://roderickchan.github.io/2022-sdctf-all-pwn-wp/</link>
+      <pubDate>Sun, 08 May 2022 15:15:44 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/2022-sdctf-all-pwn-wp/</guid>
+      <category domain="https://roderickchan.github.io/categories/pwn-wp/">pwn-wp</category>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;I was shocked  when I found  I stayed in a only-me team. Where are my teammates?&lt;/p&gt;&#xA;&lt;p&gt;Anyway, I have completed all the tasks of pwn in a afternoon. These tasks are not very hard, and it takes me about &lt;code&gt;4&lt;/code&gt; hours. In fact, I have spent almost &lt;code&gt;2&lt;/code&gt; hours on solving &lt;code&gt;shamav&lt;/code&gt;, this task is a little bit challengeable and interesting.&lt;/p&gt;&lt;/blockquote&gt;</description>
+    </item>
+  </channel>
+</rss>

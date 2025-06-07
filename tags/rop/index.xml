@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>rop - Tag | roderick - record and learn!</title>
+    <link>https://roderickchan.github.io/tags/rop/</link>
+    <description>Welcome to roderick&#39;s blog site!</description>
+    <generator>Hugo 0.147.7 &amp; FixIt v0.3.21-87ca54d0</generator>
+    <language>en</language>
+    <managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
+    <webMaster>roderickchan@foxmail.com (roderick)</webMaster>
+    <copyright>This work is licensed under CC BY-NC-SA-4.0.</copyright>
+    <lastBuildDate>Tue, 04 Oct 2022 08:28:01 +0800</lastBuildDate>
+    <atom:link href="https://roderickchan.github.io/tags/rop/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2022-SekaiCTF-Pwn-Wp-Gets-Bfs</title>
+      <link>https://roderickchan.github.io/2022-sekaictf-pwn-wp-gets-bfs/</link>
+      <pubDate>Mon, 03 Oct 2022 13:09:01 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/2022-sekaictf-pwn-wp-gets-bfs/</guid>
+      <category domain="https://roderickchan.github.io/categories/pwn-wp/">pwn-wp</category>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: writeup for &lt;code&gt;gets&lt;/code&gt; and &lt;code&gt;BFS&lt;/code&gt;&lt;/p&gt;&lt;/blockquote&gt;</description>
+    </item>
+  </channel>
+</rss>

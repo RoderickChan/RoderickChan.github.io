@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>rss - 标签 | roderick - record and learn!</title>
+    <link>https://roderickchan.github.io/zh-cn/tags/rss/</link>
+    <description>Welcome to roderick&#39;s blog site!</description>
+    <generator>Hugo 0.147.7 &amp; FixIt v0.3.21-87ca54d0</generator>
+    <language>zh-CN</language>
+    <managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
+    <webMaster>roderickchan@foxmail.com (roderick)</webMaster>
+    <copyright>本站内容采用 CC BY-NC-SA 4.0 国际许可协议。</copyright>
+    <lastBuildDate>Sat, 15 Jul 2023 10:36:26 +0800</lastBuildDate>
+    <atom:link href="https://roderickchan.github.io/zh-cn/tags/rss/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用RSS订阅资讯</title>
+      <link>https://roderickchan.github.io/zh-cn/2023-07-15-use-rss-to-read-the-world/</link>
+      <pubDate>Sat, 15 Jul 2023 10:36:26 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/zh-cn/2023-07-15-use-rss-to-read-the-world/</guid>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/tools/">tools</category>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;处于信息时代的今天，可供选择的阅读媒介数不胜数，各类信息让人眼花缭乱。不知不觉，我们早已把自己淹没在信息的海洋中。为了能有效地筛选与获取信息，我尝试过数种方法，&lt;code&gt;RSS&lt;/code&gt; 订阅是非常值得推荐的一种方法。本篇博客带大家认识与使用 &lt;code&gt;RSS&lt;/code&gt; 订阅，使用 &lt;code&gt;RSS&lt;/code&gt; 阅读新闻、博客和论文。&lt;/p&gt;&lt;/blockquote&gt;</description>
+    </item>
+  </channel>
+</rss>

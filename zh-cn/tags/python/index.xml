@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>python - 标签 | roderick - record and learn!</title>
+    <link>https://roderickchan.github.io/zh-cn/tags/python/</link>
+    <description>Welcome to roderick&#39;s blog site!</description>
+    <generator>Hugo 0.147.7 &amp; FixIt v0.3.21-87ca54d0</generator>
+    <language>zh-CN</language>
+    <managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
+    <webMaster>roderickchan@foxmail.com (roderick)</webMaster>
+    <copyright>本站内容采用 CC BY-NC-SA 4.0 国际许可协议。</copyright>
+    <lastBuildDate>Tue, 16 Jan 2024 19:31:27 +0800</lastBuildDate>
+    <atom:link href="https://roderickchan.github.io/zh-cn/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用python批量处理markdown文件中的图片</title>
+      <link>https://roderickchan.github.io/zh-cn/2024-01-15-use-python-to-upload-images-to-aliyunoss/</link>
+      <pubDate>Tue, 16 Jan 2024 19:31:27 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/zh-cn/2024-01-15-use-python-to-upload-images-to-aliyunoss/</guid>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/tools/">tools</category>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;记录一个小工具，用于批量处理 &lt;code&gt;markdown&lt;/code&gt; 文件中的图片，将其下载下来，然后上传到 &lt;code&gt;aliyun OSS&lt;/code&gt; 存储中。&lt;/p&gt;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>python带颜色打印字符串</title>
+      <link>https://roderickchan.github.io/zh-cn/2021-03-28-python%E5%B8%A6%E9%A2%9C%E8%89%B2%E6%89%93%E5%8D%B0%E5%AD%97%E7%AC%A6%E4%B8%B2/</link>
+      <pubDate>Sun, 28 Mar 2021 17:42:06 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/zh-cn/2021-03-28-python%E5%B8%A6%E9%A2%9C%E8%89%B2%E6%89%93%E5%8D%B0%E5%AD%97%E7%AC%A6%E4%B8%B2/</guid>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/tools/">tools</category>
+      <description>&lt;p&gt;之前调试pwn题的时候，有时候需要将某些特别的，重要的信息用不一样的颜色打印出来。查阅一些&lt;a href=&#34;https://stackoverflow.com/questions/287871/how-to-print-colored-text-to-the-terminal&#34;target=&#34;_blank&#34; rel=&#34;external nofollow noopener noreferrer&#34;&gt;资料&lt;i class=&#34;fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary&#34; aria-hidden=&#34;true&#34;&gt;&lt;/i&gt;&lt;/a&gt;，了解了&lt;code&gt;print&lt;/code&gt;函数的特性后，自己写了一个脚本，可以用来获取带颜色信息的字符串或者打印一串带颜色、背景色、下划线等的字符串。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

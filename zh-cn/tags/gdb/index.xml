@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>gdb - 标签 | roderick - record and learn!</title>
+    <link>https://roderickchan.github.io/zh-cn/tags/gdb/</link>
+    <description>Welcome to roderick&#39;s blog site!</description>
+    <generator>Hugo 0.147.7 &amp; FixIt v0.3.21-87ca54d0</generator>
+    <language>zh-CN</language>
+    <managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
+    <webMaster>roderickchan@foxmail.com (roderick)</webMaster>
+    <copyright>本站内容采用 CC BY-NC-SA 4.0 国际许可协议。</copyright>
+    <lastBuildDate>Sat, 29 Jun 2024 23:45:27 +0800</lastBuildDate>
+    <atom:link href="https://roderickchan.github.io/zh-cn/tags/gdb/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>【快来pwn1pwn】4-GDB调试指南</title>
+      <link>https://roderickchan.github.io/zh-cn/2024-06-29-pwn1pwn-course-4/</link>
+      <pubDate>Sat, 29 Jun 2024 23:45:27 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/zh-cn/2024-06-29-pwn1pwn-course-4/</guid>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/pwn1pwn/">pwn1pwn</category>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;快来 pwn1pwn 系列公开课第 &lt;code&gt;4&lt;/code&gt; 集【GDB调试指南】&lt;/p&gt;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>使用docker调试和部署pwn题</title>
+      <link>https://roderickchan.github.io/zh-cn/2023-02-13-%E4%BD%BF%E7%94%A8docker%E8%B0%83%E8%AF%95pwn%E9%A2%98/</link>
+      <pubDate>Mon, 13 Feb 2023 13:49:22 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/zh-cn/2023-02-13-%E4%BD%BF%E7%94%A8docker%E8%B0%83%E8%AF%95pwn%E9%A2%98/</guid>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/pwn-trick/">pwn-trick</category>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/tools/">tools</category>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;介绍如何使用 &lt;code&gt;docker&lt;/code&gt; 快速部署不同架构、不同版本的调试环境。给出 &lt;code&gt;docker&lt;/code&gt; 环境下 &lt;code&gt;pwn&lt;/code&gt; 题部署模板。&lt;/p&gt;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>使用decomp2dbg调试程序</title>
+      <link>https://roderickchan.github.io/zh-cn/2023-01-30-%E4%BD%BF%E7%94%A8decomp2dbg%E8%B0%83%E8%AF%95%E7%A8%8B%E5%BA%8F/</link>
+      <pubDate>Mon, 30 Jan 2023 20:39:51 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/zh-cn/2023-01-30-%E4%BD%BF%E7%94%A8decomp2dbg%E8%B0%83%E8%AF%95%E7%A8%8B%E5%BA%8F/</guid>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/tools/">tools</category>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;使用&lt;code&gt;decomp2dbg&lt;/code&gt;工具，统筹使用&lt;code&gt;IDA&lt;/code&gt;和&lt;code&gt;gdb&lt;/code&gt;调试程序。截至到目前(&lt;code&gt;2022-02-07&lt;/code&gt;)，测试出工具的缺陷在于：函数较多时，会陷入卡顿状态；打开&lt;code&gt;vmlinux&lt;/code&gt;，插件启动报错。&lt;/p&gt;&lt;/blockquote&gt;</description>
+    </item>
+  </channel>
+</rss>

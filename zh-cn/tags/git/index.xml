@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>git - 标签 | roderick - record and learn!</title>
+    <link>https://roderickchan.github.io/zh-cn/tags/git/</link>
+    <description>Welcome to roderick&#39;s blog site!</description>
+    <generator>Hugo 0.147.7 &amp; FixIt v0.3.21-87ca54d0</generator>
+    <language>zh-CN</language>
+    <managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
+    <webMaster>roderickchan@foxmail.com (roderick)</webMaster>
+    <copyright>本站内容采用 CC BY-NC-SA 4.0 国际许可协议。</copyright>
+    <lastBuildDate>Tue, 11 Jul 2023 18:14:58 +0800</lastBuildDate>
+    <atom:link href="https://roderickchan.github.io/zh-cn/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Git与Github的简要分享</title>
+      <link>https://roderickchan.github.io/zh-cn/2023-07-11-git-and-github/</link>
+      <pubDate>Tue, 11 Jul 2023 18:14:58 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/zh-cn/2023-07-11-git-and-github/</guid>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/tools/">tools</category>
+      <description>&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;之前的一次组会上，给组内小伙伴分享了 &lt;code&gt;Git&lt;/code&gt; 和 &lt;code&gt;Github&lt;/code&gt; 有关的基础概念与原理，介绍了使用 &lt;code&gt;Github&lt;/code&gt; 进行协作开发的流程。&lt;/li&gt;&#xA;&lt;li&gt;本篇博客会总结材料的主要内容，并提供材料的 &lt;code&gt;PPT&lt;/code&gt; 和 &lt;code&gt;PDF&lt;/code&gt; 文件下载连接。&lt;/li&gt;&#xA;&lt;li&gt;现在 &lt;code&gt;Github&lt;/code&gt; 网站改版了，&lt;code&gt;PPT&lt;/code&gt; 是基于改版前的排版而制作的。&lt;/li&gt;&#xA;&lt;li&gt;本次分享的是基础使用教程，不涉及复杂的&lt;code&gt;git&lt;/code&gt;命令讲解。&lt;/li&gt;&#xA;&lt;li&gt;文档只提供了大纲，很多细节没有体现在文档中，欢迎与我探讨。&lt;/li&gt;&#xA;&lt;/ol&gt;&lt;/blockquote&gt;</description>
+    </item>
+  </channel>
+</rss>

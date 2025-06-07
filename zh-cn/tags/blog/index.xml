@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>blog - 标签 | roderick - record and learn!</title>
+    <link>https://roderickchan.github.io/zh-cn/tags/blog/</link>
+    <description>Welcome to roderick&#39;s blog site!</description>
+    <generator>Hugo 0.147.7 &amp; FixIt v0.3.21-87ca54d0</generator>
+    <language>zh-CN</language>
+    <managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
+    <webMaster>roderickchan@foxmail.com (roderick)</webMaster>
+    <copyright>本站内容采用 CC BY-NC-SA 4.0 国际许可协议。</copyright>
+    <lastBuildDate>Tue, 16 Jan 2024 19:31:27 +0800</lastBuildDate>
+    <atom:link href="https://roderickchan.github.io/zh-cn/tags/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[置顶] 博客站点说明</title>
+      <link>https://roderickchan.github.io/zh-cn/2023-04-05-announcement-about-my-blog/</link>
+      <pubDate>Wed, 05 Apr 2023 17:42:44 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/zh-cn/2023-04-05-announcement-about-my-blog/</guid>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/announcement/">Announcement</category>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;关于本站博客。&lt;/p&gt;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>使用python批量处理markdown文件中的图片</title>
+      <link>https://roderickchan.github.io/zh-cn/2024-01-15-use-python-to-upload-images-to-aliyunoss/</link>
+      <pubDate>Tue, 16 Jan 2024 19:31:27 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/zh-cn/2024-01-15-use-python-to-upload-images-to-aliyunoss/</guid>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/tools/">tools</category>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;记录一个小工具，用于批量处理 &lt;code&gt;markdown&lt;/code&gt; 文件中的图片，将其下载下来，然后上传到 &lt;code&gt;aliyun OSS&lt;/code&gt; 存储中。&lt;/p&gt;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>解决Zotero条目的作者混乱问题</title>
+      <link>https://roderickchan.github.io/zh-cn/2024-01-10-edit-zotero-items-using-javascript-api/</link>
+      <pubDate>Wed, 10 Jan 2024 22:25:43 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/zh-cn/2024-01-10-edit-zotero-items-using-javascript-api/</guid>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/questions/">questions</category>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;记录下最近在使用 &lt;code&gt;zotero&lt;/code&gt; 的时候，遇到的一个不大不小的问题，以及解决方案。&lt;/p&gt;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>从 system 函数的实现看 Linux 下对环境变量的处理</title>
+      <link>https://roderickchan.github.io/zh-cn/2023-11-25-exploit-env-variable/</link>
+      <pubDate>Sun, 26 Nov 2023 23:08:47 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/zh-cn/2023-11-25-exploit-env-variable/</guid>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/pwn-trick/">pwn-trick</category>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;很久之前写的一篇关于环境变量的总结博客，当时没有写完，最近又翻找出来了，有些虎头蛇尾 😅&lt;/p&gt;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>poetry install的hash不一致错误的解决思路</title>
+      <link>https://roderickchan.github.io/zh-cn/2023-11-23-poetry-install-hash-error/</link>
+      <pubDate>Thu, 23 Nov 2023 16:37:23 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/zh-cn/2023-11-23-poetry-install-hash-error/</guid>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/questions/">questions</category>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;最近 &lt;code&gt;poetry install&lt;/code&gt; 总是碰到 &lt;code&gt;hash&lt;/code&gt; 不匹配的错误，记录一些解决方案&lt;/p&gt;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>使用RSS订阅资讯</title>
+      <link>https://roderickchan.github.io/zh-cn/2023-07-15-use-rss-to-read-the-world/</link>
+      <pubDate>Sat, 15 Jul 2023 10:36:26 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/zh-cn/2023-07-15-use-rss-to-read-the-world/</guid>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/tools/">tools</category>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;处于信息时代的今天，可供选择的阅读媒介数不胜数，各类信息让人眼花缭乱。不知不觉，我们早已把自己淹没在信息的海洋中。为了能有效地筛选与获取信息，我尝试过数种方法，&lt;code&gt;RSS&lt;/code&gt; 订阅是非常值得推荐的一种方法。本篇博客带大家认识与使用 &lt;code&gt;RSS&lt;/code&gt; 订阅，使用 &lt;code&gt;RSS&lt;/code&gt; 阅读新闻、博客和论文。&lt;/p&gt;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>Git与Github的简要分享</title>
+      <link>https://roderickchan.github.io/zh-cn/2023-07-11-git-and-github/</link>
+      <pubDate>Tue, 11 Jul 2023 18:14:58 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/zh-cn/2023-07-11-git-and-github/</guid>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/tools/">tools</category>
+      <description>&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;之前的一次组会上，给组内小伙伴分享了 &lt;code&gt;Git&lt;/code&gt; 和 &lt;code&gt;Github&lt;/code&gt; 有关的基础概念与原理，介绍了使用 &lt;code&gt;Github&lt;/code&gt; 进行协作开发的流程。&lt;/li&gt;&#xA;&lt;li&gt;本篇博客会总结材料的主要内容，并提供材料的 &lt;code&gt;PPT&lt;/code&gt; 和 &lt;code&gt;PDF&lt;/code&gt; 文件下载连接。&lt;/li&gt;&#xA;&lt;li&gt;现在 &lt;code&gt;Github&lt;/code&gt; 网站改版了，&lt;code&gt;PPT&lt;/code&gt; 是基于改版前的排版而制作的。&lt;/li&gt;&#xA;&lt;li&gt;本次分享的是基础使用教程，不涉及复杂的&lt;code&gt;git&lt;/code&gt;命令讲解。&lt;/li&gt;&#xA;&lt;li&gt;文档只提供了大纲，很多细节没有体现在文档中，欢迎与我探讨。&lt;/li&gt;&#xA;&lt;/ol&gt;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>解决博客链接结尾不带斜杠时访问失败的问题</title>
+      <link>https://roderickchan.github.io/zh-cn/2023-07-03-deal-with-a-nginx-problem/</link>
+      <pubDate>Mon, 03 Jul 2023 19:26:06 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/zh-cn/2023-07-03-deal-with-a-nginx-problem/</guid>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/questions/">questions</category>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;现在访问我的博客，带或者不带斜杠均可正常访问。&lt;/p&gt;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>阅读论文的姿势总结</title>
+      <link>https://roderickchan.github.io/zh-cn/2023-07-01-how-to-read-paper/</link>
+      <pubDate>Sat, 01 Jul 2023 12:25:56 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/zh-cn/2023-07-01-how-to-read-paper/</guid>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/paper/">paper</category>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;论文不是万能的，但没有论文是万万不能的。&lt;/p&gt;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>pwn 训练营第一期资料汇总</title>
+      <link>https://roderickchan.github.io/zh-cn/2023-05-06-shg-pwn-tutorial-1/</link>
+      <pubDate>Sat, 06 May 2023 23:56:49 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/zh-cn/2023-05-06-shg-pwn-tutorial-1/</guid>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/pwn-trick/">pwn-trick</category>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;分享队内第一期 &lt;code&gt;pwn&lt;/code&gt; 训练营的资料。&lt;/p&gt;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>nginx配置的问题记录</title>
+      <link>https://roderickchan.github.io/zh-cn/2023-04-01-nginx-config-problem/</link>
+      <pubDate>Sat, 01 Apr 2023 18:03:06 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/zh-cn/2023-04-01-nginx-config-problem/</guid>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/questions/">questions</category>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;当域名没有规则匹配的时候，&lt;code&gt;nginx&lt;/code&gt;的处理过程让我迷惑。&lt;/p&gt;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>2022-idekCTF-all-pwn-wp</title>
+      <link>https://roderickchan.github.io/zh-cn/2023-01-15-2022-idekctf-all-pwn-wp/</link>
+      <pubDate>Sun, 15 Jan 2023 13:59:51 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/zh-cn/2023-01-15-2022-idekctf-all-pwn-wp/</guid>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/pwn-wp/">pwn-wp</category>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;记录&lt;code&gt;2022-idekctf&lt;/code&gt;所有的&lt;code&gt;pwn&lt;/code&gt;题的&lt;code&gt;wp&lt;/code&gt;。&lt;/p&gt;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>[建站教程] 使用aliyun&#43;hugo搭建个人博客</title>
+      <link>https://roderickchan.github.io/zh-cn/2022-10-11-%E4%BD%BF%E7%94%A8aliyun-hugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</link>
+      <pubDate>Tue, 11 Oct 2022 22:36:17 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/zh-cn/2022-10-11-%E4%BD%BF%E7%94%A8aliyun-hugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</guid>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/tools/">tools</category>
+      <description>&lt;p&gt;整个搭建过程中，云服务器配置耗费时间需要&lt;code&gt;1~2&lt;/code&gt;周，而在配置云服务器过程中占用时间最长的为域名备案，最长需要等待&lt;code&gt;2&lt;/code&gt;周才能完成；剩下的几步只需要不到两个小时的时间即可完成。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

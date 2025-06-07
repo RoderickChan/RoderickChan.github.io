@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>skill - 标签 | roderick - record and learn!</title>
+    <link>https://roderickchan.github.io/zh-cn/tags/skill/</link>
+    <description>Welcome to roderick&#39;s blog site!</description>
+    <generator>Hugo 0.147.7 &amp; FixIt v0.3.21-87ca54d0</generator>
+    <language>zh-CN</language>
+    <managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
+    <webMaster>roderickchan@foxmail.com (roderick)</webMaster>
+    <copyright>本站内容采用 CC BY-NC-SA 4.0 国际许可协议。</copyright>
+    <lastBuildDate>Sat, 01 Jul 2023 12:25:56 +0800</lastBuildDate>
+    <atom:link href="https://roderickchan.github.io/zh-cn/tags/skill/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>阅读论文的姿势总结</title>
+      <link>https://roderickchan.github.io/zh-cn/2023-07-01-how-to-read-paper/</link>
+      <pubDate>Sat, 01 Jul 2023 12:25:56 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/zh-cn/2023-07-01-how-to-read-paper/</guid>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/paper/">paper</category>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;论文不是万能的，但没有论文是万万不能的。&lt;/p&gt;&lt;/blockquote&gt;</description>
+    </item>
+  </channel>
+</rss>

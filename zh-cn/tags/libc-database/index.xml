@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>libc-database - 标签 | roderick - record and learn!</title>
+    <link>https://roderickchan.github.io/zh-cn/tags/libc-database/</link>
+    <description>Welcome to roderick&#39;s blog site!</description>
+    <generator>Hugo 0.147.7 &amp; FixIt v0.3.21-87ca54d0</generator>
+    <language>zh-CN</language>
+    <managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
+    <webMaster>roderickchan@foxmail.com (roderick)</webMaster>
+    <copyright>本站内容采用 CC BY-NC-SA 4.0 国际许可协议。</copyright>
+    <lastBuildDate>Wed, 15 Feb 2023 15:55:31 +0800</lastBuildDate>
+    <atom:link href="https://roderickchan.github.io/zh-cn/tags/libc-database/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>自己搭建一个libc database</title>
+      <link>https://roderickchan.github.io/zh-cn/2023-02-15-%E8%87%AA%E5%B7%B1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAlibc-database/</link>
+      <pubDate>Wed, 15 Feb 2023 15:55:31 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/zh-cn/2023-02-15-%E8%87%AA%E5%B7%B1%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAlibc-database/</guid>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/tools/">tools</category>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/pwn-trick/">pwn-trick</category>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;为什么要自己搭建一个 &lt;code&gt;libc database&lt;/code&gt; 呢，&lt;del&gt;因为官方的&lt;a href=&#34;https://libc.rip/api/&#34;target=&#34;_blank&#34; rel=&#34;external nofollow noopener noreferrer&#34;&gt;https://libc.rip/api/&lt;i class=&#34;fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary&#34; aria-hidden=&#34;true&#34;&gt;&lt;/i&gt;&lt;/a&gt;查询接口挂了&lt;/del&gt;官方的查询接口时好时坏，现在又可以用了。&lt;/p&gt;&lt;/blockquote&gt;</description>
+    </item>
+  </channel>
+</rss>

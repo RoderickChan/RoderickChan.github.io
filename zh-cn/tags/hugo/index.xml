@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>hugo - 标签 | roderick - record and learn!</title>
+    <link>https://roderickchan.github.io/zh-cn/tags/hugo/</link>
+    <description>Welcome to roderick&#39;s blog site!</description>
+    <generator>Hugo 0.147.7 &amp; FixIt v0.3.21-87ca54d0</generator>
+    <language>zh-CN</language>
+    <managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
+    <webMaster>roderickchan@foxmail.com (roderick)</webMaster>
+    <copyright>本站内容采用 CC BY-NC-SA 4.0 国际许可协议。</copyright>
+    <lastBuildDate>Wed, 05 Apr 2023 22:36:17 +0800</lastBuildDate>
+    <atom:link href="https://roderickchan.github.io/zh-cn/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[建站教程] 使用aliyun&#43;hugo搭建个人博客</title>
+      <link>https://roderickchan.github.io/zh-cn/2022-10-11-%E4%BD%BF%E7%94%A8aliyun-hugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</link>
+      <pubDate>Tue, 11 Oct 2022 22:36:17 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/zh-cn/2022-10-11-%E4%BD%BF%E7%94%A8aliyun-hugo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</guid>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/tools/">tools</category>
+      <description>&lt;p&gt;整个搭建过程中，云服务器配置耗费时间需要&lt;code&gt;1~2&lt;/code&gt;周，而在配置云服务器过程中占用时间最长的为域名备案，最长需要等待&lt;code&gt;2&lt;/code&gt;周才能完成；剩下的几步只需要不到两个小时的时间即可完成。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

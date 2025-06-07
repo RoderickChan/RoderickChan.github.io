@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>pwn tutorial - 标签 | roderick - record and learn!</title>
+    <link>https://roderickchan.github.io/zh-cn/tags/pwn-tutorial/</link>
+    <description>Welcome to roderick&#39;s blog site!</description>
+    <generator>Hugo 0.147.7 &amp; FixIt v0.3.21-87ca54d0</generator>
+    <language>zh-CN</language>
+    <managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
+    <webMaster>roderickchan@foxmail.com (roderick)</webMaster>
+    <copyright>本站内容采用 CC BY-NC-SA 4.0 国际许可协议。</copyright>
+    <lastBuildDate>Sat, 06 May 2023 23:56:49 +0800</lastBuildDate>
+    <atom:link href="https://roderickchan.github.io/zh-cn/tags/pwn-tutorial/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>pwn 训练营第一期资料汇总</title>
+      <link>https://roderickchan.github.io/zh-cn/2023-05-06-shg-pwn-tutorial-1/</link>
+      <pubDate>Sat, 06 May 2023 23:56:49 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/zh-cn/2023-05-06-shg-pwn-tutorial-1/</guid>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/pwn-trick/">pwn-trick</category>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;分享队内第一期 &lt;code&gt;pwn&lt;/code&gt; 训练营的资料。&lt;/p&gt;&lt;/blockquote&gt;</description>
+    </item>
+  </channel>
+</rss>

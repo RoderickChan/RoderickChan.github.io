@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Announcement - 分类 | roderick - record and learn!</title>
+    <link>https://roderickchan.github.io/zh-cn/categories/announcement/</link>
+    <description>Welcome to roderick&#39;s blog site!</description>
+    <generator>Hugo 0.147.7 &amp; FixIt v0.3.21-87ca54d0</generator>
+    <language>zh-CN</language>
+    <managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
+    <webMaster>roderickchan@foxmail.com (roderick)</webMaster>
+    <copyright>本站内容采用 CC BY-NC-SA 4.0 国际许可协议。</copyright>
+    <lastBuildDate>Wed, 05 Apr 2023 17:42:44 +0800</lastBuildDate>
+    <atom:link href="https://roderickchan.github.io/zh-cn/categories/announcement/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[置顶] 博客站点说明</title>
+      <link>https://roderickchan.github.io/zh-cn/2023-04-05-announcement-about-my-blog/</link>
+      <pubDate>Wed, 05 Apr 2023 17:42:44 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/zh-cn/2023-04-05-announcement-about-my-blog/</guid>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/announcement/">Announcement</category>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;关于本站博客。&lt;/p&gt;&lt;/blockquote&gt;</description>
+    </item>
+  </channel>
+</rss>
