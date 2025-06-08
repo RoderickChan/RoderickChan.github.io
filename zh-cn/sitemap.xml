@@ -9,6 +9,12 @@
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://roderickchan.github.io/zh-cn/2023-04-05-announcement-about-my-blog/"/>
   </url>
   <url>
+    <loc>https://roderickchan.github.io/zh-cn/2025-06-08-update-hugo-blog/</loc>
+    <lastmod>2025-06-08T12:47:23+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://roderickchan.github.io/zh-cn/2025-05-09-use-deepwiki-to-understand-github-repos/</loc>
     <lastmod>2025-05-09T22:45:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -130,7 +136,7 @@
   </url>
   <url>
     <loc>https://roderickchan.github.io/zh-cn/2023-02-27-house-of-all-about-glibc-heap-exploitation/</loc>
-    <lastmod>2025-06-08T16:08:06+08:00</lastmod>
+    <lastmod>2025-06-08T22:47:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -819,8 +825,36 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://roderickchan.github.io/zh-cn/tags/ai/</loc>
+    <lastmod>2025-06-08T12:47:23+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://roderickchan.github.io/zh-cn/tags/blog/</loc>
+    <lastmod>2025-06-08T12:47:23+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://roderickchan.github.io/tags/blog/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://roderickchan.github.io/zh-cn/tags/blog/"/>
+  </url>
+  <url>
+    <loc>https://roderickchan.github.io/zh-cn/categories/</loc>
+    <lastmod>2025-06-08T22:47:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://roderickchan.github.io/categories/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://roderickchan.github.io/zh-cn/categories/"/>
+  </url>
+  <url>
+    <loc>https://roderickchan.github.io/zh-cn/tags/hugo/</loc>
+    <lastmod>2025-06-08T12:47:23+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://roderickchan.github.io/zh-cn/posts/</loc>
-    <lastmod>2025-06-08T16:08:06+08:00</lastmod>
+    <lastmod>2025-06-08T22:47:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://roderickchan.github.io/posts/"/>
@@ -828,11 +862,25 @@
   </url>
   <url>
     <loc>https://roderickchan.github.io/zh-cn/</loc>
-    <lastmod>2025-06-08T16:08:06+08:00</lastmod>
+    <lastmod>2025-06-08T22:47:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://roderickchan.github.io/"/>
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://roderickchan.github.io/zh-cn/"/>
+  </url>
+  <url>
+    <loc>https://roderickchan.github.io/zh-cn/tags/</loc>
+    <lastmod>2025-06-08T22:47:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://roderickchan.github.io/tags/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://roderickchan.github.io/zh-cn/tags/"/>
+  </url>
+  <url>
+    <loc>https://roderickchan.github.io/zh-cn/categories/tools/</loc>
+    <lastmod>2025-06-08T12:47:23+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   <url>
     <loc>https://roderickchan.github.io/zh-cn/comment/</loc>
@@ -843,35 +891,7 @@
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://roderickchan.github.io/zh-cn/comment/"/>
   </url>
   <url>
-    <loc>https://roderickchan.github.io/zh-cn/tags/ai/</loc>
-    <lastmod>2025-05-09T22:45:23+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://roderickchan.github.io/zh-cn/categories/</loc>
-    <lastmod>2025-06-08T16:08:06+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://roderickchan.github.io/categories/"/>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://roderickchan.github.io/zh-cn/categories/"/>
-  </url>
-  <url>
     <loc>https://roderickchan.github.io/zh-cn/tags/pwncli/</loc>
-    <lastmod>2025-05-09T22:45:23+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://roderickchan.github.io/zh-cn/tags/</loc>
-    <lastmod>2025-06-08T16:08:06+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://roderickchan.github.io/tags/"/>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://roderickchan.github.io/zh-cn/tags/"/>
-  </url>
-  <url>
-    <loc>https://roderickchan.github.io/zh-cn/categories/tools/</loc>
     <lastmod>2025-05-09T22:45:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -954,7 +974,7 @@
   </url>
   <url>
     <loc>https://roderickchan.github.io/zh-cn/categories/pwn-trick/</loc>
-    <lastmod>2025-06-08T16:08:06+08:00</lastmod>
+    <lastmod>2025-06-08T22:47:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -987,14 +1007,6 @@
     <lastmod>2024-01-19T20:21:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://roderickchan.github.io/zh-cn/tags/blog/</loc>
-    <lastmod>2024-01-16T19:31:27+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://roderickchan.github.io/tags/blog/"/>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://roderickchan.github.io/zh-cn/tags/blog/"/>
   </url>
   <url>
     <loc>https://roderickchan.github.io/zh-cn/tags/oss/</loc>
@@ -1102,19 +1114,19 @@
   </url>
   <url>
     <loc>https://roderickchan.github.io/zh-cn/tags/glibc/</loc>
-    <lastmod>2025-06-08T16:08:06+08:00</lastmod>
+    <lastmod>2025-06-08T22:47:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://roderickchan.github.io/zh-cn/tags/heap-exploitation/</loc>
-    <lastmod>2025-06-08T16:08:06+08:00</lastmod>
+    <lastmod>2025-06-08T22:47:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://roderickchan.github.io/zh-cn/tags/house-of/</loc>
-    <lastmod>2025-06-08T16:08:06+08:00</lastmod>
+    <lastmod>2025-06-08T22:47:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -1188,12 +1200,6 @@
   </url>
   <url>
     <loc>https://roderickchan.github.io/zh-cn/tags/fixit/</loc>
-    <lastmod>2023-04-05T22:36:17+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://roderickchan.github.io/zh-cn/tags/hugo/</loc>
     <lastmod>2023-04-05T22:36:17+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

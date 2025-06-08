@@ -1,7 +1,7 @@
 {
 	"version": 3,
 	"file": "dark.min.css",
-	"sourceRoot": "C:/Users/Administrator/Desktop/hugo-new/roderickchan.github.io",
+	"sourceRoot": "G:/Study/MyBlogData/roderickchan.github.io",
 	"sources": [
 		"themes/FixIt/assets/lib/aplayer/dark.scss"
 	],

@@ -9,7 +9,7 @@
     <managingEditor>roderickchan@foxmail.com (roderick)</managingEditor>
     <webMaster>roderickchan@foxmail.com (roderick)</webMaster>
     <copyright>本站内容采用 CC BY-NC-SA 4.0 国际许可协议。</copyright>
-    <lastBuildDate>Tue, 16 Jan 2024 19:31:27 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 08 Jun 2025 12:47:23 +0800</lastBuildDate>
     <atom:link href="https://roderickchan.github.io/zh-cn/tags/blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[置顶] 博客站点说明</title>
@@ -18,6 +18,14 @@
       <guid>https://roderickchan.github.io/zh-cn/2023-04-05-announcement-about-my-blog/</guid>
       <category domain="https://roderickchan.github.io/zh-cn/categories/announcement/">Announcement</category>
       <description>&lt;blockquote&gt;&#xA;&lt;p&gt;关于本站博客。&lt;/p&gt;&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>三年一更之博客主题更新</title>
+      <link>https://roderickchan.github.io/zh-cn/2025-06-08-update-hugo-blog/</link>
+      <pubDate>Sun, 08 Jun 2025 12:45:23 +0800</pubDate><author>roderickchan@foxmail.com (roderick)</author>
+      <guid>https://roderickchan.github.io/zh-cn/2025-06-08-update-hugo-blog/</guid>
+      <category domain="https://roderickchan.github.io/zh-cn/categories/tools/">tools</category>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;很久没有更新博客的主题了。目前采用的&lt;a href=&#34;https://github.com/hugo-fixit/FixIt&#34;target=&#34;_blank&#34; rel=&#34;external nofollow noopener noreferrer&#34;&gt;FixIt&lt;i class=&#34;fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary&#34; aria-hidden=&#34;true&#34;&gt;&lt;/i&gt;&lt;/a&gt;主题功能比较全面，就是配置稍微有些复杂。早些时候，我就在滴答清单里面写下了要更新博客主题的&lt;code&gt;task&lt;/code&gt;，忙了一阵又一阵，昨天晚上到今天终于把这个事情给忙活完了。总的来说，工作量上除了继承主题已有的更新，例如：合集、侧边栏、相关内容推荐、右侧目录等，还实现了如下几个功能：&lt;code&gt;clustrmaps&lt;/code&gt;显示访客地点和数量、&lt;code&gt;AI&lt;/code&gt;全文摘要、主页添加自己的微信公众号、添加留言板等。&lt;/p&gt;&lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>使用python批量处理markdown文件中的图片</title>

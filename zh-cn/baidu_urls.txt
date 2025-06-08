@@ -1,4 +1,5 @@
 https://roderickchan.github.io/zh-cn/2023-04-05-announcement-about-my-blog/
+https://roderickchan.github.io/zh-cn/2025-06-08-update-hugo-blog/
 https://roderickchan.github.io/zh-cn/2025-05-09-use-deepwiki-to-understand-github-repos/
 https://roderickchan.github.io/zh-cn/2024-06-29-pwn1pwn-course-4/
 https://roderickchan.github.io/zh-cn/2024-06-28-qinmiguanxi-reading-notes/
