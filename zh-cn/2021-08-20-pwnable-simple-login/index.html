@@ -6,10 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
     <meta name="robots" content="noodp" />
     <title>Pwnable_simple_login | roderick - record and learn!</title><meta name="author" content="roderick">
-<meta name="description" content="总结本以为是要逆一下MD5，后来定睛一看，原来是个隐藏的栈迁移的题，还自带system(&quot;/bin/sh&quot;)。怪不得叫login，的确是签到题。也只记录下exp。
-"><meta name="keywords" content='pwn'>
+<meta name="description" content="文章介绍了一道名为&quot;pwnable_simple_login&quot;的签到题，实际考察栈迁移技术。题目隐藏了直接调用system(&quot;/bin/sh&quot;)的功能，作者通过发送特定payload（包含0xdeadbeef、0x804925f和0x811eb40地址）成功利用漏洞，最终获取了交互式shell。文中提供了完整的利用代码，并引用了相关技术博客和工具。"><meta name="keywords" content='pwn'>
   <meta itemprop="name" content="pwnable_simple_login">
-  <meta itemprop="description" content="总结本以为是要逆一下MD5，后来定睛一看，原来是个隐藏的栈迁移的题，还自带system(&#34;/bin/sh&#34;)。怪不得叫login，的确是签到题。也只记录下exp。">
+  <meta itemprop="description" content="文章介绍了一道名为&#34;pwnable_simple_login&#34;的签到题，实际考察栈迁移技术。题目隐藏了直接调用system(&#34;/bin/sh&#34;)的功能，作者通过发送特定payload（包含0xdeadbeef、0x804925f和0x811eb40地址）成功利用漏洞，最终获取了交互式shell。文中提供了完整的利用代码，并引用了相关技术博客和工具。">
   <meta itemprop="datePublished" content="2021-08-20T23:24:22+08:00">
   <meta itemprop="dateModified" content="2021-08-20T23:24:22+08:00">
   <meta itemprop="wordCount" content="144">
@@ -17,7 +16,7 @@
   <meta itemprop="keywords" content="pwn"><meta property="og:url" content="https://roderickchan.github.io/zh-cn/2021-08-20-pwnable-simple-login/">
   <meta property="og:site_name" content="roderick - record and learn!">
   <meta property="og:title" content="pwnable_simple_login">
-  <meta property="og:description" content="总结本以为是要逆一下MD5，后来定睛一看，原来是个隐藏的栈迁移的题，还自带system(&#34;/bin/sh&#34;)。怪不得叫login，的确是签到题。也只记录下exp。">
+  <meta property="og:description" content="文章介绍了一道名为&#34;pwnable_simple_login&#34;的签到题，实际考察栈迁移技术。题目隐藏了直接调用system(&#34;/bin/sh&#34;)的功能，作者通过发送特定payload（包含0xdeadbeef、0x804925f和0x811eb40地址）成功利用漏洞，最终获取了交互式shell。文中提供了完整的利用代码，并引用了相关技术博客和工具。">
   <meta property="og:locale" content="zh_CN">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
@@ -29,7 +28,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://roderickchan.github.io/">
   <meta name="twitter:title" content="pwnable_simple_login">
-  <meta name="twitter:description" content="总结本以为是要逆一下MD5，后来定睛一看，原来是个隐藏的栈迁移的题，还自带system(&#34;/bin/sh&#34;)。怪不得叫login，的确是签到题。也只记录下exp。">
+  <meta name="twitter:description" content="文章介绍了一道名为&#34;pwnable_simple_login&#34;的签到题，实际考察栈迁移技术。题目隐藏了直接调用system(&#34;/bin/sh&#34;)的功能，作者通过发送特定payload（包含0xdeadbeef、0x804925f和0x811eb40地址）成功利用漏洞，最终获取了交互式shell。文中提供了完整的利用代码，并引用了相关技术博客和工具。">
 <meta name="application-name" content="roderick - record and learn!">
 <meta name="apple-mobile-web-app-title" content="roderick - record and learn!"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#2d89ef"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -202,7 +201,76 @@
     </li>
   </ul>
 </nav></div>
-      </div><div class="content" id="content"><div class="expiration-reminder details admonition note open">
+      </div><div class="ai-summary-container" style="margin: 20px 0; padding: 20px; border: 2px solid #e1e5e9; border-radius: 12px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+  <div class="ai-summary-header" style="display: flex; align-items: center; margin-bottom: 15px;">
+    <h3 class="ai-summary-title" style="margin: 0; color: #495057; font-size: 18px; font-weight: 600;">
+      🤖 本文的AI摘要
+    </h3>
+  </div>
+  
+<div class="typeit" data-speed="50" data-cursor-speed="1000" data-cursor-char="|" style="margin: 0; line-height: 1.6; color: #6c757d; font-size: 14px;">
+  <template>文章介绍了一道名为&quot;pwnable_simple_login&quot;的签到题，实际考察栈迁移技术。题目隐藏了直接调用system(&quot;/bin/sh&quot;)的功能，作者通过发送特定payload（包含0xdeadbeef、0x804925f和0x811eb40地址）成功利用漏洞，最终获取了交互式shell。文中提供了完整的利用代码，并引用了相关技术博客和工具。</template>
+</div>
+</div>
+
+
+<style>
+  @media (max-width: 768px) {
+    .ai-summary-container {
+      margin: 15px 0 !important;
+      padding: 15px !important;
+    }
+    
+    .ai-summary-title {
+      font-size: 16px !important;
+    }
+    
+    .ai-summary-content {
+      padding: 12px !important;
+    }
+    
+    .ai-summary-content p {
+      font-size: 13px !important;
+    }
+  }
+  
+   
+  @media (prefers-color-scheme: dark) {
+    .ai-summary-container {
+      background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%) !important;
+      border-color: #4a5568 !important;
+    }
+    
+    .ai-summary-title {
+      color: #e2e8f0 !important;
+    }
+    
+    .ai-summary-content {
+      background: #1a202c !important;
+      border-left-color: #3182ce !important;
+    }
+    
+    .ai-summary-content p {
+      color: #a0aec0 !important;
+    }
+  }
+  
+   
+  .ai-summary-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+  }
+  
+   
+  .ai-summary-title {
+    transition: color 0.3s ease;
+  }
+  
+  .ai-summary-container:hover .ai-summary-title {
+    color: #007bff !important;
+  }
+</style><div class="content" id="content"><div class="expiration-reminder details admonition note open">
       <div class="details-summary admonition-title">
         <i class="icon fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i>注意<i class="details-icon fa-solid fa-angle-right fa-fw" aria-hidden="true"></i>
       </div>
@@ -308,10 +376,58 @@
   <hr class="hr-edge-weak"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
       <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
     <div class="footer-container"><div class="clustrmaps-custom">
-    <center>
-<script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=600&t=tt&d=bKrzPRSdAZuPQnsWUdvwNdyX5hI0m3cpvARXwWbJct4'></script>
-    </center>
-</div><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.147.7"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.21-87ca54d0"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
+  <center>
+    <script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&amp;w=600&amp;t=tt&amp;d=bKrzPRSdAZuPQnsWUdvwNdyX5hI0m3cpvARXwWbJct4'></script>
+  </center>
+</div><style>
+.clustrmaps-custom {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.clustrmaps-custom center {
+  width: 100%;
+}
+
+.clustrmaps-custom #clustrmaps {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+ 
+@media (max-width: 768px) {
+  .clustrmaps-custom {
+    max-width: 100%;
+    padding: 0 10px;
+  }
+  
+  .clustrmaps-custom #clustrmaps {
+    width: 100% !important;
+    max-width: 350px !important;
+  }
+}
+
+ 
+@media (max-width: 480px) {
+  .clustrmaps-custom {
+    padding: 0 5px;
+  }
+  
+  .clustrmaps-custom #clustrmaps {
+    max-width: 280px !important;
+  }
+}
+
+ 
+@media (max-width: 360px) {
+  .clustrmaps-custom #clustrmaps {
+    max-width: 250px !important;
+  }
+}
+</style>
+<div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.147.7"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.21-87ca54d0"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
         </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
             <span itemprop="copyrightYear">2022 - 2025</span><span class="author" itemprop="copyrightHolder">
               <a href="https://www.roderickchan.cn"target="_blank" rel="external nofollow noopener noreferrer">roderick</a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中……'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i><span class="run-times ms-1">网站运行中……</span></span></div><div class="footer-line visitor">
@@ -322,5 +438,5 @@
     <div class="noscript-warning">该网站在启用 JavaScript 的情况下效果最佳。</div>
   </noscript>
 </div><link rel="stylesheet" href="/lib/waline/waline.css"><link rel="preload" href="/lib/katex/katex.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="/lib/katex/katex.min.css"></noscript><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/waline/waline.umd.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pangu/pangu.min.js" defer></script><script src="/lib/cell-watermark/watermark.min.js" defer></script><script src="https://vercount.one/js" async defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"autoBookmark":true,"code":{"copyTitle":"复制到剪贴板","maxShownLines":-1},"comment":{"enable":true,"expired":false,"waline":{"copyright":true,"dark":"html[data-theme='dark']","el":"#waline","emoji":["//unpkg.com/@waline/emojis@1.1.0/weibo"],"highlighter":true,"imageUploader":true,"lang":"zh-cn","login":"enable","meta":["nick","mail","link"],"pageSize":10,"reaction":true,"search":false,"serverURL":"https://waline.roderickchan.cn/","texRenderer":false}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"enablePWA":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"pangu":{"enable":true,"selector":"article"},"search":{"algoliaAppID":"6CJ87MRD62","algoliaIndex":"index.zh-cn","algoliaSearchKey":"9f68a62dba71402a82f37137a7a886d2","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"algolia"},"siteTime":"2022-10-01T09:00:00+08:00","twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.21-87ca54d0","watermark":{"colspacing":30,"content":"roderick' blog","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/js/theme.min.js" defer></script><script src="/lib/translate.min.js" defer></script><script>window.ATConfig={"hugoLangCodes":["zh-CN"],"hugoLangMap":{"zh-CN":"/zh-cn/2021-08-20-pwnable-simple-login/"}};</script><script src="/js/translate.fixit.min.js" defer></script></body>
+    <noscript><link rel="stylesheet" href="/lib/katex/katex.min.css"></noscript><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/waline/waline.umd.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/fuse/fuse.min.js" defer></script><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/twemoji/twemoji.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/pangu/pangu.min.js" defer></script><script src="/lib/cell-watermark/watermark.min.js" defer></script><script src="https://cn.vercount.one/js" async defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"autoBookmark":true,"code":{"copyTitle":"复制到剪贴板","maxShownLines":-1},"comment":{"enable":true,"expired":false,"waline":{"copyright":true,"dark":"html[data-theme='dark']","el":"#waline","emoji":["//unpkg.com/@waline/emojis@1.1.0/weibo"],"highlighter":true,"imageUploader":true,"lang":"zh-cn","login":"enable","meta":["nick","mail","link"],"pageSize":10,"reaction":true,"search":false,"serverURL":"https://waline.roderickchan.cn/","texRenderer":false}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"enablePWA":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"pangu":{"enable":true,"selector":"article"},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/zh-cn/search.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"siteTime":"2022-10-01T09:00:00+08:00","twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.21-87ca54d0","watermark":{"colspacing":30,"content":"roderick' blog","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/js/theme.min.js" defer></script><script src="/lib/translate.min.js" defer></script><script>window.ATConfig={"hugoLangCodes":["zh-CN"],"hugoLangMap":{"zh-CN":"/zh-cn/2021-08-20-pwnable-simple-login/"}};</script><script src="/js/translate.fixit.min.js" defer></script></body>
 </html>
